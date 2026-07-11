@@ -230,6 +230,16 @@
   .cta-box h2{ margin-bottom:14px; }
   .cta-box p{ color: var(--muted); margin-bottom:26px; }
   @media (max-width: 700px){ .story-highlights{ grid-template-columns: 1fr; } }
+
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:6px; width:36px; height:36px; align-items:center; justify-content:center; }
+  .nav-toggle svg{ width:22px; height:22px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:#fff; }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-size:.95rem; color:var(--ink); }
+  .mobile-menu .nav-cta{ display:block; margin:16px 32px; text-align:center; }
+  @media (max-width: 860px){
+    .nav-toggle{ display:flex; }
+  }
 </style>
 </head>
 <body>
@@ -247,8 +257,9 @@
         <li><a href='/contact'>Contact</a></li>
       </ul>
     </nav>
-    <a class='nav-cta' href='/contact'>Discutons de votre projet</a>
+    <a class='nav-cta' href='/contact'>Discutons de votre projet</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
+  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="/#services">Services</a><a href="/#formules">Formules</a><a href="/#approche">Approche</a><a href="/a-propos">À propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
 </header>
 
 
@@ -403,6 +414,14 @@
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
+
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){
+      mobileMenu.classList.toggle('open');
+    });
+  }
 </script>
 
 </body>
