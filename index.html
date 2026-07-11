@@ -384,10 +384,11 @@
             <div><span class="label">Email</span><a href="mailto:contact@matmax-intelligence.com">contact@matmax-intelligence.com</a></div>
             <div><span class="label">Basé à</span><a href="#">Luxembourg</a></div>
           </div>
-          <form>
-            <div class="field"><label>Nom</label><input type="text" placeholder="Votre nom"></div>
-            <div class="field"><label>Email</label><input type="email" placeholder="vous@entreprise.com"></div>
-            <div class="field"><label>Message</label><textarea placeholder="Quelques lignes sur ce que vous cherchez à faire"></textarea></div>
+          <form name="contact" method="POST" data-netlify="true">
+            <input type="hidden" name="form-name" value="contact">
+            <div class="field"><label>Nom</label><input type="text" name="name" placeholder="Votre nom"></div>
+            <div class="field"><label>Email</label><input type="email" name="email" placeholder="vous@entreprise.com"></div>
+            <div class="field"><label>Message</label><textarea name="message" placeholder="Quelques lignes sur ce que vous cherchez à faire"></textarea></div>
             <button class="btn btn-primary" type="submit">Envoyer</button>
           </form>
         </div>
