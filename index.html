@@ -221,6 +221,23 @@
   .pricing-note{ margin-top: 28px; color: var(--dim); font-size:.86rem; }
   @media (max-width: 860px){ .price-panel{ grid-template-columns: 1fr 1fr; } }
   @media (max-width: 540px){ .price-panel{ grid-template-columns: 1fr; } }
+
+  .contact-layout-light{ display:grid; grid-template-columns: 0.85fr 1.15fr; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .contact-side-light{ background:#FAFAFB; padding:44px 36px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:22px; }
+  .contact-side-light h2{ font-size:1.3rem; margin-bottom:4px; }
+  .contact-side-light p.side-intro{ color:var(--muted); font-size:.92rem; margin:0; }
+  .contact-side-light .item .label{ font-size:.76rem; color:var(--dim); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; display:block; }
+  .contact-side-light .item a, .contact-side-light .item p{ font-size:.98rem; color:var(--ink); margin:0; }
+  .contact-main-light{ padding:44px 36px; }
+  .contact-main-light form{ display:flex; flex-direction:column; gap:18px; }
+  .contact-main-light .field label{ font-size:.82rem; color:var(--muted); display:block; margin-bottom:8px; }
+  .contact-main-light .field input, .contact-main-light .field textarea{
+    width:100%; border:1px solid var(--line); border-radius:var(--radius); padding:12px 14px;
+    font-family:'Inter'; font-size:.92rem; color:var(--ink); background:#fff;
+  }
+  .contact-main-light .field textarea{ resize:vertical; min-height:96px; }
+  .contact-main-light .field input:focus, .contact-main-light .field textarea:focus{ outline:none; border-color:var(--accent); }
+  @media (max-width: 860px){ .contact-layout-light{ grid-template-columns:1fr; } .contact-side-light{ border-right:none; border-bottom:1px solid var(--line); } }
 </style>
 </head>
 <body>
@@ -415,17 +432,26 @@
 
   <section id="contact">
     <div class="wrap">
-      <div class="contact-section reveal">
-        <div class="section-head">
-          <span class="tag" style="color:#9db3ff">Contact</span>
-          <h2>Parlons de votre projet</h2>
-          <p>Décrivez-nous votre besoin, on revient vers vous sous 24h avec une première proposition.</p>
-        </div>
-        <div class="contact-grid">
-          <div class="contact-info">
-            <div><span class="label">Email</span><a href="mailto:contact@matmax-intelligence.com">contact@matmax-intelligence.com</a></div>
-            <div><span class="label">Basé à</span><a href="#">Luxembourg</a></div>
+      <div class="section-head reveal">
+        <span class="tag">Contact</span>
+        <h2>Parlons de votre projet</h2>
+        <p>Décrivez-nous votre besoin, on revient vers vous sous 24h avec une première proposition.</p>
+      </div>
+      <div class="contact-layout-light reveal">
+        <div class="contact-side-light">
+          <div>
+            <p class="side-intro">On répond sous 24h ouvrées, sans jargon commercial.</p>
           </div>
+          <div class="item">
+            <span class="label">Email</span>
+            <a href="mailto:contact@matmax-intelligence.com">contact@matmax-intelligence.com</a>
+          </div>
+          <div class="item">
+            <span class="label">Basé à</span>
+            <p>Luxembourg</p>
+          </div>
+        </div>
+        <div class="contact-main-light">
           <form action='/merci' method='POST' name='contact'>
             <input type="hidden" name="form-name" value="contact">
             <div class="field"><label>Nom</label><input type="text" name="name" placeholder="Votre nom"></div>
