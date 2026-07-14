@@ -300,6 +300,9 @@
   .portfolio-card h3{ font-size: .98rem; margin-bottom: 5px; }
   .portfolio-card p{ color: var(--muted); font-size: .83rem; line-height:1.5; }
   .portfolio-note{ margin-top: 28px; font-size:.86rem; color: var(--dim); }
+  .portfolio-card-link{ display:block; }
+  .portfolio-view{ display:inline-block; margin-top:10px; font-size:.8rem; color:var(--accent); font-weight:500; }
+  .portfolio-card-link:hover .portfolio-view{ text-decoration:underline; }
   @media (max-width: 860px){ .portfolio-panel{ grid-template-columns: 1fr 1fr; } }
   @media (max-width: 640px){ .portfolio-panel{ grid-template-columns: 1fr; } }
   @media (max-width: 480px){ .portfolio-tabs{ gap:6px; } .portfolio-tab{ padding:9px 16px; font-size:.82rem; } }
@@ -344,14 +347,15 @@
         <button class="portfolio-tab" data-tab="services" type="button">Services &amp; bien-être</button>
       </div>
       <div class="portfolio-panel active" data-panel="restauration">
-        <div class="portfolio-card">
+        <a class="portfolio-card portfolio-card-link" href="/exemple-trattoria-bella" target="_blank" rel="noopener">
           <img class="portfolio-thumb" src="portfolio-r1.png" alt="Concept de site pour Restaurant italien — Trattoria Bella" loading="lazy" width="1200" height="750">
           <div class="portfolio-body">
             <div class="portfolio-meta"><span class="industry">Restaurant italien</span><span class="portfolio-tag">Concept</span></div>
             <h3>Trattoria Bella</h3>
             <p>Trattoria familiale, carte courte, réservation en ligne.</p>
+            <span class="portfolio-view">Voir le site complet →</span>
           </div>
-        </div>
+        </a>
         <div class="portfolio-card">
           <img class="portfolio-thumb" src="portfolio-r2.png" alt="Concept de site pour Restaurant indien — Saffron" loading="lazy" width="1200" height="750">
           <div class="portfolio-body">

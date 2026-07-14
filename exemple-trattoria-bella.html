@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Trattoria Bella — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#FBF6F0; --bg-alt:#F4ECE0; --ink:#241C14; --muted:#8A7B65; --dim:#B3A794; --line:#E5DBC9;
+    --red:#A83232; --red-dark:#7C2222; --olive:#4E7A51; --gold:#C98A2E; --cream:#FFFDF9;
+    --radius:6px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Space Grotesk',sans-serif; font-weight:700; line-height:1.15; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+  section{ padding:96px 0; }
+
+  /* demo banner */
+  .demo-banner{ background:var(--ink); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; position:relative; z-index:100; }
+  .demo-banner strong{ color:#F0C46A; }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  /* header */
+  header.site-header{ position:sticky; top:0; z-index:50; background:rgba(251,246,240,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:80px; }
+  .logo{ font-family:'Space Grotesk'; font-weight:700; font-size:1.15rem; letter-spacing:.3px; }
+  .logo span{ color:var(--red); }
+  nav ul{ display:flex; gap:34px; }
+  nav a{ font-size:.9rem; color:var(--muted); transition:color .2s; }
+  nav a:hover{ color:var(--ink); }
+  .nav-cta{ padding:11px 22px; background:var(--red); color:#fff; border-radius:var(--radius); font-size:.86rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:background .2s; }
+  .nav-cta:hover{ background:var(--red-dark); }
+  .nav-toggle{ display:none; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-size:.95rem; color:var(--ink); }
+  .mobile-menu .nav-cta{ display:block; margin:16px 32px; text-align:center; color:#fff; width:calc(100% - 64px); }
+
+  /* hero */
+  .hero{ padding:80px 0 60px; position:relative; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:center; }
+  .badge-rating{ display:inline-flex; align-items:center; gap:8px; background:var(--cream); border:1px solid var(--line); padding:8px 14px; border-radius:30px; font-size:.8rem; margin-bottom:24px; }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--red); letter-spacing:.06em; margin-bottom:18px; text-transform:uppercase; }
+  .hero h1{ font-size:clamp(2.3rem,4.2vw,3.4rem); margin-bottom:22px; max-width:14ch; }
+  .hero p.lead{ font-size:1.08rem; color:var(--muted); max-width:46ch; margin-bottom:34px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:15px 28px; border-radius:var(--radius); font-size:.92rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--red); color:#fff; }
+  .btn-primary:hover{ background:var(--red-dark); }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink); }
+  .hero-visual{ position:relative; height:420px; }
+  .circle{ position:absolute; border-radius:50%; }
+  .hv1{ width:300px; height:300px; background:var(--red); top:0; right:20px; opacity:.95; }
+  .hv2{ width:190px; height:190px; background:var(--olive); bottom:10px; right:200px; opacity:.9; }
+  .hv3{ width:90px; height:90px; background:var(--gold); bottom:60px; right:20px; opacity:.95; }
+  .hv-label{ position:absolute; top:120px; right:110px; font-family:'Space Grotesk'; font-weight:700; font-size:3.4rem; color:#fff; z-index:2; }
+
+  /* highlights */
+  .highlights{ padding:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--cream); }
+  .highlights-row{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .highlight-item{ padding:30px 28px; border-left:1px solid var(--line); display:flex; flex-direction:column; gap:6px; }
+  .highlight-item:first-child{ border-left:none; }
+  .highlight-item .hnum{ font-family:'IBM Plex Mono'; color:var(--red); font-size:.78rem; }
+  .highlight-item h4{ font-family:'Space Grotesk'; font-size:1rem; font-weight:600; }
+
+  /* section head */
+  .section-head{ max-width:640px; margin-bottom:52px; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--red); text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.7rem,3vw,2.3rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1.02rem; }
+
+  /* about */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+  .about-text p{ color:var(--muted); margin-bottom:16px; font-size:1rem; }
+  .stats-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:8px; }
+  .stat{ background:var(--cream); padding:26px 20px; text-align:center; }
+  .stat .num{ font-family:'Space Grotesk'; font-size:2rem; font-weight:700; color:var(--red); }
+  .stat .lbl{ font-size:.8rem; color:var(--muted); margin-top:6px; }
+  .about-visual{ height:340px; border-radius:var(--radius); background:linear-gradient(135deg,var(--olive),var(--red)); position:relative; overflow:hidden; }
+  .about-visual::after{ content:'Depuis 1998'; position:absolute; bottom:24px; left:24px; color:#fff; font-family:'Space Grotesk'; font-weight:700; font-size:1.3rem; }
+
+  /* menu */
+  .menu-section{ background:var(--bg-alt); }
+  .menu-tabs{ display:flex; gap:8px; margin-bottom:40px; flex-wrap:wrap; }
+  .menu-tab{ padding:11px 22px; border-radius:30px; border:1px solid var(--line); font-size:.88rem; color:var(--muted); background:var(--cream); cursor:pointer; transition:all .2s; font-family:'Inter'; }
+  .menu-tab:hover{ border-color:var(--ink); color:var(--ink); }
+  .menu-tab.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .menu-panel{ display:none; }
+  .menu-panel.active{ display:grid; grid-template-columns:1fr 1fr; gap:0 48px; }
+  .menu-item{ display:flex; justify-content:space-between; gap:16px; padding:18px 0; border-bottom:1px solid var(--line); }
+  .menu-item-name{ font-family:'Space Grotesk'; font-weight:600; font-size:1.02rem; margin-bottom:4px; }
+  .menu-item-desc{ font-size:.85rem; color:var(--muted); max-width:32ch; }
+  .menu-item-price{ font-family:'IBM Plex Mono'; font-weight:500; color:var(--red); white-space:nowrap; }
+
+  /* gallery */
+  .gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .gallery-tile{ position:relative; border-radius:var(--radius); overflow:hidden; height:220px; display:flex; align-items:flex-end; padding:16px; }
+  .gallery-tile span{ color:#fff; font-family:'Space Grotesk'; font-weight:600; font-size:.92rem; position:relative; z-index:2; }
+  .gallery-tile::before{ content:''; position:absolute; inset:0; background:rgba(0,0,0,0.22); z-index:1; }
+  .g1{ background:linear-gradient(135deg,#A83232,#7C2222); }
+  .g2{ background:linear-gradient(135deg,#4E7A51,#33523A); }
+  .g3{ background:linear-gradient(135deg,#C98A2E,#A56B1D); }
+  .g4{ background:linear-gradient(135deg,#8A7B65,#5C513F); }
+  .g5{ background:linear-gradient(135deg,#7C2222,#4E1616); }
+  .g6{ background:linear-gradient(135deg,#33523A,#1F3524); }
+
+  /* testimonials */
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .testi-card{ background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:28px; }
+  .stars{ color:var(--gold); font-size:.9rem; margin-bottom:14px; letter-spacing:2px; }
+  .testi-card p{ color:var(--ink); font-size:.94rem; margin-bottom:18px; font-style:italic; }
+  .testi-name{ font-family:'Space Grotesk'; font-weight:600; font-size:.88rem; }
+  .testi-role{ font-size:.78rem; color:var(--muted); }
+
+  /* info */
+  .info-section{ background:var(--ink); color:#fff; }
+  .info-section .section-head p{ color:rgba(255,255,255,0.6); }
+  .info-section .section-head .tag{ color:#F0C46A; }
+  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .info-list{ display:flex; flex-direction:column; gap:22px; margin-bottom:30px; }
+  .info-list .lbl{ font-family:'IBM Plex Mono'; font-size:.72rem; color:#F0C46A; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:6px; }
+  .info-list .val{ font-size:1rem; }
+  .hours-table{ width:100%; border-collapse:collapse; margin-bottom:28px; }
+  .hours-table td{ padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:.9rem; }
+  .hours-table td:last-child{ text-align:right; color:rgba(255,255,255,0.65); }
+  .map-box{ height:100%; min-height:320px; border-radius:var(--radius); background:repeating-linear-gradient(45deg,rgba(255,255,255,0.04),rgba(255,255,255,0.04) 10px,transparent 10px,transparent 20px), #1C140E; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1); }
+  .map-box span{ font-family:'IBM Plex Mono'; font-size:.8rem; color:rgba(255,255,255,0.4); }
+
+  /* footer */
+  footer{ padding:44px 0; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-row p{ font-size:.8rem; color:var(--dim); }
+  .footer-links{ display:flex; gap:22px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--ink); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:900px){
+    nav, .nav-cta{ display:none; }
+    .nav-toggle{ display:flex; background:none; border:none; cursor:pointer; padding:6px; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-visual{ height:280px; margin-top:20px; }
+    .highlights-row{ grid-template-columns:1fr 1fr; }
+    .highlight-item:nth-child(3){ border-left:none; }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-visual{ order:-1; height:220px; }
+    .menu-panel.active{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:1fr 1fr; }
+    .testi-grid{ grid-template-columns:1fr; }
+    .info-grid{ grid-template-columns:1fr; }
+    section{ padding:64px 0; }
+    .wrap{ padding:0 20px; }
+  }
+  @media (max-width:520px){
+    .highlights-row{ grid-template-columns:1fr; }
+    .highlight-item{ border-left:none !important; border-top:1px solid var(--line); }
+    .highlight-item:first-child{ border-top:none; }
+    .gallery-grid{ grid-template-columns:1fr; }
+    .stats-row{ grid-template-columns:1fr; }
+    .hero h1{ font-size:2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Trattoria Bella n'est pas une vraie entreprise, les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <div class="logo">TRATTORIA <span>BELLA</span></div>
+    <nav>
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#avis">Avis</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-cta" type="button">Réserver une table</button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#menu">Menu</a>
+    <a href="#about">À propos</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <button class="nav-cta" type="button">Réserver une table</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="badge-rating">★★★★★ &nbsp;4.8/5 — 320 avis</span>
+        <div class="eyebrow">Restaurant italien — Depuis 1998</div>
+        <h1>La vraie cuisine italienne, sans détour.</h1>
+        <p class="lead">Pâtes fraîches faites maison, pizzas au four à bois, produits importés directement d'Italie. Une trattoria familiale au cœur de la ville.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#menu">Voir le menu</a>
+          <button class="btn btn-ghost" type="button">Réserver une table</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="circle hv2"></div>
+        <div class="circle hv1"></div>
+        <div class="circle hv3"></div>
+        <div class="hv-label">Est. 1998</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights">
+    <div class="wrap highlights-row">
+      <div class="highlight-item"><span class="hnum">01</span><h4>Four à bois traditionnel</h4></div>
+      <div class="highlight-item"><span class="hnum">02</span><h4>Pâtes fraîches maison</h4></div>
+      <div class="highlight-item"><span class="hnum">03</span><h4>Produits importés d'Italie</h4></div>
+      <div class="highlight-item"><span class="hnum">04</span><h4>Cave à vins italienne</h4></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-visual"></div>
+      <div class="about-text">
+        <div class="eyebrow">Notre histoire</div>
+        <h2 style="margin-bottom:18px;">Une trattoria familiale, depuis 1998</h2>
+        <p>Tout a commencé avec un four à bois ramené de Naples et une recette de famille transmise sur trois générations. Aujourd'hui encore, chaque pizza sort du même four, chaque pâte est roulée à la main en cuisine.</p>
+        <p>On importe nos produits directement de nos fournisseurs en Campanie et dans les Pouilles : farine, tomates San Marzano, huile d'olive, charcuterie. Rien n'est laissé au hasard.</p>
+        <div class="stats-row">
+          <div class="stat"><div class="num">26 ans</div><div class="lbl">d'expérience</div></div>
+          <div class="stat"><div class="num">40+</div><div class="lbl">recettes au menu</div></div>
+          <div class="stat"><div class="num">100%</div><div class="lbl">fait maison</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu-section" id="menu">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag">Notre carte</span>
+        <h2>Ce qu'on sert</h2>
+        <p>Une carte courte, qui change au fil des saisons. Voici une sélection de nos classiques.</p>
+      </div>
+
+      <div class="menu-tabs">
+        <button class="menu-tab active" data-menu="pizzas" type="button">Pizzas</button>
+        <button class="menu-tab" data-menu="pates" type="button">Pâtes</button>
+        <button class="menu-tab" data-menu="antipasti" type="button">Antipasti</button>
+        <button class="menu-tab" data-menu="desserts" type="button">Desserts</button>
+      </div>
+
+      <div class="menu-panel active" data-panel="pizzas">
+        <div class="menu-item"><div><div class="menu-item-name">Margherita</div><div class="menu-item-desc">Tomate San Marzano, mozzarella fior di latte, basilic frais.</div></div><div class="menu-item-price">12€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Diavola</div><div class="menu-item-desc">Tomate, mozzarella, salami piquant, huile pimentée.</div></div><div class="menu-item-price">14€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Quattro Formaggi</div><div class="menu-item-desc">Mozzarella, gorgonzola, parmesan, provolone.</div></div><div class="menu-item-price">15€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Tartufo</div><div class="menu-item-desc">Crème de truffe, champignons, mozzarella, parmesan.</div></div><div class="menu-item-price">18€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Bella Napoli</div><div class="menu-item-desc">Tomate, mozzarella, anchois, câpres, olives noires.</div></div><div class="menu-item-price">13€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Vegetariana</div><div class="menu-item-desc">Légumes grillés de saison, mozzarella, pesto.</div></div><div class="menu-item-price">13€</div></div>
+      </div>
+
+      <div class="menu-panel" data-panel="pates">
+        <div class="menu-item"><div><div class="menu-item-name">Carbonara</div><div class="menu-item-desc">Guanciale, œuf, pecorino romano, poivre noir.</div></div><div class="menu-item-price">14€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Bolognese</div><div class="menu-item-desc">Sauce mijotée 6h, tagliatelles fraîches.</div></div><div class="menu-item-price">13€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Pesto Genovese</div><div class="menu-item-desc">Basilic, pignons de pin, parmesan, huile d'olive.</div></div><div class="menu-item-price">13€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Vongole</div><div class="menu-item-desc">Palourdes, ail, persil, vin blanc, linguine.</div></div><div class="menu-item-price">16€</div></div>
+      </div>
+
+      <div class="menu-panel" data-panel="antipasti">
+        <div class="menu-item"><div><div class="menu-item-name">Bruschetta</div><div class="menu-item-desc">Tomates fraîches, basilic, ail, pain grillé.</div></div><div class="menu-item-price">8€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Burrata</div><div class="menu-item-desc">Burrata crémeuse, tomates confites, huile d'olive.</div></div><div class="menu-item-price">12€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Arancini</div><div class="menu-item-desc">Boulettes de risotto frites, cœur mozzarella.</div></div><div class="menu-item-price">9€</div></div>
+      </div>
+
+      <div class="menu-panel" data-panel="desserts">
+        <div class="menu-item"><div><div class="menu-item-name">Tiramisu</div><div class="menu-item-desc">Recette traditionnelle, mascarpone, café, cacao.</div></div><div class="menu-item-price">7€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Panna Cotta</div><div class="menu-item-desc">Coulis de fruits rouges maison.</div></div><div class="menu-item-price">6€</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Cannoli</div><div class="menu-item-desc">Ricotta fraîche, pistaches, écorces d'agrumes.</div></div><div class="menu-item-price">7€</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="galerie">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag">Ambiance</span>
+        <h2>Un lieu qu'on aime faire vivre</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-tile g1"><span>Le four à bois</span></div>
+        <div class="gallery-tile g2"><span>Salle principale</span></div>
+        <div class="gallery-tile g3"><span>Notre terrasse</span></div>
+        <div class="gallery-tile g4"><span>Pizza Margherita</span></div>
+        <div class="gallery-tile g5"><span>L'équipe en cuisine</span></div>
+        <div class="gallery-tile g6"><span>Cave à vins</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="avis" style="background:var(--bg-alt);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag">Avis clients</span>
+        <h2>Ce qu'on dit de nous</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"La meilleure pizza que j'ai mangée en dehors de l'Italie. Le four à bois change vraiment tout."</p>
+          <div class="testi-name">Claire M.</div>
+          <div class="testi-role">Cliente régulière</div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"Ambiance chaleureuse, service impeccable, et les pâtes fraîches sont incroyables. On y retourne chaque mois."</p>
+          <div class="testi-name">Julien P.</div>
+          <div class="testi-role">Client régulier</div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"On sent que tout est fait maison. La burrata est à tomber. Un vrai coin d'Italie."</p>
+          <div class="testi-name">Sofia R.</div>
+          <div class="testi-role">Cliente régulière</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag">Infos pratiques</span>
+        <h2>Nous trouver</h2>
+      </div>
+      <div class="info-grid">
+        <div>
+          <div class="info-list">
+            <div><span class="lbl">Adresse</span><span class="val">14 rue des Artisans, Luxembourg</span></div>
+            <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+            <div><span class="lbl">Email</span><span class="val">contact@trattoria-bella.lu</span></div>
+          </div>
+          <table class="hours-table">
+            <tr><td>Lundi — Vendredi</td><td>11h30 – 14h30 / 18h30 – 22h30</td></tr>
+            <tr><td>Samedi</td><td>18h30 – 23h00</td></tr>
+            <tr><td>Dimanche</td><td>Fermé</td></tr>
+          </table>
+          <button class="btn btn-primary" type="button">Réserver par téléphone</button>
+        </div>
+        <div class="map-box"><span>Emplacement — carte à intégrer</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 TRATTORIA BELLA — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#menu">Menu</a>
+        <a href="#about">À propos</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--red);">MatMax Intelligence</a> — Trattoria Bella n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.menu-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.menu-tab').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.menu-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelector('.menu-panel[data-panel="' + btn.dataset.menu + '"]').classList.add('active');
+    });
+  });
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+    });
+  }
+</script>
+</body>
+</html>
