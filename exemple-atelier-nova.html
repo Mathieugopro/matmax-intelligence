@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier Nova — Exemple de site (démo MatMax Intelligence)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site portfolio pour un studio d'architecture d'intérieur, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  :root{
+    --bg:#FAFAF8; --bg-alt:#F0EFEA; --ink:#17160F; --muted:#6B6A62; --dim:#B4B1A6; --line:#E3E1D8;
+    --paper:#FFFFFF; --stone:#8A8577; --maxw:1220px;
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink);
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif; font-weight:700; line-height:1.12; letter-spacing:-.01em;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  section{padding:120px 0;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  .reveal-stagger.in > *{transition-delay:calc(var(--i,0) * 90ms);}
+
+  .demo-banner{
+    background:var(--ink); color:#fff; text-align:center; font-size:.82rem;
+    padding:11px 16px; font-family:'Inter',sans-serif;
+  }
+  .demo-banner strong{color:#fff; font-weight:700;}
+  .demo-banner a{color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap;}
+
+  .site-header{
+    position:sticky; top:0; z-index:50; background:rgba(250,250,248,.90);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:14px 32px; gap:24px;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand img{height:34px; width:auto;}
+  .brand span{font-family:'Manrope',sans-serif; font-weight:700; font-size:1.02rem; letter-spacing:-.01em;}
+  nav ul{list-style:none; display:flex; gap:34px;}
+  nav a{font-size:.86rem; font-weight:500; color:var(--ink); position:relative; padding-bottom:3px;}
+  nav a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--ink); transition:width .25s;}
+  nav a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--ink); color:#fff; border:1px solid var(--ink); border-radius:2px;
+    padding:12px 22px; font-family:'Inter',sans-serif; font-weight:600; font-size:.82rem;
+    cursor:pointer; transition:opacity .2s;
+  }
+  .nav-cta:hover{opacity:.78;}
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:4px;}
+  .nav-toggle svg{width:26px; height:26px;}
+  .mobile-menu{
+    display:none; flex-direction:column; gap:2px; background:var(--paper);
+    border-top:1px solid var(--line); padding:10px 32px 22px;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{
+    padding:13px 0; border-bottom:1px solid var(--line); font-weight:500; font-size:.94rem; color:var(--ink);
+  }
+  .mobile-menu .nav-cta{color:#fff; text-align:center; margin-top:14px;}
+
+  .btn{
+    display:inline-flex; align-items:center; gap:9px; padding:15px 28px; border-radius:2px;
+    font-weight:600; font-size:.86rem; cursor:pointer; border:1px solid transparent; transition:all .2s;
+  }
+  .btn-primary{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .btn-primary:hover{opacity:.82;}
+  .btn-ghost-dark{background:transparent; color:#fff; border-color:rgba(255,255,255,.55);}
+  .btn-ghost-dark:hover{background:rgba(255,255,255,.1); border-color:#fff;}
+  .btn-ghost{background:transparent; color:var(--ink); border-color:var(--ink);}
+  .btn-ghost:hover{background:var(--ink); color:#fff;}
+  .link-arrow{display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:.88rem; color:var(--ink);}
+  .link-arrow svg{width:16px; height:16px; transition:transform .2s;}
+  .link-arrow:hover svg{transform:translateX(4px);}
+
+  /* hero: full-bleed photo, overlay text bottom-left */
+  .hero{position:relative; height:86vh; min-height:560px; overflow:hidden; color:#fff;}
+  .hero img{width:100%; height:100%; object-fit:cover;}
+  .hero::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(15,14,10,.72) 0%, rgba(15,14,10,.15) 42%, rgba(15,14,10,0) 65%);
+  }
+  .hero-content{position:absolute; left:0; right:0; bottom:0; z-index:1; padding:0 0 60px;}
+  .hero-content .wrap{max-width:720px;}
+  .eyebrow{
+    font-family:'Inter',sans-serif; font-size:.76rem; letter-spacing:.16em; text-transform:uppercase;
+    color:rgba(255,255,255,.82); display:inline-flex; align-items:center; gap:12px; margin-bottom:22px;
+  }
+  .eyebrow::before{content:''; width:28px; height:1px; background:rgba(255,255,255,.6);}
+  .hero h1{font-size:3rem; margin-bottom:20px; color:#fff;}
+  .hero .lead{font-size:1.06rem; color:rgba(255,255,255,.82); margin-bottom:34px; max-width:520px;}
+
+  /* highlights bar */
+  .stats-section{background:var(--paper); border-bottom:1px solid var(--line);}
+  .stats-row{display:grid; grid-template-columns:repeat(4,1fr); gap:0;}
+  .stat-block{padding:38px 24px; text-align:center; border-right:1px solid var(--line);}
+  .stat-block:last-child{border-right:none;}
+  .stat-block .num{font-family:'Manrope',sans-serif; font-weight:800; font-size:2.5rem; color:var(--ink); display:block;}
+  .stat-block .lbl{font-size:.8rem; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:8px;}
+
+  .section-head{max-width:640px; margin-bottom:60px;}
+  .tag{
+    font-family:'Inter',sans-serif; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--stone); display:flex; align-items:center; gap:10px; margin-bottom:18px; font-weight:600;
+  }
+  .tag::before{content:''; width:26px; height:1px; background:var(--stone);}
+  .section-head h2{font-size:2.2rem; margin-bottom:16px;}
+  .section-head p{color:var(--muted); font-size:1.02rem;}
+  .center .section-head{margin-left:auto; margin-right:auto; text-align:center;}
+  .center .tag{justify-content:center;}
+  .center .tag::before{display:none;}
+
+  /* about */
+  .about{background:var(--bg-alt);}
+  .about-grid{display:grid; grid-template-columns:.95fr 1.05fr; gap:76px; align-items:center;}
+  .about-copy p{color:var(--muted); margin-bottom:18px; font-size:1.02rem;}
+  .about-copy p:last-of-type{margin-bottom:30px;}
+  .about-photo{border:1px solid var(--line); overflow:hidden;}
+  .about-photo img{width:100%; height:auto; display:block;}
+
+  /* approach: horizontal numbered steps */
+  .approach-row{display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid var(--line);}
+  .approach-step{padding:38px 30px 0; border-right:1px solid var(--line);}
+  .approach-step:last-child{border-right:none;}
+  .approach-step .step-num{font-family:'Manrope',sans-serif; font-weight:800; font-size:1.1rem; color:var(--dim); margin-bottom:22px; display:block;}
+  .approach-step h3{font-size:1.1rem; margin-bottom:12px;}
+  .approach-step p{color:var(--muted); font-size:.95rem;}
+
+  /* projects: editorial alternating rows */
+  .project-row{
+    display:grid; grid-template-columns:1.2fr .8fr; gap:64px; align-items:center;
+    padding:56px 0; border-bottom:1px solid var(--line); position:relative;
+  }
+  .project-row:first-of-type{padding-top:0;}
+  .project-row.reverse{grid-template-columns:.8fr 1.2fr;}
+  .project-row.reverse .project-media{order:2;}
+  .project-row.reverse .project-info{order:1;}
+  .project-media{border:1px solid var(--line); overflow:hidden; position:relative;}
+  .project-media img{width:100%; height:auto; display:block; transition:transform .6s ease;}
+  .project-media:hover img{transform:scale(1.035);}
+  .project-info{position:relative;}
+  .project-idx{
+    font-family:'Manrope',sans-serif; font-weight:800; font-size:5.5rem; color:var(--bg-alt);
+    line-height:1; position:absolute; top:-34px; left:-6px; z-index:0; user-select:none;
+  }
+  .project-info .inner{position:relative; z-index:1;}
+  .project-cat{font-size:.76rem; text-transform:uppercase; letter-spacing:.1em; color:var(--stone); font-weight:600; margin-bottom:14px;}
+  .project-info h3{font-size:1.7rem; margin-bottom:14px;}
+  .project-info p{color:var(--muted); font-size:.98rem; margin-bottom:20px;}
+  .project-meta{display:flex; gap:22px; margin-bottom:24px; font-size:.86rem; color:var(--muted);}
+  .project-meta span strong{color:var(--ink); font-weight:600; display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px; color:var(--stone);}
+
+  /* testimonial */
+  .testimonial-section{background:var(--bg-alt); text-align:center;}
+  .testimonial-section blockquote{
+    font-family:'Manrope',sans-serif; font-weight:600; font-size:1.7rem; line-height:1.45; max-width:800px;
+    margin:0 auto 26px; color:var(--ink);
+  }
+  .testimonial-section cite{font-style:normal; color:var(--muted); font-size:.92rem;}
+
+  /* contact: light, centered */
+  .contact-section{text-align:center;}
+  .contact-section .section-head{margin:0 auto 44px;}
+  .contact-details{display:flex; justify-content:center; gap:56px; flex-wrap:wrap; margin-bottom:44px;}
+  .contact-item{text-align:left;}
+  .contact-item .lbl{font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:var(--stone); font-weight:600; margin-bottom:8px;}
+  .contact-item .val{font-size:1.02rem; font-weight:500;}
+
+  footer{border-top:1px solid var(--line); padding:44px 0;}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;}
+  .footer-brand{display:flex; align-items:center; gap:10px;}
+  .footer-brand img{height:26px;}
+  .footer-brand span{font-family:'Manrope',sans-serif; font-weight:700; font-size:.94rem;}
+  .footer-links{display:flex; gap:26px; list-style:none;}
+  .footer-links a{font-size:.86rem; color:var(--muted);}
+  .footer-note{margin-top:26px; font-size:.8rem; color:var(--dim); text-align:center;}
+
+  @media (max-width:900px){
+    section{padding:80px 0;}
+    .hero{height:auto; min-height:0;}
+    .hero img{height:640px;}
+    .hero-content{position:relative; padding:44px 0 0;}
+    .hero::after{background:linear-gradient(0deg, rgba(15,14,10,.55) 0%, rgba(15,14,10,.35) 100%);}
+    .hero h1{font-size:2.1rem;}
+    nav, .nav-cta{display:none;}
+    .nav-toggle{display:block;}
+    .stats-row{grid-template-columns:repeat(2,1fr);}
+    .stat-block{border-bottom:1px solid var(--line);}
+    .about-grid{grid-template-columns:1fr; gap:36px;}
+    .about-photo{order:-1;}
+    .approach-row{grid-template-columns:1fr; border-top:none;}
+    .approach-step{border-right:none; border-top:1px solid var(--line); padding:30px 0 0;}
+    .project-row, .project-row.reverse{grid-template-columns:1fr; gap:28px; padding:40px 0;}
+    .project-row.reverse .project-media{order:1;}
+    .project-row.reverse .project-info{order:2;}
+    .project-idx{font-size:3.6rem; top:-24px;}
+    .contact-details{gap:30px;}
+    .footer-row{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Atelier Nova n'est pas une vraie entreprise, les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a class="brand" href="#top">
+      <img src="nova-logo-mark.png" alt="Atelier Nova">
+      <span>Atelier Nova</span>
+    </a>
+    <nav><ul>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#approche">Approche</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul></nav>
+    <button class="nav-cta" type="button">Démarrer un projet</button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#17160F" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#projets">Projets</a>
+    <a href="#studio">Studio</a>
+    <a href="#approche">Approche</a>
+    <a href="#contact">Contact</a>
+    <button class="nav-cta" type="button">Démarrer un projet</button>
+  </div>
+</header>
+
+<section class="hero reveal in" id="top">
+  <img src="nova-hero.jpg" alt="Séjour contemporain avec vue panoramique, projet Atelier Nova" width="1760" height="800">
+  <div class="hero-content">
+    <div class="wrap">
+      <span class="eyebrow">Architecture d'intérieur — Luxembourg</span>
+      <h1>Des intérieurs pensés pour durer, dessinés pour vous.</h1>
+      <p class="lead">Atelier Nova conçoit des espaces résidentiels et tertiaires sur-mesure, de l'esquisse à la dernière finition.</p>
+      <a href="#projets" class="btn btn-primary">Voir nos projets</a>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="wrap stats-row">
+    <div class="stat-block"><span class="num">12</span><span class="lbl">Ans d'expérience</span></div>
+    <div class="stat-block"><span class="num">90+</span><span class="lbl">Projets livrés</span></div>
+    <div class="stat-block"><span class="num">3</span><span class="lbl">Pays couverts</span></div>
+    <div class="stat-block"><span class="num">100%</span><span class="lbl">Sur-mesure</span></div>
+  </div>
+</section>
+
+<section class="about" id="studio">
+  <div class="wrap about-grid">
+    <div class="about-copy reveal">
+      <span class="tag">Le studio</span>
+      <h2>Une approche architecturale, avant d'être décorative.</h2>
+      <p>Fondé à Luxembourg, Atelier Nova réunit architectes d'intérieur et designers autour d'une conviction simple : un bel espace naît d'abord d'une structure juste — lumière, circulation, matière — avant tout choix esthétique.</p>
+      <p>Nous accompagnons particuliers, promoteurs et entreprises sur l'ensemble du processus : diagnostic, conception, sélection des matériaux, suivi de chantier et installation finale.</p>
+      <a href="#projets" class="link-arrow">Découvrir nos réalisations
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="about-photo reveal">
+      <img src="nova-about.jpg" alt="Salon contemporain avec canapé courbe, projet Atelier Nova" width="800" height="1000" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="approche">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Méthode</span>
+      <h2>Notre approche, en quatre temps.</h2>
+    </div>
+    <div class="approach-row reveal-stagger reveal">
+      <div class="approach-step" style="--i:0"><span class="step-num">01</span><h3>Écoute &amp; diagnostic</h3><p>Analyse du lieu, des usages et de vos attentes pour poser les bases du projet.</p></div>
+      <div class="approach-step" style="--i:1"><span class="step-num">02</span><h3>Conception</h3><p>Plans, volumes, palette de matières — une direction claire avant tout choix de détail.</p></div>
+      <div class="approach-step" style="--i:2"><span class="step-num">03</span><h3>Sélection &amp; chantier</h3><p>Coordination des artisans et suivi rigoureux jusqu'à la dernière finition.</p></div>
+      <div class="approach-step" style="--i:3"><span class="step-num">04</span><h3>Livraison</h3><p>Un espace livré prêt à vivre, fidèle au projet dessiné dès la première esquisse.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="projets" style="background:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Portfolio</span>
+      <h2>Une sélection de projets récents.</h2>
+      <p>Cinq réalisations représentatives de notre travail — du rendu résidentiel à l'installation architecturale.</p>
+    </div>
+
+    <div class="project-row reveal">
+      <div class="project-media"><img src="nova-p3.jpg" alt="Loft scandinave, projet Kirchberg" width="1400" height="875" loading="lazy"></div>
+      <div class="project-info">
+        <span class="project-idx">01</span>
+        <div class="inner">
+          <div class="project-cat">Rénovation résidentielle</div>
+          <h3>Loft Kirchberg</h3>
+          <p>Réorganisation complète d'un loft ouvert autour d'une cuisine centrale et d'un parquet chêne massif.</p>
+          <div class="project-meta">
+            <span><strong>Lieu</strong>Kirchberg, Luxembourg</span>
+            <span><strong>Année</strong>2025</span>
+          </div>
+          <a href="#" class="link-arrow">Voir le projet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-row reverse reveal">
+      <div class="project-media"><img src="nova-p2.jpg" alt="Étude photographique d'un escalier en béton, noir et blanc" width="800" height="1000" loading="lazy"></div>
+      <div class="project-info">
+        <span class="project-idx">02</span>
+        <div class="inner">
+          <div class="project-cat">Installation architecturale</div>
+          <h3>Étude Verticale</h3>
+          <p>Une exploration de la lumière et de la matière brute au sein d'une cage d'escalier, pensée comme une sculpture habitable.</p>
+          <div class="project-meta">
+            <span><strong>Lieu</strong>Belval, Luxembourg</span>
+            <span><strong>Année</strong>2024</span>
+          </div>
+          <a href="#" class="link-arrow">Voir le projet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-row reveal">
+      <div class="project-media"><img src="nova-p1.jpg" alt="Cuisine en marbre blanc, projet Strassen" width="1400" height="875" loading="lazy"></div>
+      <div class="project-info">
+        <span class="project-idx">03</span>
+        <div class="inner">
+          <div class="project-cat">Cuisine sur-mesure</div>
+          <h3>Cuisine Marbre</h3>
+          <p>Îlot central en marbre blanc et menuiseries laquées, conçus pour une famille recevant régulièrement.</p>
+          <div class="project-meta">
+            <span><strong>Lieu</strong>Strassen, Luxembourg</span>
+            <span><strong>Année</strong>2024</span>
+          </div>
+          <a href="#" class="link-arrow">Voir le projet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-row reverse reveal">
+      <div class="project-media"><img src="nova-p4.jpg" alt="Étude de matières, pierre grise, bois et laiton" width="1400" height="875" loading="lazy"></div>
+      <div class="project-info">
+        <span class="project-idx">04</span>
+        <div class="inner">
+          <div class="project-cat">Direction artistique matières</div>
+          <h3>Matières Brutes</h3>
+          <p>Palette de finitions développée pour un client promoteur — pierre, bois brut et laiton brossé.</p>
+          <div class="project-meta">
+            <span><strong>Lieu</strong>Atelier Nova</span>
+            <span><strong>Année</strong>2023</span>
+          </div>
+          <a href="#" class="link-arrow">Voir le projet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-row reveal" style="border-bottom:none;">
+      <div class="project-media"><img src="nova-p5.jpg" alt="Séjour baigné de lumière avec grande verrière" width="1400" height="875" loading="lazy"></div>
+      <div class="project-info">
+        <span class="project-idx">05</span>
+        <div class="inner">
+          <div class="project-cat">Extension &amp; verrière</div>
+          <h3>Séjour Lumière</h3>
+          <p>Extension vitrée pensée pour prolonger un séjour existant vers le jardin, sans rupture de matière.</p>
+          <div class="project-meta">
+            <span><strong>Lieu</strong>Mamer, Luxembourg</span>
+            <span><strong>Année</strong>2023</span>
+          </div>
+          <a href="#" class="link-arrow">Voir le projet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial-section reveal">
+  <div class="wrap">
+    <blockquote>« Atelier Nova a transformé un appartement banal en un espace qui nous ressemble vraiment — sans jamais nous imposer une esthétique toute faite. »</blockquote>
+    <cite>— Client particulier, projet Kirchberg</cite>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Contact</span>
+      <h2>Discutons de votre projet.</h2>
+      <p>Un premier échange sans engagement pour évaluer la faisabilité et l'ampleur de votre projet.</p>
+    </div>
+    <div class="contact-details reveal">
+      <div class="contact-item"><div class="lbl">Email</div><div class="val">bonjour@atelier-nova.lu</div></div>
+      <div class="contact-item"><div class="lbl">Téléphone</div><div class="val">+352 26 00 00 00</div></div>
+      <div class="contact-item"><div class="lbl">Atelier</div><div class="val">14 rue de l'Architecte, Luxembourg</div></div>
+    </div>
+    <button class="btn btn-primary" type="button">Démarrer un projet</button>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <a class="footer-brand" href="#top">
+        <img src="nova-logo-mark.png" alt="Atelier Nova">
+        <span>Atelier Nova</span>
+      </a>
+      <ul class="footer-links">
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#studio">Studio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/">MatMax Intelligence</a> — Atelier Nova n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+    });
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>
