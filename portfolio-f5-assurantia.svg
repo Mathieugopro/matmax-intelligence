@@ -1,0 +1,20 @@
+<svg viewBox="0 0 1200 750" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="1200" height="750" fill="#e4e9e7"/>
+  <rect x="20" y="20" width="1160" height="710" rx="16" fill="#eef2f0" stroke="rgba(0,0,0,0.06)"/>
+  <rect x="20" y="20" width="1160" height="64" rx="16" fill="#eef2f0"/>
+  <rect x="20" y="68" width="1160" height="16" fill="#eef2f0"/>
+  <circle cx="41" cy="42" r="6" fill="#7fa89a"/><circle cx="58" cy="42" r="6" fill="#7fa89a"/><circle cx="75" cy="42" r="6" fill="#7fa89a"/>
+  <text x="100" y="47" font-family="ui-monospace,Menlo,monospace" font-size="14" fill="rgba(0,0,0,0.45)">assurantia.lu</text>
+  <line x1="20" y1="84" x2="1180" y2="84" stroke="rgba(0,0,0,0.08)"/>
+  <text x="64" y="113" font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="1" fill="#1c332c">ASSURANTIA</text>
+  <text x="693" y="112" font-family="Inter,Arial,sans-serif" font-size="15" fill="#5c7a70">Assurances</text><text x="809" y="112" font-family="Inter,Arial,sans-serif" font-size="15" fill="#5c7a70">Sinistres</text><text x="917" y="112" font-family="Inter,Arial,sans-serif" font-size="15" fill="#5c7a70">Contact</text>
+  <rect x="1014" y="89" width="122" height="40" rx="8" fill="#2f6e5c"/>
+  <text x="1075.0" y="114" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="600" fill="#ffffff">Être rappelé</text>
+  <text x="64" y="193" font-family="ui-monospace,Menlo,monospace" font-size="13" font-weight="600" letter-spacing="2" fill="#2f6e5c">COURTAGE — ASSURANCES</text><text x="64" y="240" font-family="Inter,Arial,sans-serif" font-size="42" font-weight="700" fill="#1c332c">Protéger ce qui compte,</text><text x="64" y="294" font-family="Inter,Arial,sans-serif" font-size="42" font-weight="700" fill="#1c332c">sans jargon</text><text x="64" y="378" font-family="Inter,Arial,sans-serif" font-size="16" fill="#5c7a70">Comparatif indépendant et un interlocuteur unique</text><text x="64" y="402" font-family="Inter,Arial,sans-serif" font-size="16" fill="#5c7a70">pour tous vos contrats.</text><rect x="64" y="456" width="192" height="46" rx="8" fill="#2f6e5c"/>
+  <text x="160.0" y="485" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" font-weight="600" fill="#ffffff">Comparer une offre</text>
+  <rect x="272" y="456" width="147" height="46" rx="8" fill="none" stroke="#2f6e5c"/>
+  <text x="345.5" y="485" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" font-weight="600" fill="#1c332c">Nos garanties</text>
+  <rect x="900" y="210" width="150" height="190" rx="18" fill="#2f6e5c" opacity="0.18"/>
+  <path d="M975 230 L1050 255 V320 Q1050 370 975 400 Q900 370 900 320 V255 Z" fill="#2f6e5c" opacity="0.55"/>
+  <circle cx="975" cy="300" r="24" fill="#eef2f0"/>
+</svg>
