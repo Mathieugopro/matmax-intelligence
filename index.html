@@ -154,6 +154,19 @@
   .service-list li{ font-size: .86rem; color: var(--muted); padding-left: 16px; position:relative; }
   .service-list li::before{ content:'—'; position:absolute; left:0; color: var(--accent); }
 
+  /* portfolio / concepts */
+  .portfolio-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .portfolio-card{ border:1px solid var(--line); border-radius: var(--radius); overflow:hidden; background:#fff; transition: box-shadow .25s, transform .25s; }
+  .portfolio-card:hover{ transform: translateY(-3px); box-shadow: 0 18px 32px -20px rgba(10,10,11,0.14); }
+  .portfolio-thumb{ width:100%; height:230px; object-fit:cover; display:block; border-bottom:1px solid var(--line); }
+  .portfolio-body{ padding: 22px 24px; }
+  .portfolio-meta{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .portfolio-meta .industry{ font-family:'IBM Plex Mono'; font-size:.72rem; color: var(--dim); text-transform:uppercase; letter-spacing:.05em; }
+  .portfolio-tag{ font-size:.7rem; color: var(--accent-ink); background: var(--accent-soft); padding: 3px 10px; border-radius: 20px; }
+  .portfolio-card h3{ font-size: 1.05rem; margin-bottom: 6px; }
+  .portfolio-card p{ color: var(--muted); font-size: .88rem; }
+  .portfolio-note{ margin-top: 28px; font-size:.86rem; color: var(--dim); }
+
   /* pricing */
   .pricing-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .plan{ border: 1px solid var(--line); border-radius: var(--radius); padding: 34px 28px; display:flex; flex-direction:column; transition: box-shadow .25s, transform .25s; }
@@ -208,7 +221,7 @@
 
   @media (max-width: 860px){
     nav ul, .nav-cta{ display:none; }
-    .services-grid, .pricing-grid{ grid-template-columns: 1fr; }
+    .services-grid, .pricing-grid, .portfolio-grid{ grid-template-columns: 1fr; }
     .contact-grid{ grid-template-columns: 1fr; }
     .contact-section{ padding: 40px 24px; }
     .approach-item{ grid-template-columns: 1fr; gap: 8px; }
@@ -302,6 +315,7 @@
       <ul>
         <li><a href='/'>Accueil</a></li>
         <li><a href="#services">Services</a></li>
+        <li><a href="#realisations">Réalisations</a></li>
         <li><a href="#formules">Formules</a></li>
         <li><a href="#approche">Approche</a></li>
         <li><a href='/a-propos'>À propos</a></li>
@@ -310,7 +324,7 @@
     </nav>
     <a class='nav-cta' href='/contact'>Discutons de votre projet</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
-  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="#services">Services</a><a href="#formules">Formules</a><a href="#approche">Approche</a><a href="/a-propos">À propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
+  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="#services">Services</a><a href="#realisations">Réalisations</a><a href="#formules">Formules</a><a href="#approche">Approche</a><a href="/a-propos">À propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
 </header>
 
 <main>
@@ -382,6 +396,44 @@
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+
+  <section id="realisations">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Exemples</span>
+        <h2>Le type de sites qu'on conçoit</h2>
+        <p>Trois concepts imaginés pour illustrer notre approche selon le secteur d'activité. Nos premières réalisations clients viendront enrichir cette page.</p>
+      </div>
+      <div class="portfolio-grid reveal-stagger reveal">
+        <div class="portfolio-card">
+          <img class="portfolio-thumb" src="portfolio-1.png" alt="Concept de site pour un restaurant — Le Comptoir" loading="lazy" width="1200" height="750">
+          <div class="portfolio-body">
+            <div class="portfolio-meta"><span class="industry">Restaurant</span><span class="portfolio-tag">Concept</span></div>
+            <h3>Le Comptoir</h3>
+            <p>Vitrine + réservation en ligne pour un restaurant de centre-ville.</p>
+          </div>
+        </div>
+        <div class="portfolio-card">
+          <img class="portfolio-thumb" src="portfolio-2.png" alt="Concept de site pour un cabinet d'avocats — Legalis & Associés" loading="lazy" width="1200" height="750">
+          <div class="portfolio-body">
+            <div class="portfolio-meta"><span class="industry">Cabinet d'avocats</span><span class="portfolio-tag">Concept</span></div>
+            <h3>Legalis &amp; Associés</h3>
+            <p>Site institutionnel sobre pour un cabinet d'avocats d'affaires.</p>
+          </div>
+        </div>
+        <div class="portfolio-card">
+          <img class="portfolio-thumb" src="portfolio-3.png" alt="Concept de site pour un studio d'architecture — Atelier Nova" loading="lazy" width="1200" height="750">
+          <div class="portfolio-body">
+            <div class="portfolio-meta"><span class="industry">Architecture d'intérieur</span><span class="portfolio-tag">Concept</span></div>
+            <h3>Atelier Nova</h3>
+            <p>Site portfolio visuel pour un studio d'architecture d'intérieur.</p>
+          </div>
+        </div>
+      </div>
+      <p class="portfolio-note">Envie d'un rendu similaire pour votre activité ? <a href="/contact" style="color:var(--accent);">Discutons-en</a>.</p>
     </div>
   </section>
 
@@ -524,6 +576,7 @@
     <p>© 2026 MATMAX INTELLIGENCE — LUXEMBOURG</p>
     <div class="footer-links">
       <a href="#services">Services</a>
+      <a href="#realisations">Réalisations</a>
       <a href="#formules">Formules</a>
       <a href="#approche">Approche</a>
       <a href='/a-propos'>À propos</a>
