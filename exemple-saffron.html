@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Saffron — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#FBF3E4; --bg-alt:#F5E6C8; --ink:#2E1B12; --muted:#8C7256; --dim:#C4AF95; --line:#EADBC0;
+    --saffron:#C9793A; --saffron-dark:#A85E27; --maroon:#7C2340; --maroon-dark:#5C1930; --green:#4E7A51; --cream:#FFFBF3;
+    --radius:8px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased;
+    background-image: radial-gradient(circle, rgba(124,35,64,0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  h1,h2,h3{ font-family:'Cormorant Garamond',serif; font-weight:600; line-height:1.14; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; position:relative; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:104px 0; position:relative; overflow:hidden; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .08s); }
+
+  .demo-banner{ background:var(--ink); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; position:relative; z-index:100; }
+  .demo-banner strong{ color:#F0C265; }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  header.site-header{ position:sticky; top:0; z-index:50; background:rgba(251,243,228,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:82px; }
+  .logo{ font-family:'Cormorant Garamond'; font-weight:700; font-size:1.5rem; letter-spacing:.3px; display:flex; align-items:center; gap:8px; }
+  .logo span{ color:var(--maroon); font-style:italic; }
+  nav ul{ display:flex; gap:34px; }
+  nav a{ font-size:.9rem; color:var(--muted); transition:color .2s; }
+  nav a:hover{ color:var(--ink); }
+  .nav-cta{ padding:11px 22px; background:var(--maroon); color:#fff; border-radius:var(--radius); font-size:.86rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:background .2s, transform .2s; }
+  .nav-cta:hover{ background:var(--maroon-dark); transform:translateY(-1px); }
+  .nav-toggle{ display:none; }
+
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-size:.95rem; color:var(--ink); }
+  .mobile-menu .nav-cta{ display:block; margin:16px 32px; text-align:center; color:#fff; width:calc(100% - 64px); }
+
+  .deco-leaf{ position:absolute; opacity:0.5; pointer-events:none; z-index:0; }
+
+  .hero{ padding:70px 0 76px; }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center; }
+  .badge-rating{ display:inline-flex; align-items:center; gap:8px; background:var(--cream); border:1px solid var(--line); padding:8px 14px; border-radius:30px; font-size:.8rem; margin-bottom:24px; }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--maroon); letter-spacing:.06em; margin-bottom:18px; text-transform:uppercase; }
+  .hero h1{ font-size:clamp(2.6rem,4.6vw,3.9rem); margin-bottom:22px; max-width:15ch; }
+  .hero h1 em{ color:var(--maroon); font-style:italic; }
+  .hero p.lead{ font-size:1.08rem; color:var(--muted); max-width:46ch; margin-bottom:34px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:15px 28px; border-radius:var(--radius); font-size:.92rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--maroon); color:#fff; }
+  .btn-primary:hover{ background:var(--maroon-dark); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink); transform:translateY(-2px); }
+  .hero-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+  .hero-visual .plate-wrap{ position:relative; width:100%; max-width:480px; }
+  .photo-frame{ position:relative; width:100%; border-radius:14px; overflow:hidden; box-shadow:0 30px 60px -30px rgba(43,25,15,0.45); border:1px solid rgba(255,255,255,0.4); }
+  .photo-frame img{ width:100%; aspect-ratio:3/2; object-fit:cover; display:block; }
+  .deco-ring{ position:absolute; top:-22px; right:-22px; width:78px; height:78px; border-radius:50%; border:2px dashed var(--saffron); opacity:0.55; z-index:2; }
+  @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
+  .price-tag-float{ position:absolute; bottom:-16px; left:-18px; background:var(--ink); color:#fff; padding:10px 16px; border-radius:30px; font-family:'IBM Plex Mono'; font-size:.78rem; box-shadow:0 10px 24px -8px rgba(0,0,0,0.3); z-index:3; }
+  .about-photo-frame{ position:relative; width:100%; max-width:420px; border-radius:14px; overflow:hidden; box-shadow:0 24px 50px -28px rgba(43,25,15,0.4); }
+  .about-photo-frame img{ width:100%; aspect-ratio:3/2; object-fit:cover; display:block; }
+  .gallery-tile{ background-size:cover; background-position:center; }
+  .gallery-tile.g1{ background-image:linear-gradient(180deg,rgba(20,10,5,0.05),rgba(10,6,3,0.55)), url('saffron-g1.jpg'); }
+  .gallery-tile.g2{ background-image:linear-gradient(180deg,rgba(20,10,5,0.05),rgba(10,6,3,0.55)), url('saffron-g2.jpg'); }
+  .gallery-tile.g3{ background-image:linear-gradient(180deg,rgba(20,10,5,0.05),rgba(10,6,3,0.55)), url('saffron-g3.jpg'); }
+  .gallery-tile.g4{ background-image:linear-gradient(180deg,rgba(20,10,5,0.05),rgba(10,6,3,0.55)), url('saffron-g4.jpg'); }
+  .gallery-tile.g5{ background-image:linear-gradient(180deg,rgba(20,10,5,0.05),rgba(10,6,3,0.55)), url('saffron-g5.jpg'); }
+  .gallery-tile.g6{ background-image:linear-gradient(180deg,rgba(20,10,5,0.05),rgba(10,6,3,0.55)), url('saffron-g6.jpg'); }
+
+  .highlights{ padding:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--cream); }
+  .highlights-row{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .highlight-item{ padding:30px 28px; border-left:1px solid var(--line); display:flex; flex-direction:column; gap:6px; }
+  .highlight-item:first-child{ border-left:none; }
+  .highlight-item .hnum{ font-family:'IBM Plex Mono'; color:var(--maroon); font-size:.78rem; }
+  .highlight-item h4{ font-family:'Cormorant Garamond'; font-size:1.15rem; font-weight:600; }
+
+  .section-head{ max-width:640px; margin-bottom:52px; position:relative; z-index:1; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--maroon); text-transform:uppercase; letter-spacing:.06em; display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(2rem,3.4vw,2.8rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1.02rem; }
+
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; position:relative; z-index:1; }
+  .about-text p{ color:var(--muted); margin-bottom:16px; font-size:1rem; }
+  .stats-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:8px; }
+  .stat{ background:var(--cream); padding:26px 20px; text-align:center; }
+  .stat .num{ font-family:'Cormorant Garamond'; font-size:2.1rem; font-weight:700; color:var(--maroon); }
+  .stat .lbl{ font-size:.8rem; color:var(--muted); margin-top:6px; }
+  .about-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+
+  .menu-section{ background:var(--bg-alt); }
+  .menu-tabs{ display:flex; gap:8px; margin-bottom:44px; flex-wrap:wrap; position:relative; z-index:1; }
+  .menu-tab{ display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:30px; border:1px solid var(--line); font-size:.88rem; color:var(--muted); background:var(--cream); cursor:pointer; transition:all .2s; font-family:'Inter'; }
+  .menu-tab:hover{ border-color:var(--ink); color:var(--ink); }
+  .menu-tab.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .menu-panel{ display:none; position:relative; z-index:1; }
+  .menu-panel.active{ display:grid; grid-template-columns:1fr 1fr; gap:0 56px; }
+  .menu-item{ display:flex; align-items:baseline; gap:10px; padding:20px 0; border-bottom:1px dashed var(--line); }
+  .menu-item-main{ flex:1; }
+  .menu-item-name{ font-family:'Cormorant Garamond'; font-weight:700; font-size:1.15rem; margin-bottom:4px; display:inline; }
+  .menu-item-leader{ flex:1; border-bottom:2px dotted var(--dim); margin:0 8px 5px; min-width:20px; }
+  .menu-item-desc{ font-size:.85rem; color:var(--muted); max-width:32ch; display:block; margin-top:3px; }
+  .menu-item-price{ font-family:'IBM Plex Mono'; font-weight:500; color:var(--maroon); white-space:nowrap; }
+  .menu-item-row{ display:flex; align-items:baseline; width:100%; }
+
+  .gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; position:relative; z-index:1; }
+  .gallery-tile{ position:relative; border-radius:var(--radius); overflow:hidden; height:230px; display:flex; align-items:flex-end; padding:18px; }
+  .gallery-tile .g-icon{ position:absolute; top:16px; right:16px; width:34px; height:34px; opacity:0.9; }
+  .gallery-tile span{ color:#fff; font-family:'Cormorant Garamond'; font-weight:600; font-size:1.05rem; position:relative; z-index:2; }
+  .gallery-tile::before{ content:''; position:absolute; inset:0; background:rgba(0,0,0,0.2); z-index:1; }
+
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; position:relative; z-index:1; }
+  .testi-card{ background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:30px; position:relative; }
+  .testi-quote-mark{ font-family:'Cormorant Garamond'; font-size:3rem; color:var(--saffron); opacity:0.4; line-height:1; margin-bottom:-14px; }
+  .stars{ color:var(--saffron); font-size:.9rem; margin-bottom:14px; letter-spacing:2px; }
+  .testi-card p{ color:var(--ink); font-size:.94rem; margin-bottom:18px; font-style:italic; }
+  .testi-name{ font-family:'Cormorant Garamond'; font-weight:700; font-size:1rem; }
+  .testi-role{ font-size:.78rem; color:var(--muted); }
+
+  .info-section{ background:var(--ink); color:#fff; }
+  .info-section .section-head p{ color:rgba(255,255,255,0.6); }
+  .info-section .section-head .tag{ color:#F0C265; }
+  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; position:relative; z-index:1; }
+  .info-list{ display:flex; flex-direction:column; gap:22px; margin-bottom:30px; }
+  .info-list .lbl{ font-family:'IBM Plex Mono'; font-size:.72rem; color:#F0C265; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:6px; }
+  .info-list .val{ font-size:1rem; }
+  .hours-table{ width:100%; border-collapse:collapse; margin-bottom:28px; }
+  .hours-table td{ padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:.9rem; }
+  .hours-table td:last-child{ text-align:right; color:rgba(255,255,255,0.65); }
+  .map-box{ height:100%; min-height:320px; border-radius:var(--radius); background:repeating-linear-gradient(45deg,rgba(255,255,255,0.04),rgba(255,255,255,0.04) 10px,transparent 10px,transparent 20px), #1E1610; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1); }
+  .map-box span{ font-family:'IBM Plex Mono'; font-size:.8rem; color:rgba(255,255,255,0.4); }
+
+  footer{ padding:44px 0; border-top:1px solid var(--line); position:relative; z-index:1; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-row p{ font-size:.8rem; color:var(--dim); }
+  .footer-links{ display:flex; gap:22px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--ink); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:900px){
+    nav, .nav-cta{ display:none; }
+    .nav-toggle{ display:flex; background:none; border:none; cursor:pointer; padding:6px; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-visual{ margin-top:10px; }
+    .hero-visual .plate-wrap{ max-width:280px; }
+    .highlights-row{ grid-template-columns:1fr 1fr; }
+    .highlight-item:nth-child(3){ border-left:none; }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-visual{ order:-1; }
+    .about-visual svg{ max-width:220px; margin:0 auto; }
+    .menu-panel.active{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:1fr 1fr; }
+    .testi-grid{ grid-template-columns:1fr; }
+    .info-grid{ grid-template-columns:1fr; }
+    section{ padding:68px 0; }
+    .wrap{ padding:0 20px; }
+    .deco-leaf{ display:none; }
+  }
+  @media (max-width:520px){
+    .highlights-row{ grid-template-columns:1fr; }
+    .highlight-item{ border-left:none !important; border-top:1px solid var(--line); }
+    .highlight-item:first-child{ border-top:none; }
+    .gallery-grid{ grid-template-columns:1fr; }
+    .stats-row{ grid-template-columns:1fr; }
+    .hero h1{ font-size:2.2rem; }
+  }
+
+  /* Assistant IA — Saffron Concierge */
+  .concierge-launcher{ position:fixed; bottom:26px; right:26px; z-index:200; display:flex; align-items:center; gap:10px; background:var(--maroon); color:#fff; border:none; padding:15px 20px 15px 16px; border-radius:40px; box-shadow:0 14px 30px -10px rgba(43,25,15,0.5); cursor:pointer; font-family:'Inter'; font-size:.88rem; font-weight:600; transition:transform .2s, background .2s; }
+  .concierge-launcher:hover{ background:var(--maroon-dark); transform:translateY(-2px); }
+  .concierge-launcher .cl-dot{ width:9px; height:9px; border-radius:50%; background:#6FCF97; box-shadow:0 0 0 3px rgba(111,207,151,0.35); flex-shrink:0; }
+  .concierge-launcher svg{ width:20px; height:20px; flex-shrink:0; }
+  .concierge-launcher.hidden{ display:none; }
+
+  .concierge-panel{ position:fixed; bottom:26px; right:26px; z-index:201; width:368px; max-width:calc(100vw - 32px); height:520px; max-height:calc(100vh - 52px); background:var(--cream); border-radius:16px; box-shadow:0 30px 70px -20px rgba(20,10,5,0.45); border:1px solid var(--line); display:none; flex-direction:column; overflow:hidden; }
+  .concierge-panel.open{ display:flex; }
+  .concierge-head{ background:var(--ink); color:#fff; padding:16px 18px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
+  .concierge-avatar{ width:38px; height:38px; border-radius:50%; background:var(--maroon); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+  .concierge-head-text{ flex:1; min-width:0; }
+  .concierge-head-text strong{ display:block; font-family:'Cormorant Garamond'; font-size:1.15rem; font-weight:700; }
+  .concierge-head-text span{ display:block; font-size:.72rem; color:rgba(255,255,255,0.6); }
+  .concierge-close{ background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer; padding:4px; flex-shrink:0; }
+  .concierge-close:hover{ color:#fff; }
+  .concierge-body{ flex:1; overflow-y:auto; padding:16px 16px 8px; display:flex; flex-direction:column; gap:10px; }
+  .cbubble{ max-width:84%; padding:10px 14px; border-radius:14px; font-size:.86rem; line-height:1.45; }
+  .cbubble.bot{ background:#fff; border:1px solid var(--line); align-self:flex-start; border-bottom-left-radius:4px; }
+  .cbubble.user{ background:var(--maroon); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .cbubble.typing{ display:flex; gap:4px; align-items:center; padding:12px 16px; }
+  .cbubble.typing span{ width:6px; height:6px; border-radius:50%; background:var(--dim); animation:blink 1.2s infinite; }
+  .cbubble.typing span:nth-child(2){ animation-delay:.2s; }
+  .cbubble.typing span:nth-child(3){ animation-delay:.4s; }
+  @keyframes blink{ 0%,80%,100%{ opacity:.3; } 40%{ opacity:1; } }
+  .concierge-chips{ display:flex; flex-wrap:wrap; gap:6px; padding:0 16px 12px; flex-shrink:0; }
+  .cchip{ font-family:'Inter'; font-size:.76rem; padding:7px 12px; border-radius:20px; border:1px solid var(--line); background:#fff; color:var(--muted); cursor:pointer; transition:all .15s; }
+  .cchip:hover{ border-color:var(--maroon); color:var(--maroon); }
+  .concierge-input-row{ display:flex; gap:8px; padding:12px 14px; border-top:1px solid var(--line); background:#fff; flex-shrink:0; }
+  .concierge-input-row input{ flex:1; border:1px solid var(--line); border-radius:20px; padding:9px 16px; font-family:'Inter'; font-size:.86rem; outline:none; background:var(--bg); }
+  .concierge-input-row input:focus{ border-color:var(--maroon); }
+  .concierge-send{ width:38px; height:38px; border-radius:50%; background:var(--maroon); border:none; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .15s; }
+  .concierge-send:hover{ background:var(--maroon-dark); }
+  .concierge-foot-note{ text-align:center; font-size:.66rem; color:var(--dim); padding:0 12px 10px; }
+  @media (max-width:480px){
+    .concierge-panel{ right:16px; bottom:16px; width:calc(100vw - 32px); height:calc(100vh - 96px); }
+    .concierge-launcher{ right:16px; bottom:16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Saffron n'est pas une vraie entreprise, les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <div class="logo">Saf<span>fron</span></div>
+    <nav>
+      <ul>
+        <li><a href="#carte">Carte</a></li>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#avis">Avis</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-cta" type="button">Réserver une table</button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#carte">Carte</a>
+    <a href="#about">À propos</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <button class="nav-cta" type="button">Réserver une table</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal in">
+        <span class="badge-rating">★★★★★ &nbsp;4.7/5 — 210 avis</span>
+        <div class="eyebrow">Cuisine indienne — Depuis 2011</div>
+        <h1>Les <em>épices</em>, racontées autrement.</h1>
+        <p class="lead">Currys mijotés maison, pains tandoor et épices moulues sur place. Une cuisine indienne traditionnelle revisitée, au cœur de la ville.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#carte">Voir la carte</a>
+          <button class="btn btn-ghost" type="button">Réserver une table</button>
+        </div>
+      </div>
+      <div class="hero-visual reveal in">
+        <div class="plate-wrap">
+          <div class="deco-ring"></div>
+          <div class="photo-frame">
+            <img src="saffron-hero.jpg" alt="Assortiment de currys, dal, riz basmati et naan tandoor chez Saffron" width="1400" height="934" loading="eager">
+          </div>
+          <div class="price-tag-float">🌶️ Currys mijotés 6h</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights">
+    <div class="wrap highlights-row">
+      <div class="highlight-item"><span class="hnum">01</span><h4>Épices moulues chaque jour</h4></div>
+      <div class="highlight-item"><span class="hnum">02</span><h4>Currys mijotés maison</h4></div>
+      <div class="highlight-item"><span class="hnum">03</span><h4>Pain naan au four tandoor</h4></div>
+      <div class="highlight-item"><span class="hnum">04</span><h4>Options végé &amp; sans gluten</h4></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-visual reveal">
+        <div class="about-photo-frame">
+          <img src="saffron-about.jpg" alt="Le chef de Saffron dressant un plat en cuisine" width="1000" height="667" loading="lazy">
+        </div>
+      </div>
+      <div class="about-text reveal">
+        <div class="eyebrow">Notre histoire</div>
+        <h2 style="margin-bottom:18px;">Une cuisine transmise en famille</h2>
+        <p>Tout est parti des carnets de recettes de la grand-mère du chef, rapportés du Penjab et du Kerala. Chaque curry mijote plusieurs heures, chaque mélange d'épices est composé à la main en cuisine.</p>
+        <p>On importe nos épices entières directement auprès de petits producteurs, et on les moud chaque matin pour préserver tous leurs arômes. Rien n'est laissé au hasard.</p>
+        <div class="stats-row">
+          <div class="stat"><div class="num">15 ans</div><div class="lbl">d'expérience</div></div>
+          <div class="stat"><div class="num">25+</div><div class="lbl">épices maison</div></div>
+          <div class="stat"><div class="num">100%</div><div class="lbl">fait maison</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu-section" id="carte">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Notre carte</span>
+        <h2>Ce qu'on sert</h2>
+        <p>Une carte courte, qui change au fil des saisons. Voici une sélection de nos classiques.</p>
+      </div>
+
+      <div class="menu-tabs reveal">
+        <button class="menu-tab active" data-menu="entrees" type="button">Entrées</button>
+        <button class="menu-tab" data-menu="curries" type="button">Currys</button>
+        <button class="menu-tab" data-menu="tandoor" type="button">Tandoor &amp; riz</button>
+        <button class="menu-tab" data-menu="desserts" type="button">Desserts</button>
+      </div>
+
+      <div class="menu-panel active reveal" data-panel="entrees">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Samosas aux légumes</span><span class="menu-item-leader"></span><span class="menu-item-price">7€</span></span><span class="menu-item-desc">Pommes de terre épicées, petits pois, pâte croustillante.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Pakoras d'oignons</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></span><span class="menu-item-desc">Beignets de pois chiche, chutney à la coriandre.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Soupe Mulligatawny</span><span class="menu-item-leader"></span><span class="menu-item-price">8€</span></span><span class="menu-item-desc">Lentilles, curry doux, pomme, lait de coco.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Papadums &amp; chutneys</span><span class="menu-item-leader"></span><span class="menu-item-price">5€</span></span><span class="menu-item-desc">Assortiment de trois chutneys maison.</span></div></div>
+      </div>
+
+      <div class="menu-panel" data-panel="curries">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Butter Chicken</span><span class="menu-item-leader"></span><span class="menu-item-price">16€</span></span><span class="menu-item-desc">Poulet mariné au yaourt, sauce tomate-beurre, épices douces.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Rogan Josh</span><span class="menu-item-leader"></span><span class="menu-item-price">17€</span></span><span class="menu-item-desc">Agneau mijoté, cardamome, cannelle, piment du Cachemire.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Dal Makhani</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Lentilles noires mijotées 12h, beurre, crème.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Palak Paneer</span><span class="menu-item-leader"></span><span class="menu-item-price">14€</span></span><span class="menu-item-desc">Épinards, fromage frais maison, ail, gingembre.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Vindaloo</span><span class="menu-item-leader"></span><span class="menu-item-price">16€</span></span><span class="menu-item-desc">Porc mariné au vinaigre, piments, très relevé.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Korma</span><span class="menu-item-leader"></span><span class="menu-item-price">15€</span></span><span class="menu-item-desc">Sauce douce aux noix de cajou et lait de coco.</span></div></div>
+      </div>
+
+      <div class="menu-panel" data-panel="tandoor">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Poulet Tikka</span><span class="menu-item-leader"></span><span class="menu-item-price">15€</span></span><span class="menu-item-desc">Mariné au yaourt et épices, cuit au four tandoor.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Naan au fromage</span><span class="menu-item-leader"></span><span class="menu-item-price">5€</span></span><span class="menu-item-desc">Pain moelleux garni de fromage fondant.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Biryani d'agneau</span><span class="menu-item-leader"></span><span class="menu-item-price">17€</span></span><span class="menu-item-desc">Riz basmati parfumé au safran, agneau confit.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Riz basmati nature</span><span class="menu-item-leader"></span><span class="menu-item-price">4€</span></span><span class="menu-item-desc">Riz basmati parfumé, cuit à la vapeur.</span></div></div>
+      </div>
+
+      <div class="menu-panel" data-panel="desserts">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Gulab Jamun</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></span><span class="menu-item-desc">Boulettes de lait, sirop parfumé à la cardamome.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Kheer</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></span><span class="menu-item-desc">Riz au lait, cardamome, pistaches, safran.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Kulfi</span><span class="menu-item-leader"></span><span class="menu-item-price">7€</span></span><span class="menu-item-desc">Glace indienne à la pistache et à l'eau de rose.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="galerie">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Ambiance</span>
+        <h2>Un lieu qu'on aime faire vivre</h2>
+      </div>
+      <div class="gallery-grid reveal-stagger reveal">
+        <div class="gallery-tile g1"><span>Le four tandoor</span></div>
+        <div class="gallery-tile g2"><span>Salle principale</span></div>
+        <div class="gallery-tile g3"><span>Épices &amp; marché</span></div>
+        <div class="gallery-tile g4"><span>Butter Chicken maison</span></div>
+        <div class="gallery-tile g5"><span>L'équipe en cuisine</span></div>
+        <div class="gallery-tile g6"><span>Thé chai maison</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="avis" style="background:var(--bg-alt);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Avis clients</span>
+        <h2>Ce qu'on dit de nous</h2>
+      </div>
+      <div class="testi-grid reveal-stagger reveal">
+        <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
+          <div class="stars">★★★★★</div>
+          <p>Le Butter Chicken le plus proche de ce que j'ai goûté à Delhi. Les épices sont d'une justesse incroyable.</p>
+          <div class="testi-name">Nadia K.</div>
+          <div class="testi-role">Cliente régulière</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
+          <div class="stars">★★★★★</div>
+          <p>Le naan sort tout juste du tandoor, encore chaud. Un vrai délice à chaque visite avec la famille.</p>
+          <div class="testi-name">Marc T.</div>
+          <div class="testi-role">Client régulier</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
+          <div class="stars">★★★★★</div>
+          <p>On sent que tout est fait maison, même les épices. Le Dal Makhani est à tomber.</p>
+          <div class="testi-name">Priya S.</div>
+          <div class="testi-role">Cliente régulière</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section" id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Infos pratiques</span>
+        <h2>Nous trouver</h2>
+      </div>
+      <div class="info-grid reveal">
+        <div>
+          <div class="info-list">
+            <div><span class="lbl">Adresse</span><span class="val">22 rue des Épices, Luxembourg</span></div>
+            <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+            <div><span class="lbl">Email</span><span class="val">contact@saffron-restaurant.lu</span></div>
+          </div>
+          <table class="hours-table">
+            <tr><td>Lundi — Vendredi</td><td>11h30 – 14h30 / 18h30 – 22h30</td></tr>
+            <tr><td>Samedi — Dimanche</td><td>18h00 – 23h00</td></tr>
+          </table>
+          <button class="btn btn-primary" type="button">Réserver par téléphone</button>
+        </div>
+        <div class="map-box"><span>Emplacement — carte à intégrer</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 SAFFRON — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#carte">Carte</a>
+        <a href="#about">À propos</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--maroon);">MatMax Intelligence</a> — Saffron n'existe pas.</p>
+  </div>
+</footer>
+
+<!-- Assistant IA — démonstration de l'offre "agents IA" de MatMax Intelligence -->
+<button class="concierge-launcher" id="conciergeLauncher" type="button">
+  <span class="cl-dot"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+  Demander à l'assistant
+</button>
+
+<div class="concierge-panel" id="conciergePanel">
+  <div class="concierge-head">
+    <div class="concierge-avatar">🌶️</div>
+    <div class="concierge-head-text">
+      <strong>Assistant Saffron</strong>
+      <span>Assistant IA — répond instantanément</span>
+    </div>
+    <button class="concierge-close" id="conciergeClose" type="button" aria-label="Fermer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="concierge-body" id="conciergeBody"></div>
+  <div class="concierge-chips" id="conciergeChips">
+    <button class="cchip" type="button" data-q="Quels sont vos horaires ?">Horaires ?</button>
+    <button class="cchip" type="button" data-q="Je voudrais réserver une table">Réserver une table</button>
+    <button class="cchip" type="button" data-q="Avez-vous des plats végétariens ?">Plats végétariens ?</button>
+    <button class="cchip" type="button" data-q="Où se trouve le restaurant ?">Où êtes-vous ?</button>
+  </div>
+  <div class="concierge-input-row">
+    <input type="text" id="conciergeInput" placeholder="Écrivez votre question..." autocomplete="off">
+    <button class="concierge-send" id="conciergeSend" type="button" aria-label="Envoyer">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </button>
+  </div>
+  <p class="concierge-foot-note">Démonstration de l'offre « agents IA » MatMax Intelligence — réponses automatiques, non connectées à un vrai restaurant.</p>
+</div>
+
+<script>
+  document.querySelectorAll('.menu-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.menu-tab').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.menu-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelector('.menu-panel[data-panel="' + btn.dataset.menu + '"]').classList.add('active');
+    });
+  });
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+    });
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // ---- Assistant Saffron : concierge IA de démonstration ----
+  (function(){
+    var launcher = document.getElementById('conciergeLauncher');
+    var panel = document.getElementById('conciergePanel');
+    var closeBtn = document.getElementById('conciergeClose');
+    var body = document.getElementById('conciergeBody');
+    var input = document.getElementById('conciergeInput');
+    var sendBtn = document.getElementById('conciergeSend');
+    var chipsWrap = document.getElementById('conciergeChips');
+    var hasGreeted = false;
+
+    function strip(s){
+      return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function addBubble(text, who){
+      var b = document.createElement('div');
+      b.className = 'cbubble ' + who;
+      b.textContent = text;
+      body.appendChild(b);
+      body.scrollTop = body.scrollHeight;
+      return b;
+    }
+
+    function addTyping(){
+      var t = document.createElement('div');
+      t.className = 'cbubble bot typing';
+      t.innerHTML = '<span></span><span></span><span></span>';
+      body.appendChild(t);
+      body.scrollTop = body.scrollHeight;
+      return t;
+    }
+
+    var RULES = [
+      { kw: ['horaire','ouvert','ferme','heure'], a: "On est ouverts du lundi au vendredi de 11h30 à 14h30 et de 18h30 à 22h30, et le week-end de 18h00 à 23h00. À très vite !" },
+      { kw: ['reserv','table'], a: "Avec plaisir ! Pour combien de personnes et à quelle date ? En attendant, vous pouvez aussi appeler directement le +352 00 00 00 00." },
+      { kw: ['vegetari','vegan','sans viande'], a: "Oui, plusieurs plats sont végétariens : Dal Makhani, Palak Paneer, Korma de légumes... et on peut adapter certains currys sur demande." },
+      { kw: ['piquant','epice','fort','relev'], a: "Chaque plat a un niveau de piment indiqué sur la carte. Le Vindaloo est le plus relevé, le Korma et le Butter Chicken sont plus doux. On peut toujours ajuster !" },
+      { kw: ['tandoor','naan','pain'], a: "Nos naans et notre poulet tikka cuisent dans un vrai four tandoor en argile, à plus de 400°C. C'est ce qui donne ce petit goût fumé." },
+      { kw: ['dessert','sucre'], a: "Envie de sucré ? On propose Gulab Jamun, Kheer (riz au lait épicé) et Kulfi (glace à la pistache et à l'eau de rose)." },
+      { kw: ['prix','tarif','cout','combien coute'], a: "Les entrées sont entre 5€ et 8€, les currys entre 13€ et 17€, et les desserts autour de 6-7€. La carte complète est juste au-dessus." },
+      { kw: ['adresse','situe','trouve','lieu','ou etes','ou est','ou se'], a: "On est au 22 rue des Épices, à Luxembourg. Un plan est disponible un peu plus bas sur cette page, dans la section Contact." },
+      { kw: ['telephone','contact','appel','numero'], a: "Vous pouvez nous joindre au +352 00 00 00 00 ou par email à contact@saffron-restaurant.lu." },
+      { kw: ['livrai','emporter','a emporter'], a: "On propose la vente à emporter sur tous nos plats. La livraison à domicile n'est pas encore disponible, mais ça arrive bientôt !" },
+      { kw: ['allerg','gluten','lactose','arachide','noix'], a: "On peut adapter la plupart des plats pour les allergies et intolérances (sans gluten, sans lactose...). Précisez-le simplement lors de votre réservation." },
+      { kw: ['merci','super','parfait','top'], a: "Avec plaisir ! N'hésitez pas si vous avez d'autres questions 🌶️" },
+      { kw: ['bonjour','salut','hello','coucou'], a: "Bonjour ! Ravi de vous accueillir chez Saffron. Je peux vous renseigner sur le menu, les horaires, les réservations... Que puis-je faire pour vous ?" }
+    ];
+
+    var FALLBACK = "Je ne suis qu'une démonstration de l'agent IA que MatMax Intelligence peut connecter à votre propre site — sur ce point précis, je vous invite à appeler directement le +352 00 00 00 00. Sinon, je peux vous parler du menu, des horaires, des réservations ou de nos options végétariennes.";
+
+    function reply(userText){
+      var norm = strip(userText);
+      for (var i = 0; i < RULES.length; i++){
+        for (var j = 0; j < RULES[i].kw.length; j++){
+          if (norm.indexOf(RULES[i].kw[j]) !== -1){
+            return RULES[i].a;
+          }
+        }
+      }
+      return FALLBACK;
+    }
+
+    function sendMessage(text){
+      text = (text || '').trim();
+      if (!text) return;
+      addBubble(text, 'user');
+      input.value = '';
+      var typing = addTyping();
+      var delay = 500 + Math.random() * 500;
+      setTimeout(function(){
+        typing.remove();
+        addBubble(reply(text), 'bot');
+      }, delay);
+    }
+
+    function openPanel(){
+      panel.classList.add('open');
+      launcher.classList.add('hidden');
+      if (!hasGreeted){
+        hasGreeted = true;
+        setTimeout(function(){
+          addBubble("Bonjour, je suis l'assistant virtuel de Saffron 🌶️ Je peux répondre à vos questions sur le menu, les horaires ou les réservations. Que puis-je faire pour vous ?", 'bot');
+        }, 300);
+      }
+      setTimeout(function(){ input.focus(); }, 350);
+    }
+
+    function closePanel(){
+      panel.classList.remove('open');
+      launcher.classList.remove('hidden');
+    }
+
+    launcher.addEventListener('click', openPanel);
+    closeBtn.addEventListener('click', closePanel);
+    sendBtn.addEventListener('click', function(){ sendMessage(input.value); });
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter') sendMessage(input.value);
+    });
+    chipsWrap.querySelectorAll('.cchip').forEach(function(chip){
+      chip.addEventListener('click', function(){ sendMessage(chip.dataset.q); });
+    });
+  })();
+</script>
+</body>
+</html>
