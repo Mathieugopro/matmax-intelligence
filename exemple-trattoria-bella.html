@@ -6,22 +6,29 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Trattoria Bella — Exemple de site (démo MatMax Intelligence)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   *{ margin:0; padding:0; box-sizing:border-box; }
   :root{
-    --bg:#FBF6F0; --bg-alt:#F4ECE0; --ink:#241C14; --muted:#8A7B65; --dim:#B3A794; --line:#E5DBC9;
+    --bg:#FBF6EE; --bg-alt:#F5E9D6; --ink:#2B2013; --muted:#8A7B65; --dim:#B3A794; --line:#E6D9C2;
     --red:#A83232; --red-dark:#7C2222; --olive:#4E7A51; --gold:#C98A2E; --cream:#FFFDF9;
-    --radius:6px; --maxw:1180px;
+    --radius:8px; --maxw:1180px;
   }
   html{ scroll-behavior:smooth; }
-  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased; }
-  h1,h2,h3{ font-family:'Space Grotesk',sans-serif; font-weight:700; line-height:1.15; }
-  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased;
+    background-image: radial-gradient(circle, rgba(168,50,50,0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  h1,h2,h3{ font-family:'Fraunces',serif; font-weight:600; line-height:1.14; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; position:relative; }
   a{ text-decoration:none; color:inherit; }
   ul{ list-style:none; }
-  img{ max-width:100%; display:block; }
-  section{ padding:96px 0; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:104px 0; position:relative; overflow:hidden; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .08s); }
 
   /* demo banner */
   .demo-banner{ background:var(--ink); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; position:relative; z-index:100; }
@@ -29,40 +36,46 @@
   .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
 
   /* header */
-  header.site-header{ position:sticky; top:0; z-index:50; background:rgba(251,246,240,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
-  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:80px; }
-  .logo{ font-family:'Space Grotesk'; font-weight:700; font-size:1.15rem; letter-spacing:.3px; }
-  .logo span{ color:var(--red); }
+  header.site-header{ position:sticky; top:0; z-index:50; background:rgba(251,246,238,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:82px; }
+  .logo{ font-family:'Fraunces'; font-weight:600; font-size:1.3rem; letter-spacing:.2px; display:flex; align-items:center; gap:8px; }
+  .logo span{ color:var(--red); font-style:italic; }
+  .logo .logo-mark{ width:26px; height:26px; }
   nav ul{ display:flex; gap:34px; }
   nav a{ font-size:.9rem; color:var(--muted); transition:color .2s; }
   nav a:hover{ color:var(--ink); }
-  .nav-cta{ padding:11px 22px; background:var(--red); color:#fff; border-radius:var(--radius); font-size:.86rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:background .2s; }
-  .nav-cta:hover{ background:var(--red-dark); }
+  .nav-cta{ padding:11px 22px; background:var(--red); color:#fff; border-radius:var(--radius); font-size:.86rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:background .2s, transform .2s; }
+  .nav-cta:hover{ background:var(--red-dark); transform:translateY(-1px); }
   .nav-toggle{ display:none; }
+
   .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
   .mobile-menu.open{ display:flex; }
   .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-size:.95rem; color:var(--ink); }
   .mobile-menu .nav-cta{ display:block; margin:16px 32px; text-align:center; color:#fff; width:calc(100% - 64px); }
 
+  /* decorative accents */
+  .deco-leaf{ position:absolute; opacity:0.5; pointer-events:none; z-index:0; }
+
   /* hero */
-  .hero{ padding:80px 0 60px; position:relative; overflow:hidden; }
-  .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:center; }
+  .hero{ padding:70px 0 76px; }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center; }
   .badge-rating{ display:inline-flex; align-items:center; gap:8px; background:var(--cream); border:1px solid var(--line); padding:8px 14px; border-radius:30px; font-size:.8rem; margin-bottom:24px; }
   .eyebrow{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--red); letter-spacing:.06em; margin-bottom:18px; text-transform:uppercase; }
-  .hero h1{ font-size:clamp(2.3rem,4.2vw,3.4rem); margin-bottom:22px; max-width:14ch; }
+  .hero h1{ font-size:clamp(2.5rem,4.4vw,3.7rem); margin-bottom:22px; max-width:13ch; }
+  .hero h1 em{ color:var(--red); font-style:italic; }
   .hero p.lead{ font-size:1.08rem; color:var(--muted); max-width:46ch; margin-bottom:34px; }
   .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
   .btn{ display:inline-flex; align-items:center; gap:8px; padding:15px 28px; border-radius:var(--radius); font-size:.92rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:all .2s; }
   .btn-primary{ background:var(--red); color:#fff; }
-  .btn-primary:hover{ background:var(--red-dark); }
+  .btn-primary:hover{ background:var(--red-dark); transform:translateY(-2px); }
   .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
-  .btn-ghost:hover{ border-color:var(--ink); }
-  .hero-visual{ position:relative; height:420px; }
-  .circle{ position:absolute; border-radius:50%; }
-  .hv1{ width:300px; height:300px; background:var(--red); top:0; right:20px; opacity:.95; }
-  .hv2{ width:190px; height:190px; background:var(--olive); bottom:10px; right:200px; opacity:.9; }
-  .hv3{ width:90px; height:90px; background:var(--gold); bottom:60px; right:20px; opacity:.95; }
-  .hv-label{ position:absolute; top:120px; right:110px; font-family:'Space Grotesk'; font-weight:700; font-size:3.4rem; color:#fff; z-index:2; }
+  .btn-ghost:hover{ border-color:var(--ink); transform:translateY(-2px); }
+  .hero-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+  .hero-visual .pizza-wrap{ position:relative; width:100%; max-width:440px; animation: floaty 5s ease-in-out infinite; }
+  @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
+  .hero-visual .leaf-a{ top:-14px; left:-24px; width:70px; transform:rotate(-18deg); }
+  .hero-visual .leaf-b{ bottom:6px; right:-30px; width:60px; transform:rotate(24deg); }
+  .price-tag-float{ position:absolute; bottom:-6px; left:-18px; background:var(--ink); color:#fff; padding:10px 16px; border-radius:30px; font-family:'IBM Plex Mono'; font-size:.78rem; box-shadow:0 10px 24px -8px rgba(0,0,0,0.3); }
 
   /* highlights */
   .highlights{ padding:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--cream); }
@@ -70,42 +83,46 @@
   .highlight-item{ padding:30px 28px; border-left:1px solid var(--line); display:flex; flex-direction:column; gap:6px; }
   .highlight-item:first-child{ border-left:none; }
   .highlight-item .hnum{ font-family:'IBM Plex Mono'; color:var(--red); font-size:.78rem; }
-  .highlight-item h4{ font-family:'Space Grotesk'; font-size:1rem; font-weight:600; }
+  .highlight-item h4{ font-family:'Fraunces'; font-size:1.05rem; font-weight:600; }
 
   /* section head */
-  .section-head{ max-width:640px; margin-bottom:52px; }
-  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--red); text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:14px; }
-  .section-head h2{ font-size:clamp(1.7rem,3vw,2.3rem); }
+  .section-head{ max-width:640px; margin-bottom:52px; position:relative; z-index:1; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--red); text-transform:uppercase; letter-spacing:.06em; display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.9rem,3.2vw,2.6rem); }
   .section-head p{ margin-top:14px; color:var(--muted); font-size:1.02rem; }
 
   /* about */
-  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; position:relative; z-index:1; }
   .about-text p{ color:var(--muted); margin-bottom:16px; font-size:1rem; }
   .stats-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:8px; }
   .stat{ background:var(--cream); padding:26px 20px; text-align:center; }
-  .stat .num{ font-family:'Space Grotesk'; font-size:2rem; font-weight:700; color:var(--red); }
+  .stat .num{ font-family:'Fraunces'; font-size:2rem; font-weight:600; color:var(--red); }
   .stat .lbl{ font-size:.8rem; color:var(--muted); margin-top:6px; }
-  .about-visual{ height:340px; border-radius:var(--radius); background:linear-gradient(135deg,var(--olive),var(--red)); position:relative; overflow:hidden; }
-  .about-visual::after{ content:'Depuis 1998'; position:absolute; bottom:24px; left:24px; color:#fff; font-family:'Space Grotesk'; font-weight:700; font-size:1.3rem; }
+  .about-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
 
   /* menu */
   .menu-section{ background:var(--bg-alt); }
-  .menu-tabs{ display:flex; gap:8px; margin-bottom:40px; flex-wrap:wrap; }
-  .menu-tab{ padding:11px 22px; border-radius:30px; border:1px solid var(--line); font-size:.88rem; color:var(--muted); background:var(--cream); cursor:pointer; transition:all .2s; font-family:'Inter'; }
+  .menu-tabs{ display:flex; gap:8px; margin-bottom:44px; flex-wrap:wrap; position:relative; z-index:1; }
+  .menu-tab{ display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:30px; border:1px solid var(--line); font-size:.88rem; color:var(--muted); background:var(--cream); cursor:pointer; transition:all .2s; font-family:'Inter'; }
   .menu-tab:hover{ border-color:var(--ink); color:var(--ink); }
   .menu-tab.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
-  .menu-panel{ display:none; }
-  .menu-panel.active{ display:grid; grid-template-columns:1fr 1fr; gap:0 48px; }
-  .menu-item{ display:flex; justify-content:space-between; gap:16px; padding:18px 0; border-bottom:1px solid var(--line); }
-  .menu-item-name{ font-family:'Space Grotesk'; font-weight:600; font-size:1.02rem; margin-bottom:4px; }
-  .menu-item-desc{ font-size:.85rem; color:var(--muted); max-width:32ch; }
+  .menu-tab.active svg circle:first-child, .menu-tab.active svg ellipse:first-child, .menu-tab.active svg rect:first-child, .menu-tab.active svg path:first-child{ opacity:0.9; }
+  .menu-panel{ display:none; position:relative; z-index:1; }
+  .menu-panel.active{ display:grid; grid-template-columns:1fr 1fr; gap:0 56px; }
+  .menu-item{ display:flex; align-items:baseline; gap:10px; padding:20px 0; border-bottom:1px dashed var(--line); }
+  .menu-item-main{ flex:1; }
+  .menu-item-name{ font-family:'Fraunces'; font-weight:600; font-size:1.06rem; margin-bottom:4px; display:inline; }
+  .menu-item-leader{ flex:1; border-bottom:2px dotted var(--dim); margin:0 8px 5px; min-width:20px; }
+  .menu-item-desc{ font-size:.85rem; color:var(--muted); max-width:32ch; display:block; margin-top:3px; }
   .menu-item-price{ font-family:'IBM Plex Mono'; font-weight:500; color:var(--red); white-space:nowrap; }
+  .menu-item-row{ display:flex; align-items:baseline; width:100%; }
 
   /* gallery */
-  .gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-  .gallery-tile{ position:relative; border-radius:var(--radius); overflow:hidden; height:220px; display:flex; align-items:flex-end; padding:16px; }
-  .gallery-tile span{ color:#fff; font-family:'Space Grotesk'; font-weight:600; font-size:.92rem; position:relative; z-index:2; }
-  .gallery-tile::before{ content:''; position:absolute; inset:0; background:rgba(0,0,0,0.22); z-index:1; }
+  .gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; position:relative; z-index:1; }
+  .gallery-tile{ position:relative; border-radius:var(--radius); overflow:hidden; height:230px; display:flex; align-items:flex-end; padding:18px; }
+  .gallery-tile .g-icon{ position:absolute; top:16px; right:16px; width:34px; height:34px; opacity:0.9; }
+  .gallery-tile span{ color:#fff; font-family:'Fraunces'; font-weight:600; font-size:.95rem; position:relative; z-index:2; }
+  .gallery-tile::before{ content:''; position:absolute; inset:0; background:rgba(0,0,0,0.2); z-index:1; }
   .g1{ background:linear-gradient(135deg,#A83232,#7C2222); }
   .g2{ background:linear-gradient(135deg,#4E7A51,#33523A); }
   .g3{ background:linear-gradient(135deg,#C98A2E,#A56B1D); }
@@ -114,18 +131,19 @@
   .g6{ background:linear-gradient(135deg,#33523A,#1F3524); }
 
   /* testimonials */
-  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-  .testi-card{ background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:28px; }
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; position:relative; z-index:1; }
+  .testi-card{ background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:30px; position:relative; }
+  .testi-quote-mark{ font-family:'Fraunces'; font-size:3rem; color:var(--gold); opacity:0.35; line-height:1; margin-bottom:-14px; }
   .stars{ color:var(--gold); font-size:.9rem; margin-bottom:14px; letter-spacing:2px; }
   .testi-card p{ color:var(--ink); font-size:.94rem; margin-bottom:18px; font-style:italic; }
-  .testi-name{ font-family:'Space Grotesk'; font-weight:600; font-size:.88rem; }
+  .testi-name{ font-family:'Fraunces'; font-weight:600; font-size:.9rem; }
   .testi-role{ font-size:.78rem; color:var(--muted); }
 
   /* info */
   .info-section{ background:var(--ink); color:#fff; }
   .info-section .section-head p{ color:rgba(255,255,255,0.6); }
   .info-section .section-head .tag{ color:#F0C46A; }
-  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; position:relative; z-index:1; }
   .info-list{ display:flex; flex-direction:column; gap:22px; margin-bottom:30px; }
   .info-list .lbl{ font-family:'IBM Plex Mono'; font-size:.72rem; color:#F0C46A; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:6px; }
   .info-list .val{ font-size:1rem; }
@@ -136,7 +154,7 @@
   .map-box span{ font-family:'IBM Plex Mono'; font-size:.8rem; color:rgba(255,255,255,0.4); }
 
   /* footer */
-  footer{ padding:44px 0; border-top:1px solid var(--line); }
+  footer{ padding:44px 0; border-top:1px solid var(--line); position:relative; z-index:1; }
   .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
   .footer-row p{ font-size:.8rem; color:var(--dim); }
   .footer-links{ display:flex; gap:22px; }
@@ -148,17 +166,20 @@
     nav, .nav-cta{ display:none; }
     .nav-toggle{ display:flex; background:none; border:none; cursor:pointer; padding:6px; }
     .hero-grid{ grid-template-columns:1fr; }
-    .hero-visual{ height:280px; margin-top:20px; }
+    .hero-visual{ margin-top:10px; }
+    .hero-visual .pizza-wrap{ max-width:280px; }
     .highlights-row{ grid-template-columns:1fr 1fr; }
     .highlight-item:nth-child(3){ border-left:none; }
     .about-grid{ grid-template-columns:1fr; }
-    .about-visual{ order:-1; height:220px; }
+    .about-visual{ order:-1; }
+    .about-visual svg{ max-width:220px; margin:0 auto; }
     .menu-panel.active{ grid-template-columns:1fr; }
     .gallery-grid{ grid-template-columns:1fr 1fr; }
     .testi-grid{ grid-template-columns:1fr; }
     .info-grid{ grid-template-columns:1fr; }
-    section{ padding:64px 0; }
+    section{ padding:68px 0; }
     .wrap{ padding:0 20px; }
+    .deco-leaf{ display:none; }
   }
   @media (max-width:520px){
     .highlights-row{ grid-template-columns:1fr; }
@@ -166,7 +187,7 @@
     .highlight-item:first-child{ border-top:none; }
     .gallery-grid{ grid-template-columns:1fr; }
     .stats-row{ grid-template-columns:1fr; }
-    .hero h1{ font-size:2rem; }
+    .hero h1{ font-size:2.1rem; }
   }
 </style>
 </head>
@@ -179,7 +200,7 @@
 
 <header class="site-header">
   <div class="wrap nav-row">
-    <div class="logo">TRATTORIA <span>BELLA</span></div>
+    <div class="logo">Trattoria <span>Bella</span></div>
     <nav>
       <ul>
         <li><a href="#menu">Menu</a></li>
@@ -205,21 +226,174 @@
 <main>
   <section class="hero">
     <div class="wrap hero-grid">
-      <div>
+      <div class="reveal in">
         <span class="badge-rating">★★★★★ &nbsp;4.8/5 — 320 avis</span>
         <div class="eyebrow">Restaurant italien — Depuis 1998</div>
-        <h1>La vraie cuisine italienne, sans détour.</h1>
+        <h1>La vraie cuisine <em>italienne</em>, sans détour.</h1>
         <p class="lead">Pâtes fraîches faites maison, pizzas au four à bois, produits importés directement d'Italie. Une trattoria familiale au cœur de la ville.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#menu">Voir le menu</a>
           <button class="btn btn-ghost" type="button">Réserver une table</button>
         </div>
       </div>
-      <div class="hero-visual">
-        <div class="circle hv2"></div>
-        <div class="circle hv1"></div>
-        <div class="circle hv3"></div>
-        <div class="hv-label">Est. 1998</div>
+      <div class="hero-visual reveal in">
+        <div class="pizza-wrap">
+          <div class="deco-leaf leaf-a" style="position:absolute;"><svg viewBox="0 0 180 100" width="180" height="100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10,50.0 C45.0,10.0 135.0,10.0 170,50.0 C135.0,90.0 45.0,90.0 10,50.0 Z" fill="#5B7F4B" opacity="0.9"/>
+<line x1="12" y1="50.0" x2="168" y2="50.0" stroke="#3F5C34" stroke-width="1.5" opacity="0.5"/>
+</svg></div>
+          <div class="deco-leaf leaf-b" style="position:absolute;"><svg viewBox="0 0 180 100" width="180" height="100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10,50.0 C45.0,10.0 135.0,10.0 170,50.0 C135.0,90.0 45.0,90.0 10,50.0 Z" fill="#5B7F4B" opacity="0.9"/>
+<line x1="12" y1="50.0" x2="168" y2="50.0" stroke="#3F5C34" stroke-width="1.5" opacity="0.5"/>
+</svg></div>
+          <svg viewBox="0 0 440 440" width="440" height="440" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="220.0" cy="406.208" rx="165.968" ry="28.336000000000002" fill="#000" opacity="0.10"/>
+<circle cx="220.0" cy="220.0" r="202.4" fill="#E7B25E"/>
+<circle cx="220.0" cy="220.0" r="202.4" fill="none" stroke="#C68A3B" stroke-width="3" opacity="0.5"/>
+<circle cx="137.6" cy="384.7" r="2.6" fill="#C4822F" opacity="0.64"/>
+<circle cx="378.1" cy="326.2" r="3.0" fill="#C4822F" opacity="0.36"/>
+<circle cx="52.7" cy="294.1" r="1.6" fill="#B5732A" opacity="0.37"/>
+<circle cx="40.7" cy="141.8" r="2.5" fill="#D99B45" opacity="0.68"/>
+<circle cx="53.9" cy="132.6" r="3.2" fill="#C4822F" opacity="0.54"/>
+<circle cx="346.0" cy="359.6" r="2.4" fill="#D99B45" opacity="0.46"/>
+<circle cx="294.5" cy="51.1" r="2.4" fill="#D99B45" opacity="0.42"/>
+<circle cx="377.3" cy="330.5" r="2.4" fill="#D99B45" opacity="0.42"/>
+<circle cx="140.3" cy="49.5" r="2.0" fill="#D99B45" opacity="0.67"/>
+<circle cx="100.3" cy="361.8" r="1.7" fill="#C4822F" opacity="0.38"/>
+<circle cx="161.3" cy="399.8" r="2.0" fill="#B5732A" opacity="0.45"/>
+<circle cx="402.3" cy="197.2" r="2.2" fill="#B5732A" opacity="0.40"/>
+<circle cx="37.9" cy="232.7" r="2.6" fill="#D99B45" opacity="0.55"/>
+<circle cx="352.3" cy="88.5" r="2.7" fill="#D99B45" opacity="0.52"/>
+<circle cx="273.1" cy="44.9" r="1.6" fill="#B5732A" opacity="0.52"/>
+<circle cx="126.1" cy="63.1" r="2.7" fill="#D99B45" opacity="0.55"/>
+<circle cx="141.1" cy="48.9" r="2.7" fill="#D99B45" opacity="0.47"/>
+<circle cx="394.3" cy="151.8" r="2.5" fill="#B5732A" opacity="0.37"/>
+<circle cx="241.0" cy="37.3" r="1.8" fill="#B5732A" opacity="0.67"/>
+<circle cx="35.6" cy="224.0" r="2.1" fill="#B5732A" opacity="0.66"/>
+<circle cx="302.0" cy="43.7" r="1.9" fill="#B5732A" opacity="0.70"/>
+<circle cx="143.1" cy="49.0" r="1.8" fill="#C4822F" opacity="0.41"/>
+<circle cx="241.0" cy="404.2" r="2.3" fill="#D99B45" opacity="0.41"/>
+<circle cx="183.3" cy="400.4" r="2.4" fill="#D99B45" opacity="0.55"/>
+<circle cx="403.7" cy="164.3" r="2.3" fill="#D99B45" opacity="0.58"/>
+<circle cx="207.9" cy="31.8" r="3.0" fill="#D99B45" opacity="0.63"/>
+<circle cx="73.6" cy="337.5" r="1.6" fill="#D99B45" opacity="0.49"/>
+<circle cx="291.5" cy="402.7" r="2.2" fill="#C4822F" opacity="0.47"/>
+<circle cx="392.2" cy="279.0" r="1.7" fill="#C4822F" opacity="0.68"/>
+<circle cx="81.8" cy="100.1" r="1.8" fill="#B5732A" opacity="0.40"/>
+<circle cx="217.3" cy="407.0" r="2.1" fill="#C4822F" opacity="0.39"/>
+<circle cx="24.5" cy="234.7" r="2.3" fill="#B5732A" opacity="0.38"/>
+<circle cx="369.7" cy="331.9" r="1.9" fill="#D99B45" opacity="0.41"/>
+<circle cx="413.6" cy="248.3" r="2.4" fill="#C4822F" opacity="0.59"/>
+<circle cx="385.5" cy="120.9" r="1.9" fill="#D99B45" opacity="0.65"/>
+<circle cx="158.4" cy="44.8" r="2.1" fill="#C4822F" opacity="0.47"/>
+<circle cx="252.3" cy="407.0" r="2.3" fill="#D99B45" opacity="0.43"/>
+<circle cx="293.9" cy="38.3" r="2.9" fill="#C4822F" opacity="0.64"/>
+<circle cx="208.2" cy="35.1" r="2.3" fill="#B5732A" opacity="0.61"/>
+<circle cx="413.0" cy="207.4" r="2.3" fill="#C4822F" opacity="0.59"/>
+<circle cx="401.5" cy="169.2" r="3.1" fill="#B5732A" opacity="0.68"/>
+<circle cx="97.9" cy="359.2" r="1.8" fill="#C4822F" opacity="0.47"/>
+<circle cx="25.0" cy="241.3" r="2.5" fill="#C4822F" opacity="0.52"/>
+<circle cx="109.2" cy="61.3" r="1.6" fill="#D99B45" opacity="0.39"/>
+<circle cx="73.0" cy="343.9" r="1.8" fill="#C4822F" opacity="0.50"/>
+<circle cx="99.5" cy="81.9" r="3.1" fill="#D99B45" opacity="0.49"/>
+<circle cx="220.0" cy="220.0" r="176.0" fill="#B5432E"/>
+<circle cx="220.0" cy="220.0" r="169.4" fill="#F1CD68"/>
+<ellipse cx="128.6" cy="285.2" rx="36.5" ry="16.0" fill="#F7DE8F" opacity="0.55" transform="rotate(46 128.6 285.2)"/>
+<ellipse cx="282.4" cy="307.3" rx="38.1" ry="15.8" fill="#F7DE8F" opacity="0.55" transform="rotate(298 282.4 307.3)"/>
+<ellipse cx="297.3" cy="210.4" rx="29.0" ry="20.6" fill="#F7DE8F" opacity="0.55" transform="rotate(47 297.3 210.4)"/>
+<ellipse cx="334.7" cy="230.3" rx="35.0" ry="20.3" fill="#F7DE8F" opacity="0.55" transform="rotate(336 334.7 230.3)"/>
+<ellipse cx="125.4" cy="261.8" rx="38.5" ry="16.5" fill="#F7DE8F" opacity="0.55" transform="rotate(91 125.4 261.8)"/>
+<ellipse cx="212.4" cy="247.5" rx="33.7" ry="17.1" fill="#F7DE8F" opacity="0.55" transform="rotate(151 212.4 247.5)"/>
+<ellipse cx="293.3" cy="299.2" rx="29.1" ry="19.5" fill="#F7DE8F" opacity="0.55" transform="rotate(210 293.3 299.2)"/>
+<ellipse cx="261.1" cy="191.8" rx="40.4" ry="20.0" fill="#F7DE8F" opacity="0.55" transform="rotate(191 261.1 191.8)"/>
+<ellipse cx="217.8" cy="219.7" rx="30.8" ry="16.2" fill="#F7DE8F" opacity="0.55" transform="rotate(1 217.8 219.7)"/>
+<circle cx="227.5" cy="196.4" r="3.4" fill="#C4822F" opacity="0.5"/>
+<circle cx="207.6" cy="140.8" r="3.0" fill="#C4822F" opacity="0.5"/>
+<circle cx="140.6" cy="210.8" r="4.4" fill="#C4822F" opacity="0.5"/>
+<circle cx="283.4" cy="269.9" r="2.7" fill="#C4822F" opacity="0.5"/>
+<circle cx="201.3" cy="329.6" r="3.5" fill="#C4822F" opacity="0.5"/>
+<circle cx="118.7" cy="178.6" r="4.7" fill="#C4822F" opacity="0.5"/>
+<circle cx="137.4" cy="250.8" r="3.5" fill="#C4822F" opacity="0.5"/>
+<circle cx="120.5" cy="212.4" r="3.4" fill="#C4822F" opacity="0.5"/>
+<circle cx="152.7" cy="205.7" r="4.8" fill="#C4822F" opacity="0.5"/>
+<circle cx="180.4" cy="100.2" r="4.8" fill="#C4822F" opacity="0.5"/>
+<circle cx="215.1" cy="300.4" r="4.8" fill="#C4822F" opacity="0.5"/>
+<circle cx="230.6" cy="203.3" r="2.4" fill="#C4822F" opacity="0.5"/>
+<circle cx="210.2" cy="223.7" r="2.7" fill="#C4822F" opacity="0.5"/>
+<circle cx="306.4" cy="262.7" r="4.4" fill="#C4822F" opacity="0.5"/>
+<circle cx="255.5" cy="193.2" r="15" fill="#A8402A"/>
+<circle cx="255.5" cy="193.2" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="253.5" cy="194.0" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="251.2" cy="188.9" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="263.8" cy="192.4" r="2.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="258.8" cy="195.7" r="1.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="197.4" cy="115.4" r="15" fill="#A8402A"/>
+<circle cx="197.4" cy="115.4" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="198.1" cy="111.3" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="189.2" cy="119.7" r="1.8" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="197.2" cy="118.5" r="1.9" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="190.5" cy="112.1" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="303.8" cy="325.3" r="15" fill="#A8402A"/>
+<circle cx="303.8" cy="325.3" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="310.9" cy="327.9" r="1.4" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="312.4" cy="329.5" r="1.6" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="304.7" cy="322.8" r="1.9" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="312.0" cy="328.9" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="291.4" cy="198.0" r="15" fill="#A8402A"/>
+<circle cx="291.4" cy="198.0" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="287.9" cy="203.5" r="1.9" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="291.0" cy="201.1" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="291.6" cy="200.9" r="1.2" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="294.8" cy="199.2" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="72.7" cy="231.8" r="15" fill="#A8402A"/>
+<circle cx="72.7" cy="231.8" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="69.9" cy="239.4" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="69.2" cy="231.8" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="76.6" cy="232.3" r="1.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="72.0" cy="225.4" r="1.2" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="139.0" cy="257.2" r="15" fill="#A8402A"/>
+<circle cx="139.0" cy="257.2" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="129.6" cy="258.7" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="141.2" cy="252.2" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="141.6" cy="252.8" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="135.2" cy="248.1" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="193.6" cy="262.0" r="15" fill="#A8402A"/>
+<circle cx="193.6" cy="262.0" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="197.4" cy="255.4" r="1.6" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="189.7" cy="264.7" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="195.4" cy="263.9" r="1.7" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="193.5" cy="265.3" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="172.1" cy="324.2" r="15" fill="#A8402A"/>
+<circle cx="172.1" cy="324.2" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="177.0" cy="316.7" r="1.7" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="171.3" cy="328.1" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="169.0" cy="325.1" r="1.4" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="171.3" cy="333.9" r="2.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="313.2" cy="231.5" r="15" fill="#A8402A"/>
+<circle cx="313.2" cy="231.5" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="309.4" cy="230.3" r="2.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="311.4" cy="236.0" r="1.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="309.0" cy="235.4" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="315.1" cy="237.2" r="1.0" fill="#7A2A1A" opacity="0.5"/>
+<g transform="translate(230.1 312.9) rotate(321)"><path d="M0,0 C4.641421887740661,-12.658423330201803 18.565687550962643,-12.658423330201803 23.207109438703302,0 C18.565687550962643,12.658423330201803 4.641421887740661,12.658423330201803 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="21.2" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
+<g transform="translate(111.7 199.9) rotate(250)"><path d="M0,0 C4.043521751108178,-11.027786593931392 16.17408700443271,-11.027786593931392 20.217608755540887,0 C16.17408700443271,11.027786593931392 4.043521751108178,11.027786593931392 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="18.2" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
+<g transform="translate(161.5 130.8) rotate(11)"><path d="M0,0 C3.9156830212548246,-10.679135512513156 15.662732085019298,-10.679135512513156 19.57841510627412,0 C15.662732085019298,10.679135512513156 3.9156830212548246,10.679135512513156 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="17.6" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
+<g transform="translate(196.2 190.0) rotate(130)"><path d="M0,0 C3.8784897418106805,-10.57769929584731 15.513958967242722,-10.57769929584731 19.3924487090534,0 C15.513958967242722,10.57769929584731 3.8784897418106805,10.57769929584731 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="17.4" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
+<g transform="translate(283.6 112.9) rotate(301)"><path d="M0,0 C4.477255965374634,-12.210698087385365 17.909023861498536,-12.210698087385365 22.38627982687317,0 C17.909023861498536,12.210698087385365 4.477255965374634,12.210698087385365 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="20.4" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
+<g transform="translate(263.1 137.3) rotate(226)"><path d="M0,0 C4.5666189257912775,-12.454415252158029 18.26647570316511,-12.454415252158029 22.833094628956385,0 C18.26647570316511,12.454415252158029 4.5666189257912775,12.454415252158029 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="20.8" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
+<circle cx="184.8" cy="144.4" r="7" fill="#2E2A1E"/>
+<circle cx="184.8" cy="144.4" r="3" fill="#F1CD68"/>
+<circle cx="340.0" cy="222.5" r="7" fill="#2E2A1E"/>
+<circle cx="340.0" cy="222.5" r="3" fill="#F1CD68"/>
+<circle cx="219.1" cy="135.0" r="7" fill="#2E2A1E"/>
+<circle cx="219.1" cy="135.0" r="3" fill="#F1CD68"/>
+<circle cx="323.2" cy="265.5" r="7" fill="#2E2A1E"/>
+<circle cx="323.2" cy="265.5" r="3" fill="#F1CD68"/>
+<circle cx="219.5" cy="254.2" r="7" fill="#2E2A1E"/>
+<circle cx="219.5" cy="254.2" r="3" fill="#F1CD68"/>
+</svg>
+          <div class="price-tag-float">🔥 Cuite en 90 secondes</div>
+        </div>
       </div>
     </div>
   </section>
@@ -235,8 +409,137 @@
 
   <section id="about">
     <div class="wrap about-grid">
-      <div class="about-visual"></div>
-      <div class="about-text">
+      <div class="about-visual reveal">
+        <svg viewBox="0 0 160 160" width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+<circle cx="80.0" cy="80.0" r="73.60000000000001" fill="#E7B25E"/>
+<circle cx="80.0" cy="80.0" r="73.60000000000001" fill="none" stroke="#C68A3B" stroke-width="3" opacity="0.5"/>
+<circle cx="73.3" cy="147.9" r="1.8" fill="#D99B45" opacity="0.58"/>
+<circle cx="14.1" cy="96.8" r="1.5" fill="#D99B45" opacity="0.45"/>
+<circle cx="145.5" cy="99.8" r="1.8" fill="#D99B45" opacity="0.40"/>
+<circle cx="78.3" cy="148.2" r="1.9" fill="#D99B45" opacity="0.40"/>
+<circle cx="11.6" cy="87.6" r="3.2" fill="#C4822F" opacity="0.59"/>
+<circle cx="48.8" cy="18.1" r="2.3" fill="#B5732A" opacity="0.51"/>
+<circle cx="87.3" cy="12.8" r="2.4" fill="#B5732A" opacity="0.69"/>
+<circle cx="144.4" cy="52.7" r="2.2" fill="#D99B45" opacity="0.69"/>
+<circle cx="14.1" cy="101.7" r="1.8" fill="#C4822F" opacity="0.38"/>
+<circle cx="137.5" cy="116.7" r="1.9" fill="#B5732A" opacity="0.40"/>
+<circle cx="109.4" cy="17.8" r="3.0" fill="#D99B45" opacity="0.48"/>
+<circle cx="12.1" cy="80.9" r="2.1" fill="#C4822F" opacity="0.35"/>
+<circle cx="11.2" cy="83.6" r="1.9" fill="#C4822F" opacity="0.50"/>
+<circle cx="30.4" cy="128.9" r="2.0" fill="#B5732A" opacity="0.61"/>
+<circle cx="117.0" cy="20.9" r="3.1" fill="#D99B45" opacity="0.35"/>
+<circle cx="75.6" cy="10.7" r="1.5" fill="#B5732A" opacity="0.70"/>
+<circle cx="21.4" cy="43.3" r="2.2" fill="#B5732A" opacity="0.65"/>
+<circle cx="66.6" cy="148.6" r="2.6" fill="#D99B45" opacity="0.68"/>
+<circle cx="80.3" cy="149.4" r="2.3" fill="#C4822F" opacity="0.62"/>
+<circle cx="95.1" cy="12.7" r="1.5" fill="#D99B45" opacity="0.49"/>
+<circle cx="128.8" cy="31.7" r="1.8" fill="#C4822F" opacity="0.37"/>
+<circle cx="72.4" cy="11.5" r="2.8" fill="#D99B45" opacity="0.65"/>
+<circle cx="12.5" cy="86.1" r="2.4" fill="#C4822F" opacity="0.52"/>
+<circle cx="41.5" cy="137.6" r="2.7" fill="#D99B45" opacity="0.44"/>
+<circle cx="41.4" cy="22.5" r="2.4" fill="#B5732A" opacity="0.39"/>
+<circle cx="36.6" cy="25.3" r="2.3" fill="#B5732A" opacity="0.54"/>
+<circle cx="13.8" cy="100.1" r="2.8" fill="#B5732A" opacity="0.40"/>
+<circle cx="104.7" cy="145.3" r="2.0" fill="#C4822F" opacity="0.46"/>
+<circle cx="33.9" cy="130.1" r="1.8" fill="#C4822F" opacity="0.61"/>
+<circle cx="21.1" cy="116.0" r="2.3" fill="#B5732A" opacity="0.44"/>
+<circle cx="80.9" cy="11.2" r="2.4" fill="#B5732A" opacity="0.39"/>
+<circle cx="11.5" cy="78.5" r="3.0" fill="#C4822F" opacity="0.38"/>
+<circle cx="135.1" cy="38.3" r="2.6" fill="#B5732A" opacity="0.68"/>
+<circle cx="119.5" cy="24.7" r="1.4" fill="#C4822F" opacity="0.50"/>
+<circle cx="85.8" cy="12.2" r="3.1" fill="#B5732A" opacity="0.35"/>
+<circle cx="27.4" cy="122.7" r="2.9" fill="#B5732A" opacity="0.69"/>
+<circle cx="80.7" cy="149.7" r="1.7" fill="#D99B45" opacity="0.69"/>
+<circle cx="132.7" cy="123.0" r="2.7" fill="#B5732A" opacity="0.38"/>
+<circle cx="91.8" cy="11.0" r="1.6" fill="#D99B45" opacity="0.67"/>
+<circle cx="37.7" cy="25.1" r="1.6" fill="#B5732A" opacity="0.53"/>
+<circle cx="17.0" cy="106.1" r="1.6" fill="#B5732A" opacity="0.53"/>
+<circle cx="20.1" cy="45.6" r="1.8" fill="#D99B45" opacity="0.35"/>
+<circle cx="14.3" cy="64.2" r="1.9" fill="#B5732A" opacity="0.58"/>
+<circle cx="131.3" cy="34.1" r="1.8" fill="#C4822F" opacity="0.36"/>
+<circle cx="21.8" cy="116.0" r="1.5" fill="#C4822F" opacity="0.52"/>
+<circle cx="48.5" cy="18.6" r="1.9" fill="#D99B45" opacity="0.50"/>
+<circle cx="80.0" cy="80.0" r="64.0" fill="#B5432E"/>
+<circle cx="80.0" cy="80.0" r="61.6" fill="#F1CD68"/>
+<ellipse cx="65.4" cy="95.5" rx="35.9" ry="22.6" fill="#F7DE8F" opacity="0.55" transform="rotate(130 65.4 95.5)"/>
+<ellipse cx="79.8" cy="80.2" rx="27.8" ry="24.1" fill="#F7DE8F" opacity="0.55" transform="rotate(24 79.8 80.2)"/>
+<ellipse cx="71.4" cy="80.2" rx="37.3" ry="16.3" fill="#F7DE8F" opacity="0.55" transform="rotate(167 71.4 80.2)"/>
+<ellipse cx="76.4" cy="118.2" rx="24.2" ry="21.5" fill="#F7DE8F" opacity="0.55" transform="rotate(220 76.4 118.2)"/>
+<ellipse cx="96.6" cy="67.3" rx="40.2" ry="14.7" fill="#F7DE8F" opacity="0.55" transform="rotate(214 96.6 67.3)"/>
+<ellipse cx="82.1" cy="78.9" rx="22.5" ry="21.2" fill="#F7DE8F" opacity="0.55" transform="rotate(150 82.1 78.9)"/>
+<ellipse cx="78.0" cy="72.3" rx="31.0" ry="22.5" fill="#F7DE8F" opacity="0.55" transform="rotate(113 78.0 72.3)"/>
+<ellipse cx="82.6" cy="82.2" rx="25.3" ry="16.3" fill="#F7DE8F" opacity="0.55" transform="rotate(235 82.6 82.2)"/>
+<ellipse cx="60.1" cy="76.9" rx="28.2" ry="22.7" fill="#F7DE8F" opacity="0.55" transform="rotate(302 60.1 76.9)"/>
+<circle cx="103.1" cy="77.8" r="2.3" fill="#C4822F" opacity="0.5"/>
+<circle cx="83.7" cy="82.0" r="3.3" fill="#C4822F" opacity="0.5"/>
+<circle cx="102.1" cy="60.6" r="4.3" fill="#C4822F" opacity="0.5"/>
+<circle cx="50.6" cy="107.5" r="2.9" fill="#C4822F" opacity="0.5"/>
+<circle cx="81.5" cy="75.7" r="4.1" fill="#C4822F" opacity="0.5"/>
+<circle cx="89.5" cy="106.7" r="3.3" fill="#C4822F" opacity="0.5"/>
+<circle cx="62.8" cy="114.6" r="3.4" fill="#C4822F" opacity="0.5"/>
+<circle cx="71.2" cy="70.4" r="3.9" fill="#C4822F" opacity="0.5"/>
+<circle cx="63.8" cy="91.1" r="3.4" fill="#C4822F" opacity="0.5"/>
+<circle cx="81.1" cy="76.9" r="2.6" fill="#C4822F" opacity="0.5"/>
+<circle cx="109.3" cy="92.2" r="3.1" fill="#C4822F" opacity="0.5"/>
+<circle cx="54.6" cy="123.0" r="2.1" fill="#C4822F" opacity="0.5"/>
+<circle cx="79.2" cy="43.9" r="4.8" fill="#C4822F" opacity="0.5"/>
+<circle cx="68.9" cy="116.1" r="3.8" fill="#C4822F" opacity="0.5"/>
+<circle cx="97.7" cy="31.3" r="15" fill="#A8402A"/>
+<circle cx="97.7" cy="31.3" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="101.5" cy="24.0" r="1.4" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="96.0" cy="26.4" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="94.9" cy="25.2" r="2.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="96.0" cy="28.6" r="1.8" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="122.5" cy="98.5" r="15" fill="#A8402A"/>
+<circle cx="122.5" cy="98.5" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="120.0" cy="97.7" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="128.1" cy="94.2" r="1.4" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="129.9" cy="98.9" r="2.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="124.9" cy="95.6" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="36.9" cy="89.4" r="15" fill="#A8402A"/>
+<circle cx="36.9" cy="89.4" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="32.7" cy="90.2" r="1.6" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="29.3" cy="91.9" r="1.9" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="31.6" cy="95.4" r="1.7" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="41.8" cy="95.8" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="86.0" cy="66.0" r="15" fill="#A8402A"/>
+<circle cx="86.0" cy="66.0" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="80.4" cy="63.9" r="1.7" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="93.2" cy="60.1" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="88.5" cy="66.5" r="1.9" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="83.3" cy="59.6" r="1.4" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="84.2" cy="127.8" r="15" fill="#A8402A"/>
+<circle cx="84.2" cy="127.8" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="81.6" cy="134.1" r="2.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="87.7" cy="121.9" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="91.6" cy="125.3" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="89.0" cy="136.2" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="46.1" cy="48.8" r="15" fill="#A8402A"/>
+<circle cx="46.1" cy="48.8" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="49.3" cy="47.8" r="1.8" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="38.0" cy="50.0" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="45.0" cy="56.7" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="44.8" cy="55.6" r="1.7" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="124.6" cy="58.5" r="15" fill="#A8402A"/>
+<circle cx="124.6" cy="58.5" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="126.8" cy="52.0" r="1.9" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="124.3" cy="56.4" r="1.2" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="127.9" cy="52.7" r="2.0" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="124.7" cy="63.6" r="1.4" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="49.8" cy="121.1" r="15" fill="#A8402A"/>
+<circle cx="49.8" cy="121.1" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
+<circle cx="50.3" cy="117.3" r="1.5" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="48.0" cy="116.9" r="1.3" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="54.9" cy="129.0" r="1.8" fill="#7A2A1A" opacity="0.5"/>
+<circle cx="50.6" cy="116.9" r="1.1" fill="#7A2A1A" opacity="0.5"/>
+<g transform="translate(77.0 95.6) rotate(37)"><path d="M0,0 C4.688886416376531,-12.787872044663263 18.755545665506123,-12.787872044663263 23.444432081882653,0 C18.755545665506123,12.787872044663263 4.688886416376531,12.787872044663263 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="21.4" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
+<circle cx="68.4" cy="33.8" r="7" fill="#2E2A1E"/>
+<circle cx="68.4" cy="33.8" r="3" fill="#F1CD68"/>
+<circle cx="59.3" cy="76.1" r="7" fill="#2E2A1E"/>
+<circle cx="59.3" cy="76.1" r="3" fill="#F1CD68"/>
+</svg>
+      </div>
+      <div class="about-text reveal">
         <div class="eyebrow">Notre histoire</div>
         <h2 style="margin-bottom:18px;">Une trattoria familiale, depuis 1998</h2>
         <p>Tout a commencé avec un four à bois ramené de Naples et une recette de famille transmise sur trois générations. Aujourd'hui encore, chaque pizza sort du même four, chaque pâte est roulée à la main en cuisine.</p>
@@ -252,88 +555,91 @@
 
   <section class="menu-section" id="menu">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <span class="tag">Notre carte</span>
         <h2>Ce qu'on sert</h2>
         <p>Une carte courte, qui change au fil des saisons. Voici une sélection de nos classiques.</p>
       </div>
 
-      <div class="menu-tabs">
-        <button class="menu-tab active" data-menu="pizzas" type="button">Pizzas</button>
-        <button class="menu-tab" data-menu="pates" type="button">Pâtes</button>
-        <button class="menu-tab" data-menu="antipasti" type="button">Antipasti</button>
-        <button class="menu-tab" data-menu="desserts" type="button">Desserts</button>
+      <div class="menu-tabs reveal">
+        <button class="menu-tab active" data-menu="pizzas" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><circle cx="12" cy="12" r="9.5" fill="#F1CD68" stroke="#E7B25E" stroke-width="2"/><circle cx="9" cy="9" r="1.8" fill="#A8402A"/><circle cx="14.5" cy="8.5" r="1.5" fill="#5B7F4B"/><circle cx="15" cy="14" r="1.8" fill="#A8402A"/><circle cx="9" cy="15" r="1.4" fill="#5B7F4B"/></svg> Pizzas</button>
+        <button class="menu-tab" data-menu="pates" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><ellipse cx="12" cy="12" rx="9.5" ry="7" fill="#F1CD68" stroke="#E7B25E" stroke-width="1.6"/><path d="M5 12c2-2 3 2 5 0s3 2 5 0 3 2 4 0" stroke="#B5432E" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Pâtes</button>
+        <button class="menu-tab" data-menu="antipasti" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="3" y="10" width="18" height="4" rx="2" fill="#E7B25E"/><circle cx="7" cy="8" r="2.2" fill="#5B7F4B"/><circle cx="12" cy="7" r="2.2" fill="#A8402A"/><circle cx="17" cy="8" r="2.2" fill="#F1CD68" stroke="#C4822F" stroke-width="1"/></svg> Antipasti</button>
+        <button class="menu-tab" data-menu="desserts" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M4 11c0-4 3.5-7 8-7s8 3 8 7" stroke="#C4822F" stroke-width="1.6" fill="#F7DE8F"/><rect x="4" y="11" width="16" height="3" rx="1.5" fill="#E7B25E"/><rect x="10.5" y="4" width="3" height="4" rx="1.5" fill="#B5432E"/></svg> Desserts</button>
       </div>
 
-      <div class="menu-panel active" data-panel="pizzas">
-        <div class="menu-item"><div><div class="menu-item-name">Margherita</div><div class="menu-item-desc">Tomate San Marzano, mozzarella fior di latte, basilic frais.</div></div><div class="menu-item-price">12€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Diavola</div><div class="menu-item-desc">Tomate, mozzarella, salami piquant, huile pimentée.</div></div><div class="menu-item-price">14€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Quattro Formaggi</div><div class="menu-item-desc">Mozzarella, gorgonzola, parmesan, provolone.</div></div><div class="menu-item-price">15€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Tartufo</div><div class="menu-item-desc">Crème de truffe, champignons, mozzarella, parmesan.</div></div><div class="menu-item-price">18€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Bella Napoli</div><div class="menu-item-desc">Tomate, mozzarella, anchois, câpres, olives noires.</div></div><div class="menu-item-price">13€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Vegetariana</div><div class="menu-item-desc">Légumes grillés de saison, mozzarella, pesto.</div></div><div class="menu-item-price">13€</div></div>
+      <div class="menu-panel active reveal" data-panel="pizzas">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Margherita</span><span class="menu-item-leader"></span><span class="menu-item-price">12€</span></span><span class="menu-item-desc">Tomate San Marzano, mozzarella fior di latte, basilic frais.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Diavola</span><span class="menu-item-leader"></span><span class="menu-item-price">14€</span></span><span class="menu-item-desc">Tomate, mozzarella, salami piquant, huile pimentée.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Quattro Formaggi</span><span class="menu-item-leader"></span><span class="menu-item-price">15€</span></span><span class="menu-item-desc">Mozzarella, gorgonzola, parmesan, provolone.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Tartufo</span><span class="menu-item-leader"></span><span class="menu-item-price">18€</span></span><span class="menu-item-desc">Crème de truffe, champignons, mozzarella, parmesan.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Bella Napoli</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Tomate, mozzarella, anchois, câpres, olives noires.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Vegetariana</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Légumes grillés de saison, mozzarella, pesto.</span></div></div>
       </div>
 
       <div class="menu-panel" data-panel="pates">
-        <div class="menu-item"><div><div class="menu-item-name">Carbonara</div><div class="menu-item-desc">Guanciale, œuf, pecorino romano, poivre noir.</div></div><div class="menu-item-price">14€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Bolognese</div><div class="menu-item-desc">Sauce mijotée 6h, tagliatelles fraîches.</div></div><div class="menu-item-price">13€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Pesto Genovese</div><div class="menu-item-desc">Basilic, pignons de pin, parmesan, huile d'olive.</div></div><div class="menu-item-price">13€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Vongole</div><div class="menu-item-desc">Palourdes, ail, persil, vin blanc, linguine.</div></div><div class="menu-item-price">16€</div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Carbonara</span><span class="menu-item-leader"></span><span class="menu-item-price">14€</span></span><span class="menu-item-desc">Guanciale, œuf, pecorino romano, poivre noir.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Bolognese</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Sauce mijotée 6h, tagliatelles fraîches.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Pesto Genovese</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Basilic, pignons de pin, parmesan, huile d'olive.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Vongole</span><span class="menu-item-leader"></span><span class="menu-item-price">16€</span></span><span class="menu-item-desc">Palourdes, ail, persil, vin blanc, linguine.</span></div></div>
       </div>
 
       <div class="menu-panel" data-panel="antipasti">
-        <div class="menu-item"><div><div class="menu-item-name">Bruschetta</div><div class="menu-item-desc">Tomates fraîches, basilic, ail, pain grillé.</div></div><div class="menu-item-price">8€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Burrata</div><div class="menu-item-desc">Burrata crémeuse, tomates confites, huile d'olive.</div></div><div class="menu-item-price">12€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Arancini</div><div class="menu-item-desc">Boulettes de risotto frites, cœur mozzarella.</div></div><div class="menu-item-price">9€</div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Bruschetta</span><span class="menu-item-leader"></span><span class="menu-item-price">8€</span></span><span class="menu-item-desc">Tomates fraîches, basilic, ail, pain grillé.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Burrata</span><span class="menu-item-leader"></span><span class="menu-item-price">12€</span></span><span class="menu-item-desc">Burrata crémeuse, tomates confites, huile d'olive.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Arancini</span><span class="menu-item-leader"></span><span class="menu-item-price">9€</span></span><span class="menu-item-desc">Boulettes de risotto frites, cœur mozzarella.</span></div></div>
       </div>
 
       <div class="menu-panel" data-panel="desserts">
-        <div class="menu-item"><div><div class="menu-item-name">Tiramisu</div><div class="menu-item-desc">Recette traditionnelle, mascarpone, café, cacao.</div></div><div class="menu-item-price">7€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Panna Cotta</div><div class="menu-item-desc">Coulis de fruits rouges maison.</div></div><div class="menu-item-price">6€</div></div>
-        <div class="menu-item"><div><div class="menu-item-name">Cannoli</div><div class="menu-item-desc">Ricotta fraîche, pistaches, écorces d'agrumes.</div></div><div class="menu-item-price">7€</div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Tiramisu</span><span class="menu-item-leader"></span><span class="menu-item-price">7€</span></span><span class="menu-item-desc">Recette traditionnelle, mascarpone, café, cacao.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Panna Cotta</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></span><span class="menu-item-desc">Coulis de fruits rouges maison.</span></div></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Cannoli</span><span class="menu-item-leader"></span><span class="menu-item-price">7€</span></span><span class="menu-item-desc">Ricotta fraîche, pistaches, écorces d'agrumes.</span></div></div>
       </div>
     </div>
   </section>
 
   <section id="galerie">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <span class="tag">Ambiance</span>
         <h2>Un lieu qu'on aime faire vivre</h2>
       </div>
-      <div class="gallery-grid">
-        <div class="gallery-tile g1"><span>Le four à bois</span></div>
-        <div class="gallery-tile g2"><span>Salle principale</span></div>
-        <div class="gallery-tile g3"><span>Notre terrasse</span></div>
-        <div class="gallery-tile g4"><span>Pizza Margherita</span></div>
-        <div class="gallery-tile g5"><span>L'équipe en cuisine</span></div>
-        <div class="gallery-tile g6"><span>Cave à vins</span></div>
+      <div class="gallery-grid reveal-stagger reveal">
+        <div class="gallery-tile g1"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M12 2C9 6 7 8 7 12a5 5 0 0010 0c0-2-1-3-1-3s-.5 2-2 2c1-2 .5-4-2-9z"/></svg><span>Le four à bois</span></div>
+        <div class="gallery-tile g2"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 9h18M8 18v3M16 18v3"/></svg><span>Salle principale</span></div>
+        <div class="gallery-tile g3"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M7 3h10l-1 9a4 4 0 01-8 0L7 3z"/><path d="M12 14v7M9 21h6"/></svg><span>Notre terrasse</span></div>
+        <div class="gallery-tile g4"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1" fill="#fff"/><circle cx="14" cy="8" r="1" fill="#fff"/><circle cx="15" cy="14" r="1" fill="#fff"/></svg><span>Pizza Margherita</span></div>
+        <div class="gallery-tile g5"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M12 2s-6 5-6 10a6 6 0 0012 0c0-5-6-10-6-10z"/></svg><span>L'équipe en cuisine</span></div>
+        <div class="gallery-tile g6"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M8 2h8l-1 7a3 3 0 01-6 0L8 2z"/><path d="M12 9v13"/></svg><span>Cave à vins</span></div>
       </div>
     </div>
   </section>
 
   <section id="avis" style="background:var(--bg-alt);">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <span class="tag">Avis clients</span>
         <h2>Ce qu'on dit de nous</h2>
       </div>
-      <div class="testi-grid">
+      <div class="testi-grid reveal-stagger reveal">
         <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
           <div class="stars">★★★★★</div>
-          <p>"La meilleure pizza que j'ai mangée en dehors de l'Italie. Le four à bois change vraiment tout."</p>
+          <p>La meilleure pizza que j'ai mangée en dehors de l'Italie. Le four à bois change vraiment tout.</p>
           <div class="testi-name">Claire M.</div>
           <div class="testi-role">Cliente régulière</div>
         </div>
         <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
           <div class="stars">★★★★★</div>
-          <p>"Ambiance chaleureuse, service impeccable, et les pâtes fraîches sont incroyables. On y retourne chaque mois."</p>
+          <p>Ambiance chaleureuse, service impeccable, et les pâtes fraîches sont incroyables. On y retourne chaque mois.</p>
           <div class="testi-name">Julien P.</div>
           <div class="testi-role">Client régulier</div>
         </div>
         <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
           <div class="stars">★★★★★</div>
-          <p>"On sent que tout est fait maison. La burrata est à tomber. Un vrai coin d'Italie."</p>
+          <p>On sent que tout est fait maison. La burrata est à tomber. Un vrai coin d'Italie.</p>
           <div class="testi-name">Sofia R.</div>
           <div class="testi-role">Cliente régulière</div>
         </div>
@@ -343,11 +649,11 @@
 
   <section class="info-section" id="contact">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head reveal">
         <span class="tag">Infos pratiques</span>
         <h2>Nous trouver</h2>
       </div>
-      <div class="info-grid">
+      <div class="info-grid reveal">
         <div>
           <div class="info-list">
             <div><span class="lbl">Adresse</span><span class="val">14 rue des Artisans, Luxembourg</span></div>
@@ -401,6 +707,12 @@
       a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
     });
   }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
 </script>
 </body>
 </html>
