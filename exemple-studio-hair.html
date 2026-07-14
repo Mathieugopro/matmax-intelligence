@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Hair — Exemple de site (démo MatMax Intelligence)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour un salon de coiffure premium, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box; margin:0; padding:0;}
+  :root{
+    --bg:#F8F3EA; --bg-alt:#EFE3D3; --ink:#221C17; --muted:#726657; --dim:#BBAD98; --line:#E4D8C4;
+    --accent:#A9825A; --accent-dark:#7C5C3D; --paper:#FFFFFF;
+    --maxw:1220px;
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink);
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Bodoni Moda',serif; font-weight:600; line-height:1.1; letter-spacing:-.01em;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  section{padding:110px 0;}
+
+  .reveal{opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  .reveal-stagger.in > *{transition-delay:calc(var(--i,0) * 80ms);}
+
+  .demo-banner{
+    background:#1A1512; color:#fff; text-align:center; font-size:.82rem;
+    padding:11px 16px; font-family:'Inter',sans-serif;
+  }
+  .demo-banner strong{color:var(--accent); font-weight:700;}
+  .demo-banner a{color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap;}
+
+  .site-header{
+    position:sticky; top:0; z-index:50; background:rgba(248,243,234,.9);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:22px 32px; gap:24px;}
+  .logo{font-family:'Bodoni Moda',serif; font-style:italic; font-weight:600; font-size:1.5rem;}
+  .logo span{color:var(--accent-dark);}
+  nav ul{list-style:none; display:flex; gap:36px;}
+  nav a{font-size:.86rem; font-weight:500; color:var(--ink); position:relative; padding-bottom:3px;}
+  nav a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--accent-dark); transition:width .25s;}
+  nav a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--ink); color:#fff; border:1px solid var(--ink); border-radius:999px;
+    padding:12px 26px; font-family:'Inter',sans-serif; font-weight:600; font-size:.84rem;
+    cursor:pointer; transition:background .2s, color .2s;
+  }
+  .nav-cta:hover{background:var(--accent-dark); border-color:var(--accent-dark);}
+  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:4px;}
+  .nav-toggle svg{width:26px; height:26px;}
+  .mobile-menu{
+    display:none; flex-direction:column; gap:2px; background:var(--paper);
+    border-top:1px solid var(--line); padding:10px 32px 22px;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{
+    padding:13px 0; border-bottom:1px solid var(--line); font-weight:500; font-size:.94rem; color:var(--ink);
+  }
+  .mobile-menu .nav-cta{color:#fff; text-align:center; margin-top:14px;}
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:15px 30px; border-radius:999px;
+    font-weight:600; font-size:.88rem; cursor:pointer; border:1px solid transparent; transition:all .2s;
+  }
+  .btn-primary{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .btn-primary:hover{background:var(--accent-dark); border-color:var(--accent-dark);}
+  .btn-ghost{background:transparent; color:var(--ink); border-color:var(--ink);}
+  .btn-ghost:hover{background:var(--ink); color:#fff;}
+
+  /* hero: asymmetric, image bleeds to the right edge */
+  .hero{padding:0; overflow:hidden;}
+  .hero-grid{display:grid; grid-template-columns:minmax(320px,460px) 1fr; align-items:stretch; min-height:720px;}
+  .hero-text{display:flex; flex-direction:column; justify-content:center; padding:60px 32px 60px 32px;}
+  .eyebrow{
+    font-size:.76rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent-dark); display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--accent-dark);}
+  .hero h1{font-size:3rem; margin-bottom:24px;}
+  .hero h1 em{color:var(--accent-dark); font-style:italic;}
+  .lead{font-size:1.06rem; color:var(--muted); margin-bottom:36px; max-width:420px;}
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-photo{position:relative; overflow:hidden; background:#111;}
+  .hero-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+
+  .highlights{padding:0;}
+  .highlights-row{
+    display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .highlight-item{padding:34px 28px; border-right:1px solid var(--line);}
+  .highlight-item:last-child{border-right:none;}
+  .hnum{font-family:'Bodoni Moda',serif; font-style:italic; color:var(--accent-dark); font-size:1.1rem; display:block; margin-bottom:10px;}
+  .highlight-item h4{font-family:'Inter',sans-serif; font-size:.94rem; font-weight:600; line-height:1.4;}
+
+  .section-head{max-width:600px; margin-bottom:56px;}
+  .tag{
+    font-size:.76rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent-dark); display:flex; align-items:center; gap:10px; margin-bottom:16px;
+  }
+  .tag::before{content:''; width:26px; height:1px; background:var(--accent-dark);}
+  .section-head h2{font-size:2.3rem; margin-bottom:16px;}
+  .section-head p{color:var(--muted); font-size:1.02rem;}
+  .center .section-head{margin-left:auto; margin-right:auto; text-align:center;}
+  .center .tag{justify-content:center;}
+  .center .tag::before{display:none;}
+
+  .about-grid{display:grid; grid-template-columns:.8fr 1.2fr; gap:70px; align-items:center;}
+  .about-visual img{width:100%; display:block; border:1px solid var(--line);}
+  .about-text p{color:var(--muted); margin-bottom:16px; max-width:520px;}
+  .stats-row{display:flex; gap:44px; margin-top:34px; flex-wrap:wrap;}
+  .stat .num{font-family:'Bodoni Moda',serif; font-style:italic; font-size:2.2rem; color:var(--accent-dark);}
+  .stat .lbl{font-size:.8rem; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:4px;}
+
+  /* prestations: 3 static columns, no tabs */
+  .prestations-section{background:var(--bg-alt);}
+  .presta-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid var(--line); background:var(--line);}
+  .presta-col{background:var(--paper); padding:44px 36px;}
+  .presta-col h3{font-size:1.3rem; margin-bottom:6px;}
+  .presta-col .roman{font-family:'Bodoni Moda',serif; font-style:italic; color:var(--accent-dark); font-size:1rem; display:block; margin-bottom:8px;}
+  .presta-item{padding:16px 0; border-top:1px solid var(--line);}
+  .presta-item:first-of-type{border-top:none; margin-top:14px;}
+  .presta-row{display:flex; align-items:baseline; gap:6px;}
+  .presta-name{font-weight:600; font-size:.98rem;}
+  .presta-leader{flex:1; border-bottom:2px dotted var(--dim); margin:0 8px 5px; min-width:12px;}
+  .presta-price{font-family:'Bodoni Moda',serif; font-style:italic; color:var(--accent-dark); white-space:nowrap;}
+  .presta-desc{display:block; color:var(--muted); font-size:.82rem; margin-top:4px;}
+
+  /* gallery: editorial asymmetric grid */
+  .gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:190px; gap:2px;}
+  .gallery-tile{position:relative; overflow:hidden; color:#fff; display:flex; align-items:flex-end;}
+  .gallery-tile img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+  .gallery-tile:hover img{transform:scale(1.06);}
+  .gallery-tile::after{content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(15,10,5,.7) 0%, rgba(15,10,5,0) 55%);}
+  .gallery-tile span{position:relative; z-index:1; padding:16px; font-size:.82rem; letter-spacing:.03em; font-weight:600;}
+  .gt-a{grid-column:span 2; grid-row:span 2;}
+  .gt-b{grid-column:span 2; grid-row:span 1;}
+  .gt-c{grid-column:span 1; grid-row:span 1;}
+  .gt-d{grid-column:span 1; grid-row:span 1;}
+  .gt-e{grid-column:span 2; grid-row:span 1;}
+  .gt-f{grid-column:span 2; grid-row:span 1;}
+
+  .testi-section{background:var(--bg-alt);}
+  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
+  .testi-card{background:var(--paper); padding:38px 32px;}
+  .testi-quote-mark{font-family:'Bodoni Moda',serif; font-style:italic; font-size:2.8rem; color:var(--accent-dark); line-height:1; margin-bottom:8px;}
+  .stars{color:var(--accent-dark); letter-spacing:2px; margin-bottom:16px; font-size:.9rem;}
+  .testi-card p{color:var(--ink); margin-bottom:20px; font-size:.96rem;}
+  .testi-name{font-weight:700; font-size:.9rem;}
+  .testi-role{color:var(--muted); font-size:.8rem; margin-top:2px;}
+
+  .info-section{background:var(--ink); color:#fff;}
+  .info-section .tag{color:var(--accent);}
+  .info-section .tag::before{background:var(--accent);}
+  .info-section .section-head h2, .info-section .section-head p{color:#fff;}
+  .info-section .section-head p{color:rgba(255,255,255,.6);}
+  .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;}
+  .info-list div{display:flex; justify-content:space-between; padding:15px 0; border-bottom:1px solid rgba(255,255,255,.14);}
+  .info-list .lbl{color:rgba(255,255,255,.5); font-size:.84rem; text-transform:uppercase; letter-spacing:.03em;}
+  .info-list .val{font-weight:500;}
+  .hours-table{width:100%; margin:26px 0; border-collapse:collapse;}
+  .hours-table td{padding:9px 0; border-bottom:1px solid rgba(255,255,255,.14); font-size:.88rem;}
+  .hours-table td:last-child{text-align:right; color:rgba(255,255,255,.7);}
+  .info-section .btn-primary{background:var(--accent-dark); border-color:var(--accent-dark);}
+  .info-section .btn-primary:hover{background:#fff; color:var(--ink); border-color:#fff;}
+  .map-box{
+    border:1px solid rgba(255,255,255,.15); aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
+    color:rgba(255,255,255,.35); font-size:.82rem;
+    background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px); background-size:16px 16px;
+  }
+
+  footer{padding:40px 0 30px; border-top:1px solid var(--line);}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+  .footer-row p{font-size:.76rem; letter-spacing:.03em; color:var(--muted);}
+  .footer-links{display:flex; gap:22px;}
+  .footer-links a{font-size:.82rem; color:var(--muted);}
+  .footer-links a:hover{color:var(--accent-dark);}
+  .footer-note{margin-top:18px; font-size:.78rem; color:var(--dim);}
+  .footer-note a{color:var(--accent-dark);}
+
+  @media(max-width:900px){
+    nav, .nav-cta{display:none;}
+    .nav-toggle{display:block;}
+    .hero-grid{grid-template-columns:1fr; min-height:auto;}
+    .hero-photo{aspect-ratio:4/3; order:-1;}
+    .hero-text{padding:48px 24px;}
+    .about-grid, .info-grid{grid-template-columns:1fr; gap:40px;}
+    .highlights-row{grid-template-columns:repeat(2,1fr);}
+    .highlight-item:nth-child(2){border-right:none;}
+    .presta-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr); grid-auto-rows:180px;}
+    .gt-a, .gt-b, .gt-e, .gt-f{grid-column:span 2; grid-row:span 1;}
+    .testi-grid{grid-template-columns:1fr;}
+    section{padding:76px 0;}
+    .hero h1{font-size:2.3rem;}
+  }
+  @media(max-width:520px){
+    .wrap{padding:0 20px;}
+    .nav-row{padding:16px 20px;}
+    .hero-text{padding:40px 20px;}
+    .highlights-row{grid-template-columns:1fr;}
+    .highlight-item{border-right:none; border-bottom:1px solid var(--line);}
+    .gallery-grid{grid-template-columns:1fr; grid-auto-rows:220px;}
+    .gt-a, .gt-b, .gt-c, .gt-d, .gt-e, .gt-f{grid-column:span 1;}
+    .demo-banner{font-size:.74rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Studio Hair n'est pas une vraie entreprise, les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <div class="logo">Studio <span>Hair</span></div>
+    <nav><ul>
+      <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#galerie">Galerie</a></li>
+      <li><a href="#avis">Avis</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul></nav>
+    <button class="nav-cta" type="button">Prendre rendez-vous</button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#221C17" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#prestations">Prestations</a>
+    <a href="#about">À propos</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <button class="nav-cta" type="button">Prendre rendez-vous</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-text reveal in">
+      <span class="eyebrow">Salon de coiffure — depuis 2012</span>
+      <h1>Une coupe,<br><em>qui vous ressemble.</em></h1>
+      <p class="lead">Un studio pensé pour l'écoute autant que pour le geste — coupe, couleur et soins, par une équipe de coloristes certifiés, sur rendez-vous uniquement.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" type="button">Prendre rendez-vous</button>
+        <a href="#prestations" class="btn btn-ghost">Découvrir nos prestations</a>
+      </div>
+    </div>
+    <div class="hero-photo reveal in">
+      <img src="hair-hero.jpg" alt="Intérieur du salon Studio Hair, fauteuil et miroir rond" width="900" height="1350" loading="eager">
+    </div>
+  </div>
+</section>
+
+<section class="highlights">
+  <div class="wrap highlights-row reveal-stagger reveal">
+    <div class="highlight-item" style="--i:0"><span class="hnum">I</span><h4>Produits professionnels haut de gamme</h4></div>
+    <div class="highlight-item" style="--i:1"><span class="hnum">II</span><h4>Coloristes certifiés</h4></div>
+    <div class="highlight-item" style="--i:2"><span class="hnum">III</span><h4>Sur rendez-vous uniquement</h4></div>
+    <div class="highlight-item" style="--i:3"><span class="hnum">IV</span><h4>Consultation personnalisée offerte</h4></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-visual reveal">
+      <img src="hair-about.jpg" alt="Coupe de cheveux au ciseau, détail des mains du coiffeur" width="800" height="1000" loading="lazy">
+    </div>
+    <div class="about-text reveal">
+      <span class="tag">Notre philosophie</span>
+      <h2>Chaque coupe commence par une écoute.</h2>
+      <p>Studio Hair est né d'une conviction simple : une belle coupe commence toujours par une vraie conversation. Avant chaque prestation, un diagnostic personnalisé permet de comprendre votre nature de cheveux, votre rythme de vie et ce que vous voulez vraiment changer — ou préserver.</p>
+      <p>Nos coloristes travaillent exclusivement avec des marques professionnelles, sans compromis sur la qualité du geste ni sur celle des produits.</p>
+      <div class="stats-row">
+        <div class="stat"><div class="num">12</div><div class="lbl">Ans d'expérience</div></div>
+        <div class="stat"><div class="num">4</div><div class="lbl">Coloristes certifiés</div></div>
+        <div class="stat"><div class="num">100%</div><div class="lbl">Produits professionnels</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="prestations-section" id="prestations">
+  <div class="wrap center">
+    <div class="section-head reveal">
+      <span class="tag">Nos prestations</span>
+      <h2>Coupe, couleur &amp; soins</h2>
+      <p>Une carte claire, pensée pour s'adapter à chaque nature de cheveux. Tarifs indicatifs, ajustés selon la longueur en cabine.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="presta-grid reveal">
+      <div class="presta-col">
+        <span class="roman">I.</span>
+        <h3>Coupe &amp; Style</h3>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Coupe femme</span><span class="presta-leader"></span><span class="presta-price">55€</span></div></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Coupe homme</span><span class="presta-leader"></span><span class="presta-price">35€</span></div></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Coupe &amp; brushing</span><span class="presta-leader"></span><span class="presta-price">75€</span></div><span class="presta-desc">Coupe, soin express et mise en forme.</span></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Chignon événementiel</span><span class="presta-leader"></span><span class="presta-price">90€</span></div></div>
+      </div>
+      <div class="presta-col">
+        <span class="roman">II.</span>
+        <h3>Couleur &amp; Reflets</h3>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Coloration racines</span><span class="presta-leader"></span><span class="presta-price">65€</span></div></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Balayage complet</span><span class="presta-leader"></span><span class="presta-price">120€</span></div></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Mèches / Highlights</span><span class="presta-leader"></span><span class="presta-price">95€</span></div></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Patine / gloss</span><span class="presta-leader"></span><span class="presta-price">40€</span></div></div>
+      </div>
+      <div class="presta-col">
+        <span class="roman">III.</span>
+        <h3>Soins &amp; Rituel</h3>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Soin profond kératine</span><span class="presta-leader"></span><span class="presta-price">55€</span></div></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Rituel cuir chevelu</span><span class="presta-leader"></span><span class="presta-price">45€</span></div></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Botox capillaire</span><span class="presta-leader"></span><span class="presta-price">85€</span></div></div>
+        <div class="presta-item"><div class="presta-row"><span class="presta-name">Massage crânien</span><span class="presta-leader"></span><span class="presta-price">25€</span></div><span class="presta-desc">15 minutes, en fin de prestation.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galerie">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Galerie</span>
+      <h2>Le studio, en images</h2>
+    </div>
+    <div class="gallery-grid reveal-stagger reveal">
+      <div class="gallery-tile gt-a" style="--i:0"><img src="hair-g1.jpg" alt="Le salon Studio Hair, fauteuils et miroir" loading="lazy"><span>Le salon</span></div>
+      <div class="gallery-tile gt-c" style="--i:1"><img src="hair-g2.jpg" alt="Coupe de cheveux en cours" loading="lazy"><span>La coupe</span></div>
+      <div class="gallery-tile gt-d" style="--i:2"><img src="hair-g3.jpg" alt="Application de couleur aux papillotes" loading="lazy"><span>La couleur</span></div>
+      <div class="gallery-tile gt-e" style="--i:3"><img src="hair-g4.jpg" alt="Brushing et mise en forme" loading="lazy"><span>Le brushing</span></div>
+      <div class="gallery-tile gt-c" style="--i:4"><img src="hair-g5.jpg" alt="Outils de coiffure, détail" loading="lazy"><span>Le détail</span></div>
+      <div class="gallery-tile gt-d" style="--i:5"><img src="hair-g6.jpg" alt="Accueil du salon Studio Hair" loading="lazy"><span>L'accueil</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="testi-section" id="avis">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Avis clients</span>
+      <h2>Ce qu'on en dit</h2>
+    </div>
+    <div class="testi-grid reveal-stagger reveal">
+      <div class="testi-card" style="--i:0">
+        <div class="testi-quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p>Premier salon où on prend vraiment le temps de m'écouter avant de couper. Le résultat est toujours à la hauteur.</p>
+        <div class="testi-name">Camille V.</div>
+        <div class="testi-role">Cliente régulière</div>
+      </div>
+      <div class="testi-card" style="--i:1">
+        <div class="testi-quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p>Le balayage est d'une précision incroyable, et l'accueil est toujours aussi chaleureux. Je ne change plus de salon.</p>
+        <div class="testi-name">Sophie L.</div>
+        <div class="testi-role">Cliente depuis 3 ans</div>
+      </div>
+      <div class="testi-card" style="--i:2">
+        <div class="testi-quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p>Le rituel cuir chevelu à la fin du rendez-vous change tout. On repart complètement détendu.</p>
+        <div class="testi-name">Julien M.</div>
+        <div class="testi-role">Client fidèle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info-section" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Prenez rendez-vous</h2>
+      <p>Sur rendez-vous uniquement — réservez en ligne ou par téléphone.</p>
+    </div>
+    <div class="info-grid reveal">
+      <div>
+        <div class="info-list">
+          <div><span class="lbl">Adresse</span><span class="val">8 rue Philippe II, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 621 00 00 00</span></div>
+          <div><span class="lbl">Email</span><span class="val">contact@studiohair-exemple.lu</span></div>
+        </div>
+        <table class="hours-table">
+          <tr><td>Mardi — Vendredi</td><td>9h30 – 19h00</td></tr>
+          <tr><td>Samedi</td><td>9h00 – 17h00</td></tr>
+          <tr><td>Dimanche — Lundi</td><td>Fermé</td></tr>
+        </table>
+        <button class="btn btn-primary" type="button">Réserver par téléphone</button>
+      </div>
+      <div class="map-box"><span>Emplacement — carte à intégrer</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 STUDIO HAIR — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#prestations">Prestations</a>
+        <a href="#about">À propos</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/">MatMax Intelligence</a> — Studio Hair n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+    });
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+</script>
+
+</body>
+</html>
