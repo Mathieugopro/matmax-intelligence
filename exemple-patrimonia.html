@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Patrimonia — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#F5F2E9; --bg-alt:#ECE6D6; --ink:#1C2B22; --muted:#5F6F62; --dim:#B9C2B6; --line:#DED6BE;
+    --emerald:#2F5D45; --emerald-dark:#1F4531; --bronze:#B08D57; --bronze-light:#D2B888; --cream:#FFFDF7;
+    --radius:6px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Spectral',serif; font-weight:600; line-height:1.18; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; position:relative; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:100px 0; position:relative; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .08s); }
+
+  .demo-banner{ background:var(--ink); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; position:relative; z-index:100; }
+  .demo-banner strong{ color:var(--bronze-light); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  header.site-header{ position:sticky; top:0; z-index:50; background:rgba(245,242,233,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:82px; }
+  .logo{ font-family:'Spectral'; font-weight:700; font-size:1.35rem; letter-spacing:.3px; }
+  .logo span{ color:var(--bronze); }
+  nav ul{ display:flex; gap:30px; }
+  nav a{ font-size:.86rem; color:var(--muted); transition:color .2s; }
+  nav a:hover{ color:var(--ink); }
+  .nav-cta{ padding:11px 22px; background:var(--emerald); color:#fff; border-radius:var(--radius); font-size:.86rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:background .2s, transform .2s; }
+  .nav-cta:hover{ background:var(--emerald-dark); transform:translateY(-1px); }
+  .nav-toggle{ display:none; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-size:.95rem; color:var(--ink); }
+  .mobile-menu .nav-cta{ display:block; margin:16px 32px; text-align:center; color:#fff; width:calc(100% - 64px); }
+
+  /* ---- Hero : full-bleed, pas de grille 2 colonnes ---- */
+  .hero{ padding:0; }
+  .hero-media{ position:relative; min-height:600px; display:flex; align-items:center; overflow:hidden; }
+  .hero-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+  .hero-media::after{ content:''; position:absolute; inset:0; background:linear-gradient(100deg, rgba(20,30,24,0.92) 0%, rgba(20,30,24,0.72) 42%, rgba(20,30,24,0.35) 75%); z-index:1; }
+  .hero-content{ position:relative; z-index:2; color:#fff; max-width:640px; padding:90px 0 130px; }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.76rem; color:var(--bronze-light); letter-spacing:.08em; margin-bottom:20px; text-transform:uppercase; }
+  .hero h1{ font-size:clamp(2.4rem,4.4vw,3.6rem); margin-bottom:24px; color:#fff; }
+  .hero p.lead{ font-size:1.08rem; color:rgba(255,255,255,0.82); max-width:48ch; margin-bottom:36px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:15px 28px; border-radius:var(--radius); font-size:.9rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--bronze); color:#1C2B22; }
+  .btn-primary:hover{ background:var(--bronze-light); transform:translateY(-2px); }
+  .btn-ghost-light{ background:transparent; border:1px solid rgba(255,255,255,0.4); color:#fff; }
+  .btn-ghost-light:hover{ border-color:#fff; transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink); transform:translateY(-2px); }
+
+  /* ---- Bandeau de chiffres : carte flottante qui chevauche le hero ---- */
+  .stat-float-wrap{ position:relative; z-index:3; margin-top:-84px; }
+  .stat-card{ background:var(--cream); border-radius:12px; box-shadow:0 30px 60px -20px rgba(20,30,24,0.35); display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat-cell{ padding:32px 28px; border-left:1px solid var(--line); text-align:center; }
+  .stat-cell:first-child{ border-left:none; }
+  .stat-cell .num{ font-family:'Spectral'; font-size:2rem; font-weight:700; color:var(--emerald); }
+  .stat-cell .lbl{ font-size:.78rem; color:var(--muted); margin-top:6px; }
+
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.76rem; color:var(--emerald); text-transform:uppercase; letter-spacing:.06em; margin-bottom:14px; display:block; }
+  .section-head h2{ font-size:clamp(1.9rem,3.2vw,2.5rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1.02rem; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Approche : timeline horizontale à 4 étapes ---- */
+  .approche{ padding-top:140px; }
+  .timeline{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
+  .timeline::before{ content:''; position:absolute; top:23px; left:calc(12.5% ); right:calc(12.5%); height:1px; background:var(--line); z-index:0; }
+  .tl-step{ position:relative; padding-right:28px; }
+  .tl-num{ width:46px; height:46px; border-radius:50%; background:var(--cream); border:1.5px solid var(--emerald); color:var(--emerald); display:flex; align-items:center; justify-content:center; font-family:'Spectral'; font-weight:700; font-size:1.05rem; margin-bottom:22px; position:relative; z-index:1; }
+  .tl-step h3{ font-size:1.15rem; margin-bottom:10px; }
+  .tl-step p{ color:var(--muted); font-size:.92rem; }
+
+  /* ---- Expertises : grille asymétrique ---- */
+  .expertises{ background:var(--bg-alt); }
+  .expertise-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .expertise-card{ background:var(--cream); border:1px solid var(--line); border-radius:10px; padding:32px; transition:box-shadow .2s, transform .2s; }
+  .expertise-card:hover{ box-shadow:0 20px 40px -24px rgba(20,30,24,0.25); transform:translateY(-3px); }
+  .expertise-card.featured{ grid-column:span 3; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; padding:40px; background:var(--emerald); color:#fff; }
+  .expertise-card.featured h3{ color:#fff; font-size:1.6rem; margin-bottom:14px; }
+  .expertise-card.featured p{ color:rgba(255,255,255,0.78); font-size:.98rem; }
+  .expertise-card.featured .ex-icon{ background:rgba(255,255,255,0.12); }
+  .ex-icon{ width:46px; height:46px; border-radius:10px; background:var(--bg-alt); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .ex-icon svg{ width:22px; height:22px; stroke:var(--emerald); }
+  .expertise-card.featured .ex-icon svg{ stroke:#fff; }
+  .expertise-card h3{ font-size:1.1rem; margin-bottom:8px; }
+  .expertise-card p{ color:var(--muted); font-size:.88rem; }
+  .ex-visual{ display:flex; align-items:center; justify-content:center; }
+  .ex-visual svg{ width:100%; max-width:220px; }
+
+  /* ---- Simulateur de profil investisseur ---- */
+  .simulateur{ }
+  .sim-card{ background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:44px; max-width:760px; margin:0 auto; box-shadow:0 30px 60px -30px rgba(20,30,24,0.2); }
+  .sim-q{ margin-bottom:32px; }
+  .sim-q-label{ font-family:'Spectral'; font-weight:600; font-size:1.05rem; margin-bottom:14px; }
+  .sim-options{ display:flex; gap:10px; flex-wrap:wrap; }
+  .sim-opt{ padding:11px 18px; border-radius:30px; border:1px solid var(--line); background:#fff; font-family:'Inter'; font-size:.86rem; color:var(--muted); cursor:pointer; transition:all .15s; }
+  .sim-opt:hover{ border-color:var(--emerald); color:var(--ink); }
+  .sim-opt.active{ background:var(--emerald); border-color:var(--emerald); color:#fff; }
+  .sim-result{ display:none; margin-top:8px; padding-top:32px; border-top:1px solid var(--line); }
+  .sim-result.show{ display:block; }
+  .sim-result-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:8px; }
+  .sim-result-head h3{ font-size:1.3rem; }
+  .sim-result-head span{ font-family:'IBM Plex Mono'; font-size:.8rem; color:var(--emerald); }
+  .sim-bar{ display:flex; height:34px; border-radius:8px; overflow:hidden; margin-bottom:14px; }
+  .sim-bar-seg{ display:flex; align-items:center; justify-content:center; font-size:.74rem; color:#fff; font-family:'IBM Plex Mono'; }
+  .sim-legend{ display:flex; gap:20px; flex-wrap:wrap; margin-bottom:22px; }
+  .sim-legend-item{ display:flex; align-items:center; gap:7px; font-size:.82rem; color:var(--muted); }
+  .sim-legend-dot{ width:10px; height:10px; border-radius:50%; }
+  .sim-result p.desc{ color:var(--muted); font-size:.92rem; margin-bottom:22px; }
+
+  /* ---- Équipe ---- */
+  .team-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+  .team-card{ text-align:center; }
+  .team-photo{ width:140px; height:140px; border-radius:50%; overflow:hidden; margin:0 auto 20px; border:3px solid var(--cream); box-shadow:0 14px 30px -14px rgba(20,30,24,0.35); }
+  .team-photo img{ width:100%; height:100%; object-fit:cover; }
+  .team-card h3{ font-size:1.15rem; margin-bottom:4px; }
+  .team-card .role{ font-size:.84rem; color:var(--emerald); font-family:'IBM Plex Mono'; }
+
+  /* ---- Témoignages éditoriaux ---- */
+  .testi-editorial{ background:var(--bg-alt); }
+  .testi-ed-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; }
+  .testi-ed{ border-left:2px solid var(--bronze); padding-left:28px; }
+  .testi-ed .qm{ font-family:'Spectral'; font-size:3.4rem; color:var(--bronze); line-height:1; opacity:.7; }
+  .testi-ed p{ font-family:'Spectral'; font-style:italic; font-size:1.25rem; color:var(--ink); margin:6px 0 20px; line-height:1.45; }
+  .testi-ed .name{ font-weight:700; font-size:.92rem; }
+  .testi-ed .role{ font-size:.8rem; color:var(--muted); }
+
+  .info-section{ background:var(--ink); color:#fff; }
+  .info-section .section-head p{ color:rgba(255,255,255,0.6); }
+  .info-section .section-head .tag{ color:var(--bronze-light); }
+  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .info-list{ display:flex; flex-direction:column; gap:22px; margin-bottom:30px; }
+  .info-list .lbl{ font-family:'IBM Plex Mono'; font-size:.72rem; color:var(--bronze-light); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:6px; }
+  .info-list .val{ font-size:1rem; }
+  .map-box{ height:100%; min-height:280px; border-radius:var(--radius); background:repeating-linear-gradient(45deg,rgba(255,255,255,0.04),rgba(255,255,255,0.04) 10px,transparent 10px,transparent 20px), #14201A; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1); }
+  .map-box span{ font-family:'IBM Plex Mono'; font-size:.8rem; color:rgba(255,255,255,0.4); }
+
+  footer{ padding:44px 0; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-row p{ font-size:.8rem; color:var(--dim); }
+  .footer-links{ display:flex; gap:22px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--ink); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:900px){
+    nav, .nav-cta{ display:none; }
+    .nav-toggle{ display:flex; background:none; border:none; cursor:pointer; padding:6px; }
+    .hero-content{ padding:70px 0 110px; }
+    .stat-card{ grid-template-columns:1fr 1fr; }
+    .stat-cell:nth-child(3){ border-left:none; }
+    .timeline{ grid-template-columns:1fr; gap:34px; }
+    .timeline::before{ display:none; }
+    .tl-step{ padding-right:0; }
+    .expertise-grid{ grid-template-columns:1fr 1fr; }
+    .expertise-card.featured{ grid-column:span 2; grid-template-columns:1fr; }
+    .ex-visual{ display:none; }
+    .team-grid{ grid-template-columns:1fr; max-width:280px; margin:0 auto; }
+    .testi-ed-grid{ grid-template-columns:1fr; gap:36px; }
+    .info-grid{ grid-template-columns:1fr; }
+    section{ padding:64px 0; }
+    .approche{ padding-top:64px; }
+    .wrap{ padding:0 20px; }
+  }
+  @media (max-width:520px){
+    .stat-card{ grid-template-columns:1fr 1fr; }
+    .expertise-grid{ grid-template-columns:1fr; }
+    .expertise-card.featured{ grid-column:span 1; }
+    .hero h1{ font-size:2rem; }
+    .stat-float-wrap{ margin-top:-40px; }
+    .stat-cell{ padding:20px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Patrimonia n'est pas une vraie entreprise, les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <div class="logo">Patrimon<span>ia</span></div>
+    <nav>
+      <ul>
+        <li><a href="#approche">Notre approche</a></li>
+        <li><a href="#expertises">Expertises</a></li>
+        <li><a href="#simulateur">Profil investisseur</a></li>
+        <li><a href="#equipe">Équipe</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-cta" type="button">Prendre rendez-vous</button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#approche">Notre approche</a>
+    <a href="#expertises">Expertises</a>
+    <a href="#simulateur">Profil investisseur</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#contact">Contact</a>
+    <button class="nav-cta" type="button">Prendre rendez-vous</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-media">
+      <img src="patrimonia-hero.jpg" alt="Quartier d'affaires au lever du jour" width="1920" height="1080">
+      <div class="wrap">
+        <div class="hero-content reveal in">
+          <div class="eyebrow">Conseil en gestion de patrimoine — Indépendant</div>
+          <h1>Faire fructifier, protéger, transmettre.</h1>
+          <p class="lead">Stratégie patrimoniale sur mesure, sans conflit d'intérêt. Un interlocuteur unique pour construire, sécuriser et transmettre votre patrimoine, à votre rythme.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button">Prendre rendez-vous</button>
+            <a class="btn btn-ghost-light" href="#approche">Découvrir notre approche</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap stat-float-wrap reveal in">
+      <div class="stat-card">
+        <div class="stat-cell"><div class="num">250M€</div><div class="lbl">conseillés</div></div>
+        <div class="stat-cell"><div class="num">18 ans</div><div class="lbl">d'expérience</div></div>
+        <div class="stat-cell"><div class="num">340</div><div class="lbl">familles accompagnées</div></div>
+        <div class="stat-cell"><div class="num">100%</div><div class="lbl">indépendant</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="approche" id="approche">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Notre approche</span>
+        <h2>Une méthode en quatre étapes</h2>
+        <p>Pas de produit imposé, pas de rétrocession cachée : chaque recommandation part d'un diagnostic complet de votre situation.</p>
+      </div>
+      <div class="timeline reveal-stagger reveal">
+        <div class="tl-step"><div class="tl-num">01</div><h3>Diagnostic</h3><p>Un bilan patrimonial complet, sans engagement, pour comprendre votre situation et vos objectifs.</p></div>
+        <div class="tl-step"><div class="tl-num">02</div><h3>Stratégie</h3><p>Une allocation sur mesure, adaptée à votre horizon de placement et à votre tolérance au risque.</p></div>
+        <div class="tl-step"><div class="tl-num">03</div><h3>Mise en œuvre</h3><p>Sélection des meilleurs supports du marché, sans rétrocession cachée sur nos recommandations.</p></div>
+        <div class="tl-step"><div class="tl-num">04</div><h3>Suivi</h3><p>Un point annuel, des ajustements réguliers, et un interlocuteur unique tout au long de la relation.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="expertises" id="expertises">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Nos expertises</span>
+        <h2>Quatre domaines, une seule équipe</h2>
+      </div>
+      <div class="expertise-grid reveal-stagger reveal">
+        <div class="expertise-card featured">
+          <div>
+            <div class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+            <h3>Gestion sous mandat</h3>
+            <p>Déléguez la gestion de votre portefeuille à notre équipe, selon un profil de risque défini ensemble et revu chaque année.</p>
+          </div>
+          <div class="ex-visual">
+            <svg viewBox="0 0 220 140" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="0,110 30,90 60,100 90,60 120,75 150,30 180,45 220,10" fill="none" stroke="#fff" stroke-width="2.5" opacity="0.85"/>
+              <circle cx="220" cy="10" r="5" fill="#D2B888"/>
+            </svg>
+          </div>
+        </div>
+        <div class="expertise-card">
+          <div class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg></div>
+          <h3>Conseil patrimonial</h3>
+          <p>Structuration fiscale et patrimoniale sur mesure, adaptée à votre situation personnelle et professionnelle.</p>
+        </div>
+        <div class="expertise-card">
+          <div class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <h3>Transmission &amp; succession</h3>
+          <p>Anticiper la transmission de votre patrimoine à vos proches, en toute sérénité fiscale.</p>
+        </div>
+        <div class="expertise-card">
+          <div class="ex-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5"/><path d="M5 10v10h14V10"/></svg></div>
+          <h3>Immobilier &amp; diversification</h3>
+          <p>SCPI, private equity et actifs réels pour diversifier au-delà des marchés cotés.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="simulateur" id="simulateur">
+    <div class="wrap">
+      <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+        <span class="tag">Outil interactif</span>
+        <h2>Estimez votre profil d'investisseur</h2>
+        <p>Trois questions pour une première orientation. Ce résultat est indicatif — un vrai entretien affine toujours l'analyse.</p>
+      </div>
+      <div class="sim-card reveal">
+        <div class="sim-q" data-q="1">
+          <div class="sim-q-label">1. Quel est votre horizon de placement ?</div>
+          <div class="sim-options">
+            <button class="sim-opt" type="button" data-score="0">Moins de 3 ans</button>
+            <button class="sim-opt" type="button" data-score="1">3 à 8 ans</button>
+            <button class="sim-opt" type="button" data-score="2">Plus de 8 ans</button>
+          </div>
+        </div>
+        <div class="sim-q" data-q="2">
+          <div class="sim-q-label">2. Face à une baisse de 15% de votre portefeuille, vous...</div>
+          <div class="sim-options">
+            <button class="sim-opt" type="button" data-score="0">Vendez pour limiter les pertes</button>
+            <button class="sim-opt" type="button" data-score="1">Attendez sans agir</button>
+            <button class="sim-opt" type="button" data-score="2">Investissez davantage</button>
+          </div>
+        </div>
+        <div class="sim-q" data-q="3">
+          <div class="sim-q-label">3. Quelle part de votre épargne pouvez-vous immobiliser durablement ?</div>
+          <div class="sim-options">
+            <button class="sim-opt" type="button" data-score="0">Moins de 20%</button>
+            <button class="sim-opt" type="button" data-score="1">Entre 20 et 50%</button>
+            <button class="sim-opt" type="button" data-score="2">Plus de 50%</button>
+          </div>
+        </div>
+
+        <div class="sim-result" id="simResult">
+          <div class="sim-result-head">
+            <h3 id="simProfileName">Profil équilibré</h3>
+            <span id="simProfileScore">Score 3/6</span>
+          </div>
+          <div class="sim-bar" id="simBar"></div>
+          <div class="sim-legend" id="simLegend"></div>
+          <p class="desc" id="simDesc"></p>
+          <button class="btn btn-primary" type="button">Échanger avec un conseiller sur ce profil</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="equipe" style="background:var(--bg-alt);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Notre équipe</span>
+        <h2>Trois associés, une même exigence</h2>
+      </div>
+      <div class="team-grid reveal-stagger reveal">
+        <div class="team-card">
+          <div class="team-photo"><img src="patrimonia-team1.jpg" alt="Camille Weber, associée fondatrice" width="640" height="640" loading="lazy"></div>
+          <h3>Camille Weber</h3>
+          <div class="role">Associée fondatrice — Gestion sous mandat</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><img src="patrimonia-team2.jpg" alt="Julien Roth, conseiller patrimonial" width="640" height="640" loading="lazy"></div>
+          <h3>Julien Roth</h3>
+          <div class="role">Conseiller patrimonial — Fiscalité &amp; structuration</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><img src="patrimonia-team3.jpg" alt="Marc Feldman, associé fondateur" width="640" height="640" loading="lazy"></div>
+          <h3>Marc Feldman</h3>
+          <div class="role">Associé fondateur — Transmission &amp; succession</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testi-editorial">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Avis clients</span>
+        <h2>Ce que nos clients en disent</h2>
+      </div>
+      <div class="testi-ed-grid reveal-stagger reveal">
+        <div class="testi-ed">
+          <div class="qm">"</div>
+          <p>Enfin un conseiller qui prend le temps d'expliquer chaque recommandation, sans jamais pousser un produit en particulier.</p>
+          <div class="name">Isabelle T.</div>
+          <div class="role">Cliente depuis 2019</div>
+        </div>
+        <div class="testi-ed">
+          <div class="qm">"</div>
+          <p>Une vraie approche sur mesure. Le bilan initial était plus complet que tout ce qu'on m'avait proposé en banque privée.</p>
+          <div class="name">Frédéric M.</div>
+          <div class="role">Client depuis 2021</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section" id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Nous contacter</span>
+        <h2>Un premier échange, sans engagement</h2>
+      </div>
+      <div class="info-grid reveal">
+        <div>
+          <div class="info-list">
+            <div><span class="lbl">Adresse</span><span class="val">12 boulevard Royal, Luxembourg</span></div>
+            <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+            <div><span class="lbl">Email</span><span class="val">contact@patrimonia.lu</span></div>
+            <div><span class="lbl">Horaires</span><span class="val">Lundi — Vendredi, 9h – 18h, sur rendez-vous</span></div>
+          </div>
+          <button class="btn btn-primary" type="button">Prendre rendez-vous</button>
+        </div>
+        <div class="map-box"><span>Emplacement — carte à intégrer</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 PATRIMONIA — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#approche">Notre approche</a>
+        <a href="#expertises">Expertises</a>
+        <a href="#equipe">Équipe</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--emerald);">MatMax Intelligence</a> — Patrimonia n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+    });
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // ---- Simulateur de profil investisseur ----
+  (function(){
+    var answers = {};
+    var groups = document.querySelectorAll('.sim-q');
+    var resultBox = document.getElementById('simResult');
+    var profileName = document.getElementById('simProfileName');
+    var profileScore = document.getElementById('simProfileScore');
+    var bar = document.getElementById('simBar');
+    var legend = document.getElementById('simLegend');
+    var desc = document.getElementById('simDesc');
+
+    var PROFILES = [
+      { max:2, name:"Profil prudent", alloc:[20,60,20], text:"Priorité à la préservation du capital. Une allocation dominée par les fonds euros et obligataires, avec une petite poche actions pour dynamiser le rendement.", colors:["#B08D57","#2F5D45","#8FA895"] },
+      { max:4, name:"Profil équilibré", alloc:[45,40,15], text:"Un équilibre entre performance et sécurité. Répartition mesurée entre actions, obligations et liquidités, revue chaque année.", colors:["#B08D57","#2F5D45","#8FA895"] },
+      { max:6, name:"Profil dynamique", alloc:[70,20,10], text:"Priorité à la performance sur le long terme. Allocation majoritairement en actions, avec une diversification internationale et immobilière.", colors:["#B08D57","#2F5D45","#8FA895"] }
+    ];
+    var LABELS = ["Actions", "Obligations", "Liquidités"];
+
+    function maybeCompute(){
+      var qs = Object.keys(answers);
+      if (qs.length < 3) return;
+      var total = answers[1] + answers[2] + answers[3];
+      var profile = PROFILES.find(function(p){ return total <= p.max; }) || PROFILES[PROFILES.length-1];
+
+      profileName.textContent = profile.name;
+      profileScore.textContent = "Score " + total + "/6";
+      desc.textContent = profile.text;
+
+      bar.innerHTML = '';
+      legend.innerHTML = '';
+      profile.alloc.forEach(function(pct, i){
+        var seg = document.createElement('div');
+        seg.className = 'sim-bar-seg';
+        seg.style.width = pct + '%';
+        seg.style.background = profile.colors[i];
+        seg.textContent = pct + '%';
+        bar.appendChild(seg);
+
+        var item = document.createElement('div');
+        item.className = 'sim-legend-item';
+        item.innerHTML = '<span class="sim-legend-dot" style="background:' + profile.colors[i] + '"></span>' + LABELS[i];
+        legend.appendChild(item);
+      });
+
+      resultBox.classList.add('show');
+      resultBox.scrollIntoView({ behavior:'smooth', block:'nearest' });
+    }
+
+    groups.forEach(function(group){
+      var qNum = parseInt(group.dataset.q, 10);
+      group.querySelectorAll('.sim-opt').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          group.querySelectorAll('.sim-opt').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          answers[qNum] = parseInt(btn.dataset.score, 10);
+          maybeCompute();
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
