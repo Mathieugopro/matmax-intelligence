@@ -172,15 +172,15 @@
 
   /* approche */
   .approach-section{ background:var(--bg-alt); }
-  .approach-grid{ display:grid; grid-template-columns:1fr .85fr; gap:60px; align-items:start; }
+  .approach-grid{ display:grid; grid-template-columns:1fr .85fr; gap:60px; align-items:stretch; }
   .approach-list{ display:flex; flex-direction:column; }
   .approach-item{ display:grid; grid-template-columns:56px 1fr; gap:20px; padding:26px 0; border-top:1px solid var(--line); }
   .approach-item:last-child{ border-bottom:1px solid var(--line); }
   .approach-num{ font-family:'Inter'; font-weight:600; color:var(--blue); font-size:.95rem; padding-top:2px; }
   .approach-item h3{ font-size:1.1rem; margin-bottom:6px; }
   .approach-item p{ color:var(--muted); font-size:.93rem; }
-  .approach-photo{ border-radius:12px; overflow:hidden; box-shadow:0 30px 60px -30px rgba(20,20,26,.35); }
-  .approach-photo img{ width:100%; aspect-ratio:4/5; object-fit:cover; }
+  .approach-photo{ border-radius:12px; overflow:hidden; box-shadow:0 30px 60px -30px rgba(20,20,26,.35); height:100%; min-height:420px; }
+  .approach-photo img{ width:100%; height:100%; object-fit:cover; }
 
   /* stats dark band */
   .stats-band{ background:var(--ink); color:#fff; position:relative; overflow:hidden; }
@@ -222,7 +222,8 @@
     .nav-toggle{ display:flex; }
     .services-grid, .price-panel{ grid-template-columns:1fr; }
     .approach-grid{ grid-template-columns:1fr; gap:32px; }
-    .approach-photo{ position:static; order:-1; max-width:320px; }
+    .approach-photo{ order:-1; max-width:320px; height:auto; min-height:0; }
+    .approach-photo img{ height:auto; aspect-ratio:4/5; }
     .stats-row-band{ grid-template-columns:1fr; }
     .contact-layout-light{ grid-template-columns:1fr; }
     .contact-side-light{ border-right:none; border-bottom:1px solid var(--line); }
