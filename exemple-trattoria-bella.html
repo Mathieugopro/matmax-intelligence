@@ -4,190 +4,202 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour une trattoria italienne, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
 <title>Trattoria Bella — Exemple de site (démo MatMax Intelligence)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   *{ margin:0; padding:0; box-sizing:border-box; }
   :root{
-    --bg:#FBF6EE; --bg-alt:#F5E9D6; --ink:#2B2013; --muted:#8A7B65; --dim:#B3A794; --line:#E6D9C2;
-    --red:#A83232; --red-dark:#7C2222; --olive:#4E7A51; --gold:#C98A2E; --cream:#FFFDF9;
-    --radius:8px; --maxw:1180px;
+    --bg:#F7EFE2; --bg-alt:#EFE2CC; --bg-dark:#1C120C; --ink:#241610; --muted:#8A7562; --dim:#C7B7A2; --line:#E6D6C0;
+    --red:#C1361F; --red-dark:#8F2515; --basil:#3D6B3D; --basil-dark:#2B4E2B; --gold:#D4A54A; --cream:#FFFDF8;
+    --radius:10px; --maxw:1200px;
   }
   html{ scroll-behavior:smooth; }
-  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased;
-    background-image: radial-gradient(circle, rgba(168,50,50,0.05) 1px, transparent 1px);
-    background-size: 22px 22px;
-  }
-  h1,h2,h3{ font-family:'Fraunces',serif; font-weight:600; line-height:1.14; }
-  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; position:relative; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Playfair Display',serif; font-weight:700; line-height:1.15; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
   a{ text-decoration:none; color:inherit; }
   ul{ list-style:none; }
   img,svg{ max-width:100%; display:block; }
-  section{ padding:104px 0; position:relative; overflow:hidden; }
+  section{ padding:104px 0; }
 
-  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
   .reveal.in{ opacity:1; transform:none; }
-  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .08s); }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
 
-  /* demo banner */
-  .demo-banner{ background:var(--ink); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; position:relative; z-index:100; }
-  .demo-banner strong{ color:#F0C46A; }
-  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+  .demo-banner{ background:var(--bg-dark); color:var(--cream); text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:var(--gold); }
+  .demo-banner a{ color:var(--cream); text-decoration:underline; margin-left:10px; white-space:nowrap; }
 
-  /* header */
-  header.site-header{ position:sticky; top:0; z-index:50; background:rgba(251,246,238,0.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
-  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:82px; }
-  .logo{ font-family:'Fraunces'; font-weight:600; font-size:1.3rem; letter-spacing:.2px; display:flex; align-items:center; gap:8px; }
-  .logo span{ color:var(--red); font-style:italic; }
-  .logo .logo-mark{ width:26px; height:26px; }
-  nav ul{ display:flex; gap:34px; }
-  nav a{ font-size:.9rem; color:var(--muted); transition:color .2s; }
-  nav a:hover{ color:var(--ink); }
-  .nav-cta{ padding:11px 22px; background:var(--red); color:#fff; border-radius:var(--radius); font-size:.86rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:background .2s, transform .2s; }
-  .nav-cta:hover{ background:var(--red-dark); transform:translateY(-1px); }
-  .nav-toggle{ display:none; }
-
-  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
-  .mobile-menu.open{ display:flex; }
-  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-size:.95rem; color:var(--ink); }
-  .mobile-menu .nav-cta{ display:block; margin:16px 32px; text-align:center; color:#fff; width:calc(100% - 64px); }
-
-  /* decorative accents */
-  .deco-leaf{ position:absolute; opacity:0.5; pointer-events:none; z-index:0; }
-
-  /* hero */
-  .hero{ padding:70px 0 76px; }
-  .hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center; }
-  .badge-rating{ display:inline-flex; align-items:center; gap:8px; background:var(--cream); border:1px solid var(--line); padding:8px 14px; border-radius:30px; font-size:.8rem; margin-bottom:24px; }
-  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--red); letter-spacing:.06em; margin-bottom:18px; text-transform:uppercase; }
-  .hero h1{ font-size:clamp(2.5rem,4.4vw,3.7rem); margin-bottom:22px; max-width:13ch; }
-  .hero h1 em{ color:var(--red); font-style:italic; }
-  .hero p.lead{ font-size:1.08rem; color:var(--muted); max-width:46ch; margin-bottom:34px; }
-  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
-  .btn{ display:inline-flex; align-items:center; gap:8px; padding:15px 28px; border-radius:var(--radius); font-size:.92rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:all .2s; }
-  .btn-primary{ background:var(--red); color:#fff; }
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:15px 28px; border-radius:999px; font-size:.86rem; font-weight:700; border:2px solid transparent; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--red); color:var(--cream); }
   .btn-primary:hover{ background:var(--red-dark); transform:translateY(-2px); }
-  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
-  .btn-ghost:hover{ border-color:var(--ink); transform:translateY(-2px); }
-  .hero-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
-  .hero-visual .pizza-wrap{ position:relative; width:100%; max-width:440px; animation: floaty 5s ease-in-out infinite; }
-  @keyframes floaty{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
-  .hero-visual .leaf-a{ top:-14px; left:-24px; width:70px; transform:rotate(-18deg); }
-  .hero-visual .leaf-b{ bottom:6px; right:-30px; width:60px; transform:rotate(24deg); }
-  .price-tag-float{ position:absolute; bottom:-6px; left:-18px; background:var(--ink); color:#fff; padding:10px 16px; border-radius:30px; font-family:'IBM Plex Mono'; font-size:.78rem; box-shadow:0 10px 24px -8px rgba(0,0,0,0.3); }
+  .btn-ghost{ background:transparent; border-color:rgba(255,255,255,0.35); color:var(--cream); }
+  .btn-ghost:hover{ border-color:var(--cream); }
 
-  /* highlights */
-  .highlights{ padding:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--cream); }
-  .highlights-row{ display:grid; grid-template-columns:repeat(4,1fr); }
-  .highlight-item{ padding:30px 28px; border-left:1px solid var(--line); display:flex; flex-direction:column; gap:6px; }
-  .highlight-item:first-child{ border-left:none; }
-  .highlight-item .hnum{ font-family:'IBM Plex Mono'; color:var(--red); font-size:.78rem; }
-  .highlight-item h4{ font-family:'Fraunces'; font-size:1.05rem; font-weight:600; }
+  /* ---- Header ---- */
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(28,18,12,0.92); backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,0.08); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; gap:20px; }
+  .logo{ font-family:'Playfair Display'; font-style:italic; font-weight:700; font-size:1.4rem; color:var(--cream); }
+  .logo span{ color:var(--gold); }
+  nav.main-nav{ display:flex; gap:28px; }
+  nav.main-nav a{ font-size:.84rem; color:rgba(255,255,255,0.72); font-weight:600; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--gold); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .nav-toggle svg{ stroke:var(--cream); }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid rgba(255,255,255,0.1); background:var(--bg-dark); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid rgba(255,255,255,0.08); font-size:.95rem; font-weight:600; color:var(--cream); }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
 
-  /* section head */
-  .section-head{ max-width:640px; margin-bottom:52px; position:relative; z-index:1; }
-  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--red); text-transform:uppercase; letter-spacing:.06em; display:flex; align-items:center; gap:8px; margin-bottom:14px; }
-  .section-head h2{ font-size:clamp(1.9rem,3.2vw,2.6rem); }
-  .section-head p{ margin-top:14px; color:var(--muted); font-size:1.02rem; }
+  .section-head{ max-width:620px; margin-bottom:52px; }
+  .section-head .tag{ font-family:'JetBrains Mono'; font-size:.72rem; color:var(--red); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.9rem,3.2vw,2.5rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1rem; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+  .section-head.on-dark .tag{ color:var(--gold); }
+  .section-head.on-dark h2{ color:var(--cream); }
+  .section-head.on-dark p{ color:rgba(255,255,255,0.6); }
 
-  /* about */
-  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; position:relative; z-index:1; }
-  .about-text p{ color:var(--muted); margin-bottom:16px; font-size:1rem; }
-  .stats-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:8px; }
-  .stat{ background:var(--cream); padding:26px 20px; text-align:center; }
-  .stat .num{ font-family:'Fraunces'; font-size:2rem; font-weight:600; color:var(--red); }
-  .stat .lbl{ font-size:.8rem; color:var(--muted); margin-top:6px; }
-  .about-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+  /* ---- Hero plein cadre sombre ---- */
+  .hero{ position:relative; min-height:92vh; overflow:hidden; background:var(--bg-dark); }
+  .hero-bg{ position:absolute; inset:0; }
+  .hero-bg img{ width:100%; height:100%; object-fit:cover; object-position:center 35%; opacity:.85; }
+  .hero-bg::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(28,18,12,0.35) 0%, rgba(28,18,12,0.25) 40%, rgba(28,18,12,0.96) 100%); }
+  .hero-content{ position:relative; z-index:2; min-height:92vh; display:flex; flex-direction:column; justify-content:flex-end; max-width:var(--maxw); margin:0 auto; padding:120px 32px 90px; }
+  .hero-ribbon{ position:absolute; top:34px; right:-46px; background:var(--red); color:var(--cream); font-family:'JetBrains Mono'; font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; padding:9px 60px; transform:rotate(35deg); box-shadow:0 8px 20px -6px rgba(0,0,0,0.5); z-index:3; }
+  .hero-badge{ display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); color:var(--cream); padding:9px 16px; border-radius:999px; font-size:.8rem; margin-bottom:26px; width:fit-content; }
+  .hero h1{ font-size:clamp(2.6rem,6vw,4.6rem); color:var(--cream); margin-bottom:22px; max-width:16ch; }
+  .hero h1 em{ color:var(--gold); font-style:italic; }
+  .hero p.lead{ font-size:1.08rem; color:rgba(255,255,255,0.68); max-width:48ch; margin-bottom:34px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .scroll-cue{ position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2; }
+  .scroll-cue svg{ width:20px; height:20px; stroke:rgba(255,255,255,0.5); animation:bounceDown 2s infinite; }
+  @keyframes bounceDown{ 0%,100%{ transform:translateY(0); opacity:.5; } 50%{ transform:translateY(8px); opacity:1; } }
 
-  /* menu */
-  .menu-section{ background:var(--bg-alt); }
-  .menu-tabs{ display:flex; gap:8px; margin-bottom:44px; flex-wrap:wrap; position:relative; z-index:1; }
-  .menu-tab{ display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:30px; border:1px solid var(--line); font-size:.88rem; color:var(--muted); background:var(--cream); cursor:pointer; transition:all .2s; font-family:'Inter'; }
-  .menu-tab:hover{ border-color:var(--ink); color:var(--ink); }
-  .menu-tab.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
-  .menu-tab.active svg circle:first-child, .menu-tab.active svg ellipse:first-child, .menu-tab.active svg rect:first-child, .menu-tab.active svg path:first-child{ opacity:0.9; }
-  .menu-panel{ display:none; position:relative; z-index:1; }
+  /* ---- Origini : carte interactive ---- */
+  .origini-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:60px; align-items:center; }
+  .map-wrap{ position:relative; max-width:380px; margin:0 auto; aspect-ratio:3/5; }
+  .map-wrap svg{ width:100%; height:100%; }
+  .map-pin{ position:absolute; width:26px; height:26px; border-radius:50%; background:var(--cream); border:3px solid var(--red); cursor:pointer; transform:translate(-50%,-50%); transition:all .25s; display:flex; align-items:center; justify-content:center; padding:0; }
+  .map-pin::after{ content:''; width:8px; height:8px; border-radius:50%; background:var(--red); transition:all .25s; }
+  .map-pin:hover{ transform:translate(-50%,-50%) scale(1.15); }
+  .map-pin.active{ background:var(--red); border-color:var(--gold); }
+  .map-pin.active::after{ background:var(--gold); }
+  .origini-info{ background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:36px 38px; min-height:260px; }
+  .origini-info .region-tag{ font-family:'JetBrains Mono'; font-size:.72rem; color:var(--red); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px; }
+  .origini-info h3{ font-size:1.5rem; margin-bottom:14px; }
+  .origini-info p{ color:var(--muted); font-size:.95rem; margin-bottom:18px; }
+  .origini-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .origini-tags span{ background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:7px 14px; font-size:.78rem; color:var(--ink); font-weight:600; }
+
+  /* ---- Compose ta pizza ---- */
+  .pizza-section{ background:var(--bg-dark); color:var(--cream); position:relative; overflow:hidden; }
+  .pizza-section::before{ content:''; position:absolute; inset:0; background-image:url('trattoria-oven-flames.jpg'); background-size:cover; background-position:center; opacity:.14; }
+  .pizza-section .wrap{ position:relative; z-index:1; }
+  .pizza-box{ background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.14); border-radius:var(--radius); padding:44px 44px 40px; max-width:920px; margin:0 auto; backdrop-filter:blur(6px); }
+  .pizza-group-label{ font-family:'JetBrains Mono'; font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--gold); margin-bottom:14px; display:block; }
+  .pizza-chip-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:30px; }
+  .pizza-chip{ padding:11px 18px; border-radius:999px; border:1px solid rgba(255,255,255,0.22); background:transparent; color:var(--cream); font-size:.85rem; font-weight:600; cursor:pointer; transition:all .2s; font-family:'Inter'; }
+  .pizza-chip:hover{ border-color:var(--gold); }
+  .pizza-chip.active{ background:var(--red); border-color:var(--red); color:var(--cream); }
+  .pizza-result{ margin-top:10px; background:rgba(255,255,255,0.06); border-radius:var(--radius); padding:28px 30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+  .pizza-summary{ flex:1; min-width:220px; }
+  .pizza-summary .lbl{ font-family:'JetBrains Mono'; font-size:.68rem; text-transform:uppercase; color:rgba(255,255,255,0.5); letter-spacing:.05em; margin-bottom:8px; }
+  .pizza-summary .list{ font-size:.92rem; color:var(--cream); line-height:1.8; }
+  .pizza-price{ font-family:'Playfair Display'; font-size:2.4rem; font-weight:700; color:var(--gold); white-space:nowrap; }
+
+  /* ---- Storia (à propos) ---- */
+  .storia-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:60px; align-items:center; }
+  .storia-photo{ border-radius:var(--radius); overflow:hidden; }
+  .storia-photo img{ width:100%; aspect-ratio:3/4; object-fit:cover; }
+  .storia-quote{ font-family:'Playfair Display'; font-style:italic; font-size:1.4rem; color:var(--ink); margin-bottom:20px; line-height:1.4; }
+  .storia-text p{ color:var(--muted); font-size:.98rem; margin-bottom:16px; }
+  .stats-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border-radius:var(--radius); overflow:hidden; margin-top:26px; }
+  .stat{ background:var(--cream); padding:24px 18px; text-align:center; }
+  .stat .num{ font-family:'Playfair Display'; font-size:1.8rem; font-weight:700; color:var(--red); }
+  .stat .lbl{ font-size:.78rem; color:var(--muted); margin-top:6px; }
+
+  /* ---- Menu façon lavagna ---- */
+  .menu-section{ background:var(--bg-dark); color:var(--cream); }
+  .menu-tabs{ display:flex; gap:10px; margin-bottom:40px; flex-wrap:wrap; }
+  .menu-tab{ padding:10px 20px; border-radius:999px; border:1px solid rgba(255,255,255,0.2); font-size:.85rem; color:rgba(255,255,255,0.7); background:transparent; cursor:pointer; transition:all .2s; font-family:'Inter'; }
+  .menu-tab:hover{ border-color:var(--gold); color:var(--cream); }
+  .menu-tab.active{ background:var(--gold); border-color:var(--gold); color:var(--bg-dark); font-weight:700; }
+  .menu-panel{ display:none; }
   .menu-panel.active{ display:grid; grid-template-columns:1fr 1fr; gap:0 56px; }
-  .menu-item{ display:flex; align-items:baseline; gap:10px; padding:20px 0; border-bottom:1px dashed var(--line); }
-  .menu-item-main{ flex:1; }
-  .menu-item-name{ font-family:'Fraunces'; font-weight:600; font-size:1.06rem; margin-bottom:4px; display:inline; }
-  .menu-item-leader{ flex:1; border-bottom:2px dotted var(--dim); margin:0 8px 5px; min-width:20px; }
-  .menu-item-desc{ font-size:.85rem; color:var(--muted); max-width:32ch; display:block; margin-top:3px; }
-  .menu-item-price{ font-family:'IBM Plex Mono'; font-weight:500; color:var(--red); white-space:nowrap; }
-  .menu-item-row{ display:flex; align-items:baseline; width:100%; }
+  .menu-item{ padding:20px 0; border-bottom:1px dashed rgba(255,255,255,0.18); }
+  .menu-item-row{ display:flex; align-items:baseline; width:100%; gap:8px; }
+  .menu-item-name{ font-family:'Playfair Display'; font-weight:700; font-size:1.05rem; }
+  .menu-item-leader{ flex:1; border-bottom:2px dotted rgba(255,255,255,0.25); margin-bottom:5px; min-width:16px; }
+  .menu-item-price{ font-family:'JetBrains Mono'; font-weight:500; color:var(--gold); white-space:nowrap; }
+  .menu-item-desc{ font-size:.84rem; color:rgba(255,255,255,0.55); margin-top:4px; max-width:34ch; }
 
-  /* gallery */
-  .gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; position:relative; z-index:1; }
-  .gallery-tile{ position:relative; border-radius:var(--radius); overflow:hidden; height:230px; display:flex; align-items:flex-end; padding:18px; }
-  .gallery-tile .g-icon{ position:absolute; top:16px; right:16px; width:34px; height:34px; opacity:0.9; }
-  .gallery-tile span{ color:#fff; font-family:'Fraunces'; font-weight:600; font-size:.95rem; position:relative; z-index:2; }
-  .gallery-tile::before{ content:''; position:absolute; inset:0; background:rgba(0,0,0,0.2); z-index:1; }
-  .g1{ background:linear-gradient(135deg,#A83232,#7C2222); }
-  .g2{ background:linear-gradient(135deg,#4E7A51,#33523A); }
-  .g3{ background:linear-gradient(135deg,#C98A2E,#A56B1D); }
-  .g4{ background:linear-gradient(135deg,#8A7B65,#5C513F); }
-  .g5{ background:linear-gradient(135deg,#7C2222,#4E1616); }
-  .g6{ background:linear-gradient(135deg,#33523A,#1F3524); }
+  /* ---- Galerie : bande défilante ---- */
+  .filmstrip-wrap{ position:relative; }
+  .filmstrip-track{ display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:10px; scrollbar-width:none; }
+  .filmstrip-track::-webkit-scrollbar{ display:none; }
+  .filmstrip-item{ scroll-snap-align:start; flex:0 0 320px; border-radius:var(--radius); overflow:hidden; position:relative; height:400px; }
+  .filmstrip-item img{ width:100%; height:100%; object-fit:cover; }
+  .filmstrip-item .cap{ position:absolute; left:0; right:0; bottom:0; background:linear-gradient(180deg, rgba(28,18,12,0) 40%, rgba(28,18,12,0.85) 100%); color:var(--cream); padding:20px; font-family:'Playfair Display'; font-size:1.1rem; }
+  .filmstrip-nav{ display:flex; gap:10px; justify-content:flex-end; margin-top:22px; }
+  .filmstrip-nav button{ width:42px; height:42px; border-radius:50%; border:1px solid var(--line); background:var(--cream); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+  .filmstrip-nav button:hover{ border-color:var(--red); }
+  .filmstrip-nav svg{ width:17px; height:17px; }
 
-  /* testimonials */
-  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; position:relative; z-index:1; }
-  .testi-card{ background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:30px; position:relative; }
-  .testi-quote-mark{ font-family:'Fraunces'; font-size:3rem; color:var(--gold); opacity:0.35; line-height:1; margin-bottom:-14px; }
+  /* ---- Avis ---- */
+  .avis-section{ background:var(--bg-dark); color:var(--cream); }
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .testi-card{ background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:var(--radius); padding:30px; }
+  .testi-quote-mark{ font-family:'Playfair Display'; font-size:2.8rem; color:var(--gold); opacity:.7; line-height:1; margin-bottom:-10px; }
   .stars{ color:var(--gold); font-size:.9rem; margin-bottom:14px; letter-spacing:2px; }
-  .testi-card p{ color:var(--ink); font-size:.94rem; margin-bottom:18px; font-style:italic; }
-  .testi-name{ font-family:'Fraunces'; font-weight:600; font-size:.9rem; }
-  .testi-role{ font-size:.78rem; color:var(--muted); }
+  .testi-card p{ font-size:.92rem; margin-bottom:16px; font-style:italic; color:rgba(255,255,255,0.85); }
+  .testi-name{ font-family:'Playfair Display'; font-weight:700; font-size:.9rem; }
+  .testi-role{ font-size:.76rem; color:rgba(255,255,255,0.5); }
 
-  /* info */
-  .info-section{ background:var(--ink); color:#fff; }
-  .info-section .section-head p{ color:rgba(255,255,255,0.6); }
-  .info-section .section-head .tag{ color:#F0C46A; }
-  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; position:relative; z-index:1; }
-  .info-list{ display:flex; flex-direction:column; gap:22px; margin-bottom:30px; }
-  .info-list .lbl{ font-family:'IBM Plex Mono'; font-size:.72rem; color:#F0C46A; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:6px; }
-  .info-list .val{ font-size:1rem; }
-  .hours-table{ width:100%; border-collapse:collapse; margin-bottom:28px; }
-  .hours-table td{ padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:.9rem; }
-  .hours-table td:last-child{ text-align:right; color:rgba(255,255,255,0.65); }
-  .map-box{ height:100%; min-height:320px; border-radius:var(--radius); background:repeating-linear-gradient(45deg,rgba(255,255,255,0.04),rgba(255,255,255,0.04) 10px,transparent 10px,transparent 20px), #1C140E; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1); }
-  .map-box span{ font-family:'IBM Plex Mono'; font-size:.8rem; color:rgba(255,255,255,0.4); }
+  /* ---- Contact / réservation ---- */
+  .contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:1px; background:var(--line); border-radius:var(--radius); overflow:hidden; }
+  .contact-col{ padding:46px 42px; background:var(--cream); }
+  .contact-info-list{ display:flex; flex-direction:column; gap:16px; margin:22px 0 28px; }
+  .contact-info-list .lbl{ font-family:'JetBrains Mono'; font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+  .contact-info-list .val{ font-size:.95rem; }
+  .hours-table{ width:100%; border-collapse:collapse; margin-top:8px; }
+  .hours-table td{ padding:8px 0; border-bottom:1px solid var(--line); font-size:.88rem; }
+  .hours-table td:last-child{ text-align:right; color:var(--muted); }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:.78rem; font-weight:700; margin-bottom:6px; color:var(--muted); }
+  .field input, .field select, .field textarea{ width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font-family:'Inter'; font-size:.9rem; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .field textarea{ resize:vertical; min-height:70px; }
 
-  /* footer */
-  footer{ padding:44px 0; border-top:1px solid var(--line); position:relative; z-index:1; }
+  footer{ padding:44px 0 30px; border-top:1px solid var(--line); }
   .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
-  .footer-row p{ font-size:.8rem; color:var(--dim); }
+  .footer-row p{ font-size:.8rem; color:var(--muted); }
   .footer-links{ display:flex; gap:22px; }
   .footer-links a{ font-size:.8rem; color:var(--muted); }
-  .footer-links a:hover{ color:var(--ink); }
+  .footer-links a:hover{ color:var(--red); }
   .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
 
-  @media (max-width:900px){
-    nav, .nav-cta{ display:none; }
-    .nav-toggle{ display:flex; background:none; border:none; cursor:pointer; padding:6px; }
-    .hero-grid{ grid-template-columns:1fr; }
-    .hero-visual{ margin-top:10px; }
-    .hero-visual .pizza-wrap{ max-width:280px; }
-    .highlights-row{ grid-template-columns:1fr 1fr; }
-    .highlight-item:nth-child(3){ border-left:none; }
-    .about-grid{ grid-template-columns:1fr; }
-    .about-visual{ order:-1; }
-    .about-visual svg{ max-width:220px; margin:0 auto; }
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    header .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .origini-grid{ grid-template-columns:1fr; gap:36px; }
+    .storia-grid{ grid-template-columns:1fr; gap:36px; }
+    .storia-photo{ max-width:340px; margin:0 auto; }
     .menu-panel.active{ grid-template-columns:1fr; }
-    .gallery-grid{ grid-template-columns:1fr 1fr; }
     .testi-grid{ grid-template-columns:1fr; }
-    .info-grid{ grid-template-columns:1fr; }
-    section{ padding:68px 0; }
-    .wrap{ padding:0 20px; }
-    .deco-leaf{ display:none; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .pizza-result{ flex-direction:column; align-items:flex-start; }
+    .hero-ribbon{ display:none; }
+    section{ padding:70px 0; }
   }
-  @media (max-width:520px){
-    .highlights-row{ grid-template-columns:1fr; }
-    .highlight-item{ border-left:none !important; border-top:1px solid var(--line); }
-    .highlight-item:first-child{ border-top:none; }
-    .gallery-grid{ grid-template-columns:1fr; }
-    .stats-row{ grid-template-columns:1fr; }
-    .hero h1{ font-size:2.1rem; }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .filmstrip-item{ flex-basis:260px; height:320px; }
+    .field-row{ grid-template-columns:1fr; }
   }
 </style>
 </head>
@@ -199,488 +211,290 @@
 </div>
 
 <header class="site-header">
-  <div class="wrap nav-row">
-    <div class="logo">Trattoria <span>Bella</span></div>
-    <nav>
-      <ul>
-        <li><a href="#menu">Menu</a></li>
-        <li><a href="#about">À propos</a></li>
-        <li><a href="#galerie">Galerie</a></li>
-        <li><a href="#avis">Avis</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+  <div class="nav-row">
+    <a href="#" class="logo">Trattoria <span>Bella</span></a>
+    <nav class="main-nav">
+      <a href="#origini">Nos origines</a>
+      <a href="#pizza">Compose ta pizza</a>
+      <a href="#menu">Menu</a>
+      <a href="#galleria">Galerie</a>
+      <a href="#contact">Contact</a>
     </nav>
-    <button class="nav-cta" type="button">Réserver une table</button>
-    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <a class="btn btn-primary" href="#contact">Réserver une table</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
+    <a href="#origini">Nos origines</a>
+    <a href="#pizza">Compose ta pizza</a>
     <a href="#menu">Menu</a>
-    <a href="#about">À propos</a>
-    <a href="#galerie">Galerie</a>
+    <a href="#galleria">Galerie</a>
     <a href="#avis">Avis</a>
     <a href="#contact">Contact</a>
-    <button class="nav-cta" type="button">Réserver une table</button>
+    <a class="btn btn-primary" href="#contact">Réserver une table</a>
   </div>
 </header>
 
-<main>
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="reveal in">
-        <span class="badge-rating">★★★★★ &nbsp;4.8/5 — 320 avis</span>
-        <div class="eyebrow">Restaurant italien — Depuis 1998</div>
-        <h1>La vraie cuisine <em>italienne</em>, sans détour.</h1>
-        <p class="lead">Pâtes fraîches faites maison, pizzas au four à bois, produits importés directement d'Italie. Une trattoria familiale au cœur de la ville.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#menu">Voir le menu</a>
-          <button class="btn btn-ghost" type="button">Réserver une table</button>
-        </div>
+<section class="hero">
+  <div class="hero-ribbon">Depuis 1998</div>
+  <div class="hero-bg"><img src="trattoria-hero.jpg" alt="Pizza glissée dans un four à bois traditionnel" width="1300" height="867"></div>
+  <div class="hero-content">
+    <span class="hero-badge">★★★★★ &nbsp;4.8/5 — 320 avis</span>
+    <h1>La vraie cuisine <em>italienne</em>, sans détour.</h1>
+    <p class="lead">Pâtes fraîches faites maison, pizzas au four à bois, produits importés directement d'Italie. Une trattoria familiale au cœur de la ville, depuis trois générations.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#menu">Voir le menu</a>
+      <a class="btn btn-ghost" href="#contact">Réserver une table</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+</section>
+
+<section id="origini">
+  <div class="wrap origini-grid">
+    <div class="reveal">
+      <div class="map-wrap" id="mapWrap">
+        <svg viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
+          <path d="M140,10 C160,8 175,20 172,38 C170,50 155,55 150,68 C145,82 158,90 162,105 C166,120 155,130 150,145 C145,160 155,170 158,185 C160,195 152,205 145,210 C158,215 175,222 178,238 C180,250 172,262 165,272 C158,282 150,295 155,310 C158,320 150,330 138,328 C128,326 122,315 120,305 C118,295 108,290 100,296 C90,303 92,318 85,325 C75,335 60,328 62,315 C64,302 55,295 48,300 C36,308 22,300 28,285 C32,275 45,270 52,260 C58,250 50,238 40,232 C28,225 25,208 35,198 C45,188 58,192 68,184 C78,176 74,160 65,152 C52,142 52,122 65,112 C78,102 88,88 82,72 C78,60 85,45 100,40 C110,37 118,28 125,20 C130,13 133,11 140,10 Z" fill="#EFE2CC" stroke="#E6D6C0" stroke-width="2"/>
+          <circle cx="95" cy="90" r="10" fill="#E6D6C0"/>
+          <circle cx="55" cy="290" r="16" fill="#E6D6C0"/>
+        </svg>
+        <button class="map-pin" style="left:32%; top:16%;" data-region="piemonte" type="button" aria-label="Piémont"></button>
+        <button class="map-pin" style="left:52%; top:34%;" data-region="emilia" type="button" aria-label="Émilie-Romagne"></button>
+        <button class="map-pin active" style="left:44%; top:58%;" data-region="campania" type="button" aria-label="Campanie"></button>
+        <button class="map-pin" style="left:62%; top:64%;" data-region="puglia" type="button" aria-label="Pouilles"></button>
+        <button class="map-pin" style="left:28%; top:86%;" data-region="sicilia" type="button" aria-label="Sicile"></button>
       </div>
-      <div class="hero-visual reveal in">
-        <div class="pizza-wrap">
-          <div class="deco-leaf leaf-a" style="position:absolute;"><svg viewBox="0 0 180 100" width="180" height="100" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10,50.0 C45.0,10.0 135.0,10.0 170,50.0 C135.0,90.0 45.0,90.0 10,50.0 Z" fill="#5B7F4B" opacity="0.9"/>
-<line x1="12" y1="50.0" x2="168" y2="50.0" stroke="#3F5C34" stroke-width="1.5" opacity="0.5"/>
-</svg></div>
-          <div class="deco-leaf leaf-b" style="position:absolute;"><svg viewBox="0 0 180 100" width="180" height="100" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10,50.0 C45.0,10.0 135.0,10.0 170,50.0 C135.0,90.0 45.0,90.0 10,50.0 Z" fill="#5B7F4B" opacity="0.9"/>
-<line x1="12" y1="50.0" x2="168" y2="50.0" stroke="#3F5C34" stroke-width="1.5" opacity="0.5"/>
-</svg></div>
-          <svg viewBox="0 0 440 440" width="440" height="440" xmlns="http://www.w3.org/2000/svg">
-<ellipse cx="220.0" cy="406.208" rx="165.968" ry="28.336000000000002" fill="#000" opacity="0.10"/>
-<circle cx="220.0" cy="220.0" r="202.4" fill="#E7B25E"/>
-<circle cx="220.0" cy="220.0" r="202.4" fill="none" stroke="#C68A3B" stroke-width="3" opacity="0.5"/>
-<circle cx="137.6" cy="384.7" r="2.6" fill="#C4822F" opacity="0.64"/>
-<circle cx="378.1" cy="326.2" r="3.0" fill="#C4822F" opacity="0.36"/>
-<circle cx="52.7" cy="294.1" r="1.6" fill="#B5732A" opacity="0.37"/>
-<circle cx="40.7" cy="141.8" r="2.5" fill="#D99B45" opacity="0.68"/>
-<circle cx="53.9" cy="132.6" r="3.2" fill="#C4822F" opacity="0.54"/>
-<circle cx="346.0" cy="359.6" r="2.4" fill="#D99B45" opacity="0.46"/>
-<circle cx="294.5" cy="51.1" r="2.4" fill="#D99B45" opacity="0.42"/>
-<circle cx="377.3" cy="330.5" r="2.4" fill="#D99B45" opacity="0.42"/>
-<circle cx="140.3" cy="49.5" r="2.0" fill="#D99B45" opacity="0.67"/>
-<circle cx="100.3" cy="361.8" r="1.7" fill="#C4822F" opacity="0.38"/>
-<circle cx="161.3" cy="399.8" r="2.0" fill="#B5732A" opacity="0.45"/>
-<circle cx="402.3" cy="197.2" r="2.2" fill="#B5732A" opacity="0.40"/>
-<circle cx="37.9" cy="232.7" r="2.6" fill="#D99B45" opacity="0.55"/>
-<circle cx="352.3" cy="88.5" r="2.7" fill="#D99B45" opacity="0.52"/>
-<circle cx="273.1" cy="44.9" r="1.6" fill="#B5732A" opacity="0.52"/>
-<circle cx="126.1" cy="63.1" r="2.7" fill="#D99B45" opacity="0.55"/>
-<circle cx="141.1" cy="48.9" r="2.7" fill="#D99B45" opacity="0.47"/>
-<circle cx="394.3" cy="151.8" r="2.5" fill="#B5732A" opacity="0.37"/>
-<circle cx="241.0" cy="37.3" r="1.8" fill="#B5732A" opacity="0.67"/>
-<circle cx="35.6" cy="224.0" r="2.1" fill="#B5732A" opacity="0.66"/>
-<circle cx="302.0" cy="43.7" r="1.9" fill="#B5732A" opacity="0.70"/>
-<circle cx="143.1" cy="49.0" r="1.8" fill="#C4822F" opacity="0.41"/>
-<circle cx="241.0" cy="404.2" r="2.3" fill="#D99B45" opacity="0.41"/>
-<circle cx="183.3" cy="400.4" r="2.4" fill="#D99B45" opacity="0.55"/>
-<circle cx="403.7" cy="164.3" r="2.3" fill="#D99B45" opacity="0.58"/>
-<circle cx="207.9" cy="31.8" r="3.0" fill="#D99B45" opacity="0.63"/>
-<circle cx="73.6" cy="337.5" r="1.6" fill="#D99B45" opacity="0.49"/>
-<circle cx="291.5" cy="402.7" r="2.2" fill="#C4822F" opacity="0.47"/>
-<circle cx="392.2" cy="279.0" r="1.7" fill="#C4822F" opacity="0.68"/>
-<circle cx="81.8" cy="100.1" r="1.8" fill="#B5732A" opacity="0.40"/>
-<circle cx="217.3" cy="407.0" r="2.1" fill="#C4822F" opacity="0.39"/>
-<circle cx="24.5" cy="234.7" r="2.3" fill="#B5732A" opacity="0.38"/>
-<circle cx="369.7" cy="331.9" r="1.9" fill="#D99B45" opacity="0.41"/>
-<circle cx="413.6" cy="248.3" r="2.4" fill="#C4822F" opacity="0.59"/>
-<circle cx="385.5" cy="120.9" r="1.9" fill="#D99B45" opacity="0.65"/>
-<circle cx="158.4" cy="44.8" r="2.1" fill="#C4822F" opacity="0.47"/>
-<circle cx="252.3" cy="407.0" r="2.3" fill="#D99B45" opacity="0.43"/>
-<circle cx="293.9" cy="38.3" r="2.9" fill="#C4822F" opacity="0.64"/>
-<circle cx="208.2" cy="35.1" r="2.3" fill="#B5732A" opacity="0.61"/>
-<circle cx="413.0" cy="207.4" r="2.3" fill="#C4822F" opacity="0.59"/>
-<circle cx="401.5" cy="169.2" r="3.1" fill="#B5732A" opacity="0.68"/>
-<circle cx="97.9" cy="359.2" r="1.8" fill="#C4822F" opacity="0.47"/>
-<circle cx="25.0" cy="241.3" r="2.5" fill="#C4822F" opacity="0.52"/>
-<circle cx="109.2" cy="61.3" r="1.6" fill="#D99B45" opacity="0.39"/>
-<circle cx="73.0" cy="343.9" r="1.8" fill="#C4822F" opacity="0.50"/>
-<circle cx="99.5" cy="81.9" r="3.1" fill="#D99B45" opacity="0.49"/>
-<circle cx="220.0" cy="220.0" r="176.0" fill="#B5432E"/>
-<circle cx="220.0" cy="220.0" r="169.4" fill="#F1CD68"/>
-<ellipse cx="128.6" cy="285.2" rx="36.5" ry="16.0" fill="#F7DE8F" opacity="0.55" transform="rotate(46 128.6 285.2)"/>
-<ellipse cx="282.4" cy="307.3" rx="38.1" ry="15.8" fill="#F7DE8F" opacity="0.55" transform="rotate(298 282.4 307.3)"/>
-<ellipse cx="297.3" cy="210.4" rx="29.0" ry="20.6" fill="#F7DE8F" opacity="0.55" transform="rotate(47 297.3 210.4)"/>
-<ellipse cx="334.7" cy="230.3" rx="35.0" ry="20.3" fill="#F7DE8F" opacity="0.55" transform="rotate(336 334.7 230.3)"/>
-<ellipse cx="125.4" cy="261.8" rx="38.5" ry="16.5" fill="#F7DE8F" opacity="0.55" transform="rotate(91 125.4 261.8)"/>
-<ellipse cx="212.4" cy="247.5" rx="33.7" ry="17.1" fill="#F7DE8F" opacity="0.55" transform="rotate(151 212.4 247.5)"/>
-<ellipse cx="293.3" cy="299.2" rx="29.1" ry="19.5" fill="#F7DE8F" opacity="0.55" transform="rotate(210 293.3 299.2)"/>
-<ellipse cx="261.1" cy="191.8" rx="40.4" ry="20.0" fill="#F7DE8F" opacity="0.55" transform="rotate(191 261.1 191.8)"/>
-<ellipse cx="217.8" cy="219.7" rx="30.8" ry="16.2" fill="#F7DE8F" opacity="0.55" transform="rotate(1 217.8 219.7)"/>
-<circle cx="227.5" cy="196.4" r="3.4" fill="#C4822F" opacity="0.5"/>
-<circle cx="207.6" cy="140.8" r="3.0" fill="#C4822F" opacity="0.5"/>
-<circle cx="140.6" cy="210.8" r="4.4" fill="#C4822F" opacity="0.5"/>
-<circle cx="283.4" cy="269.9" r="2.7" fill="#C4822F" opacity="0.5"/>
-<circle cx="201.3" cy="329.6" r="3.5" fill="#C4822F" opacity="0.5"/>
-<circle cx="118.7" cy="178.6" r="4.7" fill="#C4822F" opacity="0.5"/>
-<circle cx="137.4" cy="250.8" r="3.5" fill="#C4822F" opacity="0.5"/>
-<circle cx="120.5" cy="212.4" r="3.4" fill="#C4822F" opacity="0.5"/>
-<circle cx="152.7" cy="205.7" r="4.8" fill="#C4822F" opacity="0.5"/>
-<circle cx="180.4" cy="100.2" r="4.8" fill="#C4822F" opacity="0.5"/>
-<circle cx="215.1" cy="300.4" r="4.8" fill="#C4822F" opacity="0.5"/>
-<circle cx="230.6" cy="203.3" r="2.4" fill="#C4822F" opacity="0.5"/>
-<circle cx="210.2" cy="223.7" r="2.7" fill="#C4822F" opacity="0.5"/>
-<circle cx="306.4" cy="262.7" r="4.4" fill="#C4822F" opacity="0.5"/>
-<circle cx="255.5" cy="193.2" r="15" fill="#A8402A"/>
-<circle cx="255.5" cy="193.2" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="253.5" cy="194.0" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="251.2" cy="188.9" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="263.8" cy="192.4" r="2.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="258.8" cy="195.7" r="1.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="197.4" cy="115.4" r="15" fill="#A8402A"/>
-<circle cx="197.4" cy="115.4" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="198.1" cy="111.3" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="189.2" cy="119.7" r="1.8" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="197.2" cy="118.5" r="1.9" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="190.5" cy="112.1" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="303.8" cy="325.3" r="15" fill="#A8402A"/>
-<circle cx="303.8" cy="325.3" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="310.9" cy="327.9" r="1.4" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="312.4" cy="329.5" r="1.6" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="304.7" cy="322.8" r="1.9" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="312.0" cy="328.9" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="291.4" cy="198.0" r="15" fill="#A8402A"/>
-<circle cx="291.4" cy="198.0" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="287.9" cy="203.5" r="1.9" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="291.0" cy="201.1" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="291.6" cy="200.9" r="1.2" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="294.8" cy="199.2" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="72.7" cy="231.8" r="15" fill="#A8402A"/>
-<circle cx="72.7" cy="231.8" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="69.9" cy="239.4" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="69.2" cy="231.8" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="76.6" cy="232.3" r="1.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="72.0" cy="225.4" r="1.2" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="139.0" cy="257.2" r="15" fill="#A8402A"/>
-<circle cx="139.0" cy="257.2" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="129.6" cy="258.7" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="141.2" cy="252.2" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="141.6" cy="252.8" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="135.2" cy="248.1" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="193.6" cy="262.0" r="15" fill="#A8402A"/>
-<circle cx="193.6" cy="262.0" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="197.4" cy="255.4" r="1.6" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="189.7" cy="264.7" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="195.4" cy="263.9" r="1.7" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="193.5" cy="265.3" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="172.1" cy="324.2" r="15" fill="#A8402A"/>
-<circle cx="172.1" cy="324.2" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="177.0" cy="316.7" r="1.7" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="171.3" cy="328.1" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="169.0" cy="325.1" r="1.4" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="171.3" cy="333.9" r="2.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="313.2" cy="231.5" r="15" fill="#A8402A"/>
-<circle cx="313.2" cy="231.5" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="309.4" cy="230.3" r="2.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="311.4" cy="236.0" r="1.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="309.0" cy="235.4" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="315.1" cy="237.2" r="1.0" fill="#7A2A1A" opacity="0.5"/>
-<g transform="translate(230.1 312.9) rotate(321)"><path d="M0,0 C4.641421887740661,-12.658423330201803 18.565687550962643,-12.658423330201803 23.207109438703302,0 C18.565687550962643,12.658423330201803 4.641421887740661,12.658423330201803 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="21.2" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
-<g transform="translate(111.7 199.9) rotate(250)"><path d="M0,0 C4.043521751108178,-11.027786593931392 16.17408700443271,-11.027786593931392 20.217608755540887,0 C16.17408700443271,11.027786593931392 4.043521751108178,11.027786593931392 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="18.2" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
-<g transform="translate(161.5 130.8) rotate(11)"><path d="M0,0 C3.9156830212548246,-10.679135512513156 15.662732085019298,-10.679135512513156 19.57841510627412,0 C15.662732085019298,10.679135512513156 3.9156830212548246,10.679135512513156 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="17.6" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
-<g transform="translate(196.2 190.0) rotate(130)"><path d="M0,0 C3.8784897418106805,-10.57769929584731 15.513958967242722,-10.57769929584731 19.3924487090534,0 C15.513958967242722,10.57769929584731 3.8784897418106805,10.57769929584731 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="17.4" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
-<g transform="translate(283.6 112.9) rotate(301)"><path d="M0,0 C4.477255965374634,-12.210698087385365 17.909023861498536,-12.210698087385365 22.38627982687317,0 C17.909023861498536,12.210698087385365 4.477255965374634,12.210698087385365 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="20.4" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
-<g transform="translate(263.1 137.3) rotate(226)"><path d="M0,0 C4.5666189257912775,-12.454415252158029 18.26647570316511,-12.454415252158029 22.833094628956385,0 C18.26647570316511,12.454415252158029 4.5666189257912775,12.454415252158029 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="20.8" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
-<circle cx="184.8" cy="144.4" r="7" fill="#2E2A1E"/>
-<circle cx="184.8" cy="144.4" r="3" fill="#F1CD68"/>
-<circle cx="340.0" cy="222.5" r="7" fill="#2E2A1E"/>
-<circle cx="340.0" cy="222.5" r="3" fill="#F1CD68"/>
-<circle cx="219.1" cy="135.0" r="7" fill="#2E2A1E"/>
-<circle cx="219.1" cy="135.0" r="3" fill="#F1CD68"/>
-<circle cx="323.2" cy="265.5" r="7" fill="#2E2A1E"/>
-<circle cx="323.2" cy="265.5" r="3" fill="#F1CD68"/>
-<circle cx="219.5" cy="254.2" r="7" fill="#2E2A1E"/>
-<circle cx="219.5" cy="254.2" r="3" fill="#F1CD68"/>
-</svg>
-          <div class="price-tag-float">🔥 Cuite en 90 secondes</div>
+    </div>
+    <div class="reveal">
+      <span class="tag" style="font-family:'JetBrains Mono'; font-size:.72rem; color:var(--red); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">Nos origines</span>
+      <h2 style="margin-bottom:16px;">Chaque produit a son terroir</h2>
+      <p style="color:var(--muted); margin-bottom:28px; max-width:44ch;">Cliquez sur une région pour découvrir d'où viennent nos ingrédients — directement de nos producteurs partenaires en Italie.</p>
+      <div class="origini-info" id="originiInfo">
+        <div class="region-tag" id="regionTag">Campanie</div>
+        <h3 id="regionTitle">Tomates San Marzano &amp; mozzarella</h3>
+        <p id="regionDesc">Nos tomates San Marzano poussent au pied du Vésuve, dans des sols volcaniques qui leur donnent cette douceur caractéristique. Notre mozzarella di bufala est livrée deux fois par semaine.</p>
+        <div class="origini-tags" id="regionTags">
+          <span>Tomates San Marzano</span>
+          <span>Mozzarella di bufala</span>
+          <span>Farine 00</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="highlights">
-    <div class="wrap highlights-row">
-      <div class="highlight-item"><span class="hnum">01</span><h4>Four à bois traditionnel</h4></div>
-      <div class="highlight-item"><span class="hnum">02</span><h4>Pâtes fraîches maison</h4></div>
-      <div class="highlight-item"><span class="hnum">03</span><h4>Produits importés d'Italie</h4></div>
-      <div class="highlight-item"><span class="hnum">04</span><h4>Cave à vins italienne</h4></div>
+<section id="pizza" class="pizza-section">
+  <div class="wrap">
+    <div class="section-head center on-dark reveal">
+      <span class="tag">Compose ta pizza</span>
+      <h2>À vous de composer</h2>
+      <p>Choisissez votre base et vos garnitures — le prix se met à jour en direct.</p>
     </div>
-  </section>
-
-  <section id="about">
-    <div class="wrap about-grid">
-      <div class="about-visual reveal">
-        <svg viewBox="0 0 160 160" width="160" height="160" xmlns="http://www.w3.org/2000/svg">
-<circle cx="80.0" cy="80.0" r="73.60000000000001" fill="#E7B25E"/>
-<circle cx="80.0" cy="80.0" r="73.60000000000001" fill="none" stroke="#C68A3B" stroke-width="3" opacity="0.5"/>
-<circle cx="73.3" cy="147.9" r="1.8" fill="#D99B45" opacity="0.58"/>
-<circle cx="14.1" cy="96.8" r="1.5" fill="#D99B45" opacity="0.45"/>
-<circle cx="145.5" cy="99.8" r="1.8" fill="#D99B45" opacity="0.40"/>
-<circle cx="78.3" cy="148.2" r="1.9" fill="#D99B45" opacity="0.40"/>
-<circle cx="11.6" cy="87.6" r="3.2" fill="#C4822F" opacity="0.59"/>
-<circle cx="48.8" cy="18.1" r="2.3" fill="#B5732A" opacity="0.51"/>
-<circle cx="87.3" cy="12.8" r="2.4" fill="#B5732A" opacity="0.69"/>
-<circle cx="144.4" cy="52.7" r="2.2" fill="#D99B45" opacity="0.69"/>
-<circle cx="14.1" cy="101.7" r="1.8" fill="#C4822F" opacity="0.38"/>
-<circle cx="137.5" cy="116.7" r="1.9" fill="#B5732A" opacity="0.40"/>
-<circle cx="109.4" cy="17.8" r="3.0" fill="#D99B45" opacity="0.48"/>
-<circle cx="12.1" cy="80.9" r="2.1" fill="#C4822F" opacity="0.35"/>
-<circle cx="11.2" cy="83.6" r="1.9" fill="#C4822F" opacity="0.50"/>
-<circle cx="30.4" cy="128.9" r="2.0" fill="#B5732A" opacity="0.61"/>
-<circle cx="117.0" cy="20.9" r="3.1" fill="#D99B45" opacity="0.35"/>
-<circle cx="75.6" cy="10.7" r="1.5" fill="#B5732A" opacity="0.70"/>
-<circle cx="21.4" cy="43.3" r="2.2" fill="#B5732A" opacity="0.65"/>
-<circle cx="66.6" cy="148.6" r="2.6" fill="#D99B45" opacity="0.68"/>
-<circle cx="80.3" cy="149.4" r="2.3" fill="#C4822F" opacity="0.62"/>
-<circle cx="95.1" cy="12.7" r="1.5" fill="#D99B45" opacity="0.49"/>
-<circle cx="128.8" cy="31.7" r="1.8" fill="#C4822F" opacity="0.37"/>
-<circle cx="72.4" cy="11.5" r="2.8" fill="#D99B45" opacity="0.65"/>
-<circle cx="12.5" cy="86.1" r="2.4" fill="#C4822F" opacity="0.52"/>
-<circle cx="41.5" cy="137.6" r="2.7" fill="#D99B45" opacity="0.44"/>
-<circle cx="41.4" cy="22.5" r="2.4" fill="#B5732A" opacity="0.39"/>
-<circle cx="36.6" cy="25.3" r="2.3" fill="#B5732A" opacity="0.54"/>
-<circle cx="13.8" cy="100.1" r="2.8" fill="#B5732A" opacity="0.40"/>
-<circle cx="104.7" cy="145.3" r="2.0" fill="#C4822F" opacity="0.46"/>
-<circle cx="33.9" cy="130.1" r="1.8" fill="#C4822F" opacity="0.61"/>
-<circle cx="21.1" cy="116.0" r="2.3" fill="#B5732A" opacity="0.44"/>
-<circle cx="80.9" cy="11.2" r="2.4" fill="#B5732A" opacity="0.39"/>
-<circle cx="11.5" cy="78.5" r="3.0" fill="#C4822F" opacity="0.38"/>
-<circle cx="135.1" cy="38.3" r="2.6" fill="#B5732A" opacity="0.68"/>
-<circle cx="119.5" cy="24.7" r="1.4" fill="#C4822F" opacity="0.50"/>
-<circle cx="85.8" cy="12.2" r="3.1" fill="#B5732A" opacity="0.35"/>
-<circle cx="27.4" cy="122.7" r="2.9" fill="#B5732A" opacity="0.69"/>
-<circle cx="80.7" cy="149.7" r="1.7" fill="#D99B45" opacity="0.69"/>
-<circle cx="132.7" cy="123.0" r="2.7" fill="#B5732A" opacity="0.38"/>
-<circle cx="91.8" cy="11.0" r="1.6" fill="#D99B45" opacity="0.67"/>
-<circle cx="37.7" cy="25.1" r="1.6" fill="#B5732A" opacity="0.53"/>
-<circle cx="17.0" cy="106.1" r="1.6" fill="#B5732A" opacity="0.53"/>
-<circle cx="20.1" cy="45.6" r="1.8" fill="#D99B45" opacity="0.35"/>
-<circle cx="14.3" cy="64.2" r="1.9" fill="#B5732A" opacity="0.58"/>
-<circle cx="131.3" cy="34.1" r="1.8" fill="#C4822F" opacity="0.36"/>
-<circle cx="21.8" cy="116.0" r="1.5" fill="#C4822F" opacity="0.52"/>
-<circle cx="48.5" cy="18.6" r="1.9" fill="#D99B45" opacity="0.50"/>
-<circle cx="80.0" cy="80.0" r="64.0" fill="#B5432E"/>
-<circle cx="80.0" cy="80.0" r="61.6" fill="#F1CD68"/>
-<ellipse cx="65.4" cy="95.5" rx="35.9" ry="22.6" fill="#F7DE8F" opacity="0.55" transform="rotate(130 65.4 95.5)"/>
-<ellipse cx="79.8" cy="80.2" rx="27.8" ry="24.1" fill="#F7DE8F" opacity="0.55" transform="rotate(24 79.8 80.2)"/>
-<ellipse cx="71.4" cy="80.2" rx="37.3" ry="16.3" fill="#F7DE8F" opacity="0.55" transform="rotate(167 71.4 80.2)"/>
-<ellipse cx="76.4" cy="118.2" rx="24.2" ry="21.5" fill="#F7DE8F" opacity="0.55" transform="rotate(220 76.4 118.2)"/>
-<ellipse cx="96.6" cy="67.3" rx="40.2" ry="14.7" fill="#F7DE8F" opacity="0.55" transform="rotate(214 96.6 67.3)"/>
-<ellipse cx="82.1" cy="78.9" rx="22.5" ry="21.2" fill="#F7DE8F" opacity="0.55" transform="rotate(150 82.1 78.9)"/>
-<ellipse cx="78.0" cy="72.3" rx="31.0" ry="22.5" fill="#F7DE8F" opacity="0.55" transform="rotate(113 78.0 72.3)"/>
-<ellipse cx="82.6" cy="82.2" rx="25.3" ry="16.3" fill="#F7DE8F" opacity="0.55" transform="rotate(235 82.6 82.2)"/>
-<ellipse cx="60.1" cy="76.9" rx="28.2" ry="22.7" fill="#F7DE8F" opacity="0.55" transform="rotate(302 60.1 76.9)"/>
-<circle cx="103.1" cy="77.8" r="2.3" fill="#C4822F" opacity="0.5"/>
-<circle cx="83.7" cy="82.0" r="3.3" fill="#C4822F" opacity="0.5"/>
-<circle cx="102.1" cy="60.6" r="4.3" fill="#C4822F" opacity="0.5"/>
-<circle cx="50.6" cy="107.5" r="2.9" fill="#C4822F" opacity="0.5"/>
-<circle cx="81.5" cy="75.7" r="4.1" fill="#C4822F" opacity="0.5"/>
-<circle cx="89.5" cy="106.7" r="3.3" fill="#C4822F" opacity="0.5"/>
-<circle cx="62.8" cy="114.6" r="3.4" fill="#C4822F" opacity="0.5"/>
-<circle cx="71.2" cy="70.4" r="3.9" fill="#C4822F" opacity="0.5"/>
-<circle cx="63.8" cy="91.1" r="3.4" fill="#C4822F" opacity="0.5"/>
-<circle cx="81.1" cy="76.9" r="2.6" fill="#C4822F" opacity="0.5"/>
-<circle cx="109.3" cy="92.2" r="3.1" fill="#C4822F" opacity="0.5"/>
-<circle cx="54.6" cy="123.0" r="2.1" fill="#C4822F" opacity="0.5"/>
-<circle cx="79.2" cy="43.9" r="4.8" fill="#C4822F" opacity="0.5"/>
-<circle cx="68.9" cy="116.1" r="3.8" fill="#C4822F" opacity="0.5"/>
-<circle cx="97.7" cy="31.3" r="15" fill="#A8402A"/>
-<circle cx="97.7" cy="31.3" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="101.5" cy="24.0" r="1.4" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="96.0" cy="26.4" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="94.9" cy="25.2" r="2.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="96.0" cy="28.6" r="1.8" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="122.5" cy="98.5" r="15" fill="#A8402A"/>
-<circle cx="122.5" cy="98.5" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="120.0" cy="97.7" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="128.1" cy="94.2" r="1.4" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="129.9" cy="98.9" r="2.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="124.9" cy="95.6" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="36.9" cy="89.4" r="15" fill="#A8402A"/>
-<circle cx="36.9" cy="89.4" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="32.7" cy="90.2" r="1.6" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="29.3" cy="91.9" r="1.9" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="31.6" cy="95.4" r="1.7" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="41.8" cy="95.8" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="86.0" cy="66.0" r="15" fill="#A8402A"/>
-<circle cx="86.0" cy="66.0" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="80.4" cy="63.9" r="1.7" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="93.2" cy="60.1" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="88.5" cy="66.5" r="1.9" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="83.3" cy="59.6" r="1.4" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="84.2" cy="127.8" r="15" fill="#A8402A"/>
-<circle cx="84.2" cy="127.8" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="81.6" cy="134.1" r="2.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="87.7" cy="121.9" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="91.6" cy="125.3" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="89.0" cy="136.2" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="46.1" cy="48.8" r="15" fill="#A8402A"/>
-<circle cx="46.1" cy="48.8" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="49.3" cy="47.8" r="1.8" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="38.0" cy="50.0" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="45.0" cy="56.7" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="44.8" cy="55.6" r="1.7" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="124.6" cy="58.5" r="15" fill="#A8402A"/>
-<circle cx="124.6" cy="58.5" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="126.8" cy="52.0" r="1.9" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="124.3" cy="56.4" r="1.2" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="127.9" cy="52.7" r="2.0" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="124.7" cy="63.6" r="1.4" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="49.8" cy="121.1" r="15" fill="#A8402A"/>
-<circle cx="49.8" cy="121.1" r="15" fill="none" stroke="#8C3320" stroke-width="1.5" opacity="0.6"/>
-<circle cx="50.3" cy="117.3" r="1.5" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="48.0" cy="116.9" r="1.3" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="54.9" cy="129.0" r="1.8" fill="#7A2A1A" opacity="0.5"/>
-<circle cx="50.6" cy="116.9" r="1.1" fill="#7A2A1A" opacity="0.5"/>
-<g transform="translate(77.0 95.6) rotate(37)"><path d="M0,0 C4.688886416376531,-12.787872044663263 18.755545665506123,-12.787872044663263 23.444432081882653,0 C18.755545665506123,12.787872044663263 4.688886416376531,12.787872044663263 0,0 Z" fill="#5B7F4B"/><line x1="1" y1="0" x2="21.4" y2="0" stroke="#3F5C34" stroke-width="1" opacity="0.6"/></g>
-<circle cx="68.4" cy="33.8" r="7" fill="#2E2A1E"/>
-<circle cx="68.4" cy="33.8" r="3" fill="#F1CD68"/>
-<circle cx="59.3" cy="76.1" r="7" fill="#2E2A1E"/>
-<circle cx="59.3" cy="76.1" r="3" fill="#F1CD68"/>
-</svg>
+    <div class="pizza-box reveal">
+      <span class="pizza-group-label">1. La base</span>
+      <div class="pizza-chip-row" id="pizzaBase">
+        <button class="pizza-chip active" data-base="rossa" data-price="0" type="button">Rossa — tomate</button>
+        <button class="pizza-chip" data-base="bianca" data-price="1" type="button">Bianca — crème &amp; mozzarella</button>
       </div>
-      <div class="about-text reveal">
-        <div class="eyebrow">Notre histoire</div>
-        <h2 style="margin-bottom:18px;">Une trattoria familiale, depuis 1998</h2>
+      <span class="pizza-group-label">2. Les garnitures (2€ chacune)</span>
+      <div class="pizza-chip-row" id="pizzaToppings">
+        <button class="pizza-chip" data-topping="Mozzarella di bufala" type="button">Mozzarella di bufala</button>
+        <button class="pizza-chip" data-topping="Prosciutto crudo" type="button">Prosciutto crudo</button>
+        <button class="pizza-chip" data-topping="Champignons" type="button">Champignons</button>
+        <button class="pizza-chip" data-topping="Roquette &amp; parmesan" type="button">Roquette &amp; parmesan</button>
+        <button class="pizza-chip" data-topping="Anchois" type="button">Anchois</button>
+        <button class="pizza-chip" data-topping="Piments" type="button">Piments</button>
+      </div>
+      <div class="pizza-result">
+        <div class="pizza-summary">
+          <div class="lbl">Votre pizza</div>
+          <div class="list" id="pizzaList">Rossa nature</div>
+        </div>
+        <div class="pizza-price" id="pizzaPrice">11 €</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="storia">
+  <div class="wrap storia-grid">
+    <div class="storia-photo reveal"><img src="trattoria-about.jpg" alt="Mains d'une grandmère préparant des raviolis faits maison" width="900" height="1348"></div>
+    <div class="reveal">
+      <span class="tag" style="font-family:'JetBrains Mono'; font-size:.72rem; color:var(--red); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">Notre histoire</span>
+      <p class="storia-quote">« Chaque pâte est roulée à la main, exactement comme le faisait ma grand-mère à Naples. »</p>
+      <div class="storia-text">
         <p>Tout a commencé avec un four à bois ramené de Naples et une recette de famille transmise sur trois générations. Aujourd'hui encore, chaque pizza sort du même four, chaque pâte est roulée à la main en cuisine.</p>
-        <p>On importe nos produits directement de nos fournisseurs en Campanie et dans les Pouilles : farine, tomates San Marzano, huile d'olive, charcuterie. Rien n'est laissé au hasard.</p>
-        <div class="stats-row">
-          <div class="stat"><div class="num">26 ans</div><div class="lbl">d'expérience</div></div>
-          <div class="stat"><div class="num">40+</div><div class="lbl">recettes au menu</div></div>
-          <div class="stat"><div class="num">100%</div><div class="lbl">fait maison</div></div>
-        </div>
+        <p>On importe nos produits directement de nos fournisseurs en Campanie, dans les Pouilles et en Émilie-Romagne : farine, tomates San Marzano, huile d'olive, charcuterie. Rien n'est laissé au hasard.</p>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><div class="num">26 ans</div><div class="lbl">d'expérience</div></div>
+        <div class="stat"><div class="num">40+</div><div class="lbl">recettes au menu</div></div>
+        <div class="stat"><div class="num">100%</div><div class="lbl">fait maison</div></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="menu-section" id="menu">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="tag">Notre carte</span>
-        <h2>Ce qu'on sert</h2>
-        <p>Une carte courte, qui change au fil des saisons. Voici une sélection de nos classiques.</p>
+<section id="menu" class="menu-section">
+  <div class="wrap">
+    <div class="section-head on-dark reveal">
+      <span class="tag">La carte</span>
+      <h2>Le menu du jour</h2>
+    </div>
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-menu="antipasti" type="button">Antipasti</button>
+      <button class="menu-tab" data-menu="pizze" type="button">Pizze</button>
+      <button class="menu-tab" data-menu="pasta" type="button">Pasta</button>
+      <button class="menu-tab" data-menu="dolci" type="button">Dolci</button>
+    </div>
+
+    <div class="menu-panel active" id="menu-antipasti">
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Antipasto della casa</span><span class="menu-item-leader"></span><span class="menu-item-price">14 €</span></div><div class="menu-item-desc">Charcuterie, fromages et légumes marinés, plateau à partager.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Burrata pugliese</span><span class="menu-item-leader"></span><span class="menu-item-price">12 €</span></div><div class="menu-item-desc">Burrata crémeuse, tomates confites, huile d'olive des Pouilles.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Bruschette al pomodoro</span><span class="menu-item-leader"></span><span class="menu-item-price">9 €</span></div><div class="menu-item-desc">Tomates San Marzano, basilic frais, pain grillé au four à bois.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Carpaccio de bœuf</span><span class="menu-item-leader"></span><span class="menu-item-price">15 €</span></div><div class="menu-item-desc">Copeaux de parmesan, roquette, huile d'olive extra vierge.</div></div>
+    </div>
+
+    <div class="menu-panel" id="menu-pizze">
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Margherita</span><span class="menu-item-leader"></span><span class="menu-item-price">11 €</span></div><div class="menu-item-desc">Tomate San Marzano, mozzarella di bufala, basilic.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Diavola</span><span class="menu-item-leader"></span><span class="menu-item-price">14 €</span></div><div class="menu-item-desc">Salami piquant, piments, mozzarella, huile pimentée.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Quattro formaggi</span><span class="menu-item-leader"></span><span class="menu-item-price">15 €</span></div><div class="menu-item-desc">Mozzarella, gorgonzola, parmesan, fontina.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Bianca tartufo</span><span class="menu-item-leader"></span><span class="menu-item-price">17 €</span></div><div class="menu-item-desc">Crème, mozzarella, champignons, huile de truffe du Piémont.</div></div>
+    </div>
+
+    <div class="menu-panel" id="menu-pasta">
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Tagliatelle al ragù</span><span class="menu-item-leader"></span><span class="menu-item-price">16 €</span></div><div class="menu-item-desc">Ragù de bœuf mijoté 6 heures, pâtes fraîches maison.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Ravioli alla ricotta</span><span class="menu-item-leader"></span><span class="menu-item-price">15 €</span></div><div class="menu-item-desc">Ricotta et épinards, beurre de sauge, parmesan.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Spaghetti alle vongole</span><span class="menu-item-leader"></span><span class="menu-item-price">18 €</span></div><div class="menu-item-desc">Palourdes, ail, persil, vin blanc.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Tagliatelle burrata &amp; pesto</span><span class="menu-item-leader"></span><span class="menu-item-price">17 €</span></div><div class="menu-item-desc">Sauce tomate, burrata crémeuse, pesto maison.</div></div>
+    </div>
+
+    <div class="menu-panel" id="menu-dolci">
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Tiramisu della nonna</span><span class="menu-item-leader"></span><span class="menu-item-price">8 €</span></div><div class="menu-item-desc">Recette de famille, mascarpone et café de la maison.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Panna cotta aux fruits rouges</span><span class="menu-item-leader"></span><span class="menu-item-price">7 €</span></div><div class="menu-item-desc">Crème onctueuse, coulis de fruits rouges maison.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Cannoli siciliani</span><span class="menu-item-leader"></span><span class="menu-item-price">8 €</span></div><div class="menu-item-desc">Ricotta, pistaches de Sicile, zestes d'agrumes.</div></div>
+      <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Affogato</span><span class="menu-item-leader"></span><span class="menu-item-price">6 €</span></div><div class="menu-item-desc">Glace vanille, espresso chaud versé à table.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="galleria">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Galerie</span>
+      <h2>Un aperçu de la trattoria</h2>
+    </div>
+    <div class="filmstrip-wrap reveal">
+      <div class="filmstrip-track" id="filmstripTrack">
+        <div class="filmstrip-item"><img src="trattoria-interior.jpg" alt="Salle principale de la trattoria, murs en briques et chandelier"><div class="cap">La salle</div></div>
+        <div class="filmstrip-item"><img src="trattoria-antipasto.jpg" alt="Plateau d'antipasti, charcuterie et fromages"><div class="cap">L'antipasto</div></div>
+        <div class="filmstrip-item"><img src="trattoria-pasta.jpg" alt="Tagliatelle à la burrata et au pesto"><div class="cap">Pasta fresca</div></div>
+        <div class="filmstrip-item"><img src="trattoria-oven-flames.jpg" alt="Pizza cuisant dans les flammes du four à bois"><div class="cap">Le four à bois</div></div>
+        <div class="filmstrip-item"><img src="trattoria-about.jpg" alt="Mains préparant des raviolis faits maison"><div class="cap">Fait maison</div></div>
       </div>
-
-      <div class="menu-tabs reveal">
-        <button class="menu-tab active" data-menu="pizzas" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><circle cx="12" cy="12" r="9.5" fill="#F1CD68" stroke="#E7B25E" stroke-width="2"/><circle cx="9" cy="9" r="1.8" fill="#A8402A"/><circle cx="14.5" cy="8.5" r="1.5" fill="#5B7F4B"/><circle cx="15" cy="14" r="1.8" fill="#A8402A"/><circle cx="9" cy="15" r="1.4" fill="#5B7F4B"/></svg> Pizzas</button>
-        <button class="menu-tab" data-menu="pates" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><ellipse cx="12" cy="12" rx="9.5" ry="7" fill="#F1CD68" stroke="#E7B25E" stroke-width="1.6"/><path d="M5 12c2-2 3 2 5 0s3 2 5 0 3 2 4 0" stroke="#B5432E" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg> Pâtes</button>
-        <button class="menu-tab" data-menu="antipasti" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="3" y="10" width="18" height="4" rx="2" fill="#E7B25E"/><circle cx="7" cy="8" r="2.2" fill="#5B7F4B"/><circle cx="12" cy="7" r="2.2" fill="#A8402A"/><circle cx="17" cy="8" r="2.2" fill="#F1CD68" stroke="#C4822F" stroke-width="1"/></svg> Antipasti</button>
-        <button class="menu-tab" data-menu="desserts" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M4 11c0-4 3.5-7 8-7s8 3 8 7" stroke="#C4822F" stroke-width="1.6" fill="#F7DE8F"/><rect x="4" y="11" width="16" height="3" rx="1.5" fill="#E7B25E"/><rect x="10.5" y="4" width="3" height="4" rx="1.5" fill="#B5432E"/></svg> Desserts</button>
-      </div>
-
-      <div class="menu-panel active reveal" data-panel="pizzas">
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Margherita</span><span class="menu-item-leader"></span><span class="menu-item-price">12€</span></span><span class="menu-item-desc">Tomate San Marzano, mozzarella fior di latte, basilic frais.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Diavola</span><span class="menu-item-leader"></span><span class="menu-item-price">14€</span></span><span class="menu-item-desc">Tomate, mozzarella, salami piquant, huile pimentée.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Quattro Formaggi</span><span class="menu-item-leader"></span><span class="menu-item-price">15€</span></span><span class="menu-item-desc">Mozzarella, gorgonzola, parmesan, provolone.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Tartufo</span><span class="menu-item-leader"></span><span class="menu-item-price">18€</span></span><span class="menu-item-desc">Crème de truffe, champignons, mozzarella, parmesan.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Bella Napoli</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Tomate, mozzarella, anchois, câpres, olives noires.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Vegetariana</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Légumes grillés de saison, mozzarella, pesto.</span></div></div>
-      </div>
-
-      <div class="menu-panel" data-panel="pates">
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Carbonara</span><span class="menu-item-leader"></span><span class="menu-item-price">14€</span></span><span class="menu-item-desc">Guanciale, œuf, pecorino romano, poivre noir.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Bolognese</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Sauce mijotée 6h, tagliatelles fraîches.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Pesto Genovese</span><span class="menu-item-leader"></span><span class="menu-item-price">13€</span></span><span class="menu-item-desc">Basilic, pignons de pin, parmesan, huile d'olive.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Vongole</span><span class="menu-item-leader"></span><span class="menu-item-price">16€</span></span><span class="menu-item-desc">Palourdes, ail, persil, vin blanc, linguine.</span></div></div>
-      </div>
-
-      <div class="menu-panel" data-panel="antipasti">
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Bruschetta</span><span class="menu-item-leader"></span><span class="menu-item-price">8€</span></span><span class="menu-item-desc">Tomates fraîches, basilic, ail, pain grillé.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Burrata</span><span class="menu-item-leader"></span><span class="menu-item-price">12€</span></span><span class="menu-item-desc">Burrata crémeuse, tomates confites, huile d'olive.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Arancini</span><span class="menu-item-leader"></span><span class="menu-item-price">9€</span></span><span class="menu-item-desc">Boulettes de risotto frites, cœur mozzarella.</span></div></div>
-      </div>
-
-      <div class="menu-panel" data-panel="desserts">
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Tiramisu</span><span class="menu-item-leader"></span><span class="menu-item-price">7€</span></span><span class="menu-item-desc">Recette traditionnelle, mascarpone, café, cacao.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Panna Cotta</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></span><span class="menu-item-desc">Coulis de fruits rouges maison.</span></div></div>
-        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Cannoli</span><span class="menu-item-leader"></span><span class="menu-item-price">7€</span></span><span class="menu-item-desc">Ricotta fraîche, pistaches, écorces d'agrumes.</span></div></div>
+      <div class="filmstrip-nav">
+        <button type="button" id="filmPrev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" id="filmNext" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="galerie">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="tag">Ambiance</span>
-        <h2>Un lieu qu'on aime faire vivre</h2>
+<section id="avis" class="avis-section">
+  <div class="wrap">
+    <div class="section-head center on-dark reveal">
+      <span class="tag">Avis</span>
+      <h2>Ce que nos clients en disent</h2>
+    </div>
+    <div class="testi-grid reveal-stagger reveal">
+      <div class="testi-card" style="--i:0">
+        <div class="testi-quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p>La meilleure pizza napolitaine de la ville, sans hésitation. La pâte est parfaite, fine et légère.</p>
+        <div class="testi-name">Marc L.</div>
+        <div class="testi-role">Client régulier</div>
       </div>
-      <div class="gallery-grid reveal-stagger reveal">
-        <div class="gallery-tile g1"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M12 2C9 6 7 8 7 12a5 5 0 0010 0c0-2-1-3-1-3s-.5 2-2 2c1-2 .5-4-2-9z"/></svg><span>Le four à bois</span></div>
-        <div class="gallery-tile g2"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 9h18M8 18v3M16 18v3"/></svg><span>Salle principale</span></div>
-        <div class="gallery-tile g3"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M7 3h10l-1 9a4 4 0 01-8 0L7 3z"/><path d="M12 14v7M9 21h6"/></svg><span>Notre terrasse</span></div>
-        <div class="gallery-tile g4"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9" r="1" fill="#fff"/><circle cx="14" cy="8" r="1" fill="#fff"/><circle cx="15" cy="14" r="1" fill="#fff"/></svg><span>Pizza Margherita</span></div>
-        <div class="gallery-tile g5"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M12 2s-6 5-6 10a6 6 0 0012 0c0-5-6-10-6-10z"/></svg><span>L'équipe en cuisine</span></div>
-        <div class="gallery-tile g6"><svg class="g-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><path d="M8 2h8l-1 7a3 3 0 01-6 0L8 2z"/><path d="M12 9v13"/></svg><span>Cave à vins</span></div>
+      <div class="testi-card" style="--i:1">
+        <div class="testi-quote-mark">"</div>
+        <div class="stars">★★★★★</div>
+        <p>Les tagliatelles au ragù m'ont rappelé celles de ma grand-mère italienne. Un vrai coup de cœur.</p>
+        <div class="testi-name">Elena R.</div>
+        <div class="testi-role">Avis vérifié</div>
+      </div>
+      <div class="testi-card" style="--i:2">
+        <div class="testi-quote-mark">"</div>
+        <div class="stars">★★★★☆</div>
+        <p>Ambiance chaleureuse, service attentionné, et un tiramisu absolument délicieux.</p>
+        <div class="testi-name">Julien P.</div>
+        <div class="testi-role">Avis vérifié</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="avis" style="background:var(--bg-alt);">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="tag">Avis clients</span>
-        <h2>Ce qu'on dit de nous</h2>
-      </div>
-      <div class="testi-grid reveal-stagger reveal">
-        <div class="testi-card">
-          <div class="testi-quote-mark">"</div>
-          <div class="stars">★★★★★</div>
-          <p>La meilleure pizza que j'ai mangée en dehors de l'Italie. Le four à bois change vraiment tout.</p>
-          <div class="testi-name">Claire M.</div>
-          <div class="testi-role">Cliente régulière</div>
-        </div>
-        <div class="testi-card">
-          <div class="testi-quote-mark">"</div>
-          <div class="stars">★★★★★</div>
-          <p>Ambiance chaleureuse, service impeccable, et les pâtes fraîches sont incroyables. On y retourne chaque mois.</p>
-          <div class="testi-name">Julien P.</div>
-          <div class="testi-role">Client régulier</div>
-        </div>
-        <div class="testi-card">
-          <div class="testi-quote-mark">"</div>
-          <div class="stars">★★★★★</div>
-          <p>On sent que tout est fait maison. La burrata est à tomber. Un vrai coin d'Italie.</p>
-          <div class="testi-name">Sofia R.</div>
-          <div class="testi-role">Cliente régulière</div>
-        </div>
-      </div>
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Réservez votre table</h2>
     </div>
-  </section>
-
-  <section class="info-section" id="contact">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="tag">Infos pratiques</span>
-        <h2>Nous trouver</h2>
+    <div class="contact-grid reveal">
+      <div class="contact-col">
+        <h3 style="font-size:1.3rem; margin-bottom:8px;">Trattoria Bella</h3>
+        <p style="color:var(--muted); font-size:.88rem;">Au cœur de la ville, depuis 1998.</p>
+        <div class="contact-info-list">
+          <div><span class="lbl">Adresse</span><span class="val">12 rue Napoli, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+          <div><span class="lbl">Email</span><span class="val">contact@trattoria-bella-exemple.lu</span></div>
+        </div>
+        <table class="hours-table">
+          <tr><td>Lundi — Vendredi</td><td>12h – 14h30, 19h – 22h30</td></tr>
+          <tr><td>Samedi — Dimanche</td><td>12h – 23h</td></tr>
+        </table>
       </div>
-      <div class="info-grid reveal">
-        <div>
-          <div class="info-list">
-            <div><span class="lbl">Adresse</span><span class="val">14 rue des Artisans, Luxembourg</span></div>
-            <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
-            <div><span class="lbl">Email</span><span class="val">contact@trattoria-bella.lu</span></div>
+      <div class="contact-col">
+        <h3 style="font-size:1.2rem; margin-bottom:18px;">Demande de réservation</h3>
+        <form id="reservationForm" onsubmit="return false;">
+          <div class="field">
+            <label>Votre nom</label>
+            <input type="text" placeholder="Nom et prénom">
           </div>
-          <table class="hours-table">
-            <tr><td>Lundi — Vendredi</td><td>11h30 – 14h30 / 18h30 – 22h30</td></tr>
-            <tr><td>Samedi</td><td>18h30 – 23h00</td></tr>
-            <tr><td>Dimanche</td><td>Fermé</td></tr>
-          </table>
-          <button class="btn btn-primary" type="button">Réserver par téléphone</button>
-        </div>
-        <div class="map-box"><span>Emplacement — carte à intégrer</span></div>
+          <div class="field-row">
+            <div class="field">
+              <label>Date</label>
+              <input type="date">
+            </div>
+            <div class="field">
+              <label>Nombre de convives</label>
+              <select>
+                <option>2 personnes</option>
+                <option>3 personnes</option>
+                <option>4 personnes</option>
+                <option>5+ personnes</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Message (optionnel)</label>
+            <textarea placeholder="Allergies, occasion spéciale..."></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">Envoyer la demande</button>
+        </form>
       </div>
     </div>
-  </section>
-</main>
+  </div>
+</section>
 
 <footer>
   <div class="wrap">
     <div class="footer-row">
       <p>© 2026 TRATTORIA BELLA — LUXEMBOURG</p>
       <div class="footer-links">
+        <a href="#origini">Origines</a>
         <a href="#menu">Menu</a>
-        <a href="#about">À propos</a>
-        <a href="#galerie">Galerie</a>
+        <a href="#galleria">Galerie</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
@@ -689,30 +503,134 @@
 </footer>
 
 <script>
-  document.querySelectorAll('.menu-tab').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.menu-tab').forEach(function(b){ b.classList.remove('active'); });
-      document.querySelectorAll('.menu-panel').forEach(function(p){ p.classList.remove('active'); });
-      btn.classList.add('active');
-      document.querySelector('.menu-panel[data-panel="' + btn.dataset.menu + '"]').classList.add('active');
-    });
-  });
   var navToggle = document.getElementById('navToggle');
   var mobileMenu = document.getElementById('mobileMenu');
   if(navToggle && mobileMenu){
-    navToggle.addEventListener('click', function(){
-      mobileMenu.classList.toggle('open');
-    });
-    mobileMenu.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
-    });
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
   }
+
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Carte des origines
+  (function(){
+    var REGIONS = {
+      piemonte: { tag:"Piémont", title:"Truffe blanche &amp; noisettes", desc:"Notre huile de truffe blanche vient d'Alba, récoltée à l'automne par un petit producteur familial. Les noisettes viennent des collines des Langhe.", tags:["Huile de truffe","Noisettes IGP"] },
+      emilia: { tag:"Émilie-Romagne", title:"Parmesan &amp; jambon de Parme", desc:"Notre parmigiano reggiano est affiné 24 mois. Le prosciutto crudo vient d'un producteur de Parme qui travaille encore à l'ancienne.", tags:["Parmigiano 24 mois","Prosciutto di Parma"] },
+      campania: { tag:"Campanie", title:"Tomates San Marzano &amp; mozzarella", desc:"Nos tomates San Marzano poussent au pied du Vésuve, dans des sols volcaniques qui leur donnent cette douceur caractéristique. Notre mozzarella di bufala est livrée deux fois par semaine.", tags:["Tomates San Marzano","Mozzarella di bufala","Farine 00"] },
+      puglia: { tag:"Pouilles", title:"Huile d'olive &amp; burrata", desc:"Notre huile d'olive extra vierge est pressée à froid dans les Pouilles. La burrata arrive fraîche chaque semaine, filée à la main.", tags:["Huile d'olive extra vierge","Burrata artisanale"] },
+      sicilia: { tag:"Sicile", title:"Citrons, pistaches &amp; agrumes", desc:"Les pistaches de Bronte et les citrons de Sicile parfument nos desserts — cannoli, granita et zestes d'agrumes frais.", tags:["Pistaches de Bronte","Citrons de Sicile"] }
+    };
+    var pins = document.querySelectorAll('.map-pin');
+    var tagEl = document.getElementById('regionTag');
+    var titleEl = document.getElementById('regionTitle');
+    var descEl = document.getElementById('regionDesc');
+    var tagsEl = document.getElementById('regionTags');
+
+    function render(key){
+      var r = REGIONS[key];
+      if(!r) return;
+      tagEl.textContent = r.tag;
+      titleEl.innerHTML = r.title;
+      descEl.textContent = r.desc;
+      tagsEl.innerHTML = r.tags.map(function(t){ return '<span>' + t + '</span>'; }).join('');
+    }
+    pins.forEach(function(pin){
+      pin.addEventListener('click', function(){
+        pins.forEach(function(p){ p.classList.remove('active'); });
+        pin.classList.add('active');
+        render(pin.getAttribute('data-region'));
+      });
+    });
+  })();
+
+  // Compose ta pizza
+  (function(){
+    var baseGroup = document.getElementById('pizzaBase');
+    var toppingsGroup = document.getElementById('pizzaToppings');
+    var listEl = document.getElementById('pizzaList');
+    var priceEl = document.getElementById('pizzaPrice');
+    if(!baseGroup) return;
+    var BASE_PRICE = 11;
+    var currentBasePrice = 0;
+    var currentBaseLabel = 'Rossa';
+    var selectedToppings = [];
+
+    function render(){
+      var total = BASE_PRICE + currentBasePrice + selectedToppings.length * 2;
+      var label = currentBaseLabel;
+      if(selectedToppings.length){
+        label += ' + ' + selectedToppings.join(', ');
+      } else {
+        label += ' nature';
+      }
+      listEl.textContent = label;
+      priceEl.textContent = total + ' €';
+    }
+
+    baseGroup.querySelectorAll('.pizza-chip').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        baseGroup.querySelectorAll('.pizza-chip').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        currentBasePrice = parseInt(btn.getAttribute('data-price'), 10);
+        currentBaseLabel = btn.textContent.split(' — ')[0];
+        render();
+      });
+    });
+
+    toppingsGroup.querySelectorAll('.pizza-chip').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var topping = btn.getAttribute('data-topping');
+        var idx = selectedToppings.indexOf(topping);
+        if(idx === -1){
+          if(selectedToppings.length >= 4){ return; }
+          selectedToppings.push(topping);
+          btn.classList.add('active');
+        } else {
+          selectedToppings.splice(idx, 1);
+          btn.classList.remove('active');
+        }
+        render();
+      });
+    });
+
+    render();
+  })();
+
+  // Menu à onglets
+  (function(){
+    var tabs = document.querySelectorAll('.menu-tab');
+    var panels = document.querySelectorAll('.menu-panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        tabs.forEach(function(t){ t.classList.remove('active'); });
+        panels.forEach(function(p){ p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById('menu-' + tab.getAttribute('data-menu')).classList.add('active');
+      });
+    });
+  })();
+
+  // Galerie : bande défilante
+  (function(){
+    var track = document.getElementById('filmstripTrack');
+    var prev = document.getElementById('filmPrev');
+    var next = document.getElementById('filmNext');
+    if(!track) return;
+    function scrollByItem(dir){
+      var item = track.querySelector('.filmstrip-item');
+      var gap = 16;
+      var amount = item ? (item.offsetWidth + gap) * dir : 320 * dir;
+      track.scrollBy({ left: amount, behavior: 'smooth' });
+    }
+    if(prev) prev.addEventListener('click', function(){ scrollByItem(-1); });
+    if(next) next.addEventListener('click', function(){ scrollByItem(1); });
+  })();
 </script>
 </body>
 </html>
