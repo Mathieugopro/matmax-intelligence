@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour un studio de photographie, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>Studio Lumière — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#0D0D0C; --bg-alt:#171716; --ink:#F5F3EE; --muted:#A8A39A; --dim:#5C584F; --line:#2B2A27;
+    --accent:#E8622C; --accent-dark:#C94E1E; --white:#FFFFFF;
+    --maxw:1280px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Bebas Neue',sans-serif; font-weight:400; line-height:1; letter-spacing:.01em; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:110px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
+
+  .demo-banner{ background:var(--bg-alt); color:var(--ink); text-align:center; font-size:.8rem; padding:12px 16px; border-bottom:1px solid var(--line); }
+  .demo-banner strong{ color:var(--accent); }
+  .demo-banner a{ color:var(--ink); text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:15px 28px; font-size:.78rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; border:1px solid transparent; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--accent); color:#0D0D0C; }
+  .btn-primary:hover{ background:var(--accent-dark); color:#fff; }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+
+  /* ---- Header ---- */
+  header.site-header{ position:fixed; top:0; left:0; right:0; z-index:200; background:transparent; border-bottom:1px solid transparent; transition:background .3s ease, border-color .3s ease; }
+  header.site-header.scrolled{ background:rgba(13,13,12,0.92); backdrop-filter:blur(10px); border-color:var(--line); }
+  header.site-header.no-hero{ background:rgba(13,13,12,0.92); backdrop-filter:blur(10px); border-color:var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:22px 32px; gap:20px; }
+  .logo{ font-family:'Bebas Neue'; font-size:1.5rem; letter-spacing:.06em; color:var(--ink); display:flex; align-items:center; gap:8px; }
+  .logo .dot{ width:8px; height:8px; background:var(--accent); border-radius:50%; }
+  nav.main-nav{ display:flex; gap:30px; }
+  nav.main-nav a{ font-size:.74rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.06em; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--accent); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .nav-toggle svg{ stroke:var(--ink); }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-size:.9rem; font-weight:600; text-transform:uppercase; letter-spacing:.04em; }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
+
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head .tag{ font-family:'Courier Prime'; font-size:.74rem; color:var(--accent); text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:16px; }
+  .section-head h2{ font-size:clamp(2.4rem,4.5vw,3.4rem); }
+  .section-head p{ margin-top:16px; color:var(--muted); font-size:1rem; }
+
+  /* ---- Hero plein cadre ---- */
+  .hero{ position:relative; height:100vh; min-height:620px; overflow:hidden; }
+  .hero-bg{ position:absolute; inset:0; }
+  .hero-bg img{ width:100%; height:100%; object-fit:cover; object-position:center 25%; }
+  .hero-bg::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,12,0.25) 0%, rgba(13,13,12,0.1) 35%, rgba(13,13,12,0.95) 100%); }
+  .hero-content{ position:relative; z-index:2; height:100%; display:flex; flex-direction:column; justify-content:flex-end; max-width:var(--maxw); margin:0 auto; padding:0 32px 90px; }
+  .hero-eyebrow{ font-family:'Courier Prime'; font-size:.78rem; color:var(--accent); text-transform:uppercase; letter-spacing:.15em; margin-bottom:20px; }
+  .hero h1{ font-size:clamp(3.4rem,9vw,7.2rem); margin-bottom:22px; }
+  .hero-sub{ color:var(--muted); font-size:1.05rem; max-width:46ch; margin-bottom:32px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .hero-exif{ position:absolute; bottom:36px; right:32px; z-index:2; font-family:'Courier Prime'; font-size:.7rem; color:var(--muted); text-align:right; line-height:1.8; display:none; }
+  .scroll-cue{ position:absolute; bottom:24px; left:50%; transform:translateX(-50%); z-index:2; }
+  .scroll-cue svg{ width:20px; height:20px; stroke:var(--muted); animation:bounceDown 2s infinite; }
+  @keyframes bounceDown{ 0%,100%{ transform:translateY(0); opacity:.6; } 50%{ transform:translateY(8px); opacity:1; } }
+
+  /* ---- Portfolio : galerie filtrable + lightbox ---- */
+  .filter-row{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:44px; }
+  .filter-chip{ padding:10px 20px; border:1px solid var(--line); background:transparent; color:var(--muted); font-family:'Courier Prime'; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; cursor:pointer; transition:all .2s; }
+  .filter-chip:hover{ border-color:var(--accent); color:var(--ink); }
+  .filter-chip.active{ background:var(--accent); border-color:var(--accent); color:#0D0D0C; }
+  .gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+  .gallery-item{ position:relative; aspect-ratio:4/5; overflow:hidden; cursor:pointer; background:var(--bg-alt); }
+  .gallery-item.is-hidden{ display:none; }
+  .gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease, filter .5s ease; filter:grayscale(15%) brightness(.9); }
+  .gallery-item:hover img{ transform:scale(1.06); filter:grayscale(0%) brightness(1); }
+  .gallery-overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(13,13,12,0) 45%, rgba(13,13,12,0.92) 100%); display:flex; flex-direction:column; justify-content:flex-end; padding:22px; opacity:0; transition:opacity .3s; }
+  .gallery-item:hover .gallery-overlay{ opacity:1; }
+  .gallery-cat{ font-family:'Courier Prime'; font-size:.66rem; color:var(--accent); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+  .gallery-title{ font-family:'Bebas Neue'; font-size:1.3rem; color:var(--ink); margin-bottom:8px; }
+  .gallery-exif{ font-family:'Courier Prime'; font-size:.64rem; color:var(--muted); line-height:1.6; }
+
+  /* ---- Lightbox ---- */
+  .lightbox{ position:fixed; inset:0; background:rgba(8,8,7,0.97); z-index:1000; display:none; align-items:center; justify-content:center; padding:50px 90px; }
+  .lightbox.open{ display:flex; }
+  .lightbox-inner{ max-width:960px; width:100%; display:flex; flex-direction:column; align-items:center; }
+  .lightbox-img-wrap{ max-height:70vh; margin-bottom:22px; width:100%; display:flex; justify-content:center; }
+  .lightbox-img-wrap img{ max-height:70vh; max-width:100%; object-fit:contain; display:block; }
+  .lightbox-caption{ text-align:center; }
+  .lightbox-cat{ font-family:'Courier Prime'; color:var(--accent); font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .lightbox-title{ font-family:'Bebas Neue'; font-size:1.7rem; color:var(--ink); margin-bottom:8px; }
+  .lightbox-exif{ font-family:'Courier Prime'; font-size:.72rem; color:var(--muted); }
+  .lightbox-close{ position:absolute; top:26px; right:32px; background:none; border:none; cursor:pointer; padding:6px; }
+  .lightbox-close svg{ width:26px; height:26px; stroke:var(--ink); }
+  .lightbox-nav{ position:absolute; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:10px; }
+  .lightbox-nav svg{ width:30px; height:30px; stroke:var(--ink); }
+  .lightbox-prev{ left:20px; }
+  .lightbox-next{ right:20px; }
+  .lightbox-count{ position:absolute; top:30px; left:32px; font-family:'Courier Prime'; font-size:.72rem; color:var(--muted); }
+
+  /* ---- Formules ---- */
+  .formules-section{ background:var(--bg-alt); }
+  .formules-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); }
+  .formule-card{ background:var(--bg); padding:42px 34px; }
+  .formule-card.featured{ background:var(--bg-alt); border-top:2px solid var(--accent); }
+  .formule-name{ font-family:'Courier Prime'; font-size:.72rem; text-transform:uppercase; color:var(--muted); letter-spacing:.08em; margin-bottom:18px; }
+  .formule-price{ font-family:'Bebas Neue'; font-size:2.8rem; color:var(--ink); margin-bottom:8px; }
+  .formule-price span{ font-family:'Inter'; font-size:.85rem; color:var(--muted); }
+  .formule-desc{ color:var(--muted); font-size:.86rem; margin-bottom:26px; }
+  .formule-list{ display:flex; flex-direction:column; gap:11px; margin-bottom:30px; }
+  .formule-list li{ font-size:.85rem; color:var(--ink); display:flex; gap:9px; align-items:flex-start; }
+  .formule-list svg{ width:15px; height:15px; stroke:var(--accent); flex-shrink:0; margin-top:2px; }
+
+  /* ---- Studio / à propos ---- */
+  .studio-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:64px; align-items:center; }
+  .studio-photo-wrap{ position:relative; }
+  .studio-photo-wrap::before{ content:''; position:absolute; top:-16px; left:-16px; right:16px; bottom:16px; border:1px solid var(--accent); z-index:0; }
+  .studio-photo{ position:relative; z-index:1; aspect-ratio:3/4; overflow:hidden; }
+  .studio-photo img{ width:100%; height:100%; object-fit:cover; filter:grayscale(35%); }
+  .studio-quote{ font-family:'Bebas Neue'; font-size:clamp(1.6rem,2.6vw,2.1rem); line-height:1.25; margin-bottom:22px; color:var(--ink); }
+  .studio-text p{ color:var(--muted); font-size:.95rem; margin-bottom:16px; max-width:56ch; }
+  .studio-signature{ font-family:'Courier Prime'; font-size:.78rem; color:var(--accent); margin-top:20px; }
+
+  /* ---- Avis : bobine pellicule ---- */
+  .filmstrip-section{ padding:0; background:var(--bg-alt); padding-top:110px; padding-bottom:110px; }
+  .filmstrip{ position:relative; }
+  .filmstrip-perf{ height:16px; background-image:repeating-linear-gradient(90deg, var(--bg) 0 9px, transparent 9px 22px); margin:0 32px 28px; }
+  .filmstrip-perf.bottom{ margin:28px 32px 0; }
+  .filmstrip-track{ display:flex; gap:2px; overflow-x:auto; scroll-snap-type:x mandatory; padding:0 32px; scrollbar-width:none; }
+  .filmstrip-track::-webkit-scrollbar{ display:none; }
+  .filmstrip-frame{ scroll-snap-align:start; flex:0 0 340px; background:var(--bg); border:1px solid var(--line); padding:30px 28px; }
+  .filmstrip-frame .stars{ color:var(--accent); font-size:.9rem; margin-bottom:16px; }
+  .filmstrip-frame p{ font-size:.9rem; color:var(--ink); margin-bottom:18px; }
+  .filmstrip-frame .name{ font-family:'Courier Prime'; font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
+  .filmstrip-nav{ display:flex; gap:10px; justify-content:flex-end; margin:22px 32px 0; }
+  .filmstrip-nav button{ width:40px; height:40px; border:1px solid var(--line); background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+  .filmstrip-nav button:hover{ border-color:var(--accent); }
+  .filmstrip-nav svg{ width:16px; height:16px; stroke:var(--ink); }
+
+  /* ---- Contact ---- */
+  .contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:1px; background:var(--line); }
+  .contact-col{ padding:48px 42px; background:var(--bg); }
+  .contact-info-list{ display:flex; flex-direction:column; gap:16px; margin:24px 0 30px; }
+  .contact-info-list .lbl{ font-family:'Courier Prime'; font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+  .contact-info-list .val{ font-size:.94rem; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:.78rem; font-weight:600; margin-bottom:8px; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; }
+  .field input, .field select, .field textarea{ width:100%; padding:13px 14px; border:1px solid var(--line); background:var(--bg-alt); color:var(--ink); font-family:'Inter'; font-size:.9rem; }
+  .field select option{ background:var(--bg-alt); }
+  .field textarea{ resize:vertical; min-height:90px; }
+
+  footer{ padding:44px 0 30px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.76rem; color:var(--muted); font-family:'Courier Prime'; }
+  .footer-links{ display:flex; gap:22px; }
+  .footer-links a{ font-size:.76rem; color:var(--muted); text-transform:uppercase; letter-spacing:.03em; }
+  .footer-links a:hover{ color:var(--accent); }
+  .footer-note{ text-align:center; font-size:.74rem; color:var(--dim); margin-top:24px; padding-top:24px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    header .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .gallery-grid{ grid-template-columns:1fr 1fr; }
+    .formules-grid{ grid-template-columns:1fr; }
+    .studio-grid{ grid-template-columns:1fr; gap:40px; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .lightbox{ padding:30px 20px; }
+    .lightbox-nav svg{ width:24px; height:24px; }
+    section{ padding:76px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .gallery-grid{ grid-template-columns:1fr; }
+    .filmstrip-frame{ flex-basis:280px; }
+    .hero h1{ font-size:clamp(2.8rem,12vw,4rem); }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Studio Lumière n'est pas un vrai studio, les photos affichées sont des illustrations libres de droits.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header" id="siteHeader">
+  <div class="nav-row">
+    <a href="#" class="logo"><span class="dot"></span>STUDIO LUMIÈRE</a>
+    <nav class="main-nav">
+      <a href="#portfolio">Portfolio</a>
+      <a href="#formules">Formules</a>
+      <a href="#studio">Le studio</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Réserver une séance</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#portfolio">Portfolio</a>
+    <a href="#formules">Formules</a>
+    <a href="#studio">Le studio</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#contact">Réserver une séance</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"><img src="studio-hero.jpg" alt="Portrait dramatique en studio, éclairage cinématique" width="1200" height="1800"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Studio de photographie — Luxembourg</span>
+    <h1>La lumière<br>raconte l'histoire.</h1>
+    <p class="hero-sub">Portraits, mariages et séances corporate — un regard photographique exigeant, pensé pour durer bien au-delà de l'instant.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#portfolio">Voir le portfolio</a>
+      <a class="btn btn-ghost" href="#contact">Réserver une séance</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+</section>
+
+<section id="portfolio">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Portfolio</span>
+      <h2>Une sélection de séances récentes</h2>
+      <p>Filtrez par type de séance — survolez une photo pour voir les réglages, cliquez pour l'agrandir.</p>
+    </div>
+    <div class="filter-row reveal" id="galleryFilters">
+      <button class="filter-chip active" data-cat="tous" type="button">Tous</button>
+      <button class="filter-chip" data-cat="portrait" type="button">Portrait</button>
+      <button class="filter-chip" data-cat="mariage" type="button">Mariage</button>
+      <button class="filter-chip" data-cat="corporate" type="button">Corporate</button>
+    </div>
+    <div class="gallery-grid reveal" id="galleryGrid">
+      <div class="gallery-item" data-cat="portrait" data-index="0">
+        <img src="studio-g-portrait1.jpg" alt="Portrait noir et blanc élégant en studio">
+        <div class="gallery-overlay">
+          <span class="gallery-cat">Portrait</span>
+          <span class="gallery-title">Élégance intemporelle</span>
+          <span class="gallery-exif">50mm · f/1.8 · 1/200s · ISO 200</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="mariage" data-index="1">
+        <img src="studio-g-mariage1.jpg" alt="Silhouette de mariés en clair-obscur">
+        <div class="gallery-overlay">
+          <span class="gallery-cat">Mariage</span>
+          <span class="gallery-title">Instant suspendu</span>
+          <span class="gallery-exif">85mm · f/1.4 · 1/160s · ISO 800</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="corporate" data-index="2">
+        <img src="studio-g-corporate.jpg" alt="Portrait corporate en noir et blanc">
+        <div class="gallery-overlay">
+          <span class="gallery-cat">Corporate</span>
+          <span class="gallery-title">Autorité tranquille</span>
+          <span class="gallery-exif">85mm · f/2.0 · 1/125s · ISO 100</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="portrait" data-index="3">
+        <img src="studio-g-portrait2.jpg" alt="Portrait éditorial en lumière dramatique">
+        <div class="gallery-overlay">
+          <span class="gallery-cat">Portrait</span>
+          <span class="gallery-title">Clair-obscur</span>
+          <span class="gallery-exif">35mm · f/2.2 · 1/200s · ISO 400</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="mariage" data-index="4">
+        <img src="studio-g-mariage2.jpg" alt="Couple de mariés lors d'un instant tendre">
+        <div class="gallery-overlay">
+          <span class="gallery-cat">Mariage</span>
+          <span class="gallery-title">Premier regard</span>
+          <span class="gallery-exif">70mm · f/2.0 · 1/250s · ISO 320</span>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="corporate" data-index="5">
+        <img src="studio-hero.jpg" alt="Portrait dramatique en studio pour séance corporate">
+        <div class="gallery-overlay">
+          <span class="gallery-cat">Corporate</span>
+          <span class="gallery-title">Présence</span>
+          <span class="gallery-exif">50mm · f/1.8 · 1/160s · ISO 250</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+  <span class="lightbox-count" id="lightboxCount">01 / 06</span>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Photo précédente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <div class="lightbox-inner">
+    <div class="lightbox-img-wrap"><img id="lightboxImg" src="" alt=""></div>
+    <div class="lightbox-caption">
+      <div class="lightbox-cat" id="lightboxCat"></div>
+      <div class="lightbox-title" id="lightboxTitle"></div>
+      <div class="lightbox-exif" id="lightboxExif"></div>
+    </div>
+  </div>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Photo suivante"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+</div>
+
+<section id="formules" class="formules-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Formules</span>
+      <h2>Trois formats, un même regard</h2>
+    </div>
+    <div class="formules-grid reveal">
+      <div class="formule-card">
+        <div class="formule-name">Séance portrait</div>
+        <div class="formule-price">280 € <span>/ séance</span></div>
+        <p class="formule-desc">Idéal pour un portrait individuel, un book ou un portrait de couple.</p>
+        <ul class="formule-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>1h de séance en studio</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>15 photos retouchées</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Galerie privée en ligne</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact" style="width:100%; justify-content:center;">Réserver</a>
+      </div>
+      <div class="formule-card featured">
+        <div class="formule-name">Journée mariage</div>
+        <div class="formule-price">1 450 € <span>/ jour</span></div>
+        <p class="formule-desc">Couverture complète, de la préparation à la soirée.</p>
+        <ul class="formule-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Jusqu'à 10h de présence</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>400+ photos retouchées</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Album photo inclus</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact" style="width:100%; justify-content:center;">Réserver</a>
+      </div>
+      <div class="formule-card">
+        <div class="formule-name">Corporate</div>
+        <div class="formule-price">Sur devis</div>
+        <p class="formule-desc">Portraits d'équipe, événements d'entreprise ou contenu de marque.</p>
+        <ul class="formule-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Sur site ou en studio</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Licence d'usage commercial</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Livraison sous 5 jours</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact" style="width:100%; justify-content:center;">Demander un devis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="studio">
+  <div class="wrap studio-grid">
+    <div class="studio-photo-wrap reveal">
+      <div class="studio-photo"><img src="studio-bio.jpg" alt="Photographe du studio tenant un appareil photo" loading="lazy"></div>
+    </div>
+    <div class="studio-text reveal">
+      <span class="tag" style="font-family:'Courier Prime'; font-size:.74rem; color:var(--accent); text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:16px;">Le studio</span>
+      <p class="studio-quote">« Je ne cherche pas la photo parfaite. Je cherche la photo vraie. »</p>
+      <p>Studio Lumière est né d'une conviction simple : les meilleures photos ne sont pas posées, elles sont observées. Chaque séance commence par une conversation, pas par un plan de prises de vue.</p>
+      <p>Formé à la photographie argentique avant de passer au numérique, le studio garde cette exigence de lumière naturelle et de composition réfléchie, quel que soit le sujet.</p>
+      <div class="studio-signature">— Fondateur, Studio Lumière</div>
+    </div>
+  </div>
+</section>
+
+<section id="avis" class="filmstrip-section">
+  <div class="section-head reveal wrap">
+    <span class="tag">Avis clients</span>
+    <h2>Ce que nos clients en gardent</h2>
+  </div>
+  <div class="filmstrip reveal">
+    <div class="filmstrip-perf"></div>
+    <div class="filmstrip-track" id="filmstripTrack">
+      <div class="filmstrip-frame">
+        <div class="stars">★★★★★</div>
+        <p>Des photos de mariage qu'on regarde encore un an après, comme si c'était hier. Un vrai talent pour capturer l'instant sans le forcer.</p>
+        <div class="name">Camille &amp; Hugo</div>
+      </div>
+      <div class="filmstrip-frame">
+        <div class="stars">★★★★★</div>
+        <p>Séance portrait corporate pour toute notre équipe. Résultat professionnel, sans la rigidité habituelle des photos d'entreprise.</p>
+        <div class="name">Directeur, cabinet d'avocats</div>
+      </div>
+      <div class="filmstrip-frame">
+        <div class="stars">★★★★☆</div>
+        <p>Très à l'aise pour mettre en confiance devant l'objectif — pas simple avec quelqu'un comme moi qui déteste être pris en photo.</p>
+        <div class="name">Sophie M.</div>
+      </div>
+      <div class="filmstrip-frame">
+        <div class="stars">★★★★★</div>
+        <p>Livraison rapide, retouches subtiles et un book qui a fait la différence pour mes castings.</p>
+        <div class="name">Elias K.</div>
+      </div>
+    </div>
+    <div class="filmstrip-perf bottom"></div>
+    <div class="filmstrip-nav">
+      <button type="button" id="filmPrev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button type="button" id="filmNext" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Réservons votre séance</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-col">
+        <h3 style="font-size:1.6rem; margin-bottom:8px;">Studio Lumière</h3>
+        <p style="color:var(--muted); font-size:.88rem;">Sur rendez-vous, en studio ou en extérieur.</p>
+        <div class="contact-info-list">
+          <div><span class="lbl">Adresse</span><span class="val">4 rue de l'Objectif, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+          <div><span class="lbl">Email</span><span class="val">contact@studio-lumiere-exemple.lu</span></div>
+        </div>
+        <a class="btn btn-primary" href="tel:+35200000000">Appeler le studio</a>
+      </div>
+      <div class="contact-col">
+        <h3 style="font-size:1.2rem; margin-bottom:18px;">Demande de réservation</h3>
+        <form id="bookingForm" onsubmit="return false;">
+          <div class="field">
+            <label>Votre nom</label>
+            <input type="text" placeholder="Nom et prénom">
+          </div>
+          <div class="field">
+            <label>Type de séance</label>
+            <select>
+              <option>Portrait</option>
+              <option>Mariage</option>
+              <option>Corporate</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Message</label>
+            <textarea placeholder="Décrivez votre projet et la date souhaitée"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">Envoyer la demande</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 STUDIO LUMIÈRE — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#formules">Formules</a>
+        <a href="#studio">Le studio</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--accent);">MatMax Intelligence</a> — Studio Lumière n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  // Header devient opaque au scroll
+  (function(){
+    var header = document.getElementById('siteHeader');
+    if(!header) return;
+    function onScroll(){
+      if(window.scrollY > 60){ header.classList.add('scrolled'); }
+      else{ header.classList.remove('scrolled'); }
+    }
+    window.addEventListener('scroll', onScroll);
+    onScroll();
+  })();
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Filtres de galerie
+  (function(){
+    var filterGroup = document.getElementById('galleryFilters');
+    var grid = document.getElementById('galleryGrid');
+    if(!grid) return;
+    var items = Array.prototype.slice.call(grid.querySelectorAll('.gallery-item'));
+
+    filterGroup.querySelectorAll('.filter-chip').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        filterGroup.querySelectorAll('.filter-chip').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        var cat = btn.getAttribute('data-cat');
+        items.forEach(function(item){
+          var visible = cat === 'tous' || item.getAttribute('data-cat') === cat;
+          item.classList.toggle('is-hidden', !visible);
+        });
+      });
+    });
+  })();
+
+  // Lightbox
+  (function(){
+    var grid = document.getElementById('galleryGrid');
+    var lightbox = document.getElementById('lightbox');
+    if(!grid || !lightbox) return;
+    var items = Array.prototype.slice.call(grid.querySelectorAll('.gallery-item'));
+    var img = document.getElementById('lightboxImg');
+    var catEl = document.getElementById('lightboxCat');
+    var titleEl = document.getElementById('lightboxTitle');
+    var exifEl = document.getElementById('lightboxExif');
+    var countEl = document.getElementById('lightboxCount');
+    var closeBtn = document.getElementById('lightboxClose');
+    var prevBtn = document.getElementById('lightboxPrev');
+    var nextBtn = document.getElementById('lightboxNext');
+    var currentIdx = 0;
+
+    function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+    function openAt(idx){
+      currentIdx = idx;
+      var item = items[currentIdx];
+      var itemImg = item.querySelector('img');
+      img.src = itemImg.src;
+      img.alt = itemImg.alt;
+      catEl.textContent = item.querySelector('.gallery-cat').textContent;
+      titleEl.textContent = item.querySelector('.gallery-title').textContent;
+      exifEl.textContent = item.querySelector('.gallery-exif').textContent;
+      countEl.textContent = pad(currentIdx + 1) + ' / ' + pad(items.length);
+      lightbox.classList.add('open');
+    }
+    function close(){ lightbox.classList.remove('open'); }
+    function nav(dir){ openAt((currentIdx + dir + items.length) % items.length); }
+
+    items.forEach(function(item, idx){
+      item.addEventListener('click', function(){ openAt(idx); });
+    });
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    if(prevBtn) prevBtn.addEventListener('click', function(){ nav(-1); });
+    if(nextBtn) nextBtn.addEventListener('click', function(){ nav(1); });
+    lightbox.addEventListener('click', function(e){ if(e.target === lightbox) close(); });
+    document.addEventListener('keydown', function(e){
+      if(!lightbox.classList.contains('open')) return;
+      if(e.key === 'Escape') close();
+      if(e.key === 'ArrowLeft') nav(-1);
+      if(e.key === 'ArrowRight') nav(1);
+    });
+  })();
+
+  // Bobine d'avis
+  (function(){
+    var track = document.getElementById('filmstripTrack');
+    var prev = document.getElementById('filmPrev');
+    var next = document.getElementById('filmNext');
+    if(!track) return;
+    function scrollByFrame(dir){
+      var frame = track.querySelector('.filmstrip-frame');
+      var gap = 2;
+      var amount = frame ? (frame.offsetWidth + gap) * dir : 300 * dir;
+      track.scrollBy({ left: amount, behavior: 'smooth' });
+    }
+    if(prev) prev.addEventListener('click', function(){ scrollByFrame(-1); });
+    if(next) next.addEventListener('click', function(){ scrollByFrame(1); });
+  })();
+</script>
+</body>
+</html>
