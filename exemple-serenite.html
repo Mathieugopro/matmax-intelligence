@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Sérénité — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --cream:#FAF6EE; --sand:#F1E9D8; --ink:#2B2A26; --muted:#6B6558; --dim:#B3AA96; --line:#E4DDCB;
+    --sage:#6E8471; --sage-dark:#4F6350; --sage-deep:#30392C; --clay:#BF8256; --white:#FFFFFF;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--cream); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Fraunces',serif; font-weight:500; line-height:1.15; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .08s); }
+
+  .demo-banner{ background:var(--sage-deep); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:var(--clay); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  /* ---- Header : logo centré, nav éclatée ---- */
+  header{ position:sticky; top:0; z-index:100; background:rgba(250,246,238,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:20px 32px; max-width:1180px; margin:0 auto; gap:20px; }
+  nav.nav-left, nav.nav-right{ display:flex; gap:26px; }
+  nav.nav-right{ justify-content:flex-end; align-items:center; }
+  nav.main-nav a{ font-size:.86rem; font-weight:500; color:var(--muted); transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--sage-dark); }
+  .logo{ font-family:'Fraunces'; font-weight:600; font-size:1.3rem; text-align:center; letter-spacing:.02em; white-space:nowrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:11px 22px; border-radius:24px; font-size:.83rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--sage-dark); color:#fff; }
+  .btn-primary:hover{ background:var(--sage-deep); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--sage-dark); }
+  .hamburger{ display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+  .hamburger span{ width:22px; height:2px; background:var(--ink); display:block; }
+  .mobile-nav{ display:none; flex-direction:column; gap:2px; padding:0 32px 20px; }
+  .mobile-nav a{ padding:12px 0; border-bottom:1px solid var(--line); font-size:.95rem; }
+  .mobile-nav.open{ display:flex; }
+
+  /* ---- Hero plein écran ---- */
+  .hero{ position:relative; height:100vh; min-height:560px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .hero-bg{ position:absolute; inset:0; background-size:cover; background-position:center; }
+  .hero-overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(48,57,44,0.35) 0%, rgba(43,42,38,0.55) 65%, rgba(43,42,38,0.75) 100%); }
+  .hero-content{ position:relative; z-index:2; text-align:center; color:#fff; max-width:720px; padding:0 24px; }
+  .hero-tag{ font-family:'IBM Plex Mono'; font-size:.78rem; text-transform:uppercase; letter-spacing:.12em; color:rgba(255,255,255,0.75); display:block; margin-bottom:22px; }
+  .hero h1{ font-size:clamp(2.4rem,5vw,3.6rem); font-style:italic; font-weight:500; margin-bottom:22px; }
+  .hero p.lead{ font-size:1.08rem; color:rgba(255,255,255,0.82); max-width:44ch; margin:0 auto 34px; }
+  .hero-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn-hero{ padding:14px 30px; }
+  .btn-hero.btn-ghost{ border-color:rgba(255,255,255,0.4); color:#fff; }
+  .btn-hero.btn-ghost:hover{ border-color:#fff; }
+  .scroll-cue{ position:absolute; bottom:30px; left:50%; transform:translateX(-50%); z-index:2; animation:bounce 2.2s infinite; }
+  .scroll-cue svg{ width:22px; height:22px; stroke:rgba(255,255,255,0.75); }
+  @keyframes bounce{ 0%,100%{ transform:translateX(-50%) translateY(0); } 50%{ transform:translateX(-50%) translateY(8px); } }
+
+  section{ padding:96px 0; }
+  .section-head{ margin-bottom:48px; max-width:620px; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--sage-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:12px; }
+  .section-head h2{ font-size:clamp(1.8rem,3vw,2.3rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:.98rem; }
+
+  /* ---- Soins : carousel scroll-snap ---- */
+  .soins-carousel-wrap{ position:relative; }
+  .soins-carousel{ display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:10px; scrollbar-width:none; }
+  .soins-carousel::-webkit-scrollbar{ display:none; }
+  .soin-card{ flex:0 0 280px; scroll-snap-align:start; background:var(--white); border:1px solid var(--line); border-radius:14px; padding:28px 26px; }
+  .soin-icon{ width:44px; height:44px; border-radius:50%; background:rgba(110,132,113,0.12); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .soin-icon svg{ width:22px; height:22px; stroke:var(--sage-dark); }
+  .soin-card h3{ font-size:1.15rem; margin-bottom:8px; }
+  .soin-card p{ font-size:.86rem; color:var(--muted); margin-bottom:18px; min-height:44px; }
+  .soin-meta{ display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid var(--line); }
+  .soin-duration{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--muted); }
+  .soin-price{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--sage-dark); font-size:.95rem; }
+  .carousel-controls{ display:flex; gap:10px; justify-content:center; margin-top:26px; }
+  .carousel-btn{ width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--white); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+  .carousel-btn:hover{ background:var(--sage-dark); border-color:var(--sage-dark); }
+  .carousel-btn:hover svg{ stroke:#fff; }
+  .carousel-btn svg{ width:16px; height:16px; stroke:var(--ink); }
+
+  /* ---- Philosophie ---- */
+  .philo{ background:var(--sand); text-align:center; }
+  .philo-rule{ width:60px; height:1px; background:var(--dim); margin:0 auto 30px; }
+  .philo blockquote{ font-family:'Fraunces'; font-style:italic; font-weight:500; font-size:clamp(1.5rem,3vw,2.1rem); max-width:16ch; margin:0 auto 30px; line-height:1.35; color:var(--sage-deep); }
+  .philo p{ color:var(--muted); max-width:52ch; margin:0 auto; font-size:.96rem; }
+
+  /* ---- Réservation ---- */
+  .booking-card{ background:var(--white); border:1px solid var(--line); border-radius:18px; padding:44px; }
+  .booking-step-lbl{ font-family:'IBM Plex Mono'; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; color:var(--sage-dark); margin-bottom:12px; display:block; }
+  .booking-block{ margin-bottom:32px; }
+  .booking-pills{ display:flex; gap:10px; flex-wrap:wrap; }
+  .booking-pill{ padding:10px 18px; border-radius:22px; border:1px solid var(--line); background:var(--cream); font-size:.85rem; font-weight:500; cursor:pointer; transition:all .15s; color:var(--muted); }
+  .booking-pill.active{ background:var(--sage-dark); border-color:var(--sage-dark); color:#fff; }
+  .slot-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .slot-btn{ padding:12px; border-radius:9px; border:1px solid var(--line); background:var(--cream); font-family:'IBM Plex Mono'; font-size:.82rem; cursor:pointer; transition:all .15s; color:var(--ink); }
+  .slot-btn.active{ background:var(--clay); border-color:var(--clay); color:#fff; }
+  .booking-recap{ background:var(--sand); border-radius:12px; padding:22px 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:22px; }
+  .recap-detail{ font-size:.86rem; color:var(--muted); }
+  .recap-detail strong{ color:var(--ink); font-family:'Fraunces'; font-size:1.05rem; display:block; margin-bottom:4px; }
+  .recap-price{ font-family:'IBM Plex Mono'; font-weight:600; font-size:1.5rem; color:var(--sage-dark); }
+  .booking-confirm{ width:100%; background:var(--sage-dark); color:#fff; border:none; padding:16px; border-radius:9px; font-weight:600; font-size:.95rem; cursor:pointer; font-family:'Inter'; transition:background .2s; }
+  .booking-confirm:hover{ background:var(--sage-deep); }
+  .booking-success{ text-align:center; padding:20px 0; }
+  .booking-success .check{ width:56px; height:56px; border-radius:50%; background:rgba(110,132,113,0.15); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+  .booking-success .check svg{ width:26px; height:26px; stroke:var(--sage-dark); }
+  .booking-success h3{ font-size:1.3rem; margin-bottom:10px; }
+  .booking-success p{ color:var(--muted); font-size:.9rem; }
+
+  /* ---- Espace : galerie asymétrique ---- */
+  .espace-grid{ display:grid; grid-template-columns:repeat(4, 1fr); grid-template-rows:repeat(2, 160px); gap:14px; }
+  .espace-grid img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
+  .espace-item-1{ grid-column:1/3; grid-row:1/3; }
+  .espace-item-1 img{ aspect-ratio:auto; }
+  .espace-item-2{ grid-column:3/5; grid-row:1/2; }
+  .espace-item-3{ grid-column:3/4; grid-row:2/3; }
+  .espace-item-4{ grid-column:4/5; grid-row:2/3; }
+
+  /* ---- Avis : 2 colonnes ---- */
+  .testi-grid{ display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+  .testi-block .qm{ font-family:'Fraunces'; font-size:2.6rem; color:var(--sage); opacity:.4; line-height:1; margin-bottom:6px; }
+  .testi-block p{ font-size:1.05rem; font-family:'Fraunces'; font-style:italic; margin-bottom:18px; color:var(--sage-deep); line-height:1.5; }
+  .testi-block .name{ font-weight:700; font-size:.86rem; }
+  .testi-block .role{ font-size:.78rem; color:var(--muted); }
+
+  /* ---- Contact ---- */
+  .contact-section{ background:var(--sage-deep); color:#fff; }
+  .contact-section .tag{ color:var(--clay); }
+  .contact-section .section-head p{ color:rgba(255,255,255,0.65); }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .contact-list{ display:flex; flex-direction:column; gap:18px; margin-bottom:26px; }
+  .contact-list .lbl{ font-family:'IBM Plex Mono'; font-size:.7rem; color:var(--clay); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:5px; }
+  .contact-list .val{ font-size:.98rem; }
+  .contact-hours-table{ width:100%; border-collapse:collapse; }
+  .contact-hours-table td{ padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.14); font-size:.86rem; }
+  .contact-hours-table td:last-child{ text-align:right; color:rgba(255,255,255,0.62); }
+
+  footer{ padding:36px 0; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-note{ text-align:center; font-size:.74rem; color:var(--dim); margin-top:18px; padding-top:18px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    .nav-row{ grid-template-columns:auto 1fr auto; }
+    nav.nav-left{ display:none; }
+    nav.nav-right .btn-primary{ display:none; }
+    .hamburger{ display:flex; }
+    .espace-grid{ grid-template-columns:1fr 1fr; grid-template-rows:repeat(3, 160px); }
+    .espace-item-1{ grid-column:1/3; grid-row:1/2; }
+    .espace-item-2{ grid-column:1/2; grid-row:2/3; }
+    .espace-item-3{ grid-column:2/3; grid-row:2/3; }
+    .espace-item-4{ grid-column:1/3; grid-row:3/4; }
+    .testi-grid{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .slot-grid{ grid-template-columns:repeat(2,1fr); }
+    .booking-card{ padding:28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Sérénité n'est pas un vrai institut, la réservation est simulée.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header>
+  <div class="nav-row">
+    <nav class="nav-left main-nav">
+      <a href="#soins">Nos soins</a>
+      <a href="#reservation">Réserver</a>
+    </nav>
+    <a href="#" class="logo">Sérénité</a>
+    <nav class="nav-right">
+      <div class="main-nav" style="display:flex; gap:26px; margin-right:20px;">
+        <a href="#espace">L'espace</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a class="btn btn-primary" href="#reservation">Réserver</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#soins">Nos soins</a>
+    <a href="#reservation">Réserver</a>
+    <a href="#espace">L'espace</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<section class="hero" style="padding:0;">
+  <div class="hero-bg" style="background-image:url('serenite-hero.jpg');"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Institut de massage &amp; bien-être</span>
+    <h1>Ralentir, respirer, se retrouver.</h1>
+    <p class="lead">Un espace pensé pour le repos, des soins sur-mesure, et un rituel de réservation aussi apaisant que le massage lui-même.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-hero" href="#reservation">Réserver un soin</a>
+      <a class="btn btn-ghost btn-hero" href="#soins">Découvrir nos soins</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
+</section>
+
+<section id="soins">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Nos soins</span>
+      <h2>Un massage pour chaque besoin</h2>
+      <p>Faites glisser pour découvrir l'ensemble de nos soins, du plus doux au plus intense.</p>
+    </div>
+    <div class="soins-carousel-wrap reveal">
+      <div class="soins-carousel" id="soinsCarousel">
+        <div class="soin-card">
+          <div class="soin-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9C.9 8.5 2 5 5.5 5c2 0 3.3 1.1 4 2.2C10.2 6.1 11.5 5 13.5 5 17 5 18.1 8.5 16.5 12c-2.5 4.5-4.5 9-4.5 9z"/></svg></div>
+          <h3>Massage suédois</h3>
+          <p>Le grand classique pour relâcher les tensions musculaires en douceur.</p>
+          <div class="soin-meta"><span class="soin-duration">60 min</span><span class="soin-price">75€</span></div>
+        </div>
+        <div class="soin-card">
+          <div class="soin-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><circle cx="6" cy="7" r="2.4"/><circle cx="18" cy="7" r="2.4"/><circle cx="6" cy="17" r="2.4"/><circle cx="18" cy="17" r="2.4"/></svg></div>
+          <h3>Pierres chaudes</h3>
+          <p>La chaleur des basaltes pour une détente profonde, jusque dans les muscles.</p>
+          <div class="soin-meta"><span class="soin-duration">75 min</span><span class="soin-price">95€</span></div>
+        </div>
+        <div class="soin-card">
+          <div class="soin-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M8 6l4-4 4 4M6 12c0 5 2.7 9 6 9s6-4 6-9-2.7-6-6-6-6 1-6 6z"/></svg></div>
+          <h3>Aromathérapie</h3>
+          <p>Huiles essentielles sur-mesure, choisies selon votre état du moment.</p>
+          <div class="soin-meta"><span class="soin-duration">60 min</span><span class="soin-price">80€</span></div>
+        </div>
+        <div class="soin-card">
+          <div class="soin-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
+          <h3>Massage sportif</h3>
+          <p>Récupération musculaire ciblée avant ou après l'effort.</p>
+          <div class="soin-meta"><span class="soin-duration">45 min</span><span class="soin-price">65€</span></div>
+        </div>
+        <div class="soin-card">
+          <div class="soin-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12a4 4 0 108 0 4 4 0 00-8 0zM4 20c0-3 2-5 4-5M20 20c0-3-2-5-4-5"/></svg></div>
+          <h3>Rituel duo</h3>
+          <p>Un moment de détente à deux, en cabine partagée.</p>
+          <div class="soin-meta"><span class="soin-duration">90 min</span><span class="soin-price">160€</span></div>
+        </div>
+        <div class="soin-card">
+          <div class="soin-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3>Spécial grossesse</h3>
+          <p>Un soin doux et adapté, pensé pour les futures mamans.</p>
+          <div class="soin-meta"><span class="soin-duration">60 min</span><span class="soin-price">85€</span></div>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carouselPrev" type="button" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="carousel-btn" id="carouselNext" type="button" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="philo">
+  <div class="wrap">
+    <div class="philo-rule reveal"></div>
+    <blockquote class="reveal">Ralentir n'est pas un luxe, c'est une nécessité.</blockquote>
+    <p class="reveal">Chez Sérénité, chaque soin commence par une écoute attentive de votre état du moment. Pas de rituel imposé : un accompagnement qui s'adapte à vous, séance après séance.</p>
+  </div>
+</section>
+
+<section id="reservation">
+  <div class="wrap" style="max-width:760px;">
+    <div class="section-head center reveal">
+      <span class="tag">Réservation</span>
+      <h2>Réservez votre moment</h2>
+      <p>Choisissez votre soin, votre créneau, et confirmez — sans appel, sans attente.</p>
+    </div>
+    <div class="booking-card reveal">
+      <div id="bookingForm">
+        <div class="booking-block">
+          <span class="booking-step-lbl">1. Choisissez votre soin</span>
+          <div class="booking-pills" id="soinPills">
+            <button class="booking-pill active" data-soin="suedois" data-price="75" data-duration="60 min" type="button">Suédois</button>
+            <button class="booking-pill" data-soin="pierres" data-price="95" data-duration="75 min" type="button">Pierres chaudes</button>
+            <button class="booking-pill" data-soin="aroma" data-price="80" data-duration="60 min" type="button">Aromathérapie</button>
+            <button class="booking-pill" data-soin="sportif" data-price="65" data-duration="45 min" type="button">Sportif</button>
+          </div>
+        </div>
+        <div class="booking-block">
+          <span class="booking-step-lbl">2. Choisissez un créneau</span>
+          <div class="slot-grid" id="slotGrid">
+            <button class="slot-btn active" type="button">09h00</button>
+            <button class="slot-btn" type="button">10h30</button>
+            <button class="slot-btn" type="button">12h00</button>
+            <button class="slot-btn" type="button">14h00</button>
+            <button class="slot-btn" type="button">15h30</button>
+            <button class="slot-btn" type="button">17h00</button>
+          </div>
+        </div>
+        <div class="booking-recap">
+          <div class="recap-detail"><strong id="recapSoin">Massage suédois</strong><span id="recapMeta">60 min — Aujourd'hui à 09h00</span></div>
+          <div class="recap-price" id="recapPrice">75€</div>
+        </div>
+        <button class="booking-confirm" id="bookingConfirm" type="button">Confirmer la réservation</button>
+      </div>
+      <div class="booking-success" id="bookingSuccess" style="display:none;">
+        <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>Réservation confirmée</h3>
+        <p>Ceci est une démonstration — aucune réservation réelle n'a été enregistrée.<br>Fonctionnalité que MatMax Intelligence peut connecter à votre agenda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="espace" style="background:var(--sand);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">L'espace</span>
+      <h2>Un lieu pensé pour le calme</h2>
+    </div>
+    <div class="espace-grid reveal">
+      <div class="espace-item-1"><img src="serenite-g1.jpg" alt="Serviettes et sachets d'herbes en institut" loading="lazy"></div>
+      <div class="espace-item-2"><img src="serenite-g2.jpg" alt="Bougies et fleur d'orchidée en salon de massage" loading="lazy"></div>
+      <div class="espace-item-3"><img src="serenite-g3.jpg" alt="Accueil de l'institut Sérénité" loading="lazy"></div>
+      <div class="espace-item-4"><img src="serenite-g4.jpg" alt="Salle de sauna en bois de l'institut" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="display:grid; grid-template-columns:.9fr 1.1fr; gap:44px; align-items:center;">
+    <div class="reveal" style="border-radius:14px; overflow:hidden;"><img src="serenite-about.jpg" alt="Thérapeute Sérénité pratiquant un massage" width="1000" height="750" style="aspect-ratio:4/3; object-fit:cover; width:100%;" loading="lazy"></div>
+    <div class="reveal">
+      <span class="tag" style="font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--sage-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:12px;">Notre équipe</span>
+      <h2 style="margin-bottom:16px;">Des mains formées, une écoute réelle</h2>
+      <p style="color:var(--muted); margin-bottom:16px;">Toute notre équipe est diplômée et formée en continu aux techniques de massage bien-être. Chaque séance commence par un temps d'échange pour adapter le soin à votre besoin du jour.</p>
+      <p style="color:var(--muted);">Nous travaillons uniquement avec des huiles et des produits naturels, sans parfum de synthèse.</p>
+    </div>
+  </div>
+</section>
+
+<section id="avis" style="background:var(--sand);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Avis</span>
+      <h2>Ce que nos clients en disent</h2>
+    </div>
+    <div class="testi-grid reveal-stagger reveal">
+      <div class="testi-block"><div class="qm">"</div><p>Le meilleur massage aux pierres chaudes que j'ai reçu. L'accueil est chaleureux et le lieu vraiment apaisant.</p><div class="name">Léa F.</div><div class="role">Cliente depuis 2023</div></div>
+      <div class="testi-block"><div class="qm">"</div><p>La réservation en ligne est un vrai plus — je choisis mon créneau en deux minutes, sans appeler.</p><div class="name">Marc T.</div><div class="role">Client depuis 2022</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Offrez-vous une pause</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div>
+        <div class="contact-list">
+          <div><span class="lbl">Adresse</span><span class="val">9 rue du Bien-Être, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+          <div><span class="lbl">Email</span><span class="val">contact@serenite-institut.lu</span></div>
+        </div>
+        <a class="btn btn-primary" href="#reservation" style="background:var(--clay);">Réserver un soin</a>
+      </div>
+      <table class="contact-hours-table">
+        <tr><td>Lundi — Vendredi</td><td>9h00 – 20h00</td></tr>
+        <tr><td>Samedi</td><td>9h00 – 18h00</td></tr>
+        <tr><td>Dimanche</td><td>Fermé</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 SÉRÉNITÉ — LUXEMBOURG</p>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--sage-dark);">MatMax Intelligence</a> — Sérénité n'existe pas, la réservation est simulée.</p>
+  </div>
+</footer>
+
+<script>
+  var hamburger = document.getElementById('hamburger');
+  var mobileNav = document.getElementById('mobileNav');
+  if(hamburger && mobileNav){
+    hamburger.addEventListener('click', function(){ mobileNav.classList.toggle('open'); });
+    mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileNav.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  var carousel = document.getElementById('soinsCarousel');
+  var prevBtn = document.getElementById('carouselPrev');
+  var nextBtn = document.getElementById('carouselNext');
+  if(carousel && prevBtn && nextBtn){
+    prevBtn.addEventListener('click', function(){ carousel.scrollBy({ left: -300, behavior: 'smooth' }); });
+    nextBtn.addEventListener('click', function(){ carousel.scrollBy({ left: 300, behavior: 'smooth' }); });
+  }
+
+  var soinPills = document.getElementById('soinPills');
+  var slotGrid = document.getElementById('slotGrid');
+  var recapSoin = document.getElementById('recapSoin');
+  var recapMeta = document.getElementById('recapMeta');
+  var recapPrice = document.getElementById('recapPrice');
+  var bookingConfirm = document.getElementById('bookingConfirm');
+  var bookingForm = document.getElementById('bookingForm');
+  var bookingSuccess = document.getElementById('bookingSuccess');
+
+  var soinNames = { suedois: "Massage suédois", pierres: "Massage pierres chaudes", aroma: "Massage aromathérapie", sportif: "Massage sportif" };
+  var currentSoin = { name: "Massage suédois", price: 75, duration: "60 min" };
+  var currentSlot = "09h00";
+
+  function updateRecap(){
+    recapSoin.textContent = currentSoin.name;
+    recapMeta.textContent = currentSoin.duration + " — Aujourd'hui à " + currentSlot;
+    recapPrice.textContent = currentSoin.price + "€";
+  }
+
+  if(soinPills){
+    soinPills.querySelectorAll('.booking-pill').forEach(function(pill){
+      pill.addEventListener('click', function(){
+        soinPills.querySelectorAll('.booking-pill').forEach(function(p){ p.classList.remove('active'); });
+        pill.classList.add('active');
+        var key = pill.getAttribute('data-soin');
+        currentSoin = { name: soinNames[key], price: parseInt(pill.getAttribute('data-price'), 10), duration: pill.getAttribute('data-duration') };
+        updateRecap();
+      });
+    });
+  }
+
+  if(slotGrid){
+    slotGrid.querySelectorAll('.slot-btn').forEach(function(slot){
+      slot.addEventListener('click', function(){
+        slotGrid.querySelectorAll('.slot-btn').forEach(function(s){ s.classList.remove('active'); });
+        slot.classList.add('active');
+        currentSlot = slot.textContent;
+        updateRecap();
+      });
+    });
+  }
+
+  if(bookingConfirm){
+    bookingConfirm.addEventListener('click', function(){
+      bookingForm.style.display = 'none';
+      bookingSuccess.style.display = 'block';
+    });
+  }
+</script>
+</body>
+</html>
