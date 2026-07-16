@@ -101,33 +101,17 @@
   .hero p.lead{ margin-top:24px; font-size:1.08rem; color:rgba(255,255,255,.72); max-width:46ch; }
   .hero-actions{ display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; }
 
-  .site-mock{ background:#fff; border-radius:12px; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); overflow:hidden; width:100%; max-width:400px; justify-self:end; }
-  .site-mock-bar{ display:flex; align-items:center; padding:12px 16px; background:var(--bg-alt); border-bottom:1px solid var(--line); }
-  .site-mock-url{ font-family:'Inter'; font-weight:600; font-size:.72rem; letter-spacing:.02em; color:var(--dim); background:#fff; border:1px solid var(--line); border-radius:20px; padding:4px 14px; }
-  .site-mock-body{ padding:20px; display:flex; flex-direction:column; gap:16px; }
-  .site-mock-nav{ display:flex; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid var(--line); }
-  .site-mock-dot{ width:14px; height:14px; border-radius:3px; background:var(--blue); flex-shrink:0; }
-  .site-mock-line{ height:7px; border-radius:4px; background:var(--line); }
-  .site-mock-nav .site-mock-line{ margin-left:auto; }
-  .site-mock-nav .site-mock-line:first-of-type{ margin-left:auto; }
-  .site-mock-hero{ display:flex; flex-direction:column; gap:9px; padding:6px 0; position:relative; }
-  .site-mock-hero .lg{ height:11px; }
-  .site-mock-hero .site-mock-cta{ margin-top:8px; width:88px; height:26px; border-radius:6px; background:var(--blue); transition:opacity .35s ease, transform .35s ease, box-shadow .25s ease; }
-  .site-mock-hero .site-mock-cta.sm-click{ box-shadow:0 0 0 6px var(--blue-soft); }
-  .site-mock-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-  .site-mock-card{ height:46px; border-radius:6px; background:var(--bg-alt); border:1px solid var(--line); }
-  .w20{ width:20%; } .w40{ width:40%; } .w60{ width:60%; } .w70{ width:70%; }
-
-  .sm-item{ opacity:0; transform:translateY(7px); transition:opacity .35s ease, transform .35s ease; }
-  .sm-in .sm-item{ opacity:1; transform:none; }
-  .sm-in .sm-item:nth-child(1){ transition-delay:0s; }
-  .sm-in .sm-item:nth-child(2){ transition-delay:.07s; }
-  .sm-in .sm-item:nth-child(3){ transition-delay:.14s; }
-  .sm-in .sm-item:nth-child(4){ transition-delay:.21s; }
-  .sm-cursor{ position:absolute; left:44px; top:calc(100% - 20px); width:16px; height:16px; opacity:0; transform:translate(0,0) scale(1); transition:opacity .3s ease, transform .3s ease; pointer-events:none; }
-  .sm-cursor svg{ width:16px; height:16px; filter:drop-shadow(0 2px 3px rgba(0,0,0,.25)); }
-  .sm-cursor.sm-show{ opacity:1; }
-  .sm-cursor.sm-tap{ transform:translate(0,0) scale(.82); }
+  .chat-card{ background:#fff; border-radius:12px; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); overflow:hidden; width:100%; max-width:400px; justify-self:end; }
+  .chat-top{ display:flex; align-items:center; gap:9px; padding:16px 20px; background:var(--bg-alt); border-bottom:1px solid var(--line); }
+  .chat-top-dot{ width:8px; height:8px; border-radius:50%; background:#2FB86A; flex-shrink:0; }
+  .chat-top-label{ font-family:'Inter'; font-weight:600; font-size:.78rem; letter-spacing:.02em; color:var(--ink-soft); }
+  .chat-body{ padding:22px 20px; display:flex; flex-direction:column; gap:12px; min-height:230px; }
+  .chat-msg{ max-width:82%; padding:10px 14px; border-radius:14px; font-size:.86rem; line-height:1.4; opacity:0; transform:translateY(6px); transition:opacity .35s ease, transform .35s ease; }
+  .chat-msg.in{ align-self:flex-start; background:var(--bg-alt); color:var(--ink-soft); border-bottom-left-radius:4px; }
+  .chat-msg.out{ align-self:flex-end; background:var(--blue); color:#fff; border-bottom-right-radius:4px; }
+  .chat-msg.show{ opacity:1; transform:none; }
+  .chat-foot{ display:flex; align-items:center; gap:8px; padding:14px 20px; border-top:1px solid var(--line); font-family:'Inter'; font-weight:600; font-size:.74rem; letter-spacing:.02em; color:var(--dim); text-transform:uppercase; }
+  .chat-foot-dot{ width:7px; height:7px; border-radius:50%; background:var(--blue); flex-shrink:0; }
 
   section{ padding:100px 0; }
   .section-head{ max-width:640px; margin-bottom:56px; }
@@ -259,7 +243,7 @@
     .hero h1{ font-size:2.1rem; max-width:none; }
     .hero-actions{ flex-direction:column; align-items:stretch; }
     .hero-actions .btn{ justify-content:center; width:100%; }
-    .site-mock{ max-width:100%; justify-self:stretch; margin-top:36px; }
+    .chat-card{ max-width:100%; justify-self:stretch; margin-top:36px; }
   }
 </style>
 </head>
@@ -302,29 +286,20 @@
           <a href="#contact" class="btn btn-ghost">Demander un devis</a>
         </div>
       </div>
-      <div class="site-mock reveal in">
-        <div class="site-mock-bar">
-          <span class="site-mock-url">votre-entreprise.lu</span>
+      <div class="chat-card reveal in">
+        <div class="chat-top">
+          <span class="chat-top-dot"></span>
+          <span class="chat-top-label">Discutons de votre projet</span>
         </div>
-        <div class="site-mock-body">
-          <div class="site-mock-nav" id="smNav">
-            <span class="site-mock-dot sm-item"></span>
-            <span class="site-mock-line w40 sm-item"></span>
-            <span class="site-mock-line w20 sm-item"></span>
-            <span class="site-mock-line w20 sm-item"></span>
-          </div>
-          <div class="site-mock-hero" id="smHero">
-            <span class="site-mock-line w60 lg sm-item"></span>
-            <span class="site-mock-line w40 lg sm-item"></span>
-            <span class="site-mock-line w70 sm-item"></span>
-            <span class="site-mock-cta sm-item" id="smCta"></span>
-            <span class="sm-cursor" id="smCursor"><svg viewBox="0 0 24 24" fill="#14141A"><path d="M4 2l14 6-5.5 2.2L15 16z"/></svg></span>
-          </div>
-          <div class="site-mock-grid" id="smGrid">
-            <span class="site-mock-card sm-item"></span>
-            <span class="site-mock-card sm-item"></span>
-            <span class="site-mock-card sm-item"></span>
-          </div>
+        <div class="chat-body" id="chatBody">
+          <div class="chat-msg in">Bonjour, je cherche un site pour mon restaurant.</div>
+          <div class="chat-msg out">Avec plaisir ! Vitrine simple, ou avec réservation en ligne ?</div>
+          <div class="chat-msg in">Avec réservation, si possible.</div>
+          <div class="chat-msg out">On peut vous livrer ça sous 2 semaines, hébergement inclus.</div>
+        </div>
+        <div class="chat-foot">
+          <span class="chat-foot-dot"></span>
+          Réponse sous 24h ouvrées
         </div>
       </div>
     </div>
@@ -582,33 +557,18 @@
 </footer>
 
 <script>
-  const smNav = document.getElementById('smNav');
-  const smHero = document.getElementById('smHero');
-  const smGrid = document.getElementById('smGrid');
-  const smCta = document.getElementById('smCta');
-  const smCursor = document.getElementById('smCursor');
+  const chatBody = document.getElementById('chatBody');
+  const chatMsgs = chatBody ? Array.from(chatBody.querySelectorAll('.chat-msg')) : [];
 
-  function playSiteMock(){
-    [smNav, smHero, smGrid].forEach(el => el && el.classList.remove('sm-in'));
-    if(smCursor){ smCursor.classList.remove('sm-show','sm-tap'); }
-    if(smCta){ smCta.classList.remove('sm-click'); }
-
-    setTimeout(()=>{ smNav && smNav.classList.add('sm-in'); }, 150);
-    setTimeout(()=>{ smHero && smHero.classList.add('sm-in'); }, 550);
-    setTimeout(()=>{ smGrid && smGrid.classList.add('sm-in'); }, 1050);
-    setTimeout(()=>{ smCursor && smCursor.classList.add('sm-show'); }, 1700);
-    setTimeout(()=>{
-      smCursor && smCursor.classList.add('sm-tap');
-      smCta && smCta.classList.add('sm-click');
-    }, 2150);
-    setTimeout(()=>{
-      smCursor && smCursor.classList.remove('sm-tap');
-      smCta && smCta.classList.remove('sm-click');
-    }, 2400);
+  function playChat(){
+    chatMsgs.forEach(el => el.classList.remove('show'));
+    chatMsgs.forEach((el, i) => {
+      setTimeout(()=>{ el.classList.add('show'); }, 500 + i * 900);
+    });
   }
-  if(smNav){
-    playSiteMock();
-    setInterval(playSiteMock, 6500);
+  if(chatMsgs.length){
+    playChat();
+    setInterval(playChat, 7000);
   }
 
   const io = new IntersectionObserver((entries)=>{
