@@ -8,246 +8,259 @@
 <meta name="description" content="Exemple de site vitrine pour un comptoir sushi, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box; margin:0; padding:0;}
+  *{ box-sizing:border-box; margin:0; padding:0; }
   :root{
-    --bg:#FAFAF8; --bg-alt:#F1EFEB; --ink:#141414; --muted:#6E6B68; --dim:#B8B4AF; --line:#E2DFDA;
-    --red:#D11F3C; --red-dark:#93122A; --paper:#FFFFFF;
-    --radius:2px; --maxw:1180px;
+    --bg:#FAF6EF; --bg-alt:#F1E9DA; --ink:#1C1A17; --muted:#6B6459; --dim:#C9BFAE; --line:#E4DAC7;
+    --red:#B7282E; --red-dark:#8A1D22; --wood:#8B6B4A; --wood-dark:#4A3823; --paper:#FFFEFB;
+    --radius:3px; --maxw:1200px;
   }
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink);
-    line-height:1.6; -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif; font-weight:600; line-height:1.12; letter-spacing:-.01em;}
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
-  a{color:inherit; text-decoration:none;}
-  img{max-width:100%; display:block;}
-  section{padding:104px 0;}
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Work Sans',sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Zen Old Mincho',serif; font-weight:600; line-height:1.25; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  section{ padding:112px 0; }
 
-  /* reveal animation */
-  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  .reveal-stagger.in > *{transition-delay:calc(var(--i,0) * 70ms);}
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay:calc(var(--i,0) * 70ms); }
 
-  /* demo banner */
-  .demo-banner{
-    background:#0A0A0A; color:#fff; text-align:center; font-size:.82rem;
-    padding:11px 16px; font-family:'Inter',sans-serif;
-  }
-  .demo-banner strong{color:var(--red); font-weight:700;}
-  .demo-banner a{color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap;}
+  .demo-banner{ background:var(--ink); color:#fff; text-align:center; font-size:.82rem; padding:11px 16px; }
+  .demo-banner strong{ color:#E8A45A; }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
 
-  /* header */
-  .site-header{
-    position:sticky; top:0; z-index:50; background:rgba(250,250,248,.92);
-    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
-  }
-  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:20px 32px; gap:24px;}
-  .logo{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.35rem; letter-spacing:.04em; text-transform:uppercase;}
-  .logo span{color:var(--red);}
-  nav ul{list-style:none; display:flex; gap:34px;}
-  nav a{font-size:.86rem; font-weight:500; letter-spacing:.03em; text-transform:uppercase; color:var(--ink); transition:color .2s;}
-  nav a:hover{color:var(--red);}
-  .nav-cta{
-    background:var(--ink); color:#fff; border:1px solid var(--ink); border-radius:var(--radius);
-    padding:11px 22px; font-family:'Inter',sans-serif; font-weight:600; font-size:.84rem;
-    letter-spacing:.02em; cursor:pointer; transition:background .2s, color .2s;
-  }
-  .nav-cta:hover{background:var(--red); border-color:var(--red);}
-  .nav-toggle{display:none; background:none; border:none; cursor:pointer; padding:4px;}
-  .nav-toggle svg{width:26px; height:26px;}
-  .mobile-menu{
-    display:none; flex-direction:column; gap:2px; background:var(--paper);
-    border-top:1px solid var(--line); padding:10px 32px 22px;
-  }
-  .mobile-menu.open{display:flex;}
-  .mobile-menu a{
-    padding:13px 0; border-bottom:1px solid var(--line); font-weight:500;
-    text-transform:uppercase; font-size:.86rem; letter-spacing:.03em; color:var(--ink);
-  }
-  .mobile-menu .nav-cta{color:#fff; text-align:center; margin-top:14px;}
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(250,246,239,.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:20px 32px; gap:24px; }
+  .logo{ font-family:'Zen Old Mincho',serif; font-weight:700; font-size:1.5rem; letter-spacing:.02em; }
+  .logo .hanko{ color:var(--red); }
+  nav.main-nav{ display:flex; gap:32px; }
+  nav.main-nav a{ font-family:'Space Mono',monospace; font-size:.76rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--red); }
+  .nav-cta{ background:var(--ink); color:#fff; border:1px solid var(--ink); border-radius:var(--radius); padding:11px 22px; font-family:'Work Sans'; font-weight:600; font-size:.84rem; cursor:pointer; transition:all .2s; }
+  .nav-cta:hover{ background:var(--red); border-color:var(--red); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .nav-toggle svg{ width:24px; height:24px; stroke:var(--ink); }
+  .mobile-menu{ display:none; flex-direction:column; background:var(--paper); border-top:1px solid var(--line); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-family:'Space Mono',monospace; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; }
+  .mobile-menu .nav-cta{ margin:16px 32px; text-align:center; }
 
-  /* buttons */
-  .btn{
-    display:inline-flex; align-items:center; gap:8px; padding:14px 26px; border-radius:var(--radius);
-    font-weight:600; font-size:.88rem; letter-spacing:.02em; cursor:pointer; border:1px solid transparent;
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:var(--radius); font-weight:600; font-size:.87rem; border:1px solid transparent; cursor:pointer; transition:all .2s; font-family:'Work Sans'; }
+  .btn-primary{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .btn-primary:hover{ background:var(--red); border-color:var(--red); }
+  .btn-ghost{ background:transparent; color:var(--ink); border-color:var(--ink); }
+  .btn-ghost:hover{ background:var(--ink); color:#fff; }
+
+  .section-head{ max-width:600px; margin-bottom:56px; }
+  .tag{ font-family:'Space Mono',monospace; font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; color:var(--red); display:inline-block; margin-bottom:16px; }
+  .section-head h2{ font-size:clamp(1.9rem,3vw,2.4rem); }
+  .section-head p{ color:var(--muted); font-size:1rem; margin-top:14px; }
+
+  .hanko-stamp{ width:52px; height:52px; border-radius:50%; border:2.5px solid var(--red); display:flex; align-items:center; justify-content:center; color:var(--red); font-family:'Zen Old Mincho'; font-size:1.4rem; flex-shrink:0; }
+
+  /* ---- Hero asymétrique ---- */
+  .hero{ padding:0; }
+  .hero-shell{ display:grid; grid-template-columns:.62fr 1.38fr; min-height:88vh; }
+  .hero-photo-col{ position:relative; overflow:hidden; background:var(--ink); }
+  .hero-photo-col img{ width:100%; height:100%; object-fit:cover; opacity:.92; }
+  .hero-vert-label{
+    position:absolute; left:18px; top:50%; transform:translateY(-50%); writing-mode:vertical-rl;
+    font-family:'Space Mono',monospace; font-size:.72rem; letter-spacing:.25em; color:#fff; opacity:.75;
+    text-transform:uppercase;
+  }
+  .hero-text-col{ display:flex; flex-direction:column; justify-content:center; padding:60px 64px; }
+  .hero-tagline{ display:flex; align-items:center; gap:16px; margin-bottom:26px; }
+  .hero-tagline .eyebrow{ font-family:'Space Mono',monospace; font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+  .hero-text-col h1{ font-size:clamp(2.4rem,4.6vw,3.6rem); max-width:14ch; margin-bottom:24px; }
+  .hero-text-col h1 em{ color:var(--red); font-style:normal; }
+  .hero-text-col .lead{ font-size:1.06rem; color:var(--muted); max-width:480px; margin-bottom:36px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .hero-facts{ display:flex; gap:46px; margin-top:56px; flex-wrap:wrap; }
+  .hero-facts .num{ font-family:'Zen Old Mincho'; font-size:2rem; color:var(--red); }
+  .hero-facts .lbl{ font-family:'Space Mono',monospace; font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-top:4px; max-width:12ch; }
+
+  /* ---- Saison (flagship 1) ---- */
+  .season-section{ background:var(--bg-alt); }
+  .season-head-row{ display:flex; align-items:flex-start; gap:20px; margin-bottom:56px; }
+  .season-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:start; }
+  .fish-list{ display:flex; flex-direction:column; gap:2px; }
+  .fish-item{
+    display:flex; align-items:center; justify-content:space-between; gap:20px; background:var(--paper);
+    border:1px solid var(--line); padding:20px 24px; cursor:pointer; text-align:left; width:100%;
+    font-family:'Work Sans'; transition:all .2s;
+  }
+  .fish-item:hover{ border-color:var(--red); }
+  .fish-item.active{ background:var(--ink); border-color:var(--ink); }
+  .fish-item.active .fish-name, .fish-item.active .fish-jp{ color:#fff; }
+  .fish-name{ font-weight:600; font-size:1.02rem; }
+  .fish-jp{ font-family:'Zen Old Mincho'; font-size:.85rem; color:var(--muted); margin-left:10px; }
+  .fish-dots{ display:flex; gap:4px; }
+  .fish-dots span{ width:7px; height:7px; border-radius:50%; background:var(--dim); }
+  .fish-dots span.on{ background:var(--red); }
+  .fish-item.active .fish-dots span{ background:rgba(255,255,255,.25); }
+  .fish-item.active .fish-dots span.on{ background:#E8A45A; }
+  .season-detail{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:38px 36px; min-height:280px; }
+  .season-detail .fish-title{ font-size:1.5rem; margin-bottom:6px; }
+  .season-detail .fish-title-jp{ font-family:'Zen Old Mincho'; color:var(--red); font-size:1rem; margin-bottom:20px; display:block; }
+  .season-detail p{ color:var(--muted); margin-bottom:22px; }
+  .month-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .month-chip{ font-family:'Space Mono',monospace; font-size:.68rem; padding:6px 10px; border-radius:999px; border:1px solid var(--line); color:var(--dim); }
+  .month-chip.on{ border-color:var(--red); color:var(--red); background:rgba(183,40,46,.06); font-weight:700; }
+
+  /* ---- About ---- */
+  .about-grid{ display:grid; grid-template-columns:.8fr 1.2fr; gap:64px; align-items:center; }
+  .about-photo-wrap{ position:relative; }
+  .about-photo-wrap img{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:var(--radius); }
+  .about-photo-wrap::before{
+    content:""; position:absolute; inset:16px -16px -16px 16px; border:2px solid var(--red); border-radius:var(--radius); z-index:-1;
+  }
+  .about-quote{ font-family:'Zen Old Mincho'; font-size:1.35rem; line-height:1.5; margin-bottom:22px; }
+  .about-text p{ color:var(--muted); margin-bottom:16px; max-width:520px; }
+  .stats-row{ display:flex; gap:44px; margin-top:32px; flex-wrap:wrap; }
+  .stat .num{ font-family:'Zen Old Mincho'; font-size:2rem; color:var(--red); }
+  .stat .lbl{ font-family:'Space Mono',monospace; font-size:.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:.03em; margin-top:4px; }
+
+  /* ---- Omakase stepper (flagship 2) ---- */
+  .omakase-section{
+    background:var(--wood-dark);
+    background-image:repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 2px, transparent 2px, transparent 64px);
+    color:#fff;
+  }
+  .omakase-section .tag{ color:#E8A45A; }
+  .omakase-section .section-head h2, .omakase-section .section-head p{ color:#fff; }
+  .omakase-section .section-head p{ color:rgba(255,255,255,.62); }
+  .omakase-box{ background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14); border-radius:var(--radius); padding:44px; max-width:760px; }
+  .omakase-progress{ display:flex; gap:7px; margin-bottom:32px; }
+  .omakase-progress span{ flex:1; height:3px; background:rgba(255,255,255,.18); border-radius:2px; }
+  .omakase-progress span.done{ background:#E8A45A; }
+  .course-count{ font-family:'Space Mono',monospace; font-size:.76rem; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:.06em; margin-bottom:12px; }
+  .course-title{ font-size:2rem; margin-bottom:6px; }
+  .course-title-jp{ font-family:'Zen Old Mincho'; color:#E8A45A; font-size:1rem; margin-bottom:20px; display:block; }
+  .course-desc{ color:rgba(255,255,255,.72); font-size:1rem; max-width:52ch; margin-bottom:36px; }
+  .omakase-nav{ display:flex; align-items:center; gap:18px; }
+  .omakase-nav button{
+    width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,.3); background:transparent;
+    color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s;
+  }
+  .omakase-nav button:hover{ border-color:#E8A45A; color:#E8A45A; }
+  .omakase-nav button:disabled{ opacity:.3; cursor:default; }
+  .omakase-nav button:disabled:hover{ border-color:rgba(255,255,255,.3); color:#fff; }
+  .omakase-nav svg{ width:18px; height:18px; }
+
+  /* ---- Menu vertical tabs ---- */
+  .menu-shell{ display:grid; grid-template-columns:220px 1fr; gap:56px; align-items:start; }
+  .menu-vtabs{ display:flex; flex-direction:row; lex-wrap:wrap; gap:2px; position:sticky; top:110px; }
+  .menu-vtabs{ display:flex; flex-direction:column; gap:2px; }
+  .menu-vtab{
+    display:flex; align-items:center; gap:12px; text-align:left; background:var(--paper); border:1px solid var(--line);
+    padding:16px 18px; cursor:pointer; font-family:'Work Sans'; font-weight:600; font-size:.92rem; color:var(--muted);
     transition:all .2s;
   }
-  .btn-primary{background:var(--ink); color:#fff; border-color:var(--ink);}
-  .btn-primary:hover{background:var(--red); border-color:var(--red);}
-  .btn-ghost{background:transparent; color:var(--ink); border-color:var(--ink);}
-  .btn-ghost:hover{background:var(--ink); color:#fff;}
+  .menu-vtab .idx{ font-family:'Space Mono',monospace; font-size:.72rem; color:var(--dim); }
+  .menu-vtab.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .menu-vtab.active .idx{ color:#E8A45A; }
+  .menu-panel{ display:none; }
+  .menu-panel.active{ display:grid; grid-template-columns:1fr 1fr; gap:0 48px; }
+  .menu-item{ padding:16px 0; border-bottom:1px solid var(--line); }
+  .menu-item-row{ display:flex; align-items:baseline; gap:6px; }
+  .menu-item-name{ font-weight:600; font-size:1rem; white-space:nowrap; }
+  .menu-item-leader{ flex:1; border-bottom:2px dotted var(--dim); margin:0 6px 5px; min-width:14px; }
+  .menu-item-price{ font-family:'Space Mono',monospace; color:var(--red); font-weight:700; white-space:nowrap; }
+  .menu-item-desc{ display:block; color:var(--muted); font-size:.85rem; margin-top:5px; }
 
-  /* hero */
-  .hero{padding:76px 0 100px;}
-  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center;}
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace; font-size:.76rem; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--red); display:inline-block; margin-bottom:18px;
+  /* ---- Galerie shoji ---- */
+  .shoji-row{ display:flex; gap:4px; height:480px; }
+  .shoji-panel{
+    position:relative; flex:1; overflow:hidden; cursor:pointer; transition:flex 0.5s cubic-bezier(.2,.8,.2,1); background:var(--ink);
   }
-  .hero h1{font-size:3.1rem; margin-bottom:22px;}
-  .hero h1 em{color:var(--red); font-style:normal;}
-  .lead{font-size:1.08rem; color:var(--muted); max-width:460px; margin-bottom:34px;}
-  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
-  .hero-visual{position:relative; display:flex; justify-content:center; align-items:center;}
-  .photo-frame{position:relative; width:100%; max-width:400px;}
-  .photo-frame img{
-    width:100%; height:auto; display:block; border-radius:var(--radius); border:1px solid var(--line);
-    box-shadow:0 30px 60px -20px rgba(20,20,20,.35);
+  .shoji-panel.expanded{ flex:5; }
+  .shoji-panel img{ width:100%; height:100%; object-fit:cover; opacity:.72; transition:opacity .4s; }
+  .shoji-panel.expanded img{ opacity:1; }
+  .shoji-panel::after{ content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(10,8,6,.75) 0%, rgba(10,8,6,0) 45%); }
+  .shoji-cap{
+    position:absolute; left:14px; bottom:16px; z-index:1; color:#fff; font-family:'Space Mono',monospace;
+    font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; writing-mode:vertical-rl; opacity:.9;
+    transition:writing-mode 0s, transform .3s;
   }
-  .price-tag-float{
-    position:absolute; bottom:24px; left:-28px; background:var(--red); color:#fff; padding:12px 18px;
-    border-radius:var(--radius); font-family:'IBM Plex Mono',monospace; font-size:.78rem; letter-spacing:.02em;
-    box-shadow:0 12px 28px rgba(209,31,60,.35); transform:rotate(-4deg);
-  }
-  .deco-ring{
-    position:absolute; top:-28px; right:-28px; width:96px; height:96px; border:2px solid var(--red);
-    border-radius:50%; opacity:.55; z-index:-1;
-  }
-  .deco-line{
-    position:absolute; left:-24px; top:30%; width:2px; height:120px; background:var(--red); opacity:.35;
-  }
+  .shoji-panel.expanded .shoji-cap{ writing-mode:horizontal-tb; }
 
-  /* highlights */
-  .highlights{padding:0 0 92px;}
-  .highlights-row{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-  }
-  .highlight-item{padding:32px 26px; border-right:1px solid var(--line);}
-  .highlight-item:last-child{border-right:none;}
-  .hnum{
-    font-family:'IBM Plex Mono',monospace; color:var(--red); font-size:.8rem; font-weight:500;
-    display:block; margin-bottom:10px;
-  }
-  .highlight-item h4{font-size:.98rem; font-weight:600; line-height:1.35;}
+  /* ---- Avis ---- */
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line); }
+  .testi-card{ background:var(--paper); padding:38px 32px; }
+  .testi-card .hanko-stamp{ width:38px; height:38px; font-size:1rem; margin-bottom:18px; }
+  .stars{ color:var(--red); letter-spacing:2px; margin-bottom:14px; font-size:.88rem; }
+  .testi-card p{ color:var(--ink); margin-bottom:20px; font-size:.96rem; font-style:italic; }
+  .testi-name{ font-weight:700; font-size:.9rem; }
+  .testi-role{ color:var(--muted); font-size:.8rem; margin-top:2px; }
 
-  /* section head */
-  .section-head{max-width:560px; margin-bottom:52px;}
-  .tag{
-    font-family:'IBM Plex Mono',monospace; font-size:.76rem; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--red); display:inline-block; margin-bottom:14px;
+  /* ---- Contact ---- */
+  .contact-section{ background:var(--ink); color:#fff; }
+  .contact-section .tag{ color:#E8A45A; }
+  .contact-section .section-head h2, .contact-section .section-head p{ color:#fff; }
+  .contact-section .section-head p{ color:rgba(255,255,255,.6); }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; }
+  .info-list div{ display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12); }
+  .info-list .lbl{ color:rgba(255,255,255,.5); font-size:.82rem; text-transform:uppercase; letter-spacing:.03em; font-family:'Space Mono',monospace; }
+  .info-list .val{ font-weight:500; text-align:right; }
+  .hours-table{ width:100%; margin:24px 0 32px; border-collapse:collapse; }
+  .hours-table td{ padding:9px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:.88rem; }
+  .hours-table td:last-child{ text-align:right; color:rgba(255,255,255,.65); }
+  .counter-diagram{ margin:8px 0 30px; }
+  .counter-diagram .cd-label{ font-family:'Space Mono',monospace; font-size:.68rem; color:rgba(255,255,255,.45); text-transform:uppercase; letter-spacing:.05em; margin-bottom:12px; display:block; }
+  .counter-seats{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .counter-seats span{
+    width:30px; height:30px; border-radius:50%; border:1px solid rgba(255,255,255,.3); display:flex;
+    align-items:center; justify-content:center; font-family:'Space Mono',monospace; font-size:.68rem; color:rgba(255,255,255,.55);
   }
-  .section-head h2{font-size:2.2rem; margin-bottom:14px;}
-  .section-head p{color:var(--muted); font-size:1.02rem;}
+  .counter-seats span.taken{ background:rgba(183,40,46,.35); border-color:var(--red); color:#fff; }
+  .counter-bar{ height:8px; background:var(--wood); border-radius:2px; margin-top:6px; }
+  .contact-form-col{ background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.12); border-radius:var(--radius); padding:38px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:.78rem; font-weight:600; margin-bottom:6px; color:rgba(255,255,255,.6); font-family:'Space Mono',monospace; text-transform:uppercase; letter-spacing:.03em; }
+  .field input, .field select, .field textarea{
+    width:100%; padding:12px 14px; border-radius:var(--radius); border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.03); color:#fff; font-family:'Work Sans'; font-size:.9rem;
+  }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .contact-section .btn-primary{ background:var(--red); border-color:var(--red); }
+  .contact-section .btn-primary:hover{ background:#E8A45A; border-color:#E8A45A; color:var(--ink); }
 
-  /* about */
-  .about-grid{display:grid; grid-template-columns:.85fr 1.15fr; gap:64px; align-items:center;}
-  .about-visual{border-radius:var(--radius); overflow:hidden; border:1px solid var(--line);}
-  .about-visual img{width:100%; display:block; aspect-ratio:1/1; object-fit:cover;}
-  .about-text p{color:var(--muted); margin-bottom:16px; max-width:520px;}
-  .stats-row{display:flex; gap:40px; margin-top:32px; flex-wrap:wrap;}
-  .stat .num{font-family:'Space Grotesk',sans-serif; font-size:2.1rem; font-weight:700; color:var(--red);}
-  .stat .lbl{font-size:.82rem; color:var(--muted); text-transform:uppercase; letter-spacing:.03em; margin-top:4px;}
+  footer{ padding:44px 0 30px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-row p{ font-family:'Space Mono',monospace; font-size:.74rem; letter-spacing:.03em; color:var(--muted); }
+  .footer-links{ display:flex; gap:22px; }
+  .footer-links a{ font-size:.82rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--red); }
+  .footer-note{ margin-top:18px; font-size:.78rem; color:var(--dim); }
+  .footer-note a{ color:var(--red); }
 
-  /* menu */
-  .menu-section{background:var(--bg-alt);}
-  .menu-tabs{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:42px;}
-  .menu-tab{
-    display:flex; align-items:center; gap:8px; background:transparent; border:1px solid var(--line);
-    border-radius:var(--radius); padding:11px 20px; font-weight:600; font-size:.86rem; cursor:pointer;
-    color:var(--muted); transition:all .2s;
+  @media(max-width:980px){
+    nav.main-nav, .site-header .nav-cta{ display:none; }
+    .nav-toggle{ display:block; }
+    .hero-shell{ grid-template-columns:1fr; min-height:auto; }
+    .hero-photo-col{ height:280px; }
+    .hero-vert-label{ display:none; }
+    .hero-text-col{ padding:44px 24px; }
+    .season-grid, .about-grid, .contact-grid, .menu-shell{ grid-template-columns:1fr; gap:36px; }
+    .menu-vtabs{ flex-direction:row; overflow-x:auto; position:static; }
+    .menu-panel.active{ grid-template-columns:1fr; }
+    .shoji-row{ flex-direction:column; height:auto; }
+    .shoji-panel{ height:160px; flex:none !important; }
+    .shoji-cap{ writing-mode:horizontal-tb; }
+    .testi-grid{ grid-template-columns:1fr; }
+    section{ padding:76px 0; }
+    .about-photo-wrap::before{ display:none; }
   }
-  .menu-tab svg{width:17px; height:17px;}
-  .menu-tab.active{background:var(--ink); color:#fff; border-color:var(--ink);}
-  .menu-panel{display:none; grid-template-columns:1fr 1fr; gap:0 56px;}
-  .menu-panel.active{display:grid;}
-  .menu-item{padding:16px 0; border-bottom:1px solid var(--line);}
-  .menu-item-row{display:flex; align-items:baseline; gap:6px;}
-  .menu-item-name{font-weight:600; font-size:1rem; white-space:nowrap;}
-  .menu-item-leader{flex:1; border-bottom:2px dotted var(--dim); margin:0 8px 5px; min-width:16px;}
-  .menu-item-price{font-family:'IBM Plex Mono',monospace; color:var(--red); font-weight:500; white-space:nowrap;}
-  .menu-item-desc{display:block; color:var(--muted); font-size:.86rem; margin-top:5px;}
-
-  /* gallery */
-  .gallery-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px;}
-  .gallery-tile{
-    aspect-ratio:4/3; display:flex; align-items:flex-end; justify-content:flex-start;
-    color:#fff; position:relative; overflow:hidden;
-  }
-  .gallery-tile img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    transition:transform .5s ease;
-  }
-  .gallery-tile:hover img{transform:scale(1.05);}
-  .gallery-tile::after{
-    content:""; position:absolute; inset:0;
-    background:linear-gradient(to top, rgba(10,10,10,.72) 0%, rgba(10,10,10,0) 55%);
-  }
-  .gallery-tile span{
-    position:relative; z-index:1; padding:16px;
-    font-family:'IBM Plex Mono',monospace; font-size:.8rem; letter-spacing:.04em; text-transform:uppercase;
-  }
-
-  /* testimonials */
-  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
-  .testi-card{background:var(--paper); padding:36px 30px;}
-  .testi-quote-mark{font-family:'Space Grotesk',sans-serif; font-size:2.6rem; color:var(--red); line-height:1; margin-bottom:6px;}
-  .stars{color:var(--red); letter-spacing:2px; margin-bottom:14px; font-size:.9rem;}
-  .testi-card p{color:var(--ink); margin-bottom:20px; font-size:.96rem;}
-  .testi-name{font-weight:700; font-size:.9rem;}
-  .testi-role{color:var(--muted); font-size:.8rem; margin-top:2px;}
-
-  /* info/contact */
-  .info-section{background:var(--ink); color:#fff;}
-  .info-section .tag{color:var(--red);}
-  .info-section .section-head h2, .info-section .section-head p{color:#fff;}
-  .info-section .section-head p{color:rgba(255,255,255,.6);}
-  .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;}
-  .info-list div{display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.12);}
-  .info-list .lbl{color:rgba(255,255,255,.5); font-size:.84rem; text-transform:uppercase; letter-spacing:.03em;}
-  .info-list .val{font-weight:500;}
-  .hours-table{width:100%; margin:26px 0; border-collapse:collapse;}
-  .hours-table td{padding:9px 0; border-bottom:1px solid rgba(255,255,255,.12); font-size:.88rem;}
-  .hours-table td:last-child{text-align:right; color:rgba(255,255,255,.7);}
-  .info-section .btn-primary{background:var(--red); border-color:var(--red);}
-  .info-section .btn-primary:hover{background:#fff; color:var(--ink); border-color:#fff;}
-  .map-box{
-    background:#000; border:1px solid rgba(255,255,255,.15); border-radius:var(--radius);
-    aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
-    color:rgba(255,255,255,.35); font-family:'IBM Plex Mono',monospace; font-size:.82rem;
-    background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
-    background-size:16px 16px;
-  }
-
-  /* footer */
-  footer{padding:40px 0 30px; border-top:1px solid var(--line);}
-  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
-  .footer-row p{font-family:'IBM Plex Mono',monospace; font-size:.76rem; letter-spacing:.04em; color:var(--muted);}
-  .footer-links{display:flex; gap:22px;}
-  .footer-links a{font-size:.82rem; color:var(--muted);}
-  .footer-links a:hover{color:var(--red);}
-  .footer-note{margin-top:18px; font-size:.78rem; color:var(--dim);}
-  .footer-note a{color:var(--red);}
-
-  @media(max-width:900px){
-    nav, .nav-cta{display:none;}
-    .nav-toggle{display:block;}
-    .hero-grid, .about-grid, .info-grid{grid-template-columns:1fr; gap:44px;}
-    .hero-visual{order:-1;}
-    .highlights-row{grid-template-columns:repeat(2,1fr);}
-    .highlight-item:nth-child(2){border-right:none;}
-    .menu-panel{grid-template-columns:1fr;}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);}
-    .testi-grid{grid-template-columns:1fr;}
-    section{padding:72px 0;}
-    .hero h1{font-size:2.3rem;}
-    .hero-visual{padding:0 6px;}
-    .photo-frame{max-width:320px; margin:0 auto;}
-    .price-tag-float{left:0; bottom:14px; font-size:.62rem; padding:8px 12px;}
-    .deco-ring{width:56px; height:56px; top:-16px; right:-16px;}
-    .deco-line{display:none;}
-  }
-  @media(max-width:520px){
-    .wrap{padding:0 20px;}
-    .nav-row{padding:16px 20px;}
-    .highlights-row{grid-template-columns:1fr;}
-    .highlight-item{border-right:none; border-bottom:1px solid var(--line);}
-    .gallery-grid{grid-template-columns:1fr;}
-    .demo-banner{font-size:.74rem;}
+  @media(max-width:560px){
+    .wrap{ padding:0 20px; }
+    .nav-row{ padding:16px 20px; }
+    .hero-facts{ gap:28px; }
+    .field-row{ grid-template-columns:1fr; }
+    .omakase-box{ padding:28px 22px; }
   }
 </style>
 </head>
@@ -260,68 +273,112 @@
 
 <header class="site-header">
   <div class="wrap nav-row">
-    <div class="logo">K<span>ō</span>ji</div>
-    <nav><ul>
-      <li><a href="#menu">Carte</a></li>
-      <li><a href="#about">À propos</a></li>
-      <li><a href="#galerie">Galerie</a></li>
-      <li><a href="#avis">Avis</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul></nav>
+    <div class="logo">K<span class="hanko">ō</span>ji</div>
+    <nav class="main-nav">
+      <a href="#saison">Saison</a>
+      <a href="#about">Le chef</a>
+      <a href="#omakase">Omakase</a>
+      <a href="#menu">Carte</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#contact">Contact</a>
+    </nav>
     <button class="nav-cta" type="button">Réserver une table</button>
     <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
+    <a href="#saison">Saison</a>
+    <a href="#about">Le chef</a>
+    <a href="#omakase">Omakase</a>
     <a href="#menu">Carte</a>
-    <a href="#about">À propos</a>
     <a href="#galerie">Galerie</a>
-    <a href="#avis">Avis</a>
     <a href="#contact">Contact</a>
     <button class="nav-cta" type="button">Réserver une table</button>
   </div>
 </header>
 
 <section class="hero">
-  <div class="wrap hero-grid">
-    <div class="reveal in">
-      <span class="eyebrow">Comptoir sushi — Omakase depuis 2015</span>
-      <h1>L'art du sushi,<br><em>sans compromis.</em></h1>
-      <p class="lead">Dix places au comptoir, un poisson livré chaque matin, un riz vinaigré préparé sur place. Kōji, c'est le sushi pensé comme un artisanat, pas comme une chaîne.</p>
+  <div class="hero-shell">
+    <div class="hero-photo-col">
+      <img src="koji-hero.jpg" alt="Plateau de nigiri et maki préparé au comptoir Kōji" width="1000" height="1250" loading="eager">
+      <span class="hero-vert-label">Omakase Counter — Depuis 2015</span>
+    </div>
+    <div class="hero-text-col reveal in">
+      <div class="hero-tagline">
+        <div class="hanko-stamp">鮨</div>
+        <span class="eyebrow">Comptoir sushi — 10 places seulement</span>
+      </div>
+      <h1>L'art du sushi, <em>sans compromis.</em></h1>
+      <p class="lead">Un poisson livré chaque matin, un riz vinaigré préparé sur place, et un chef qui façonne chaque pièce sous vos yeux. Pas de carte à rallonge — juste l'essentiel, fait avec précision.</p>
       <div class="hero-actions">
-        <a href="#menu" class="btn btn-primary">Voir la carte</a>
+        <a href="#omakase" class="btn btn-primary">Découvrir l'omakase</a>
         <button class="btn btn-ghost" type="button">Réserver une table</button>
       </div>
-    </div>
-    <div class="hero-visual reveal in">
-      <div class="deco-ring"></div>
-      <div class="deco-line"></div>
-      <div class="photo-frame">
-        <img src="koji-hero.jpg" alt="Plateau de nigiri et maki préparé au comptoir Kōji" width="1000" height="1250" loading="eager">
+      <div class="hero-facts">
+        <div><div class="num">10</div><div class="lbl">Places au comptoir</div></div>
+        <div><div class="num">10</div><div class="lbl">Ans d'expérience</div></div>
+        <div><div class="num">100%</div><div class="lbl">Poisson frais du jour</div></div>
       </div>
-      <div class="price-tag-float">OMAKASE — 12 PIÈCES DÈS 68€</div>
     </div>
   </div>
 </section>
 
-<section class="highlights">
-  <div class="wrap highlights-row reveal-stagger reveal">
-    <div class="highlight-item" style="--i:0"><span class="hnum">01</span><h4>Poisson livré chaque matin</h4></div>
-    <div class="highlight-item" style="--i:1"><span class="hnum">02</span><h4>Riz vinaigré préparé sur place</h4></div>
-    <div class="highlight-item" style="--i:2"><span class="hnum">03</span><h4>Chef formé à Tokyo, 15 ans d'expérience</h4></div>
-    <div class="highlight-item" style="--i:3"><span class="hnum">04</span><h4>Comptoir de 10 places seulement</h4></div>
+<section id="saison" class="season-section">
+  <div class="wrap">
+    <div class="season-head-row reveal">
+      <div class="hanko-stamp">旬</div>
+      <div class="section-head" style="margin-bottom:0;">
+        <span class="tag">Shun — la saisonnalité</span>
+        <h2>Le poisson au fil des saisons</h2>
+        <p>Chaque poisson a son moment. Cliquez sur une pièce pour voir sa période de pleine saison.</p>
+      </div>
+    </div>
+    <div class="season-grid reveal">
+      <div class="fish-list" id="fishList">
+        <button class="fish-item active" data-fish="saumon" type="button">
+          <span><span class="fish-name">Saumon</span><span class="fish-jp">鮭</span></span>
+          <span class="fish-dots" data-dots="saumon"></span>
+        </button>
+        <button class="fish-item" data-fish="thon" type="button">
+          <span><span class="fish-name">Thon rouge</span><span class="fish-jp">鮪</span></span>
+          <span class="fish-dots" data-dots="thon"></span>
+        </button>
+        <button class="fish-item" data-fish="anguille" type="button">
+          <span><span class="fish-name">Anguille</span><span class="fish-jp">鰻</span></span>
+          <span class="fish-dots" data-dots="anguille"></span>
+        </button>
+        <button class="fish-item" data-fish="bar" type="button">
+          <span><span class="fish-name">Bar de ligne</span><span class="fish-jp">鱸</span></span>
+          <span class="fish-dots" data-dots="bar"></span>
+        </button>
+        <button class="fish-item" data-fish="maquereau" type="button">
+          <span><span class="fish-name">Maquereau</span><span class="fish-jp">鯖</span></span>
+          <span class="fish-dots" data-dots="maquereau"></span>
+        </button>
+        <button class="fish-item" data-fish="oursin" type="button">
+          <span><span class="fish-name">Oursin</span><span class="fish-jp">雲丹</span></span>
+          <span class="fish-dots" data-dots="oursin"></span>
+        </button>
+      </div>
+      <div class="season-detail" id="seasonDetail">
+        <span class="fish-title-jp" id="fishJpFull">鮭 — Sake</span>
+        <h3 class="fish-title" id="fishTitle">Saumon</h3>
+        <p id="fishDesc">Saumon d'Écosse, chair grasse et fondante — particulièrement savoureux en fin et en tout début d'année.</p>
+        <div class="month-row" id="monthRow"></div>
+      </div>
+    </div>
   </div>
 </section>
 
 <section id="about">
   <div class="wrap about-grid">
-    <div class="about-visual reveal">
+    <div class="about-photo-wrap reveal">
       <img src="koji-about.jpg" alt="Le chef Kōji façonnant un nigiri à la main" width="800" height="800" loading="lazy">
     </div>
     <div class="about-text reveal">
-      <span class="tag">Notre histoire</span>
-      <h2>Un comptoir, un couteau, une obsession du détail.</h2>
+      <span class="tag">Le chef</span>
+      <p class="about-quote">« Un comptoir, un couteau, une obsession du détail. »</p>
       <p>Kōji est né d'une idée simple : servir un sushi honnête, sans artifice, dans un cadre qui respecte le geste du chef autant que le produit. Pas de buffet, pas de carte à rallonge — juste dix places, un poisson choisi chaque matin, et un riz préparé selon une recette transmise depuis Tokyo.</p>
       <p>Chaque pièce est façonnée à la commande, sous les yeux du client. C'est un choix de rythme autant que de qualité.</p>
       <div class="stats-row">
@@ -333,58 +390,73 @@
   </div>
 </section>
 
-<section class="menu-section" id="menu">
+<section id="omakase" class="omakase-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Omakase — « Je vous laisse choisir »</span>
+      <h2>Le menu du chef, course par course</h2>
+      <p>Parcourez les huit temps d'un service omakase typique au comptoir Kōji.</p>
+    </div>
+    <div class="omakase-box reveal">
+      <div class="omakase-progress" id="omakaseProgress"></div>
+      <div class="course-count" id="courseCount">Service 1 / 8</div>
+      <span class="course-title-jp" id="courseJp">先付け — Sakizuke</span>
+      <h3 class="course-title" id="courseTitle">Amuse-bouche</h3>
+      <p class="course-desc" id="courseDesc">Chawanmushi tiède, flan salé aux champignons shiitake et dashi — pour ouvrir le palais en douceur.</p>
+      <div class="omakase-nav">
+        <button id="coursePrev" type="button" aria-label="Précédent" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button id="courseNext" type="button" aria-label="Suivant">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="tag">Notre carte</span>
       <h2>Nigiri, maki, sashimi &amp; omakase</h2>
       <p>Une carte courte, pensée autour du produit du jour. Les prix affichés sont ceux d'un menu type — ils varient selon l'arrivage.</p>
     </div>
-    <div class="menu-tabs reveal">
-      <button class="menu-tab active" data-menu="nigiri" type="button">
-        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="6"/><path d="M6 9 Q12 4 18 9"/></svg>
-        Nigiri
-      </button>
-      <button class="menu-tab" data-menu="maki" type="button">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
-        Maki
-      </button>
-      <button class="menu-tab" data-menu="sashimi" type="button">
-        <svg viewBox="0 0 24 24"><line x1="5" y1="7" x2="10" y2="17"/><line x1="10" y1="6" x2="15" y2="17"/><line x1="15" y1="6" x2="20" y2="16"/></svg>
-        Sashimi
-      </button>
-      <button class="menu-tab" data-menu="omakase" type="button">
-        <svg viewBox="0 0 24 24"><path d="M12 3v18M4 8l16 8M20 8L4 16"/></svg>
-        Omakase
-      </button>
-    </div>
+    <div class="menu-shell reveal">
+      <div class="menu-vtabs">
+        <button class="menu-vtab active" data-menu="nigiri" type="button"><span class="idx">01</span> Nigiri</button>
+        <button class="menu-vtab" data-menu="maki" type="button"><span class="idx">02</span> Maki</button>
+        <button class="menu-vtab" data-menu="sashimi" type="button"><span class="idx">03</span> Sashimi</button>
+        <button class="menu-vtab" data-menu="omakase" type="button"><span class="idx">04</span> Omakase</button>
+      </div>
 
-    <div class="menu-panel active" data-panel="nigiri">
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Saumon</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></span><span class="menu-item-desc">Saumon d'Écosse, riz vinaigré, une touche de wasabi.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Thon</span><span class="menu-item-leader"></span><span class="menu-item-price">7€</span></span><span class="menu-item-desc">Thon rouge qualité sashimi, découpe au couteau.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Anguille (Unagi)</span><span class="menu-item-leader"></span><span class="menu-item-price">8€</span></span><span class="menu-item-desc">Anguille grillée, sauce tare maison.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Crevette (Ebi)</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></span><span class="menu-item-desc">Crevette pochée, légèrement sucrée.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Omelette (Tamago)</span><span class="menu-item-leader"></span><span class="menu-item-price">5€</span></span><span class="menu-item-desc">Omelette japonaise sucrée-salée, ceinture de nori.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Oursin (Uni)</span><span class="menu-item-leader"></span><span class="menu-item-price">12€</span></span><span class="menu-item-desc">Selon arrivage — pièce rare du comptoir.</span></div></div>
-    </div>
+      <div class="menu-panel active" data-panel="nigiri">
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Saumon</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></div><span class="menu-item-desc">Saumon d'Écosse, riz vinaigré, une touche de wasabi.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Thon</span><span class="menu-item-leader"></span><span class="menu-item-price">7€</span></div><span class="menu-item-desc">Thon rouge qualité sashimi, découpe au couteau.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Anguille (Unagi)</span><span class="menu-item-leader"></span><span class="menu-item-price">8€</span></div><span class="menu-item-desc">Anguille grillée, sauce tare maison.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Crevette (Ebi)</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></div><span class="menu-item-desc">Crevette pochée, légèrement sucrée.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Omelette (Tamago)</span><span class="menu-item-leader"></span><span class="menu-item-price">5€</span></div><span class="menu-item-desc">Omelette japonaise sucrée-salée, ceinture de nori.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Oursin (Uni)</span><span class="menu-item-leader"></span><span class="menu-item-price">12€</span></div><span class="menu-item-desc">Selon arrivage — pièce rare du comptoir.</span></div>
+      </div>
 
-    <div class="menu-panel" data-panel="maki">
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">California</span><span class="menu-item-leader"></span><span class="menu-item-price">9€</span></span><span class="menu-item-desc">Avocat, surimi, tobiko — 8 pièces.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Saumon-avocat</span><span class="menu-item-leader"></span><span class="menu-item-price">8€</span></span><span class="menu-item-desc">Rouleau classique, riz extérieur — 8 pièces.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Concombre (Kappa)</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></span><span class="menu-item-desc">Version végétarienne, fraîche et croquante.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Thon épicé</span><span class="menu-item-leader"></span><span class="menu-item-price">9€</span></span><span class="menu-item-desc">Thon haché au couteau, mayonnaise épicée maison.</span></div></div>
-    </div>
+      <div class="menu-panel" data-panel="maki">
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">California</span><span class="menu-item-leader"></span><span class="menu-item-price">9€</span></div><span class="menu-item-desc">Avocat, surimi, tobiko — 8 pièces.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Saumon-avocat</span><span class="menu-item-leader"></span><span class="menu-item-price">8€</span></div><span class="menu-item-desc">Rouleau classique, riz extérieur — 8 pièces.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Concombre (Kappa)</span><span class="menu-item-leader"></span><span class="menu-item-price">6€</span></div><span class="menu-item-desc">Version végétarienne, fraîche et croquante.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Thon épicé</span><span class="menu-item-leader"></span><span class="menu-item-price">9€</span></div><span class="menu-item-desc">Thon haché au couteau, mayonnaise épicée maison.</span></div>
+      </div>
 
-    <div class="menu-panel" data-panel="sashimi">
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Saumon — 6 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">14€</span></span><span class="menu-item-desc">Découpe fine, servi avec daikon et shiso.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Thon — 6 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">16€</span></span><span class="menu-item-desc">Thon rouge sélectionné, texture fondante.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Assortiment du chef — 9 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">22€</span></span><span class="menu-item-desc">Sélection du jour selon arrivage.</span></div></div>
-    </div>
+      <div class="menu-panel" data-panel="sashimi">
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Saumon — 6 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">14€</span></div><span class="menu-item-desc">Découpe fine, servi avec daikon et shiso.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Thon — 6 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">16€</span></div><span class="menu-item-desc">Thon rouge sélectionné, texture fondante.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Assortiment du chef — 9 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">22€</span></div><span class="menu-item-desc">Sélection du jour selon arrivage.</span></div>
+      </div>
 
-    <div class="menu-panel" data-panel="omakase">
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Menu 12 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">68€</span></span><span class="menu-item-desc">Sélection du chef, nigiri &amp; maki.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Menu 18 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">92€</span></span><span class="menu-item-desc">Version élargie, inclut sashimi et pièce rare.</span></div></div>
-      <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Dégustation chef</span><span class="menu-item-leader"></span><span class="menu-item-price">120€</span></span><span class="menu-item-desc">Service au comptoir, au rythme du chef.</span></div></div>
+      <div class="menu-panel" data-panel="omakase">
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Menu 12 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">68€</span></div><span class="menu-item-desc">Sélection du chef, nigiri &amp; maki.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Menu 18 pièces</span><span class="menu-item-leader"></span><span class="menu-item-price">92€</span></div><span class="menu-item-desc">Version élargie, inclut sashimi et pièce rare.</span></div>
+        <div class="menu-item"><div class="menu-item-row"><span class="menu-item-name">Dégustation chef</span><span class="menu-item-leader"></span><span class="menu-item-price">120€</span></div><span class="menu-item-desc">Service au comptoir, au rythme du chef.</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -394,14 +466,15 @@
     <div class="section-head reveal">
       <span class="tag">Galerie</span>
       <h2>Le comptoir, en images</h2>
+      <p>Survolez un panneau pour l'ouvrir — comme les cloisons coulissantes d'un comptoir japonais.</p>
     </div>
-    <div class="gallery-grid reveal-stagger reveal">
-      <div class="gallery-tile" style="--i:0"><img src="koji-g1.jpg" alt="Le chef au comptoir Kōji" loading="lazy"><span>Le comptoir</span></div>
-      <div class="gallery-tile" style="--i:1"><img src="koji-g2.jpg" alt="Découpe du poisson au couteau" loading="lazy"><span>La découpe</span></div>
-      <div class="gallery-tile" style="--i:2"><img src="koji-g3.jpg" alt="Rouleaux de maki fraîchement coupés" loading="lazy"><span>Le riz vinaigré</span></div>
-      <div class="gallery-tile" style="--i:3"><img src="koji-g4.jpg" alt="Sélection de nigiri et maki du jour" loading="lazy"><span>La sélection du jour</span></div>
-      <div class="gallery-tile" style="--i:4"><img src="koji-g5.jpg" alt="Service d'un plateau de sushi aux baguettes" loading="lazy"><span>Le service</span></div>
-      <div class="gallery-tile" style="--i:5"><img src="koji-g6.jpg" alt="Baguettes en bois, détail du comptoir" loading="lazy"><span>Détail du jour</span></div>
+    <div class="shoji-row reveal" id="shojiRow">
+      <div class="shoji-panel expanded" data-panel="1"><img src="koji-g1.jpg" alt="Le chef au comptoir Kōji" loading="lazy"><span class="shoji-cap">Le comptoir</span></div>
+      <div class="shoji-panel" data-panel="2"><img src="koji-g2.jpg" alt="Découpe du poisson au couteau" loading="lazy"><span class="shoji-cap">La découpe</span></div>
+      <div class="shoji-panel" data-panel="3"><img src="koji-g3.jpg" alt="Rouleaux de maki fraîchement coupés" loading="lazy"><span class="shoji-cap">Le riz vinaigré</span></div>
+      <div class="shoji-panel" data-panel="4"><img src="koji-g4.jpg" alt="Sélection de nigiri et maki du jour" loading="lazy"><span class="shoji-cap">La sélection</span></div>
+      <div class="shoji-panel" data-panel="5"><img src="koji-g5.jpg" alt="Service d'un plateau de sushi aux baguettes" loading="lazy"><span class="shoji-cap">Le service</span></div>
+      <div class="shoji-panel" data-panel="6"><img src="koji-g6.jpg" alt="Baguettes en bois, détail du comptoir" loading="lazy"><span class="shoji-cap">Détail du jour</span></div>
     </div>
   </div>
 </section>
@@ -414,21 +487,21 @@
     </div>
     <div class="testi-grid reveal-stagger reveal">
       <div class="testi-card" style="--i:0">
-        <div class="testi-quote-mark">"</div>
+        <div class="hanko-stamp">鮨</div>
         <div class="stars">★★★★★</div>
         <p>Le meilleur nigiri que j'ai mangé au Luxembourg. Le riz est parfait, ce qui change tout.</p>
         <div class="testi-name">Élise R.</div>
         <div class="testi-role">Cliente régulière</div>
       </div>
       <div class="testi-card" style="--i:1">
-        <div class="testi-quote-mark">"</div>
+        <div class="hanko-stamp">鮨</div>
         <div class="stars">★★★★★</div>
         <p>Le comptoir de 10 places donne une vraie ambiance, on sent que chaque pièce est faite pour nous.</p>
         <div class="testi-name">Thomas B.</div>
         <div class="testi-role">Habitant du quartier</div>
       </div>
       <div class="testi-card" style="--i:2">
-        <div class="testi-quote-mark">"</div>
+        <div class="hanko-stamp">鮨</div>
         <div class="stars">★★★★★</div>
         <p>Le menu omakase vaut le détour — simple, précis, sans surenchère inutile.</p>
         <div class="testi-name">Marc D.</div>
@@ -438,14 +511,14 @@
   </div>
 </section>
 
-<section class="info-section" id="contact">
+<section class="contact-section" id="contact">
   <div class="wrap">
     <div class="section-head reveal">
       <span class="tag">Contact</span>
       <h2>Venez au comptoir</h2>
       <p>Réservation conseillée — 10 places seulement.</p>
     </div>
-    <div class="info-grid reveal">
+    <div class="contact-grid reveal">
       <div>
         <div class="info-list">
           <div><span class="lbl">Adresse</span><span class="val">12 rue du Fort Wallis, Luxembourg</span></div>
@@ -456,9 +529,41 @@
           <tr><td>Mardi — Samedi</td><td>12h00 – 14h00 / 19h00 – 22h30</td></tr>
           <tr><td>Dimanche — Lundi</td><td>Fermé</td></tr>
         </table>
-        <button class="btn btn-primary" type="button">Réserver par téléphone</button>
+        <div class="counter-diagram">
+          <span class="cd-label">Plan du comptoir — places restantes ce soir</span>
+          <div class="counter-seats" id="counterSeats"></div>
+          <div class="counter-bar"></div>
+        </div>
       </div>
-      <div class="map-box"><span>Emplacement — carte à intégrer</span></div>
+      <div class="contact-form-col">
+        <h3 style="font-size:1.15rem; margin-bottom:18px; color:#fff;">Demande de réservation</h3>
+        <form id="reservationForm" onsubmit="return false;">
+          <div class="field">
+            <label>Votre nom</label>
+            <input type="text" placeholder="Nom et prénom">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Date</label>
+              <input type="date">
+            </div>
+            <div class="field">
+              <label>Convives</label>
+              <select>
+                <option>1 personne</option>
+                <option>2 personnes</option>
+                <option>3 personnes</option>
+                <option>4+ personnes</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Message (optionnel)</label>
+            <textarea placeholder="Allergies, préférences..."></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">Envoyer la demande</button>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -468,8 +573,8 @@
     <div class="footer-row">
       <p>© 2026 KŌJI — LUXEMBOURG</p>
       <div class="footer-links">
+        <a href="#saison">Saison</a>
         <a href="#menu">Carte</a>
-        <a href="#about">À propos</a>
         <a href="#galerie">Galerie</a>
         <a href="#contact">Contact</a>
       </div>
@@ -479,30 +584,156 @@
 </footer>
 
 <script>
-  document.querySelectorAll('.menu-tab').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.menu-tab').forEach(function(b){ b.classList.remove('active'); });
-      document.querySelectorAll('.menu-panel').forEach(function(p){ p.classList.remove('active'); });
-      btn.classList.add('active');
-      document.querySelector('.menu-panel[data-panel="' + btn.dataset.menu + '"]').classList.add('active');
-    });
-  });
   var navToggle = document.getElementById('navToggle');
   var mobileMenu = document.getElementById('mobileMenu');
   if(navToggle && mobileMenu){
-    navToggle.addEventListener('click', function(){
-      mobileMenu.classList.toggle('open');
-    });
-    mobileMenu.querySelectorAll('a').forEach(function(a){
-      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
-    });
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
   }
+
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Saisonnalité du poisson
+  (function(){
+    var FISH = {
+      saumon: { name:'Saumon', jp:'鮭 — Sake', months:[1,2,3,10,11,12], desc:"Saumon d'Écosse, chair grasse et fondante — particulièrement savoureux en fin et en tout début d'année." },
+      thon: { name:'Thon rouge', jp:'鮪 — Maguro', months:[6,7,8,9], desc:'Thon rouge de Méditerranée, à son pic de gras durant l\'été.' },
+      anguille: { name:'Anguille', jp:'鰻 — Unagi', months:[6,7,8], desc:"Anguille grillée à la sauce tare — tradition estivale japonaise contre la chaleur." },
+      bar: { name:'Bar de ligne', jp:'鱸 — Suzuki', months:[5,6,7,8], desc:'Bar de ligne, chair ferme et délicate, idéal cru en sashimi.' },
+      maquereau: { name:'Maquereau', jp:'鯖 — Saba', months:[9,10,11,12], desc:"Maquereau mariné au vinaigre — spécialité d'automne, riche en gras." },
+      oursin: { name:'Oursin', jp:'雲丹 — Uni', months:[1,2,3,12], desc:"Oursin de nos côtes, pièce rare et crémeuse d'hiver, selon arrivage." }
+    };
+    var MONTHS = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+    var fishList = document.getElementById('fishList');
+    var titleEl = document.getElementById('fishTitle');
+    var jpEl = document.getElementById('fishJpFull');
+    var descEl = document.getElementById('fishDesc');
+    var monthRowEl = document.getElementById('monthRow');
+
+    // build mini dots for each fish item in the list
+    document.querySelectorAll('.fish-dots').forEach(function(dotsEl){
+      var key = dotsEl.getAttribute('data-dots');
+      var months = FISH[key].months;
+      for(var m = 1; m <= 12; m++){
+        var d = document.createElement('span');
+        if(months.indexOf(m) !== -1){ d.classList.add('on'); }
+        dotsEl.appendChild(d);
+      }
+    });
+
+    function render(key){
+      var f = FISH[key];
+      titleEl.textContent = f.name;
+      jpEl.textContent = f.jp;
+      descEl.textContent = f.desc;
+      monthRowEl.innerHTML = '';
+      for(var m = 1; m <= 12; m++){
+        var chip = document.createElement('span');
+        chip.className = 'month-chip' + (f.months.indexOf(m) !== -1 ? ' on' : '');
+        chip.textContent = MONTHS[m-1];
+        monthRowEl.appendChild(chip);
+      }
+    }
+
+    fishList.querySelectorAll('.fish-item').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        fishList.querySelectorAll('.fish-item').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        render(btn.getAttribute('data-fish'));
+      });
+    });
+    render('saumon');
+  })();
+
+  // Parcours omakase
+  (function(){
+    var COURSES = [
+      { jp:'先付け — Sakizuke', title:'Amuse-bouche', desc:'Chawanmushi tiède, flan salé aux champignons shiitake et dashi — pour ouvrir le palais en douceur.' },
+      { jp:'向付 — Mukōzuke', title:"Sashimi d'ouverture", desc:'Thon rouge et bar de ligne, wasabi frais râpé minute, sans sauce soja pour préserver le goût.' },
+      { jp:'握り — Nigiri I', title:'Saumon & thon', desc:'Deux pièces de nigiri classiques, riz vinaigré tiède, poisson à température ambiante.' },
+      { jp:'握り — Nigiri II', title:'Anguille grillée', desc:'Anguille (unagi) grillée minute, laquée à la sauce tare maison.' },
+      { jp:'巻物 — Makimono', title:'Maki spécial du chef', desc:'Rouleau du jour selon l\'inspiration et l\'arrivage — souvent thon épicé ou saumon-avocat.' },
+      { jp:'珍味 — Chinmi', title:'Pièce rare du jour', desc:'Oursin ou autre pièce d\'exception, selon la pêche du matin — la signature du service.' },
+      { jp:'汁物 — Shirumono', title:'Soupe miso & tamago', desc:'Miso léger, tofu soyeux, et une bouchée d\'omelette japonaise sucrée-salée.' },
+      { jp:'甘味 — Kanmi', title:'Dessert — Mochi glacé', desc:'Mochi glacé au thé matcha, pour clore le service sur une note fraîche.' }
+    ];
+    var idx = 0;
+    var progressEl = document.getElementById('omakaseProgress');
+    var countEl = document.getElementById('courseCount');
+    var jpEl = document.getElementById('courseJp');
+    var titleEl = document.getElementById('courseTitle');
+    var descEl = document.getElementById('courseDesc');
+    var prevBtn = document.getElementById('coursePrev');
+    var nextBtn = document.getElementById('courseNext');
+
+    for(var i = 0; i < COURSES.length; i++){
+      var s = document.createElement('span');
+      progressEl.appendChild(s);
+    }
+
+    function render(){
+      var c = COURSES[idx];
+      countEl.textContent = 'Service ' + (idx+1) + ' / ' + COURSES.length;
+      jpEl.textContent = c.jp;
+      titleEl.textContent = c.title;
+      descEl.textContent = c.desc;
+      progressEl.querySelectorAll('span').forEach(function(s, i){
+        s.classList.toggle('done', i <= idx);
+      });
+      prevBtn.disabled = idx === 0;
+      nextBtn.disabled = idx === COURSES.length - 1;
+    }
+    prevBtn.addEventListener('click', function(){ if(idx > 0){ idx--; render(); } });
+    nextBtn.addEventListener('click', function(){ if(idx < COURSES.length - 1){ idx++; render(); } });
+    render();
+  })();
+
+  // Menu à onglets verticaux
+  (function(){
+    var tabs = document.querySelectorAll('.menu-vtab');
+    var panels = document.querySelectorAll('.menu-panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        tabs.forEach(function(t){ t.classList.remove('active'); });
+        panels.forEach(function(p){ p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.querySelector('.menu-panel[data-panel="' + tab.dataset.menu + '"]').classList.add('active');
+      });
+    });
+  })();
+
+  // Galerie shoji
+  (function(){
+    var panels = document.querySelectorAll('.shoji-panel');
+    panels.forEach(function(p){
+      p.addEventListener('mouseenter', function(){
+        panels.forEach(function(o){ o.classList.remove('expanded'); });
+        p.classList.add('expanded');
+      });
+      p.addEventListener('click', function(){
+        panels.forEach(function(o){ o.classList.remove('expanded'); });
+        p.classList.add('expanded');
+      });
+    });
+  })();
+
+  // Plan du comptoir
+  (function(){
+    var seatsEl = document.getElementById('counterSeats');
+    if(!seatsEl) return;
+    var taken = [2,3,7];
+    for(var i = 1; i <= 10; i++){
+      var s = document.createElement('span');
+      if(taken.indexOf(i) !== -1){ s.classList.add('taken'); }
+      s.textContent = i;
+      seatsEl.appendChild(s);
+    }
+  })();
 </script>
 
 </body>
