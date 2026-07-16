@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour un cabinet de kinésithérapie, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>Kinéo — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#F5F6FB; --bg-alt:#ECEEFA; --ink:#12142B; --muted:#5B5F7A; --dim:#A6A9C4; --line:#DCDFF0;
+    --blue:#2541F5; --blue-dark:#1B2FB8; --lime:#C6FF3D; --lime-ink:#1B2600; --white:#FFFFFF;
+    --radius:18px; --maxw:1200px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Manrope',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Space Grotesk',sans-serif; font-weight:700; line-height:1.15; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:100px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
+
+  .demo-banner{ background:var(--blue-dark); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:var(--lime); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:10px; font-size:.85rem; font-weight:700; border:2px solid transparent; cursor:pointer; font-family:'Manrope'; transition:all .2s; }
+  .btn-primary{ background:var(--ink); color:var(--lime); }
+  .btn-primary:hover{ background:var(--blue-dark); color:#fff; transform:translateY(-2px); }
+  .btn-lime{ background:var(--lime); color:var(--lime-ink); }
+  .btn-lime:hover{ background:#b3ea28; transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--blue); color:var(--blue); }
+  .btn svg{ width:17px; height:17px; }
+
+  /* ---- Header ---- */
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(245,246,251,0.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; gap:20px; }
+  .logo{ font-family:'Space Grotesk'; font-weight:700; font-size:1.4rem; display:flex; align-items:center; gap:9px; }
+  .logo .dot{ width:12px; height:12px; border-radius:3px; background:var(--lime); border:2px solid var(--ink); transform:rotate(45deg); }
+  nav.main-nav{ display:flex; gap:26px; }
+  nav.main-nav a{ font-size:.85rem; color:var(--muted); font-weight:600; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--blue); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:15px 32px; border-bottom:1px solid var(--line); font-size:.95rem; font-weight:600; }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
+
+  .section-head{ max-width:600px; margin-bottom:50px; }
+  .section-head .tag{ font-family:'DM Mono'; font-size:.74rem; color:var(--blue); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.9rem,3vw,2.4rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1rem; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Hero : diagonal split ---- */
+  .hero{ padding:0; }
+  .hero-inner{ display:grid; grid-template-columns:1fr 1fr; min-height:620px; position:relative; }
+  .hero-text{ background:var(--bg); display:flex; flex-direction:column; justify-content:center; padding:70px 50px 70px 32px; position:relative; z-index:2; }
+  .eyebrow{ font-family:'DM Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--blue); display:block; margin-bottom:18px; }
+  .hero h1{ font-size:clamp(2.2rem,4vw,3.1rem); margin-bottom:20px; }
+  .hero p.lead{ color:var(--muted); font-size:1.02rem; margin-bottom:30px; max-width:44ch; }
+  .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:34px; }
+  .hero-mini-stats{ display:flex; gap:28px; }
+  .hero-mini-stats div{ display:flex; flex-direction:column; }
+  .hero-mini-stats strong{ font-family:'Space Grotesk'; font-size:1.5rem; }
+  .hero-mini-stats span{ font-size:.74rem; color:var(--muted); }
+  .hero-photo-panel{ position:relative; background:var(--blue-dark); clip-path:polygon(14% 0, 100% 0, 100% 100%, 0% 100%); overflow:hidden; }
+  .hero-photo-panel img{ width:100%; height:100%; object-fit:cover; position:absolute; inset:0; opacity:.9; }
+  .hero-photo-panel::after{ content:''; position:absolute; inset:0; background:linear-gradient(200deg, rgba(37,65,245,0.15), rgba(18,20,43,0.55)); }
+  .hero-badge{ position:absolute; bottom:44px; right:44px; background:var(--lime); color:var(--lime-ink); border-radius:14px; padding:16px 20px; z-index:2; max-width:220px; box-shadow:0 20px 40px -16px rgba(0,0,0,0.4); }
+  .hero-badge strong{ display:block; font-family:'Space Grotesk'; font-size:1.05rem; margin-bottom:2px; }
+  .hero-badge span{ font-size:.76rem; }
+
+  /* ---- Générateur de programme (#bilan) ---- */
+  .bilan-section{ background:var(--bg-alt); }
+  .bilan-box{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:44px 44px 40px; max-width:920px; margin:0 auto; }
+  .chip-group-label{ font-family:'DM Mono'; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:14px; display:block; }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; }
+  .chip{ padding:11px 18px; border-radius:999px; border:2px solid var(--line); background:var(--bg); font-size:.85rem; font-weight:600; cursor:pointer; transition:all .2s; font-family:'Manrope'; }
+  .chip:hover{ border-color:var(--blue); }
+  .chip.active{ background:var(--ink); border-color:var(--ink); color:var(--lime); }
+  .bilan-result{ margin-top:8px; background:var(--bg-alt); border-radius:14px; padding:30px 32px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:24px; }
+  .bilan-result-item .lbl{ font-family:'DM Mono'; font-size:.7rem; text-transform:uppercase; color:var(--muted); letter-spacing:.05em; display:block; margin-bottom:6px; }
+  .bilan-result-item .val{ font-family:'Space Grotesk'; font-size:1.15rem; font-weight:700; color:var(--blue-dark); }
+  .bilan-result-full{ grid-column:1 / -1; border-top:1px solid var(--line); padding-top:20px; margin-top:4px; font-size:.92rem; color:var(--muted); }
+
+  /* ---- Résultats chiffrés (#resultats) ---- */
+  .resultats-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+  .bar-list{ display:flex; flex-direction:column; gap:26px; }
+  .bar-item .bar-top{ display:flex; justify-content:space-between; margin-bottom:8px; font-size:.88rem; font-weight:600; }
+  .bar-track{ height:12px; background:var(--bg-alt); border-radius:999px; overflow:hidden; }
+  .bar-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--blue), var(--lime)); border-radius:999px; transition:width 1.4s cubic-bezier(.2,.8,.2,1); }
+  .resultats-photo{ border-radius:var(--radius); overflow:hidden; position:relative; }
+  .resultats-photo img{ width:100%; aspect-ratio:3/4; object-fit:cover; }
+
+  /* ---- Approche (#approche) ---- */
+  .approche-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  .approche-card{ background:var(--white); border:1px solid var(--line); border-radius:16px; padding:32px 28px; transition:transform .2s, box-shadow .2s; }
+  .approche-card:hover{ transform:translateY(-4px); box-shadow:0 20px 40px -24px rgba(18,20,43,0.25); }
+  .approche-icon{ width:50px; height:50px; border-radius:12px; background:var(--ink); display:flex; align-items:center; justify-content:center; margin-bottom:20px; }
+  .approche-icon svg{ width:24px; height:24px; stroke:var(--lime); }
+  .approche-card h3{ font-size:1.1rem; margin-bottom:10px; }
+  .approche-card p{ color:var(--muted); font-size:.9rem; }
+
+  /* ---- Équipe (#equipe) ---- */
+  .team-section{ background:var(--bg-alt); }
+  .team-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .team-card{ position:relative; border-radius:16px; overflow:hidden; }
+  .team-card img{ width:100%; aspect-ratio:3/4; object-fit:cover; display:block; }
+  .team-tag{ position:absolute; left:16px; bottom:16px; background:rgba(18,20,43,0.85); backdrop-filter:blur(6px); border-radius:10px; padding:12px 16px; color:#fff; }
+  .team-tag strong{ display:block; font-family:'Space Grotesk'; font-size:1rem; }
+  .team-tag span{ font-size:.76rem; color:var(--lime); }
+
+  /* ---- Avis : carrousel horizontal ---- */
+  .avis-carousel-wrap{ position:relative; }
+  .avis-track{ display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:10px; scrollbar-width:none; }
+  .avis-track::-webkit-scrollbar{ display:none; }
+  .avis-card{ scroll-snap-align:start; flex:0 0 340px; background:var(--white); border:1px solid var(--line); border-radius:16px; padding:28px 26px; }
+  .avis-stars{ color:var(--blue); font-size:.95rem; margin-bottom:14px; }
+  .avis-card p{ font-size:.92rem; color:var(--ink); margin-bottom:16px; }
+  .avis-card .name{ font-size:.8rem; font-weight:700; color:var(--muted); }
+  .avis-nav{ display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+  .avis-nav button{ width:42px; height:42px; border-radius:50%; border:2px solid var(--line); background:var(--white); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+  .avis-nav button:hover{ border-color:var(--ink); }
+  .avis-nav svg{ width:18px; height:18px; }
+
+  /* ---- Contact : créneaux ---- */
+  .contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:2px; background:var(--line); border-radius:var(--radius); overflow:hidden; }
+  .contact-col{ background:var(--white); padding:44px 40px; }
+  .contact-col.ink{ background:var(--ink); color:#fff; }
+  .contact-info-list{ display:flex; flex-direction:column; gap:16px; margin:24px 0 28px; }
+  .contact-info-list .lbl{ font-family:'DM Mono'; font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+  .contact-info-list .val{ font-size:.96rem; }
+  .slot-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin:20px 0 24px; }
+  .slot-day{ font-family:'DM Mono'; font-size:.68rem; text-align:center; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:6px; }
+  .slot-btn{ background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff; border-radius:8px; padding:10px 4px; font-size:.72rem; cursor:pointer; text-align:center; transition:all .15s; font-family:'Manrope'; }
+  .slot-btn:hover{ border-color:var(--lime); }
+  .slot-btn.selected{ background:var(--lime); color:var(--lime-ink); border-color:var(--lime); font-weight:700; }
+  .slot-summary{ background:rgba(255,255,255,0.08); border-radius:10px; padding:16px 18px; font-size:.86rem; margin-bottom:18px; }
+  .slot-summary strong{ color:var(--lime); }
+
+  footer{ padding:40px 0 30px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-links{ display:flex; gap:20px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--blue); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    header .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero-inner{ grid-template-columns:1fr; min-height:auto; }
+    .hero-photo-panel{ clip-path:none; height:320px; order:-1; }
+    .hero-text{ padding:50px 24px; }
+    .resultats-grid{ grid-template-columns:1fr; gap:36px; }
+    .resultats-photo{ order:-1; max-width:360px; margin:0 auto; }
+    .approche-grid{ grid-template-columns:1fr; }
+    .team-grid{ grid-template-columns:1fr 1fr; }
+    .bilan-result{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .slot-grid{ grid-template-columns:repeat(5,1fr); }
+    section{ padding:70px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .team-grid{ grid-template-columns:1fr; }
+    .slot-grid{ gap:6px; }
+    .slot-btn{ font-size:.62rem; padding:8px 2px; }
+    .avis-card{ flex-basis:280px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Kinéo n'est pas un vrai cabinet, la prise de rendez-vous n'est pas fonctionnelle.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="nav-row">
+    <a href="#" class="logo"><span class="dot"></span>Kinéo</a>
+    <nav class="main-nav">
+      <a href="#bilan">Générateur de programme</a>
+      <a href="#resultats">Résultats</a>
+      <a href="#approche">Approche</a>
+      <a href="#equipe">Équipe</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Réserver une séance</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#bilan">Générateur de programme</a>
+    <a href="#resultats">Résultats</a>
+    <a href="#approche">Approche</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#contact">Réserver une séance</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text reveal in">
+      <span class="eyebrow">Kinésithérapie &amp; rééducation</span>
+      <h1>Retrouvez le mouvement, sans douleur.</h1>
+      <p class="lead">Bilan personnalisé, rééducation ciblée et suivi de vos progrès — que vous sortiez d'une opération ou repreniez le sport.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#bilan">Générer mon programme</a>
+        <a class="btn btn-ghost" href="#contact">Prendre rendez-vous</a>
+      </div>
+      <div class="hero-mini-stats">
+        <div><strong>+1 800</strong><span>Patients accompagnés</span></div>
+        <div><strong>94%</strong><span>Objectifs atteints</span></div>
+        <div><strong>12</strong><span>Années d'expérience</span></div>
+      </div>
+    </div>
+    <div class="hero-photo-panel reveal in">
+      <img src="kineo-hero.jpg" alt="Kinésithérapeute évaluant la mobilité d'épaule d'une patiente" width="1000" height="667">
+      <div class="hero-badge">
+        <strong>Bilan offert</strong>
+        <span>Pour toute première consultation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="bilan" class="bilan-section">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Générateur de programme</span>
+      <h2>Composez votre programme de rééducation</h2>
+      <p>Sélectionnez votre zone et votre objectif — obtenez une première orientation, avant votre bilan complet en cabinet.</p>
+    </div>
+    <div class="bilan-box reveal">
+      <span class="chip-group-label">1. Quelle zone souhaitez-vous traiter ?</span>
+      <div class="chip-row" id="zoneChips">
+        <button class="chip active" data-zone="dos" type="button">Dos</button>
+        <button class="chip" data-zone="genou" type="button">Genou</button>
+        <button class="chip" data-zone="epaule" type="button">Épaule</button>
+        <button class="chip" data-zone="cheville" type="button">Cheville</button>
+        <button class="chip" data-zone="sport" type="button">Préparation sportive</button>
+      </div>
+      <span class="chip-group-label">2. Quel est votre objectif ?</span>
+      <div class="chip-row" id="goalChips">
+        <button class="chip active" data-goal="douleur" type="button">Soulager la douleur</button>
+        <button class="chip" data-goal="mobilite" type="button">Retrouver la mobilité</button>
+        <button class="chip" data-goal="operation" type="button">Suivi post-opératoire</button>
+        <button class="chip" data-goal="performance" type="button">Performance sportive</button>
+      </div>
+      <div class="bilan-result" id="bilanResult">
+        <div class="bilan-result-item"><span class="lbl">Rythme conseillé</span><span class="val" id="resFreq">2 séances / semaine</span></div>
+        <div class="bilan-result-item"><span class="lbl">Durée du programme</span><span class="val" id="resDuree">6 semaines</span></div>
+        <div class="bilan-result-item"><span class="lbl">Axe principal</span><span class="val" id="resAxe">Soulager la douleur</span></div>
+        <div class="bilan-result-full" id="resDetail">Programme centré sur le dos : étirements ciblés, renforcement postural et techniques manuelles pour soulager la douleur dès les premières séances.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resultats">
+  <div class="wrap resultats-grid">
+    <div class="reveal">
+      <span class="tag" style="font-family:'DM Mono'; font-size:.74rem; color:var(--blue); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">Résultats</span>
+      <h2 style="margin-bottom:16px; font-size:clamp(1.9rem,3vw,2.4rem);">Des progrès mesurés à chaque étape</h2>
+      <p style="color:var(--muted); margin-bottom:34px; max-width:46ch;">Nous suivons votre évolution séance après séance pour ajuster le programme en continu.</p>
+      <div class="bar-list" id="barList">
+        <div class="bar-item">
+          <div class="bar-top"><span>Mobilité retrouvée</span><span>91%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-value="91"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-top"><span>Douleur réduite</span><span>87%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-value="87"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-top"><span>Reprise du sport dans les délais</span><span>78%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-value="78"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-top"><span>Patients satisfaits du suivi</span><span>96%</span></div>
+          <div class="bar-track"><div class="bar-fill" data-value="96"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="resultats-photo reveal">
+      <img src="kineo-action.jpg" alt="Séance de rééducation du genou en cabinet de kinésithérapie" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="approche" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Notre approche</span>
+      <h2>Une méthode simple, un suivi constant</h2>
+    </div>
+    <div class="approche-grid reveal-stagger reveal">
+      <div class="approche-card" style="--i:0">
+        <div class="approche-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <h3>Bilan complet</h3>
+        <p>Évaluation de votre posture, de votre mobilité et de vos antécédents avant tout traitement.</p>
+      </div>
+      <div class="approche-card" style="--i:1">
+        <div class="approche-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+        <h3>Suivi personnalisé</h3>
+        <p>Un programme ajusté à chaque séance selon votre évolution réelle, pas un protocole figé.</p>
+      </div>
+      <div class="approche-card" style="--i:2">
+        <div class="approche-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></div>
+        <h3>Exercices à la maison</h3>
+        <p>Une fiche d'exercices simple à suivre chez vous, pour accélérer et prolonger vos progrès.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="equipe" class="team-section">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Notre équipe</span>
+      <h2>Des kinésithérapeutes diplômés</h2>
+    </div>
+    <div class="team-grid reveal-stagger reveal">
+      <div class="team-card" style="--i:0">
+        <img src="kineo-team1.jpg" alt="Kinésithérapeute de l'équipe Kinéo" loading="lazy">
+        <div class="team-tag"><strong>Dr Amélie Roussel</strong><span>Rééducation du sport</span></div>
+      </div>
+      <div class="team-card" style="--i:1">
+        <img src="kineo-team2.jpg" alt="Kinésithérapeute de l'équipe Kinéo" loading="lazy">
+        <div class="team-tag"><strong>Dr Tomas Ferreira</strong><span>Rééducation post-opératoire</span></div>
+      </div>
+      <div class="team-card" style="--i:2">
+        <img src="kineo-team3.jpg" alt="Kinésithérapeute de l'équipe Kinéo" loading="lazy">
+        <div class="team-tag"><strong>Dr Yanis Belkacem</strong><span>Thérapie manuelle</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Avis patients</span>
+      <h2>Ce que nos patients en disent</h2>
+    </div>
+    <div class="avis-carousel-wrap reveal">
+      <div class="avis-track" id="avisTrack">
+        <div class="avis-card">
+          <div class="avis-stars">★★★★★</div>
+          <p>Après ma blessure au genou, le programme a été ajusté à chaque séance. J'ai repris la course 3 semaines plus tôt que prévu.</p>
+          <div class="name">Nadia B. — Avis vérifié</div>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★★★★★</div>
+          <p>Suivi post-opératoire très rassurant, avec des exercices clairs à faire chez moi entre les séances.</p>
+          <div class="name">Julien P. — Avis vérifié</div>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★★★★☆</div>
+          <p>Douleur au dos chronique enfin prise au sérieux. Résultats visibles dès la troisième séance.</p>
+          <div class="name">Camille D. — Avis vérifié</div>
+        </div>
+        <div class="avis-card">
+          <div class="avis-stars">★★★★★</div>
+          <p>Équipe à l'écoute, explications claires, et un vrai plan de progression sur plusieurs semaines.</p>
+          <div class="name">Marc T. — Avis vérifié</div>
+        </div>
+      </div>
+      <div class="avis-nav">
+        <button type="button" id="avisPrev" aria-label="Précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" id="avisNext" aria-label="Suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Réservez votre créneau</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-col">
+        <h3 style="font-size:1.15rem; margin-bottom:6px;">Infos pratiques</h3>
+        <div class="contact-info-list">
+          <div><span class="lbl">Adresse</span><span class="val">14 rue du Mouvement, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+          <div><span class="lbl">Email</span><span class="val">contact@kineo-exemple.lu</span></div>
+          <div><span class="lbl">Horaires</span><span class="val">Lundi — Vendredi, 8h – 19h</span></div>
+        </div>
+        <a class="btn btn-primary" href="tel:+35200000000">Appeler le cabinet</a>
+      </div>
+      <div class="contact-col ink">
+        <h3 style="font-size:1.15rem; margin-bottom:16px; color:#fff;">Choisissez un créneau</h3>
+        <div class="slot-grid" id="slotGrid">
+          <div><div class="slot-day">Lun</div><button class="slot-btn" data-slot="Lundi 9h">9h</button></div>
+          <div><div class="slot-day">Mar</div><button class="slot-btn" data-slot="Mardi 11h">11h</button></div>
+          <div><div class="slot-day">Mer</div><button class="slot-btn" data-slot="Mercredi 14h">14h</button></div>
+          <div><div class="slot-day">Jeu</div><button class="slot-btn" data-slot="Jeudi 16h">16h</button></div>
+          <div><div class="slot-day">Ven</div><button class="slot-btn" data-slot="Vendredi 10h">10h</button></div>
+          <div><div class="slot-day">&nbsp;</div><button class="slot-btn" data-slot="Lundi 17h">17h</button></div>
+          <div><div class="slot-day">&nbsp;</div><button class="slot-btn" data-slot="Mardi 8h">8h</button></div>
+          <div><div class="slot-day">&nbsp;</div><button class="slot-btn" data-slot="Mercredi 18h">18h</button></div>
+          <div><div class="slot-day">&nbsp;</div><button class="slot-btn" data-slot="Jeudi 9h">9h</button></div>
+          <div><div class="slot-day">&nbsp;</div><button class="slot-btn" data-slot="Vendredi 15h">15h</button></div>
+        </div>
+        <div class="slot-summary" id="slotSummary">Sélectionnez un créneau ci-dessus pour voir apparaître le récapitulatif.</div>
+        <a class="btn btn-lime" href="#contact" id="slotConfirm">Confirmer ce créneau</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 KINÉO — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#bilan">Programme</a>
+        <a href="#resultats">Résultats</a>
+        <a href="#equipe">Équipe</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--blue);">MatMax Intelligence</a> — Kinéo n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        if(e.target.id === 'barList' || e.target.contains(document.getElementById('barList'))){
+          document.querySelectorAll('.bar-fill').forEach(function(bar){
+            bar.style.width = bar.getAttribute('data-value') + '%';
+          });
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Générateur de programme
+  (function(){
+    var ZONES = {
+      dos: { label:"Dos", freq:"2 séances / semaine", duree:"6 semaines", text:"étirements ciblés, renforcement postural et techniques manuelles" },
+      genou: { label:"Genou", freq:"2 séances / semaine", duree:"8 semaines", text:"renforcement du quadriceps, travail de stabilité et récupération progressive de l'appui" },
+      epaule: { label:"Épaule", freq:"2 séances / semaine", duree:"7 semaines", text:"mobilisation articulaire douce, renforcement de la coiffe des rotateurs et travail postural" },
+      cheville: { label:"Cheville", freq:"2 séances / semaine", duree:"5 semaines", text:"travail proprioceptif, renforcement des stabilisateurs et retour progressif à l'appui complet" },
+      sport: { label:"Préparation sportive", freq:"1 à 2 séances / semaine", duree:"En continu", text:"prévention des blessures, optimisation de la mobilité et suivi de charge d'entraînement" }
+    };
+    var GOALS = {
+      douleur: "Soulager la douleur",
+      mobilite: "Retrouver la mobilité",
+      operation: "Suivi post-opératoire",
+      performance: "Performance sportive"
+    };
+    var zoneChips = document.getElementById('zoneChips');
+    var goalChips = document.getElementById('goalChips');
+    var resFreq = document.getElementById('resFreq');
+    var resDuree = document.getElementById('resDuree');
+    var resAxe = document.getElementById('resAxe');
+    var resDetail = document.getElementById('resDetail');
+    var currentZone = 'dos';
+    var currentGoal = 'douleur';
+
+    function render(){
+      var z = ZONES[currentZone];
+      resFreq.textContent = z.freq;
+      resDuree.textContent = z.duree;
+      resAxe.textContent = GOALS[currentGoal];
+      resDetail.textContent = "Programme centré sur " + z.label.toLowerCase() + " : " + z.text + ", avec pour objectif de " + GOALS[currentGoal].toLowerCase() + ".";
+    }
+    if(zoneChips){
+      zoneChips.querySelectorAll('.chip').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          zoneChips.querySelectorAll('.chip').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentZone = btn.getAttribute('data-zone');
+          render();
+        });
+      });
+    }
+    if(goalChips){
+      goalChips.querySelectorAll('.chip').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          goalChips.querySelectorAll('.chip').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentGoal = btn.getAttribute('data-goal');
+          render();
+        });
+      });
+    }
+    render();
+  })();
+
+  // Carrousel avis
+  (function(){
+    var track = document.getElementById('avisTrack');
+    var prev = document.getElementById('avisPrev');
+    var next = document.getElementById('avisNext');
+    if(!track) return;
+    function scrollByCard(dir){
+      var card = track.querySelector('.avis-card');
+      var gap = 20;
+      var amount = card ? (card.offsetWidth + gap) * dir : 300 * dir;
+      track.scrollBy({ left: amount, behavior: 'smooth' });
+    }
+    if(prev) prev.addEventListener('click', function(){ scrollByCard(-1); });
+    if(next) next.addEventListener('click', function(){ scrollByCard(1); });
+  })();
+
+  // Créneaux de rendez-vous
+  (function(){
+    var grid = document.getElementById('slotGrid');
+    var summary = document.getElementById('slotSummary');
+    if(!grid) return;
+    grid.querySelectorAll('.slot-btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        grid.querySelectorAll('.slot-btn').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        var slot = btn.getAttribute('data-slot');
+        summary.innerHTML = 'Créneau sélectionné : <strong>' + slot + '</strong>. Cliquez sur "Confirmer" pour finaliser votre demande.';
+      });
+    });
+  })();
+</script>
+</body>
+</html>
