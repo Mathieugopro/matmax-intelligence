@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour une entreprise d'électricité générale, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>VoltPro — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#F5F5F2; --bg-alt:#ECEBE5; --ink:#161513; --muted:#5C5A54; --dim:#B4B1A8; --line:#DEDCD3;
+    --black:#0D0D0C; --panel:#1A1B1E; --yellow:#F4C430; --yellow-dark:#C99A16; --cyan:#22C1D6; --white:#FFFFFF;
+    --radius:14px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Rajdhani',sans-serif; font-weight:700; line-height:1.15; text-transform:uppercase; letter-spacing:.01em; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:96px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .06s); }
+
+  .demo-banner{ background:var(--black); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:var(--yellow); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:8px; font-size:.85rem; font-weight:700; border:1px solid transparent; cursor:pointer; font-family:'Inter'; text-transform:uppercase; letter-spacing:.03em; transition:all .2s; }
+  .btn-primary{ background:var(--black); color:var(--yellow); border-color:var(--black); }
+  .btn-primary:hover{ background:#000; color:#fff; transform:translateY(-2px); }
+  .btn-primary.on-dark{ background:var(--yellow); color:var(--black); border-color:var(--yellow); }
+  .btn-primary.on-dark:hover{ background:#fff; }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--cyan); color:var(--cyan); }
+  .btn-ghost-light{ background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.25); color:#fff; }
+  .btn-ghost-light:hover{ background:rgba(255,255,255,0.14); }
+  .btn svg{ width:17px; height:17px; }
+
+  /* ---- Bandeau utilitaire + header ---- */
+  .util-bar{ background:var(--black); color:rgba(255,255,255,0.72); font-size:.76rem; }
+  .util-row{ display:flex; justify-content:space-between; align-items:center; padding:9px 32px; max-width:var(--maxw); margin:0 auto; }
+  .util-left{ display:flex; gap:22px; }
+  .util-item{ display:flex; align-items:center; gap:6px; }
+  .util-item svg{ width:13px; height:13px; stroke:var(--yellow); flex-shrink:0; }
+  .util-right a{ color:var(--yellow); font-weight:600; }
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(245,245,242,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; gap:20px; }
+  .logo{ font-family:'Rajdhani'; font-weight:700; font-size:1.6rem; text-transform:uppercase; letter-spacing:.02em; display:flex; align-items:center; gap:7px; }
+  .logo .bolt{ color:var(--yellow-dark); }
+  nav.main-nav{ display:flex; gap:28px; }
+  nav.main-nav a{ font-size:.83rem; color:var(--muted); font-weight:600; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--ink); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:15px 32px; border-bottom:1px solid var(--line); font-size:.95rem; font-weight:600; }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
+
+  .section-head{ max-width:600px; margin-bottom:50px; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--yellow-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.8rem,3vw,2.3rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1rem; text-transform:none; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Hero : fond circuit + médaillon rond ---- */
+  .hero{ background:var(--black); color:#fff; position:relative; overflow:hidden; padding:80px 0 0; }
+  .hero::before{ content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg, rgba(34,193,214,0.07) 0 1px, transparent 1px 64px), repeating-linear-gradient(90deg, rgba(34,193,214,0.07) 0 1px, transparent 1px 64px); pointer-events:none; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:50px; align-items:center; position:relative; z-index:1; padding-bottom:64px; }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--yellow); display:flex; align-items:center; gap:8px; margin-bottom:22px; }
+  .eyebrow .live-dot{ width:7px; height:7px; border-radius:50%; background:#3ED17B; box-shadow:0 0 8px #3ED17B; }
+  .hero h1{ font-size:clamp(2.3rem,4.4vw,3.4rem); margin-bottom:20px; color:#fff; }
+  .hero h1 em{ font-style:normal; color:var(--cyan); }
+  .hero p.lead{ color:rgba(255,255,255,0.68); font-size:1.02rem; margin-bottom:32px; max-width:44ch; text-transform:none; font-family:'Inter'; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .hero-badge-wrap{ position:relative; width:320px; height:320px; margin:0 auto; }
+  .hero-badge-ring{ position:absolute; inset:-16px; border-radius:50%; border:1px dashed rgba(34,193,214,0.45); animation:spin 22s linear infinite; }
+  .hero-badge-ring2{ position:absolute; inset:-32px; border-radius:50%; border:1px dashed rgba(244,196,48,0.2); animation:spin 30s linear infinite reverse; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .hero-badge{ width:100%; height:100%; border-radius:50%; overflow:hidden; border:4px solid rgba(244,196,48,0.3); box-shadow:0 0 70px -10px rgba(34,193,214,0.4); position:relative; z-index:1; }
+  .hero-badge img{ width:100%; height:100%; object-fit:cover; }
+  .hero-stats{ display:flex; border-top:1px solid rgba(255,255,255,0.12); position:relative; z-index:1; }
+  .hero-stat{ flex:1; padding:26px 10px; text-align:center; border-right:1px solid rgba(255,255,255,0.12); }
+  .hero-stat:last-child{ border-right:none; }
+  .hero-stat .num{ font-family:'Rajdhani'; font-weight:700; font-size:2.1rem; color:var(--yellow); }
+  .hero-stat .lbl{ font-size:.78rem; color:rgba(255,255,255,0.5); margin-top:4px; text-transform:uppercase; letter-spacing:.04em; }
+
+  /* ---- Tableau électrique interactif ---- */
+  .panel-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:50px; align-items:start; }
+  .breaker-box{ background:var(--panel); border-radius:16px; padding:30px 26px; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.07); }
+  .breaker-box-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; }
+  .breaker-box-head span{ font-family:'IBM Plex Mono'; font-size:.7rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:.06em; }
+  .breaker-box-head .live-dot{ width:7px; height:7px; border-radius:50%; background:#3ED17B; box-shadow:0 0 8px #3ED17B; display:inline-block; margin-right:6px; }
+  .breaker-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .breaker{ background:#232428; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:14px 6px; text-align:center; cursor:pointer; transition:all .15s; font-family:'Inter'; }
+  .breaker:hover{ border-color:var(--cyan); }
+  .breaker.active{ background:#2B2C31; border-color:var(--yellow); }
+  .breaker-toggle{ width:18px; height:30px; background:#3A3C42; border-radius:4px; margin:0 auto 9px; position:relative; overflow:hidden; }
+  .breaker-toggle::after{ content:''; position:absolute; left:3px; right:3px; top:3px; height:11px; background:#6A6D75; border-radius:2px; transition:transform .2s; }
+  .breaker.active .breaker-toggle::after{ background:var(--yellow); transform:translateY(13px); }
+  .breaker-label{ font-family:'IBM Plex Mono'; font-size:.64rem; color:rgba(255,255,255,0.65); letter-spacing:.02em; display:block; }
+  .breaker.active .breaker-label{ color:#fff; }
+  .panel-info{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:38px 34px; min-height:280px; }
+  .panel-info-icon{ width:48px; height:48px; border-radius:10px; background:var(--bg-alt); display:flex; align-items:center; justify-content:center; margin-bottom:20px; }
+  .panel-info-icon svg{ width:24px; height:24px; stroke:var(--yellow-dark); }
+  .panel-info h3{ font-size:1.35rem; margin-bottom:10px; }
+  .panel-info p{ color:var(--muted); font-size:.95rem; margin-bottom:20px; text-transform:none; }
+  .panel-info-price{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--ink); font-size:1.05rem; }
+  .panel-info-price span{ color:var(--muted); font-weight:400; font-size:.8rem; text-transform:none; }
+
+  /* ---- Forfaits ---- */
+  .forfaits-section{ background:var(--bg-alt); }
+  .pricing-table{ width:100%; border-collapse:collapse; background:var(--white); border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); }
+  .pricing-table th{ background:var(--black); color:var(--yellow); font-family:'IBM Plex Mono'; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; padding:16px 22px; text-align:left; font-weight:600; }
+  .pricing-table td{ padding:18px 22px; border-top:1px solid var(--line); font-size:.92rem; }
+  .pricing-table tr:hover td{ background:var(--bg-alt); }
+  .pricing-table td.name{ font-weight:600; }
+  .pricing-table td.desc{ color:var(--muted); font-size:.85rem; }
+  .pricing-table td.duration{ color:var(--muted); white-space:nowrap; font-family:'IBM Plex Mono'; font-size:.82rem; }
+  .pricing-table td.price{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--ink); white-space:nowrap; text-align:right; }
+
+  /* ---- Avant / Après ---- */
+  .compare-outer{ display:flex; justify-content:center; }
+  .compare-wrap{ position:relative; width:100%; max-width:560px; aspect-ratio:7/9; border-radius:var(--radius); overflow:hidden; box-shadow:0 30px 60px -30px rgba(0,0,0,0.35); }
+  .compare-wrap img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .compare-before{ position:absolute; inset:0; clip-path:inset(0 50% 0 0); }
+  .compare-handle-line{ position:absolute; top:0; bottom:0; left:50%; width:2px; background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,0.15); pointer-events:none; }
+  .compare-handle-btn{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px -4px rgba(0,0,0,0.35); pointer-events:none; }
+  .compare-handle-btn svg{ width:18px; height:18px; stroke:var(--ink); }
+  .compare-range{ position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:ew-resize; margin:0; }
+  .compare-tag{ position:absolute; top:16px; font-family:'IBM Plex Mono'; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; background:rgba(13,13,12,0.75); color:#fff; padding:6px 13px; border-radius:999px; pointer-events:none; }
+  .compare-tag.before-tag{ left:16px; }
+  .compare-tag.after-tag{ right:16px; }
+
+  /* ---- Bande panoramique ---- */
+  .band{ height:280px; overflow:hidden; }
+  .band img{ width:100%; height:100%; object-fit:cover; object-position:center 35%; }
+
+  /* ---- Avis + confiance ---- */
+  .avis-card{ max-width:640px; margin:0 auto 46px; background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:34px 36px; display:flex; gap:20px; align-items:flex-start; }
+  .avis-avatar{ width:52px; height:52px; border-radius:50%; background:var(--yellow); color:var(--black); font-family:'Rajdhani'; font-weight:700; font-size:1.3rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .avis-stars{ color:var(--yellow-dark); font-size:.85rem; margin-bottom:8px; letter-spacing:1px; }
+  .avis-card p{ font-size:.98rem; color:var(--ink); margin-bottom:12px; text-transform:none; }
+  .avis-meta{ font-size:.8rem; color:var(--muted); }
+  .trust-badges{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+  .trust-badge{ display:flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:11px 20px; font-size:.82rem; font-weight:600; color:var(--muted); background:var(--white); }
+  .trust-badge svg{ width:16px; height:16px; stroke:var(--yellow-dark); }
+
+  /* ---- Contact ---- */
+  .contact-section{ background:var(--black); color:#fff; }
+  .contact-grid{ display:grid; grid-template-columns:1fr .85fr; gap:56px; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-family:'IBM Plex Mono'; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; color:rgba(255,255,255,0.5); margin-bottom:7px; }
+  .field input, .field select, .field textarea{ width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16); border-radius:8px; padding:12px 14px; color:#fff; font-family:'Inter'; font-size:.9rem; }
+  .field textarea{ resize:vertical; min-height:90px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .contact-info-list{ display:flex; flex-direction:column; gap:16px; margin-bottom:26px; }
+  .contact-info-list .lbl{ font-family:'IBM Plex Mono'; font-size:.7rem; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+  .contact-info-list .val{ font-size:.96rem; }
+  .map-box{ height:100%; min-height:200px; border-radius:var(--radius); background:repeating-linear-gradient(45deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04) 10px, transparent 10px, transparent 20px), #141414; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1); }
+  .map-box span{ font-family:'IBM Plex Mono'; font-size:.8rem; color:rgba(255,255,255,0.4); }
+
+  footer{ padding:40px 0 30px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-links{ display:flex; gap:20px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--yellow-dark); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    .util-item.hide-mobile{ display:none; }
+    nav.main-nav{ display:none; }
+    header .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero-grid{ grid-template-columns:1fr; gap:44px; text-align:center; }
+    .hero-actions{ justify-content:center; }
+    .hero-badge-wrap{ width:240px; height:240px; }
+    .hero-stats{ flex-wrap:wrap; }
+    .hero-stat{ flex:1 1 33%; border-bottom:1px solid rgba(255,255,255,0.12); }
+    .panel-grid{ grid-template-columns:1fr; gap:34px; }
+    .breaker-grid{ grid-template-columns:repeat(4,1fr); }
+    .contact-grid{ grid-template-columns:1fr; gap:36px; }
+    .pricing-table td.desc{ display:none; }
+    section{ padding:66px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .field-row{ grid-template-columns:1fr; }
+    .breaker-grid{ grid-template-columns:repeat(4,1fr); gap:8px; }
+    .avis-card{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — VoltPro n'est pas une vraie entreprise, le tableau interactif et les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<div class="util-bar">
+  <div class="util-row">
+    <div class="util-left">
+      <span class="util-item hide-mobile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>21 rue de l'Industrie, Luxembourg</span>
+      <span class="util-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Urgences électriques 7j/7</span>
+    </div>
+    <div class="util-right"><a href="tel:+35200000000">+352 00 00 00 00</a></div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="nav-row">
+    <a href="#" class="logo">Volt<span class="bolt">Pro</span></a>
+    <nav class="main-nav">
+      <a href="#tableau">Nos services</a>
+      <a href="#forfaits">Forfaits</a>
+      <a href="#avant-apres">Avant / Après</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Demander un devis</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#tableau">Nos services</a>
+    <a href="#forfaits">Forfaits</a>
+    <a href="#avant-apres">Avant / Après</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#contact">Demander un devis</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <span class="eyebrow"><span class="live-dot"></span>Électricien certifié — Luxembourg</span>
+      <h1>Votre installation électrique, <em>sous contrôle.</em></h1>
+      <p class="lead">Installation, mise aux normes NF C 15-100 et dépannage électrique 7j/7. Un diagnostic clair avant chaque intervention.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#tableau">Explorer nos services</a>
+        <a class="btn btn-ghost-light" href="#contact">Demander un devis</a>
+      </div>
+    </div>
+    <div class="hero-badge-wrap reveal in">
+      <div class="hero-badge-ring2"></div>
+      <div class="hero-badge-ring"></div>
+      <div class="hero-badge"><img src="voltpro-hero.jpg" alt="Électricien testant un tableau électrique avec un multimètre" width="900" height="900"></div>
+    </div>
+  </div>
+  <div class="wrap hero-stats reveal-stagger reveal">
+    <div class="hero-stat" style="--i:0"><div class="num" data-count="15">0</div><div class="lbl">Ans d'expérience</div></div>
+    <div class="hero-stat" style="--i:1"><div class="num" data-count="3200">0</div><div class="lbl">Interventions réalisées</div></div>
+    <div class="hero-stat" style="--i:2"><div class="num" data-count="98">0</div><div class="lbl">% clients satisfaits</div></div>
+  </div>
+</section>
+
+<section id="tableau">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Outil interactif</span>
+      <h2>Cliquez sur le tableau, découvrez le service</h2>
+      <p>Chaque disjoncteur correspond à l'une de nos prestations — cliquez pour en savoir plus.</p>
+    </div>
+    <div class="panel-grid">
+      <div class="breaker-box reveal">
+        <div class="breaker-box-head">
+          <span><span class="live-dot"></span>Tableau principal</span>
+          <span>8 circuits</span>
+        </div>
+        <div class="breaker-grid" id="breakerGrid">
+          <button class="breaker active" type="button" data-service="ecl">
+            <div class="breaker-toggle"></div><span class="breaker-label">ÉCL</span>
+          </button>
+          <button class="breaker" type="button" data-service="pc">
+            <div class="breaker-toggle"></div><span class="breaker-label">PC16</span>
+          </button>
+          <button class="breaker" type="button" data-service="tab">
+            <div class="breaker-toggle"></div><span class="breaker-label">TAB</span>
+          </button>
+          <button class="breaker" type="button" data-service="diff">
+            <div class="breaker-toggle"></div><span class="breaker-label">DIFF</span>
+          </button>
+          <button class="breaker" type="button" data-service="chf">
+            <div class="breaker-toggle"></div><span class="breaker-label">CHF</span>
+          </button>
+          <button class="breaker" type="button" data-service="ve">
+            <div class="breaker-toggle"></div><span class="breaker-label">VE</span>
+          </button>
+          <button class="breaker" type="button" data-service="dom">
+            <div class="breaker-toggle"></div><span class="breaker-label">DOM</span>
+          </button>
+          <button class="breaker" type="button" data-service="sec">
+            <div class="breaker-toggle"></div><span class="breaker-label">SEC</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-info reveal" id="panelInfo">
+        <div class="panel-info-icon" id="panelIcon"></div>
+        <h3 id="panelTitle">Éclairage</h3>
+        <p id="panelDesc">Pose et rénovation de circuits d'éclairage, intérieur comme extérieur, LED et détecteurs de présence.</p>
+        <div class="panel-info-price">Dès <span id="panelPrice">90 €</span><span> — devis gratuit sur place</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="forfaits-section" id="forfaits">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Forfaits</span>
+      <h2>Des prix clairs, avant l'intervention</h2>
+      <p>Tarifs indicatifs pour nos prestations les plus demandées. Devis exact confirmé sur place.</p>
+    </div>
+    <table class="pricing-table reveal">
+      <thead>
+        <tr><th>Prestation</th><th>Durée estimée</th><th style="text-align:right;">Prix indicatif</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">Diagnostic électrique complet<br><span class="desc">Contrôle du tableau, des circuits et des mises à la terre.</span></td>
+          <td class="duration">1h – 1h30</td>
+          <td class="price">120 €</td>
+        </tr>
+        <tr>
+          <td class="name">Mise aux normes du tableau<br><span class="desc">Remplacement et mise en conformité NF C 15-100.</span></td>
+          <td class="duration">3h – 5h</td>
+          <td class="price">450 € – 900 €</td>
+        </tr>
+        <tr>
+          <td class="name">Installation borne de recharge<br><span class="desc">Pose d'une borne de recharge véhicule électrique.</span></td>
+          <td class="duration">2h – 4h</td>
+          <td class="price">890 € – 1 400 €</td>
+        </tr>
+        <tr>
+          <td class="name">Dépannage électrique<br><span class="desc">Recherche et réparation de panne, disjonctions.</span></td>
+          <td class="duration">30 min – 1h30</td>
+          <td class="price">85 € – 180 €</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="avant-apres">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Avant / Après</span>
+      <h2>Un tableau vétuste, remis aux normes</h2>
+      <p>Faites glisser le curseur pour comparer un ancien coffret à fusibles et une installation neuve.</p>
+    </div>
+    <div class="compare-outer reveal">
+      <div class="compare-wrap" id="compareWrap">
+        <img class="compare-after" src="voltpro-after.jpg" alt="Tableau électrique neuf avec disjoncteurs modernes">
+        <div class="compare-before" id="compareBefore">
+          <img src="voltpro-before.jpg" alt="Ancien coffret à fusibles vétuste">
+        </div>
+        <div class="compare-handle-line" id="compareLine"></div>
+        <div class="compare-handle-btn" id="compareBtn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></div>
+        <span class="compare-tag before-tag">Avant</span>
+        <span class="compare-tag after-tag">Après</span>
+        <input class="compare-range" id="compareRange" type="range" min="0" max="100" value="50" aria-label="Comparer avant et après">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band"><img src="voltpro-band.jpg" alt="Technicien en pleine concentration sur un tableau électrique" loading="lazy"></div>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Avis clients</span>
+      <h2>Ce qu'on en dit</h2>
+    </div>
+    <div class="avis-card reveal">
+      <div class="avis-avatar">TB</div>
+      <div>
+        <div class="avis-stars">★★★★★</div>
+        <p>Diagnostic complet et honnête — on m'a clairement expliqué pourquoi mon tableau devait être remplacé, avec un prix fixé avant les travaux. Aucune surprise à la fin.</p>
+        <div class="avis-meta">Thierry B. — Avis vérifié, Kirchberg</div>
+      </div>
+    </div>
+    <div class="trust-badges reveal-stagger reveal">
+      <span class="trust-badge" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>Assurance décennale</span>
+      <span class="trust-badge" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Conforme NF C 15-100</span>
+      <span class="trust-badge" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Intervention rapide</span>
+      <span class="trust-badge" style="--i:3"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a4 4 0 100-8 4 4 0 000 8z"/><path d="M8.5 13.5L6 21l6-3 6 3-2.5-7.5"/></svg>Électriciens certifiés</span>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <span class="tag" style="color:var(--yellow); font-family:'IBM Plex Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:16px;">Contact</span>
+      <h2 style="color:#fff; margin-bottom:24px;">Demandez votre devis</h2>
+      <form onsubmit="return false;">
+        <div class="field-row">
+          <div class="field"><label for="vpName">Nom</label><input id="vpName" type="text" placeholder="Votre nom"></div>
+          <div class="field"><label for="vpPhone">Téléphone</label><input id="vpPhone" type="tel" placeholder="+352 000 000 000"></div>
+        </div>
+        <div class="field"><label for="vpType">Type d'intervention</label>
+          <select id="vpType">
+            <option>Mise aux normes du tableau</option>
+            <option>Installation borne de recharge</option>
+            <option>Dépannage électrique</option>
+            <option>Autre demande</option>
+          </select>
+        </div>
+        <div class="field"><label for="vpMsg">Message</label><textarea id="vpMsg" placeholder="Décrivez brièvement votre besoin"></textarea></div>
+        <button class="btn btn-primary on-dark" type="submit" style="width:100%; justify-content:center;">Envoyer la demande</button>
+      </form>
+    </div>
+    <div class="reveal">
+      <div class="contact-info-list">
+        <div><span class="lbl">Adresse</span><span class="val">21 rue de l'Industrie, Luxembourg</span></div>
+        <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+        <div><span class="lbl">Email</span><span class="val">contact@voltpro-exemple.lu</span></div>
+        <div><span class="lbl">Horaires</span><span class="val">Lundi — Vendredi, 8h – 18h — Urgences 7j/7</span></div>
+      </div>
+      <div class="map-box"><span>Emplacement — carte à intégrer</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 VOLTPRO — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#tableau">Services</a>
+        <a href="#forfaits">Forfaits</a>
+        <a href="#avant-apres">Avant / Après</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--yellow-dark);">MatMax Intelligence</a> — VoltPro n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Compteurs animés
+  (function(){
+    var nums = document.querySelectorAll('.hero-stat .num');
+    if(!nums.length) return;
+    var done = false;
+    var counterIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && !done){
+          done = true;
+          nums.forEach(function(el){
+            var target = parseInt(el.getAttribute('data-count'), 10);
+            var start = 0;
+            var duration = 1400;
+            var startTime = null;
+            function step(ts){
+              if(!startTime) startTime = ts;
+              var progress = Math.min((ts - startTime) / duration, 1);
+              el.textContent = Math.round(start + (target - start) * progress);
+              if(progress < 1) requestAnimationFrame(step);
+              else el.textContent = target;
+            }
+            requestAnimationFrame(step);
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+    counterIo.observe(nums[0]);
+  })();
+
+  // Tableau électrique interactif
+  (function(){
+    var SERVICES = {
+      ecl: { title:"Éclairage", desc:"Pose et rénovation de circuits d'éclairage, intérieur comme extérieur, LED et détecteurs de présence.", price:"90 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0012 2z"/></svg>' },
+      pc: { title:"Prises & circuits", desc:"Ajout de prises, mise en conformité et sécurisation de vos circuits prises existants.", price:"110 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9v.01M15 9v.01M9 15v.01M15 15v.01"/></svg>' },
+      tab: { title:"Tableau électrique", desc:"Mise aux normes NF C 15-100 et remplacement complet de tableau électrique.", price:"450 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h2"/></svg>' },
+      diff: { title:"Disjoncteur différentiel", desc:"Installation ou remplacement de disjoncteurs différentiels pour votre sécurité.", price:"140 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>' },
+      chf: { title:"Chauffage électrique", desc:"Raccordement de convecteurs, radiateurs et chauffage électrique au tableau.", price:"160 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6M8 6l4-4 4 4M6 12c0 5 2.7 9 6 9s6-4 6-9-2.7-6-6-6-6 1-6 6z"/></svg>' },
+      ve: { title:"Borne de recharge", desc:"Installation de borne de recharge pour véhicule électrique, à domicile ou en entreprise.", price:"890 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V7a2 2 0 012-2h6a2 2 0 012 2v13M5 20h10M19 11l2 2v5a1 1 0 01-1 1h-1"/><path d="M19 8v3M9 10l-2 3h3l-2 3"/></svg>' },
+      dom: { title:"Domotique", desc:"Automatisation de l'éclairage, des volets et du chauffage connecté.", price:"320 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>' },
+      sec: { title:"Détection incendie", desc:"Pose de détecteurs de fumée conformes à la réglementation en vigueur.", price:"60 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg>' }
+    };
+    var grid = document.getElementById('breakerGrid');
+    var titleEl = document.getElementById('panelTitle');
+    var descEl = document.getElementById('panelDesc');
+    var priceEl = document.getElementById('panelPrice');
+    var iconEl = document.getElementById('panelIcon');
+
+    function render(key){
+      var s = SERVICES[key];
+      if(!s) return;
+      titleEl.textContent = s.title;
+      descEl.textContent = s.desc;
+      priceEl.textContent = s.price;
+      iconEl.innerHTML = s.icon;
+    }
+    render('ecl');
+
+    if(grid){
+      grid.querySelectorAll('.breaker').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          grid.querySelectorAll('.breaker').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          render(btn.getAttribute('data-service'));
+        });
+      });
+    }
+  })();
+
+  // Slider avant / après
+  (function(){
+    var range = document.getElementById('compareRange');
+    var before = document.getElementById('compareBefore');
+    var line = document.getElementById('compareLine');
+    var btn = document.getElementById('compareBtn');
+    if(!range) return;
+    function update(){
+      var v = range.value;
+      before.style.clipPath = 'inset(0 ' + (100 - v) + '% 0 0)';
+      line.style.left = v + '%';
+      btn.style.left = v + '%';
+    }
+    range.addEventListener('input', update);
+    update();
+  })();
+</script>
+</body>
+</html>
