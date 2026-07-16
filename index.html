@@ -93,7 +93,7 @@
       linear-gradient(0deg, rgba(20,20,26,1) 0%, rgba(20,20,26,.2) 40%);
   }
   .hero-chevrons{ position:absolute; top:-10%; right:-6%; width:60%; height:120%; opacity:.14; pointer-events:none; z-index:1; }
-  .hero-inner{ position:relative; z-index:2; padding-bottom:80px; }
+  .hero-inner{ position:relative; z-index:2; padding-bottom:80px; display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:center; }
   .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:.78rem; color:#fff; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,.18); padding:7px 14px; border-radius:20px; margin-bottom:28px; }
   .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:#4D7CFF; }
   .hero h1{ font-size:clamp(2.3rem,4.6vw,3.8rem); line-height:1.06; max-width:15ch; color:#fff; }
@@ -103,7 +103,7 @@
   .hero p.lead{ margin-top:24px; font-size:1.08rem; color:rgba(255,255,255,.72); max-width:46ch; }
   .hero-actions{ display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; }
 
-  .demo-card{ background:rgba(255,255,255,.06); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.16); border-radius:12px; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); overflow:hidden; max-width:420px; margin-top:52px; }
+  .demo-card{ background:rgba(255,255,255,.06); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.16); border-radius:12px; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); overflow:hidden; width:100%; max-width:400px; justify-self:end; }
   .demo-topbar{ display:flex; align-items:center; gap:8px; padding:13px 16px; border-bottom:1px solid rgba(255,255,255,.12); }
   .demo-topbar .d{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.2); }
   .demo-topbar .label{ font-family:'IBM Plex Mono'; font-size:.7rem; color:rgba(255,255,255,.4); margin-left:6px; }
@@ -157,6 +157,9 @@
   .price-panel{ display:none; grid-template-columns:repeat(4,1fr); gap:18px; }
   .price-panel.active{ display:grid; }
   .price-panel.cols-3{ grid-template-columns:repeat(3,1fr); }
+  .price-panel-static{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:860px){ .price-panel-static{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:540px){ .price-panel-static{ grid-template-columns:1fr; } }
   .price-card{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:30px 24px; display:flex; flex-direction:column; gap:14px; transition:box-shadow .25s, transform .25s, border-color .25s; position:relative; }
   .price-card:hover{ transform:translateY(-3px); box-shadow:0 18px 32px -22px rgba(20,20,26,.18); }
   .price-card.featured{ border-color:var(--blue); box-shadow:0 0 0 1px var(--blue); }
@@ -169,6 +172,14 @@
   .pricing-note{ margin-top:26px; color:var(--dim); font-size:.86rem; }
   @media (max-width:860px){ .price-panel{ grid-template-columns:1fr 1fr; } }
   @media (max-width:540px){ .price-panel{ grid-template-columns:1fr; } }
+
+  .pricing-step-head{ display:flex; align-items:center; gap:14px; margin-bottom:24px; }
+  .step-num{ width:32px; height:32px; border-radius:50%; background:var(--ink); color:#fff; font-family:'Bricolage Grotesque'; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.92rem; }
+  .pricing-step-head h3{ font-size:1.1rem; margin-bottom:2px; }
+  .pricing-step-head .step-sub{ font-size:.84rem; color:var(--muted); }
+  .pricing-connector{ display:flex; align-items:center; gap:16px; margin:32px 0; }
+  .pricing-connector::before, .pricing-connector::after{ content:''; flex:1; height:1px; background:var(--line); }
+  .pricing-connector span{ width:38px; height:38px; border-radius:50%; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:var(--blue); font-size:1.15rem; font-weight:700; background:var(--bg-alt); flex-shrink:0; }
 
   /* approche */
   .approach-section{ background:var(--bg-alt); }
@@ -234,11 +245,11 @@
     section{ padding:68px 0; }
     .wrap{ padding:0 20px; }
     .hero{ padding-top:0; }
-    .hero-inner{ padding-top:70px; padding-bottom:56px; }
+    .hero-inner{ grid-template-columns:1fr; padding-top:70px; padding-bottom:56px; }
     .hero h1{ font-size:2.1rem; max-width:none; }
     .hero-actions{ flex-direction:column; align-items:stretch; }
     .hero-actions .btn{ justify-content:center; width:100%; }
-    .demo-card{ max-width:100%; }
+    .demo-card{ max-width:100%; justify-self:stretch; margin-top:36px; }
   }
 </style>
 </head>
@@ -272,12 +283,14 @@
       <path d="M309,11 L88,210 L88,258 L272,95 L273,264 L309,263 Z" fill="#4D7CFF"/>
     </svg>
     <div class="wrap hero-inner">
-      <span class="eyebrow reveal in"><span class="dot"></span>LUXEMBOURG — SITES WEB &amp; IA</span>
-      <h1 class="reveal in">Des sites qui convertissent, des <span class="u">outils IA</span> qui travaillent pour vous</h1>
-      <p class="lead reveal in">MatMax Intelligence conçoit des sites web sur mesure et des agents IA pour les entreprises qui veulent gagner du temps, pas en perdre. Un seul abonnement, tout est géré, mis à jour et fait évoluer par nous.</p>
-      <div class="hero-actions reveal in">
-        <a href="#formules" class="btn btn-white">Voir les formules</a>
-        <a href="#contact" class="btn btn-ghost">Demander un devis</a>
+      <div class="hero-text">
+        <span class="eyebrow reveal in"><span class="dot"></span>LUXEMBOURG — SITES WEB &amp; IA</span>
+        <h1 class="reveal in">Des sites qui convertissent, des <span class="u">outils IA</span> qui travaillent pour vous</h1>
+        <p class="lead reveal in">MatMax Intelligence conçoit des sites web sur mesure et des agents IA pour les entreprises qui veulent gagner du temps, pas en perdre. Un seul abonnement, tout est géré, mis à jour et fait évoluer par nous.</p>
+        <div class="hero-actions reveal in">
+          <a href="#formules" class="btn btn-white">Voir les formules</a>
+          <a href="#contact" class="btn btn-ghost">Demander un devis</a>
+        </div>
       </div>
       <div class="demo-card reveal in">
         <div class="demo-topbar">
@@ -345,13 +358,17 @@
       <div class="section-head reveal">
         <span class="tag">Tarification</span>
         <h2>Un projet initial, puis un abonnement qui suit</h2>
-        <p>La mise en place se paie une fois. L'abonnement mensuel couvre l'hébergement, la maintenance et les évolutions.</p>
+        <p>Chaque projet combine deux paiements : une mise en place unique au démarrage, puis un abonnement mensuel qui couvre l'hébergement, la maintenance et les évolutions.</p>
+      </div>
+
+      <div class="pricing-step-head">
+        <span class="step-num">1</span>
+        <div><h3>Mise en place</h3><span class="step-sub">Paiement unique, au démarrage du projet</span></div>
       </div>
 
       <div class="price-tabs reveal">
         <button class="price-tab active" data-tab="sites" type="button">Sites web</button>
         <button class="price-tab" data-tab="ia" type="button">Agents IA</button>
-        <button class="price-tab" data-tab="abo" type="button">Abonnement mensuel</button>
       </div>
 
       <div class="price-panel active" data-panel="sites">
@@ -395,7 +412,15 @@
           <span class="p-hint">Plusieurs agents, intégrations complexes.</span>
         </div>
       </div>
-      <div class="price-panel cols-3" data-panel="abo">
+
+      <div class="pricing-connector"><span>+</span></div>
+
+      <div class="pricing-step-head">
+        <span class="step-num">2</span>
+        <div><h3>Abonnement mensuel</h3><span class="step-sub">Ensuite, tant que le service est actif</span></div>
+      </div>
+
+      <div class="price-panel-static cols-3">
         <div class="price-card">
           <span class="p-name">Essentiel</span>
           <div class="p-price">39 – 59€<span>par mois</span></div>
