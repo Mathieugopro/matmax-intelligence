@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://matmax-intelligence.netlify.app/sitemap.xml
