@@ -101,27 +101,17 @@
   .hero p.lead{ margin-top:24px; font-size:1.08rem; color:rgba(255,255,255,.72); max-width:46ch; }
   .hero-actions{ display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; }
 
-  .site-build{ background:#fff; border-radius:12px; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); overflow:hidden; width:100%; max-width:400px; justify-self:end; }
-  .site-build-bar{ display:flex; align-items:center; padding:12px 16px; background:var(--bg-alt); border-bottom:1px solid var(--line); }
-  .site-build-url{ font-family:'Inter'; font-weight:600; font-size:.72rem; letter-spacing:.02em; color:var(--dim); background:#fff; border:1px solid var(--line); border-radius:20px; padding:4px 14px; }
-  .site-build-body{ padding:20px; display:flex; flex-direction:column; gap:16px; }
-  .site-build-nav{ display:flex; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid var(--line); }
-  .sb-dot{ width:14px; height:14px; border-radius:3px; background:var(--blue); flex-shrink:0; }
-  .sb-line{ height:7px; border-radius:4px; background:var(--line); }
-  .site-build-nav .sb-line{ margin-left:auto; }
-  .site-build-hero{ display:flex; flex-direction:column; gap:9px; padding:6px 0; }
-  .site-build-hero .lg{ height:11px; }
-  .sb-cta{ margin-top:8px; width:88px; height:26px; border-radius:6px; background:var(--blue); }
-  .site-build-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-  .sb-card{ height:46px; border-radius:6px; background:var(--bg-alt); border:1px solid var(--line); }
-  .w20{ width:20%; } .w40{ width:40%; } .w60{ width:60%; } .w70{ width:70%; }
-
-  .sb-item{ opacity:0; transform:translateY(7px); transition:opacity .4s ease, transform .4s ease; }
-  .sb-in .sb-item{ opacity:1; transform:none; }
-  .sb-in .sb-item:nth-child(1){ transition-delay:0s; }
-  .sb-in .sb-item:nth-child(2){ transition-delay:.08s; }
-  .sb-in .sb-item:nth-child(3){ transition-delay:.16s; }
-  .sb-in .sb-item:nth-child(4){ transition-delay:.24s; }
+  .chat-card{ background:#fff; border-radius:12px; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); overflow:hidden; width:100%; max-width:400px; justify-self:end; }
+  .chat-top{ display:flex; align-items:center; gap:9px; padding:16px 20px; background:var(--bg-alt); border-bottom:1px solid var(--line); }
+  .chat-top-dot{ width:8px; height:8px; border-radius:50%; background:#2FB86A; flex-shrink:0; }
+  .chat-top-label{ font-family:'Inter'; font-weight:600; font-size:.78rem; letter-spacing:.02em; color:var(--ink-soft); }
+  .chat-body{ padding:22px 20px; display:flex; flex-direction:column; gap:12px; min-height:230px; }
+  .chat-msg{ max-width:82%; padding:10px 14px; border-radius:14px; font-size:.86rem; line-height:1.4; opacity:0; transform:translateY(6px); transition:opacity .35s ease, transform .35s ease; }
+  .chat-msg.in{ align-self:flex-start; background:var(--bg-alt); color:var(--ink-soft); border-bottom-left-radius:4px; }
+  .chat-msg.out{ align-self:flex-end; background:var(--blue); color:#fff; border-bottom-right-radius:4px; }
+  .chat-msg.show{ opacity:1; transform:none; }
+  .chat-foot{ display:flex; align-items:center; gap:8px; padding:14px 20px; border-top:1px solid var(--line); font-family:'Inter'; font-weight:600; font-size:.74rem; letter-spacing:.02em; color:var(--dim); text-transform:uppercase; }
+  .chat-foot-dot{ width:7px; height:7px; border-radius:50%; background:var(--blue); flex-shrink:0; }
 
   section{ padding:100px 0; }
   .section-head{ max-width:640px; margin-bottom:56px; }
@@ -253,7 +243,7 @@
     .hero h1{ font-size:2.1rem; max-width:none; }
     .hero-actions{ flex-direction:column; align-items:stretch; }
     .hero-actions .btn{ justify-content:center; width:100%; }
-    .site-build{ max-width:100%; justify-self:stretch; margin-top:36px; }
+    .chat-card{ max-width:100%; justify-self:stretch; margin-top:36px; }
   }
 </style>
 </head>
@@ -296,28 +286,20 @@
           <a href="#contact" class="btn btn-ghost">Demander un devis</a>
         </div>
       </div>
-      <div class="site-build reveal in">
-        <div class="site-build-bar">
-          <span class="site-build-url">votre-entreprise.lu</span>
+      <div class="chat-card reveal in">
+        <div class="chat-top">
+          <span class="chat-top-dot"></span>
+          <span class="chat-top-label">Discutons de votre projet</span>
         </div>
-        <div class="site-build-body">
-          <div class="site-build-nav" id="sbNav">
-            <span class="sb-dot sb-item"></span>
-            <span class="sb-line w40 sb-item"></span>
-            <span class="sb-line w20 sb-item"></span>
-            <span class="sb-line w20 sb-item"></span>
-          </div>
-          <div class="site-build-hero" id="sbHero">
-            <span class="sb-line w60 lg sb-item"></span>
-            <span class="sb-line w40 lg sb-item"></span>
-            <span class="sb-line w70 sb-item"></span>
-            <span class="sb-cta sb-item"></span>
-          </div>
-          <div class="site-build-grid" id="sbGrid">
-            <span class="sb-card sb-item"></span>
-            <span class="sb-card sb-item"></span>
-            <span class="sb-card sb-item"></span>
-          </div>
+        <div class="chat-body" id="chatBody">
+          <div class="chat-msg in">Bonjour, je cherche un site pour mon restaurant.</div>
+          <div class="chat-msg out">Avec plaisir ! Vitrine simple, ou avec réservation en ligne ?</div>
+          <div class="chat-msg in">Avec réservation, si possible.</div>
+          <div class="chat-msg out">On peut vous livrer ça sous 2 semaines, hébergement inclus.</div>
+        </div>
+        <div class="chat-foot">
+          <span class="chat-foot-dot"></span>
+          Réponse sous 24h ouvrées
         </div>
       </div>
     </div>
@@ -575,19 +557,18 @@
 </footer>
 
 <script>
-  const sbNav = document.getElementById('sbNav');
-  const sbHero = document.getElementById('sbHero');
-  const sbGrid = document.getElementById('sbGrid');
+  const chatBody = document.getElementById('chatBody');
+  const chatMsgs = chatBody ? Array.from(chatBody.querySelectorAll('.chat-msg')) : [];
 
-  function playSiteBuild(){
-    [sbNav, sbHero, sbGrid].forEach(el => el && el.classList.remove('sb-in'));
-    setTimeout(()=>{ sbNav && sbNav.classList.add('sb-in'); }, 200);
-    setTimeout(()=>{ sbHero && sbHero.classList.add('sb-in'); }, 650);
-    setTimeout(()=>{ sbGrid && sbGrid.classList.add('sb-in'); }, 1200);
+  function playChat(){
+    chatMsgs.forEach(el => el.classList.remove('show'));
+    chatMsgs.forEach((el, i) => {
+      setTimeout(()=>{ el.classList.add('show'); }, 500 + i * 900);
+    });
   }
-  if(sbNav){
-    playSiteBuild();
-    setInterval(playSiteBuild, 5500);
+  if(chatMsgs.length){
+    playChat();
+    setInterval(playChat, 7000);
   }
 
   const io = new IntersectionObserver((entries)=>{
