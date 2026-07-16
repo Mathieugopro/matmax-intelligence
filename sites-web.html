@@ -145,11 +145,29 @@
   @media (max-width:860px){
     nav ul, .nav-cta{ display:none; }
     .nav-toggle{ display:flex; }
-    section{ padding:64px 0; }
+    .nav-row{ height:64px; }
+    section{ padding:52px 0; }
     .wrap{ padding:0 20px; }
-    .page-hero{ padding:52px 0 36px; }
-    .page-hero h1{ max-width:none; }
+    .page-hero{ padding:40px 0 32px; }
+    .page-hero .hero-chevrons{ display:none; }
+    .page-hero h1{ max-width:none; font-size:1.7rem; }
+    .page-hero p.lead{ font-size:.96rem; }
+    .page-hero .hero-actions{ flex-direction:column; align-items:stretch; margin-top:24px; }
+    .page-hero .hero-actions .btn{ justify-content:center; width:100%; }
+    .section-head{ margin-bottom:32px; }
+    .section-head h2{ font-size:1.5rem; }
+    .section-head p{ font-size:.94rem; }
+    .feature-card{ padding:22px 18px; }
+    .process-step{ padding:20px 18px; gap:14px; }
+    .faq-item{ padding:20px 18px; }
     .cta-box{ padding:36px 22px; }
+    .work-grid .work-card:nth-child(n+3){ display:none; }
+    .footer-row{ flex-direction:column; align-items:flex-start; gap:14px; }
+  }
+  @media (max-width:480px){
+    .page-hero h1{ font-size:1.5rem; }
+    .section-head h2{ font-size:1.3rem; }
+    .btn{ font-size:.9rem; padding:12px 20px; }
   }
 </style>
 </head>
