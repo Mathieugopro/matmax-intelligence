@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour une entreprise de plomberie et dépannage d'urgence, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>AquaPro — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#F2F5F7; --bg-alt:#E7EDF1; --ink:#101820; --muted:#57646E; --dim:#AEB9C2; --line:#D8E0E5;
+    --navy:#0F2C4C; --navy-dark:#081B31; --steel:#3E7CA6; --orange:#E8621E; --orange-dark:#C14D12; --white:#FFFFFF;
+    --radius:14px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Oswald',sans-serif; font-weight:600; line-height:1.15; text-transform:uppercase; letter-spacing:.01em; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:96px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
+
+  .demo-banner{ background:var(--navy-dark); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; position:relative; z-index:200; }
+  .demo-banner strong{ color:var(--orange); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:15px 28px; border-radius:8px; font-size:.85rem; font-weight:700; border:1px solid transparent; cursor:pointer; font-family:'Inter'; text-transform:uppercase; letter-spacing:.03em; transition:all .2s; }
+  .btn-primary{ background:var(--orange); color:#fff; }
+  .btn-primary:hover{ background:var(--orange-dark); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--steel); color:var(--steel); }
+  .btn-ghost-light{ background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.35); color:#fff; }
+  .btn-ghost-light:hover{ background:rgba(255,255,255,0.14); }
+  .btn svg{ width:18px; height:18px; }
+
+  /* ---- Header ---- */
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(242,245,247,0.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:16px 32px; gap:20px; }
+  .logo{ font-family:'Oswald'; font-size:1.5rem; text-transform:uppercase; letter-spacing:.02em; display:flex; align-items:center; gap:8px; }
+  .logo span{ color:var(--orange); }
+  nav.main-nav{ display:flex; gap:28px; }
+  nav.main-nav a{ font-size:.84rem; color:var(--muted); font-weight:600; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--navy); }
+  .header-cta{ display:flex; align-items:center; gap:14px; }
+  .avail-badge{ display:flex; align-items:center; gap:8px; font-size:.78rem; font-weight:600; color:var(--navy); }
+  .avail-dot{ width:8px; height:8px; border-radius:50%; background:#2FA85B; position:relative; }
+  .avail-dot::after{ content:''; position:absolute; inset:-4px; border-radius:50%; border:1.5px solid #2FA85B; animation:pulse 1.8s infinite; }
+  @keyframes pulse{ 0%{ transform:scale(0.6); opacity:1; } 100%{ transform:scale(1.8); opacity:0; } }
+  .header-phone{ font-family:'IBM Plex Mono'; font-weight:600; font-size:.95rem; color:var(--navy); display:flex; align-items:center; gap:8px; }
+  .header-phone svg{ width:17px; height:17px; stroke:var(--orange); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:15px 32px; border-bottom:1px solid var(--line); font-size:.95rem; font-weight:600; }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
+
+  /* ---- Barre d'appel fixe mobile ---- */
+  .call-bar{ display:none; position:fixed; bottom:0; left:0; right:0; z-index:150; background:var(--orange); color:#fff; }
+  .call-bar a{ display:flex; align-items:center; justify-content:center; gap:10px; padding:16px; font-weight:700; font-size:.95rem; text-transform:uppercase; letter-spacing:.03em; }
+  .call-bar svg{ width:19px; height:19px; }
+  @media (max-width:760px){ .call-bar{ display:block; } body{ padding-bottom:58px; } }
+
+  /* ---- Hero : panneau plein + photo, pas d'image plein cadre ---- */
+  .hero{ padding:0; display:grid; grid-template-columns:.95fr 1.05fr; min-height:82vh; }
+  .hero-panel{ background:var(--navy); color:#fff; display:flex; flex-direction:column; justify-content:center; padding:64px 54px; position:relative; overflow:hidden; }
+  .hero-panel::before{ content:''; position:absolute; inset:0; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 26px); pointer-events:none; }
+  .urgence-badge{ display:inline-flex; align-items:center; gap:8px; background:rgba(232,98,30,0.18); border:1px solid rgba(232,98,30,0.5); color:#FFB088; font-family:'IBM Plex Mono'; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; padding:8px 16px; border-radius:999px; margin-bottom:26px; width:fit-content; }
+  .urgence-badge svg{ width:14px; height:14px; }
+  .hero h1{ font-size:clamp(2.3rem,4.2vw,3.3rem); margin-bottom:20px; color:#fff; }
+  .hero h1 span{ color:var(--orange); }
+  .hero p.lead{ color:rgba(255,255,255,0.72); font-size:1.02rem; margin-bottom:32px; max-width:42ch; font-family:'Inter'; text-transform:none; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .hero-media{ position:relative; overflow:hidden; }
+  .hero-media img{ width:100%; height:100%; object-fit:cover; }
+
+  /* ---- Bandeau disponibilité ---- */
+  .avail-strip{ background:var(--white); border-bottom:1px solid var(--line); }
+  .avail-strip-row{ display:flex; justify-content:center; gap:0; flex-wrap:wrap; }
+  .avail-cell{ padding:22px 40px; text-align:center; border-right:1px solid var(--line); }
+  .avail-cell:last-child{ border-right:none; }
+  .avail-cell .num{ font-family:'IBM Plex Mono'; font-weight:600; font-size:1.3rem; color:var(--navy); }
+  .avail-cell .lbl{ font-size:.76rem; color:var(--muted); margin-top:2px; text-transform:uppercase; letter-spacing:.04em; }
+
+  .section-head{ max-width:600px; margin-bottom:50px; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--orange-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.8rem,3vw,2.3rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1rem; text-transform:none; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Devis express ---- */
+  .devis-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:start; }
+  .devis-step{ margin-bottom:34px; }
+  .devis-step-label{ font-family:'IBM Plex Mono'; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--steel); margin-bottom:14px; display:block; }
+  .tile-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+  .tile-grid.tile-3{ grid-template-columns:repeat(3,1fr); }
+  .tile{ background:var(--white); border:1px solid var(--line); border-radius:10px; padding:18px 16px; text-align:left; cursor:pointer; transition:all .15s; font-family:'Inter'; }
+  .tile svg{ width:24px; height:24px; stroke:var(--steel); margin-bottom:10px; }
+  .tile span{ display:block; font-size:.86rem; font-weight:600; color:var(--ink); }
+  .tile:hover{ border-color:var(--steel); }
+  .tile.active{ background:var(--navy); border-color:var(--navy); }
+  .tile.active svg{ stroke:var(--orange); }
+  .tile.active span{ color:#fff; }
+  .chip-row{ display:flex; gap:10px; flex-wrap:wrap; }
+  .chip{ padding:11px 18px; border-radius:999px; border:1px solid var(--line); background:var(--white); font-size:.84rem; font-weight:600; color:var(--muted); cursor:pointer; transition:all .15s; }
+  .chip:hover{ border-color:var(--steel); color:var(--ink); }
+  .chip.active{ background:var(--steel); border-color:var(--steel); color:#fff; }
+
+  .devis-result{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:40px 34px; text-align:center; position:sticky; top:110px; }
+  .devis-result-label{ font-family:'IBM Plex Mono'; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:10px; }
+  .devis-price{ font-family:'Oswald'; font-size:2.6rem; color:var(--navy); margin-bottom:6px; }
+  .devis-price span{ color:var(--orange); }
+  .devis-sub{ color:var(--dim); font-size:.8rem; margin-bottom:26px; }
+  .devis-eta{ display:flex; align-items:center; justify-content:center; gap:10px; background:var(--bg-alt); border-radius:8px; padding:14px; margin-bottom:24px; font-size:.88rem; font-weight:600; color:var(--navy); }
+  .devis-eta svg{ width:18px; height:18px; stroke:var(--orange); }
+  .devis-hint{ color:var(--dim); font-size:.82rem; font-style:italic; }
+
+  /* ---- Zones d'intervention ---- */
+  .zones-section{ background:var(--bg-alt); }
+  .zones-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .zone-card{ background:var(--white); border:1px solid var(--line); border-radius:10px; padding:20px 18px; }
+  .zone-top{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .zone-dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .zone-dot.fast{ background:#2FA85B; }
+  .zone-dot.mid{ background:var(--orange); }
+  .zone-dot.slow{ background:var(--dim); }
+  .zone-card h4{ font-family:'Oswald'; font-size:1rem; text-transform:uppercase; }
+  .zone-eta{ font-family:'IBM Plex Mono'; font-size:.8rem; color:var(--muted); }
+
+  /* ---- Interventions récentes : feed façon log de chantier ---- */
+  .log-list{ border-top:1px solid var(--line); }
+  .log-row{ display:flex; align-items:center; gap:20px; padding:20px 4px; border-bottom:1px solid var(--line); }
+  .log-thumb{ width:64px; height:64px; border-radius:8px; overflow:hidden; flex-shrink:0; }
+  .log-thumb img{ width:100%; height:100%; object-fit:cover; }
+  .log-main{ flex:1; min-width:0; }
+  .log-main h4{ font-family:'Oswald'; font-size:1.02rem; text-transform:none; letter-spacing:0; margin-bottom:3px; }
+  .log-meta{ font-size:.8rem; color:var(--muted); }
+  .log-status{ display:flex; align-items:center; gap:6px; font-family:'IBM Plex Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.04em; color:#2FA85B; white-space:nowrap; }
+  .log-status svg{ width:15px; height:15px; }
+
+  /* ---- Bandeau confiance ---- */
+  .trust-strip{ background:var(--navy); }
+  .trust-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; }
+  .trust-item{ background:#132F4E; padding:26px 20px; text-align:center; }
+  .trust-item svg{ width:26px; height:26px; stroke:var(--orange); margin:0 auto 10px; }
+  .trust-item span{ display:block; color:#fff; font-size:.82rem; font-weight:600; }
+
+  /* ---- Avis : bandeau défilant ---- */
+  .marquee-wrap{ overflow:hidden; position:relative; -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .marquee-track{ display:flex; gap:18px; width:max-content; animation:scroll-left 34s linear infinite; }
+  .marquee-track:hover{ animation-play-state:paused; }
+  @keyframes scroll-left{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  .review-chip{ background:var(--white); border:1px solid var(--line); border-radius:12px; padding:22px 24px; width:320px; flex-shrink:0; }
+  .review-stars{ color:var(--orange); font-size:.85rem; margin-bottom:10px; letter-spacing:2px; }
+  .review-chip p{ font-size:.9rem; color:var(--ink); margin-bottom:14px; }
+  .review-chip .name{ font-size:.8rem; font-weight:700; }
+  .review-chip .role{ font-size:.75rem; color:var(--muted); }
+
+  /* ---- Contact ---- */
+  .contact-section{ background:var(--navy-dark); color:#fff; }
+  .contact-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:center; }
+  .big-phone{ font-family:'Oswald'; font-size:clamp(2rem,4.4vw,3.1rem); color:#fff; display:flex; align-items:center; gap:16px; margin-bottom:18px; }
+  .big-phone svg{ width:34px; height:34px; stroke:var(--orange); flex-shrink:0; }
+  .contact-note{ color:rgba(255,255,255,0.6); font-size:.92rem; margin-bottom:28px; max-width:44ch; }
+  .contact-list{ display:flex; flex-direction:column; gap:14px; }
+  .contact-list .lbl{ font-family:'IBM Plex Mono'; font-size:.7rem; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+  .contact-list .val{ font-size:.96rem; }
+  .hours-card{ background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.14); border-radius:var(--radius); padding:30px; }
+  .hours-card h4{ font-family:'Oswald'; font-size:1rem; margin-bottom:18px; }
+  .hours-row{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.12); font-size:.86rem; }
+  .hours-row:last-child{ border-bottom:none; }
+  .hours-row.urgence{ color:var(--orange); font-weight:700; }
+  .hours-row span:last-child{ color:rgba(255,255,255,0.65); }
+  .hours-row.urgence span:last-child{ color:var(--orange); }
+
+  footer{ padding:40px 0 30px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-links{ display:flex; gap:20px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--orange-dark); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    .header-cta .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero{ grid-template-columns:1fr; min-height:auto; }
+    .hero-media{ order:-1; aspect-ratio:16/10; }
+    .hero-panel{ padding:48px 26px; }
+    .avail-strip-row{ flex-direction:column; }
+    .avail-cell{ border-right:none; border-bottom:1px solid var(--line); }
+    .devis-grid{ grid-template-columns:1fr; gap:36px; }
+    .devis-result{ position:static; }
+    .zones-grid{ grid-template-columns:repeat(2,1fr); }
+    .trust-row{ grid-template-columns:1fr 1fr; }
+    .contact-grid{ grid-template-columns:1fr; gap:36px; }
+    section{ padding:66px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .zones-grid{ grid-template-columns:1fr; }
+    .tile-grid.tile-3{ grid-template-columns:1fr; }
+    .log-row{ flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — AquaPro n'est pas une vraie entreprise, le devis et les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="nav-row">
+    <a href="#" class="logo">Aqua<span>Pro</span></a>
+    <nav class="main-nav">
+      <a href="#devis">Devis express</a>
+      <a href="#zones">Zones</a>
+      <a href="#interventions">Interventions</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-cta">
+      <div class="avail-badge"><span class="avail-dot"></span>Disponible maintenant</div>
+      <a class="header-phone" href="tel:+35200000000"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+352 00 00 00 00</a>
+      <a class="btn btn-primary" href="#devis">Devis gratuit</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#devis">Devis express</a>
+    <a href="#zones">Zones</a>
+    <a href="#interventions">Interventions</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="tel:+35200000000">Appeler maintenant</a>
+  </div>
+</header>
+
+<div class="call-bar">
+  <a href="tel:+35200000000"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Urgence — Appeler maintenant</a>
+</div>
+
+<section class="hero">
+  <div class="hero-panel reveal in">
+    <span class="urgence-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>Urgence 24/7</span>
+    <h1>Une fuite ? Une panne ?<br><span>On est là.</span></h1>
+    <p class="lead">Plombiers certifiés, intervention rapide sur Luxembourg-ville et environs. Devis clair avant toute intervention, appel ou en ligne.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="tel:+35200000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Appeler maintenant</a>
+      <a class="btn btn-ghost-light" href="#devis">Obtenir un devis express</a>
+    </div>
+  </div>
+  <div class="hero-media"><img src="aquapro-hero.jpg" alt="Plombier réparant un raccord de tuyauterie avec une clé" width="1920" height="1200"></div>
+</section>
+
+<div class="avail-strip">
+  <div class="wrap avail-strip-row">
+    <div class="avail-cell"><div class="num">45 min</div><div class="lbl">Délai moyen d'intervention</div></div>
+    <div class="avail-cell"><div class="num">12 zones</div><div class="lbl">Couvertes autour de Luxembourg</div></div>
+    <div class="avail-cell"><div class="num">4.9 / 5</div><div class="lbl">Sur 210 avis clients</div></div>
+  </div>
+</div>
+
+<section id="devis">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Outil interactif</span>
+      <h2>Votre devis express en 3 étapes</h2>
+      <p>Une estimation immédiate, avant même de décrocher le téléphone.</p>
+    </div>
+    <div class="devis-grid">
+      <div class="reveal">
+        <div class="devis-step">
+          <span class="devis-step-label">1. Type de problème</span>
+          <div class="tile-grid" id="devisType">
+            <button class="tile" type="button" data-type="fuite" data-price="90-150" data-base-eta="45">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69s6 7.35 6 11.31a6 6 0 11-12 0c0-3.96 6-11.31 6-11.31z"/></svg>
+              <span>Fuite d'eau</span>
+            </button>
+            <button class="tile" type="button" data-type="chauffe-eau" data-price="120-220" data-base-eta="90">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="4"/><path d="M12 8v6M9 11h6"/></svg>
+              <span>Chauffe-eau</span>
+            </button>
+            <button class="tile" type="button" data-type="debouchage" data-price="80-140" data-base-eta="60">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4c4 0 4 4 8 4s4-4 8-4M4 20c4 0 4-4 8-4s4 4 8 4"/><path d="M4 12h16"/></svg>
+              <span>Débouchage</span>
+            </button>
+            <button class="tile" type="button" data-type="installation" data-price="150-400" data-base-eta="180">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.77z"/></svg>
+              <span>Installation</span>
+            </button>
+          </div>
+        </div>
+        <div class="devis-step">
+          <span class="devis-step-label">2. Niveau d'urgence</span>
+          <div class="tile-grid tile-3" id="devisUrgence">
+            <button class="tile" type="button" data-mult="1" data-label="Urgence immédiate">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+              <span>Immédiate</span>
+            </button>
+            <button class="tile" type="button" data-mult="1.3" data-label="Sous 48h">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              <span>Sous 48h</span>
+            </button>
+            <button class="tile" type="button" data-mult="1.6" data-label="Je planifie">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              <span>Je planifie</span>
+            </button>
+          </div>
+        </div>
+        <div class="devis-step">
+          <span class="devis-step-label">3. Votre zone</span>
+          <div class="chip-row" id="devisZone">
+            <button class="chip" type="button" data-eta="30">Centre-ville</button>
+            <button class="chip" type="button" data-eta="35">Belair</button>
+            <button class="chip" type="button" data-eta="40">Limpertsberg</button>
+            <button class="chip" type="button" data-eta="50">Gasperich</button>
+            <button class="chip" type="button" data-eta="55">Kirchberg</button>
+            <button class="chip" type="button" data-eta="60">Autre zone</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="devis-result reveal">
+        <div class="devis-result-label">Estimation</div>
+        <div class="devis-price" id="devisPrice">— € – <span>—</span> €</div>
+        <div class="devis-sub">TVA comprise, hors pièces détachées</div>
+        <div class="devis-eta" id="devisEta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span id="devisEtaText">Sélectionnez les 3 étapes ci-contre</span>
+        </div>
+        <a class="btn btn-primary" href="tel:+35200000000" style="width:100%; justify-content:center; margin-bottom:12px;">Demander cette intervention</a>
+        <p class="devis-hint">Estimation indicative — le prix définitif est confirmé sur place avant intervention.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="zones-section" id="zones">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Zones d'intervention</span>
+      <h2>On couvre Luxembourg-ville et ses environs</h2>
+      <p>Délai moyen constaté par zone, sur les 30 derniers jours.</p>
+    </div>
+    <div class="zones-grid reveal-stagger reveal">
+      <div class="zone-card" style="--i:0"><div class="zone-top"><span class="zone-dot fast"></span><h4>Centre-ville</h4></div><div class="zone-eta">~30 min</div></div>
+      <div class="zone-card" style="--i:1"><div class="zone-top"><span class="zone-dot fast"></span><h4>Belair</h4></div><div class="zone-eta">~35 min</div></div>
+      <div class="zone-card" style="--i:2"><div class="zone-top"><span class="zone-dot fast"></span><h4>Limpertsberg</h4></div><div class="zone-eta">~40 min</div></div>
+      <div class="zone-card" style="--i:3"><div class="zone-top"><span class="zone-dot mid"></span><h4>Hollerich</h4></div><div class="zone-eta">~45 min</div></div>
+      <div class="zone-card" style="--i:4"><div class="zone-top"><span class="zone-dot mid"></span><h4>Bonnevoie</h4></div><div class="zone-eta">~45 min</div></div>
+      <div class="zone-card" style="--i:5"><div class="zone-top"><span class="zone-dot mid"></span><h4>Gasperich</h4></div><div class="zone-eta">~50 min</div></div>
+      <div class="zone-card" style="--i:6"><div class="zone-top"><span class="zone-dot mid"></span><h4>Kirchberg</h4></div><div class="zone-eta">~55 min</div></div>
+      <div class="zone-card" style="--i:7"><div class="zone-top"><span class="zone-dot slow"></span><h4>Autres environs</h4></div><div class="zone-eta">Sur devis</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="interventions">
+  <div class="wrap" style="max-width:840px;">
+    <div class="section-head reveal">
+      <span class="tag">Interventions récentes</span>
+      <h2>Le journal de nos chantiers</h2>
+      <p>Un aperçu réel du type d'interventions que nous traitons chaque semaine.</p>
+    </div>
+    <div class="log-list reveal">
+      <div class="log-row">
+        <div class="log-thumb"><img src="aquapro-g1.jpg" alt="Installation d'un raccord de tuyauterie" loading="lazy"></div>
+        <div class="log-main"><h4>Remplacement d'un raccord sous évier</h4><div class="log-meta">Belair — durée 40 min</div></div>
+        <div class="log-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Terminé</div>
+      </div>
+      <div class="log-row">
+        <div class="log-thumb"><img src="aquapro-g2.jpg" alt="Clé à molette utilisée pour une réparation" loading="lazy"></div>
+        <div class="log-main"><h4>Réparation de fuite sur colonne montante</h4><div class="log-meta">Centre-ville — durée 55 min</div></div>
+        <div class="log-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Terminé</div>
+      </div>
+      <div class="log-row">
+        <div class="log-thumb"><img src="aquapro-g3.jpg" alt="Contrôle d'un radiateur et de sa vanne" loading="lazy"></div>
+        <div class="log-main"><h4>Purge et contrôle d'un circuit de chauffage</h4><div class="log-meta">Limpertsberg — durée 1h10</div></div>
+        <div class="log-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Terminé</div>
+      </div>
+      <div class="log-row">
+        <div class="log-thumb"><img src="aquapro-g4.jpg" alt="Réglage d'une vanne en laiton" loading="lazy"></div>
+        <div class="log-main"><h4>Remplacement d'une vanne d'arrêt</h4><div class="log-meta">Gasperich — durée 35 min</div></div>
+        <div class="log-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Terminé</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust-strip">
+  <div class="wrap">
+    <div class="trust-row reveal-stagger reveal">
+      <div class="trust-item" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg><span>Assurance décennale</span></div>
+      <div class="trust-item" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a4 4 0 100-8 4 4 0 000 8z"/><path d="M8.5 13.5L6 21l6-3 6 3-2.5-7.5"/></svg><span>Plombiers certifiés</span></div>
+      <div class="trust-item" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><span>Devis gratuit</span></div>
+      <div class="trust-item" style="--i:3"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>Intervention sous 45 min</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Avis clients</span>
+      <h2>Ce qu'on en dit</h2>
+    </div>
+  </div>
+  <div class="marquee-wrap reveal">
+    <div class="marquee-track">
+      <div class="review-chip"><div class="review-stars">★★★★★</div><p>Appelé à 22h pour une fuite, quelqu'un était là en moins d'une heure. Travail propre et prix annoncé au téléphone.</p><div class="name">Marc D.</div><div class="role">Belair</div></div>
+      <div class="review-chip"><div class="review-stars">★★★★★</div><p>Le devis express en ligne était juste au euro près. Aucune mauvaise surprise à la fin de l'intervention.</p><div class="name">Sophie R.</div><div class="role">Centre-ville</div></div>
+      <div class="review-chip"><div class="review-stars">★★★★★</div><p>Chauffe-eau remplacé le jour même. Équipe ponctuelle et très pédagogue sur l'entretien à prévoir.</p><div class="name">Julien P.</div><div class="role">Gasperich</div></div>
+      <div class="review-chip"><div class="review-stars">★★★★★</div><p>Débouchage rapide et efficace, sans dégâts. Je recommande pour toute urgence de plomberie.</p><div class="name">Amina K.</div><div class="role">Kirchberg</div></div>
+      <div class="review-chip"><div class="review-stars">★★★★★</div><p>Appelé à 22h pour une fuite, quelqu'un était là en moins d'une heure. Travail propre et prix annoncé au téléphone.</p><div class="name">Marc D.</div><div class="role">Belair</div></div>
+      <div class="review-chip"><div class="review-stars">★★★★★</div><p>Le devis express en ligne était juste au euro près. Aucune mauvaise surprise à la fin de l'intervention.</p><div class="name">Sophie R.</div><div class="role">Centre-ville</div></div>
+      <div class="review-chip"><div class="review-stars">★★★★★</div><p>Chauffe-eau remplacé le jour même. Équipe ponctuelle et très pédagogue sur l'entretien à prévoir.</p><div class="name">Julien P.</div><div class="role">Gasperich</div></div>
+      <div class="review-chip"><div class="review-stars">★★★★★</div><p>Débouchage rapide et efficace, sans dégâts. Je recommande pour toute urgence de plomberie.</p><div class="name">Amina K.</div><div class="role">Kirchberg</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="equipe" style="padding-top:0;">
+  <div class="wrap" style="display:grid; grid-template-columns:.85fr 1.15fr; gap:56px; align-items:center;">
+    <div class="reveal" style="border-radius:var(--radius); overflow:hidden;"><img src="aquapro-about.jpg" alt="Technicienne AquaPro équipée d'un casque et d'une clé à molette" style="aspect-ratio:4/3; object-fit:cover; width:100%;" loading="lazy"></div>
+    <div class="reveal">
+      <span class="tag" style="font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--orange-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">Notre équipe</span>
+      <h2 style="margin-bottom:16px;">Des artisans formés, du matériel pro</h2>
+      <p style="color:var(--muted); margin-bottom:14px; text-transform:none;">Toute l'équipe AquaPro est composée de plombiers certifiés, équipés pour intervenir aussi bien sur une urgence nocturne que sur une installation complète. Chaque intervention est couverte par notre assurance décennale.</p>
+      <p style="color:var(--muted); text-transform:none;">Nous annonçons toujours une fourchette de prix avant de commencer, et confirmons le montant final sur place, avant toute réparation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <span class="tag" style="color:var(--orange); font-family:'IBM Plex Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:16px;">Contact</span>
+      <a class="big-phone" href="tel:+35200000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>+352 00 00 00 00</a>
+      <p class="contact-note">Urgences acceptées 24h/24, 7j/7. Pour une demande non urgente, vous pouvez aussi nous écrire.</p>
+      <div class="contact-list">
+        <div><span class="lbl">Email</span><span class="val">contact@aquapro-exemple.lu</span></div>
+        <div><span class="lbl">Zone d'intervention</span><span class="val">Luxembourg-ville et environs (12 zones)</span></div>
+        <div><span class="lbl">Adresse</span><span class="val">21 rue de l'Industrie, Luxembourg</span></div>
+      </div>
+    </div>
+    <div class="hours-card reveal">
+      <h4>Disponibilités</h4>
+      <div class="hours-row urgence"><span>Urgences</span><span>24h/24 — 7j/7</span></div>
+      <div class="hours-row"><span>Bureau &amp; devis</span><span>Lundi — Vendredi, 8h – 18h</span></div>
+      <div class="hours-row"><span>Interventions planifiées</span><span>Samedi, 9h – 13h</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 AQUAPRO — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#devis">Devis express</a>
+        <a href="#zones">Zones</a>
+        <a href="#interventions">Interventions</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--orange-dark);">MatMax Intelligence</a> — AquaPro n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Devis express
+  (function(){
+    var typeBox = document.getElementById('devisType');
+    var urgenceBox = document.getElementById('devisUrgence');
+    var zoneBox = document.getElementById('devisZone');
+    var priceEl = document.getElementById('devisPrice');
+    var etaEl = document.getElementById('devisEtaText');
+
+    var state = { type: null, mult: null, label: null, baseEta: null, zoneEta: null };
+
+    function updateResult(){
+      if(state.type && state.mult && state.zoneEta != null){
+        var range = state.type.split('-').map(Number);
+        var low = Math.round(range[0] * state.mult / 5) * 5;
+        var high = Math.round(range[1] * state.mult / 5) * 5;
+        priceEl.innerHTML = low + ' € – <span>' + high + '</span> €';
+        if(state.label === 'Immédiate'){
+          etaEl.textContent = 'Intervention estimée sous ' + Math.round(state.zoneEta) + ' min';
+        } else if(state.label === 'Sous 48h'){
+          etaEl.textContent = 'Rendez-vous proposé sous 48h';
+        } else {
+          etaEl.textContent = 'Créneau à planifier avec vous';
+        }
+      } else {
+        priceEl.innerHTML = '— € – <span>—</span> €';
+        etaEl.textContent = 'Sélectionnez les 3 étapes ci-contre';
+      }
+    }
+
+    if(typeBox){
+      typeBox.querySelectorAll('.tile').forEach(function(tile){
+        tile.addEventListener('click', function(){
+          typeBox.querySelectorAll('.tile').forEach(function(t){ t.classList.remove('active'); });
+          tile.classList.add('active');
+          state.type = tile.getAttribute('data-price');
+          state.baseEta = parseInt(tile.getAttribute('data-base-eta'), 10);
+          updateResult();
+        });
+      });
+    }
+    if(urgenceBox){
+      urgenceBox.querySelectorAll('.tile').forEach(function(tile){
+        tile.addEventListener('click', function(){
+          urgenceBox.querySelectorAll('.tile').forEach(function(t){ t.classList.remove('active'); });
+          tile.classList.add('active');
+          state.mult = parseFloat(tile.getAttribute('data-mult'));
+          state.label = tile.getAttribute('data-label');
+          updateResult();
+        });
+      });
+    }
+    if(zoneBox){
+      zoneBox.querySelectorAll('.chip').forEach(function(chip){
+        chip.addEventListener('click', function(){
+          zoneBox.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); });
+          chip.classList.add('active');
+          state.zoneEta = parseInt(chip.getAttribute('data-eta'), 10);
+          updateResult();
+        });
+      });
+    }
+  })();
+</script>
+</body>
+</html>
