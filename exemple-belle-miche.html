@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Belle Miche — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#FAF3E6; --bg-alt:#F3E6D2; --ink:#3A2A1A; --muted:#8A7358; --dim:#C7B79C; --line:#E8DAC0;
+    --amber:#B5722E; --amber-dark:#8F5A22; --choco:#4A2E1C; --gold:#D9A44A; --cream:#FFFBF3;
+    --radius:8px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased;
+    background-image: radial-gradient(circle, rgba(74,46,28,0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  h1,h2,h3{ font-family:'Lora',serif; font-weight:600; line-height:1.16; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; position:relative; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:104px 0; position:relative; overflow:hidden; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .08s); }
+
+  .demo-banner{ background:var(--ink); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; position:relative; z-index:100; }
+  .demo-banner strong{ color:var(--gold); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  header.site-header{ position:sticky; top:0; z-index:50; background:rgba(250,243,230,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; height:82px; }
+  .logo{ font-family:'Lora'; font-weight:700; font-size:1.4rem; letter-spacing:.2px; display:flex; align-items:center; gap:8px; }
+  .logo span{ color:var(--amber); font-style:italic; }
+  nav ul{ display:flex; gap:32px; }
+  nav a{ font-size:.9rem; color:var(--muted); transition:color .2s; }
+  nav a:hover{ color:var(--ink); }
+  .nav-cta{ padding:11px 22px; background:var(--amber); color:#fff; border-radius:var(--radius); font-size:.86rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:background .2s, transform .2s; }
+  .nav-cta:hover{ background:var(--amber-dark); transform:translateY(-1px); }
+  .nav-toggle{ display:none; }
+
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:16px 32px; border-bottom:1px solid var(--line); font-size:.95rem; color:var(--ink); }
+  .mobile-menu .nav-cta{ display:block; margin:16px 32px; text-align:center; color:#fff; width:calc(100% - 64px); }
+
+  .hero{ padding:70px 0 76px; }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center; }
+  .badge-rating{ display:inline-flex; align-items:center; gap:8px; background:var(--cream); border:1px solid var(--line); padding:8px 14px; border-radius:30px; font-size:.8rem; margin-bottom:24px; }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--amber); letter-spacing:.06em; margin-bottom:18px; text-transform:uppercase; }
+  .hero h1{ font-size:clamp(2.6rem,4.6vw,3.9rem); margin-bottom:22px; max-width:15ch; }
+  .hero h1 em{ color:var(--amber); font-style:italic; }
+  .hero p.lead{ font-size:1.08rem; color:var(--muted); max-width:46ch; margin-bottom:34px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:15px 28px; border-radius:var(--radius); font-size:.92rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--amber); color:#fff; }
+  .btn-primary:hover{ background:var(--amber-dark); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--ink); transform:translateY(-2px); }
+  .hero-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+  .hero-visual .plate-wrap{ position:relative; width:100%; max-width:480px; }
+  .photo-frame{ position:relative; width:100%; border-radius:14px; overflow:hidden; box-shadow:0 30px 60px -30px rgba(58,42,26,0.45); border:1px solid rgba(255,255,255,0.4); }
+  .photo-frame img{ width:100%; aspect-ratio:3/2; object-fit:cover; display:block; }
+  .deco-ring{ position:absolute; top:-22px; right:-22px; width:78px; height:78px; border-radius:50%; border:2px dashed var(--gold); opacity:0.6; z-index:2; }
+  .price-tag-float{ position:absolute; bottom:-16px; left:-18px; background:var(--ink); color:#fff; padding:10px 16px; border-radius:30px; font-family:'IBM Plex Mono'; font-size:.78rem; box-shadow:0 10px 24px -8px rgba(0,0,0,0.3); z-index:3; }
+  .about-photo-frame{ position:relative; width:100%; max-width:420px; border-radius:14px; overflow:hidden; box-shadow:0 24px 50px -28px rgba(58,42,26,0.4); }
+  .about-photo-frame img{ width:100%; aspect-ratio:3/2; object-fit:cover; display:block; }
+
+  .highlights{ padding:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--cream); }
+  .highlights-row{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .highlight-item{ padding:30px 28px; border-left:1px solid var(--line); display:flex; flex-direction:column; gap:6px; }
+  .highlight-item:first-child{ border-left:none; }
+  .highlight-item .hnum{ font-family:'IBM Plex Mono'; color:var(--amber); font-size:.78rem; }
+  .highlight-item h4{ font-family:'Lora'; font-size:1.1rem; font-weight:600; }
+
+  .section-head{ max-width:640px; margin-bottom:52px; position:relative; z-index:1; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--amber); text-transform:uppercase; letter-spacing:.06em; display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(2rem,3.4vw,2.8rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1.02rem; }
+
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; position:relative; z-index:1; }
+  .about-text p{ color:var(--muted); margin-bottom:16px; font-size:1rem; }
+  .stats-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:8px; }
+  .stat{ background:var(--cream); padding:26px 20px; text-align:center; }
+  .stat .num{ font-family:'Lora'; font-size:2rem; font-weight:700; color:var(--amber); }
+  .stat .lbl{ font-size:.8rem; color:var(--muted); margin-top:6px; }
+
+  .menu-section{ background:var(--bg-alt); }
+  .menu-tabs{ display:flex; gap:8px; margin-bottom:44px; flex-wrap:wrap; position:relative; z-index:1; }
+  .menu-tab{ display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:30px; border:1px solid var(--line); font-size:.88rem; color:var(--muted); background:var(--cream); cursor:pointer; transition:all .2s; font-family:'Inter'; }
+  .menu-tab:hover{ border-color:var(--ink); color:var(--ink); }
+  .menu-tab.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .menu-panel{ display:none; position:relative; z-index:1; }
+  .menu-panel.active{ display:grid; grid-template-columns:1fr 1fr; gap:0 56px; }
+  .menu-item{ display:flex; align-items:center; gap:14px; padding:18px 0; border-bottom:1px dashed var(--line); }
+  .menu-item-main{ flex:1; }
+  .menu-item-name{ font-family:'Lora'; font-weight:700; font-size:1.08rem; margin-bottom:4px; display:inline; }
+  .menu-item-leader{ flex:1; border-bottom:2px dotted var(--dim); margin:0 8px 5px; min-width:20px; }
+  .menu-item-desc{ font-size:.85rem; color:var(--muted); max-width:32ch; display:block; margin-top:3px; }
+  .menu-item-price{ font-family:'IBM Plex Mono'; font-weight:500; color:var(--amber); white-space:nowrap; }
+  .menu-item-row{ display:flex; align-items:baseline; width:100%; }
+  .menu-add{ width:34px; height:34px; border-radius:50%; background:var(--ink); color:#fff; border:none; font-size:1.2rem; line-height:1; cursor:pointer; flex-shrink:0; transition:background .15s, transform .15s; display:flex; align-items:center; justify-content:center; }
+  .menu-add:hover{ background:var(--amber); transform:scale(1.08); }
+  .menu-add.added{ background:#5C8A5C; }
+
+  .gallery-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; position:relative; z-index:1; }
+  .gallery-tile{ position:relative; border-radius:var(--radius); overflow:hidden; height:230px; display:flex; align-items:flex-end; padding:18px; background-size:cover; background-position:center; }
+  .gallery-tile span{ color:#fff; font-family:'Lora'; font-weight:600; font-size:1.05rem; position:relative; z-index:2; }
+  .gallery-tile::before{ content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,12,5,0.05),rgba(10,6,3,0.55)); z-index:1; }
+  .gallery-tile.g1{ background-image:url('bellemiche-g1.jpg'); }
+  .gallery-tile.g2{ background-image:url('bellemiche-g2.jpg'); }
+  .gallery-tile.g3{ background-image:url('bellemiche-g3.jpg'); }
+  .gallery-tile.g4{ background-image:url('bellemiche-g4.jpg'); }
+  .gallery-tile.g5{ background-image:url('bellemiche-g5.jpg'); }
+  .gallery-tile.g6{ background-image:url('bellemiche-g6.jpg'); }
+
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; position:relative; z-index:1; }
+  .testi-card{ background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:30px; position:relative; }
+  .testi-quote-mark{ font-family:'Lora'; font-size:3rem; color:var(--gold); opacity:0.5; line-height:1; margin-bottom:-14px; }
+  .stars{ color:var(--gold); font-size:.9rem; margin-bottom:14px; letter-spacing:2px; }
+  .testi-card p{ color:var(--ink); font-size:.94rem; margin-bottom:18px; font-style:italic; }
+  .testi-name{ font-family:'Lora'; font-weight:700; font-size:1rem; }
+  .testi-role{ font-size:.78rem; color:var(--muted); }
+
+  .info-section{ background:var(--ink); color:#fff; }
+  .info-section .section-head p{ color:rgba(255,255,255,0.6); }
+  .info-section .section-head .tag{ color:var(--gold); }
+  .info-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; position:relative; z-index:1; }
+  .info-list{ display:flex; flex-direction:column; gap:22px; margin-bottom:30px; }
+  .info-list .lbl{ font-family:'IBM Plex Mono'; font-size:.72rem; color:var(--gold); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:6px; }
+  .info-list .val{ font-size:1rem; }
+  .hours-table{ width:100%; border-collapse:collapse; margin-bottom:28px; }
+  .hours-table td{ padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1); font-size:.9rem; }
+  .hours-table td:last-child{ text-align:right; color:rgba(255,255,255,0.65); }
+  .map-box{ height:100%; min-height:320px; border-radius:var(--radius); background:repeating-linear-gradient(45deg,rgba(255,255,255,0.04),rgba(255,255,255,0.04) 10px,transparent 10px,transparent 20px), #241A10; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1); }
+  .map-box span{ font-family:'IBM Plex Mono'; font-size:.8rem; color:rgba(255,255,255,0.4); }
+
+  footer{ padding:44px 0; border-top:1px solid var(--line); position:relative; z-index:1; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-row p{ font-size:.8rem; color:var(--dim); }
+  .footer-links{ display:flex; gap:22px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--ink); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:900px){
+    nav, .nav-cta{ display:none; }
+    .nav-toggle{ display:flex; background:none; border:none; cursor:pointer; padding:6px; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-visual{ margin-top:10px; }
+    .highlights-row{ grid-template-columns:1fr 1fr; }
+    .highlight-item:nth-child(3){ border-left:none; }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-photo-frame{ order:-1; margin:0 auto; }
+    .menu-panel.active{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:1fr 1fr; }
+    .testi-grid{ grid-template-columns:1fr; }
+    .info-grid{ grid-template-columns:1fr; }
+    section{ padding:68px 0; }
+    .wrap{ padding:0 20px; }
+  }
+  @media (max-width:520px){
+    .highlights-row{ grid-template-columns:1fr; }
+    .highlight-item{ border-left:none !important; border-top:1px solid var(--line); }
+    .highlight-item:first-child{ border-top:none; }
+    .gallery-grid{ grid-template-columns:1fr; }
+    .stats-row{ grid-template-columns:1fr; }
+    .hero h1{ font-size:2.2rem; }
+  }
+
+  /* Précommande — panier de démonstration */
+  .cart-launcher{ position:fixed; bottom:26px; right:26px; z-index:200; display:flex; align-items:center; gap:10px; background:var(--amber); color:#fff; border:none; padding:15px 20px; border-radius:40px; box-shadow:0 14px 30px -10px rgba(58,42,26,0.5); cursor:pointer; font-family:'Inter'; font-size:.88rem; font-weight:600; transition:transform .2s, background .2s; }
+  .cart-launcher:hover{ background:var(--amber-dark); transform:translateY(-2px); }
+  .cart-launcher svg{ width:20px; height:20px; flex-shrink:0; }
+  .cart-count{ background:#fff; color:var(--amber); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; }
+  .cart-count.zero{ display:none; }
+
+  .cart-panel{ position:fixed; bottom:26px; right:26px; z-index:201; width:380px; max-width:calc(100vw - 32px); max-height:calc(100vh - 52px); background:var(--cream); border-radius:16px; box-shadow:0 30px 70px -20px rgba(40,25,10,0.45); border:1px solid var(--line); display:none; flex-direction:column; overflow:hidden; }
+  .cart-panel.open{ display:flex; }
+  .cart-head{ background:var(--ink); color:#fff; padding:16px 18px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
+  .cart-head-icon{ width:38px; height:38px; border-radius:50%; background:var(--amber); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+  .cart-head-text{ flex:1; min-width:0; }
+  .cart-head-text strong{ display:block; font-family:'Lora'; font-size:1.1rem; font-weight:700; }
+  .cart-head-text span{ display:block; font-size:.72rem; color:rgba(255,255,255,0.6); }
+  .cart-close{ background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer; padding:4px; flex-shrink:0; }
+  .cart-close:hover{ color:#fff; }
+  .cart-body{ flex:1; overflow-y:auto; padding:14px 18px; display:flex; flex-direction:column; gap:10px; min-height:80px; }
+  .cart-empty{ color:var(--muted); font-size:.86rem; text-align:center; padding:24px 8px; }
+  .cart-line{ display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); }
+  .cart-line-name{ flex:1; font-size:.88rem; font-weight:600; }
+  .cart-line-price{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--amber); }
+  .cart-stepper{ display:flex; align-items:center; gap:8px; }
+  .cart-stepper button{ width:24px; height:24px; border-radius:50%; border:1px solid var(--line); background:#fff; cursor:pointer; font-size:.9rem; line-height:1; display:flex; align-items:center; justify-content:center; }
+  .cart-stepper button:hover{ border-color:var(--amber); color:var(--amber); }
+  .cart-stepper span{ min-width:16px; text-align:center; font-size:.85rem; }
+  .cart-slot{ padding:12px 18px; border-top:1px solid var(--line); flex-shrink:0; }
+  .cart-slot label{ font-size:.76rem; color:var(--muted); display:block; margin-bottom:6px; font-family:'IBM Plex Mono'; text-transform:uppercase; letter-spacing:.04em; }
+  .cart-slot select{ width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--line); font-family:'Inter'; font-size:.86rem; background:#fff; }
+  .cart-total-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 18px; border-top:1px solid var(--line); flex-shrink:0; }
+  .cart-total-row strong{ font-family:'Lora'; font-size:1.15rem; }
+  .cart-footer{ padding:0 18px 16px; flex-shrink:0; }
+  .cart-footer .btn{ width:100%; justify-content:center; }
+  .cart-footer .btn:disabled{ opacity:.45; cursor:not-allowed; }
+  .cart-foot-note{ text-align:center; font-size:.66rem; color:var(--dim); padding:0 14px 12px; }
+  .cart-success{ padding:30px 22px; text-align:center; }
+  .cart-success svg{ margin:0 auto 14px; }
+  .cart-success h4{ font-family:'Lora'; font-size:1.2rem; margin-bottom:8px; }
+  .cart-success p{ font-size:.86rem; color:var(--muted); }
+  @media (max-width:480px){
+    .cart-panel{ right:16px; bottom:16px; width:calc(100vw - 32px); max-height:calc(100vh - 96px); }
+    .cart-launcher{ right:16px; bottom:16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Belle Miche n'est pas une vraie entreprise, les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <div class="logo">Belle <span>Miche</span></div>
+    <nav>
+      <ul>
+        <li><a href="#carte">Carte</a></li>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#avis">Avis</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-cta" type="button">Précommander</button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#carte">Carte</a>
+    <a href="#about">À propos</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <button class="nav-cta" type="button">Précommander</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal in">
+        <span class="badge-rating">★★★★★ &nbsp;4.9/5 — 180 avis</span>
+        <div class="eyebrow">Boulangerie-Pâtisserie — Depuis 2014</div>
+        <h1>Le bon <em>pain</em>, tous les matins.</h1>
+        <p class="lead">Pains et viennoiseries au levain naturel, cuits chaque jour sur place, avec des farines bio et locales. Une boulangerie de quartier, tenue par une même famille depuis dix ans.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#carte">Voir la carte</a>
+          <button class="btn btn-ghost" type="button" id="heroPrecommande">Précommander pour le week-end</button>
+        </div>
+      </div>
+      <div class="hero-visual reveal in">
+        <div class="plate-wrap">
+          <div class="deco-ring"></div>
+          <div class="photo-frame">
+            <img src="bellemiche-hero.jpg" alt="Assortiment de pains frais sur une table en bois chez Belle Miche" width="1400" height="933" loading="eager">
+          </div>
+          <div class="price-tag-float">Levain naturel 48h</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="highlights">
+    <div class="wrap highlights-row">
+      <div class="highlight-item"><span class="hnum">01</span><h4>Levain naturel 48h</h4></div>
+      <div class="highlight-item"><span class="hnum">02</span><h4>Farines bio &amp; locales</h4></div>
+      <div class="highlight-item"><span class="hnum">03</span><h4>Cuisson au feu de bois</h4></div>
+      <div class="highlight-item"><span class="hnum">04</span><h4>Zéro additif</h4></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-photo-frame reveal">
+        <img src="bellemiche-about.jpg" alt="Mains du boulanger pétrissant la pâte au levain" width="1000" height="667" loading="lazy">
+      </div>
+      <div class="about-text reveal">
+        <div class="eyebrow">Notre histoire</div>
+        <h2 style="margin-bottom:18px;">Un levain choyé depuis dix ans</h2>
+        <p>Tout est parti d'un levain naturel créé en 2014, jamais interrompu depuis. Chaque matin, notre boulanger le nourrit à la main avant de pétrir les premières pâtes, bien avant le lever du jour.</p>
+        <p>Nos farines viennent de moulins bio à moins de 50 km, et nos pains cuisent dans un four à sole traditionnel. Pas de surgelé, pas d'additif : juste de la farine, de l'eau, du sel et du temps.</p>
+        <div class="stats-row">
+          <div class="stat"><div class="num">10 ans</div><div class="lbl">d'expérience</div></div>
+          <div class="stat"><div class="num">100%</div><div class="lbl">farines bio</div></div>
+          <div class="stat"><div class="num">500+</div><div class="lbl">pains par semaine</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu-section" id="carte">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Notre carte</span>
+        <h2>Ce qu'on prépare chaque jour</h2>
+        <p>Une sélection qui évolue avec les saisons. Ajoutez vos envies au panier pour préparer une précommande de week-end.</p>
+      </div>
+
+      <div class="menu-tabs reveal">
+        <button class="menu-tab active" data-menu="pains" type="button">Pains</button>
+        <button class="menu-tab" data-menu="viennoiseries" type="button">Viennoiseries</button>
+        <button class="menu-tab" data-menu="patisserie" type="button">Pâtisserie</button>
+        <button class="menu-tab" data-menu="snacking" type="button">Snacking</button>
+      </div>
+
+      <div class="menu-panel active reveal" data-panel="pains">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Pain de campagne</span><span class="menu-item-leader"></span><span class="menu-item-price">4,20€</span></span><span class="menu-item-desc">Miche au levain naturel, farine T80, croûte épaisse.</span></div><button class="menu-add" type="button" data-name="Pain de campagne" data-price="4.20" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Baguette tradition</span><span class="menu-item-leader"></span><span class="menu-item-price">1,30€</span></span><span class="menu-item-desc">Croustillante à l'extérieur, alvéolée à l'intérieur.</span></div><button class="menu-add" type="button" data-name="Baguette tradition" data-price="1.30" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Pain de seigle</span><span class="menu-item-leader"></span><span class="menu-item-price">4,80€</span></span><span class="menu-item-desc">Idéal avec fromages affinés et charcuterie.</span></div><button class="menu-add" type="button" data-name="Pain de seigle" data-price="4.80" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Pain complet</span><span class="menu-item-leader"></span><span class="menu-item-price">4,50€</span></span><span class="menu-item-desc">Farine complète bio, graines de tournesol et lin.</span></div><button class="menu-add" type="button" data-name="Pain complet" data-price="4.50" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Miche au levain 1kg</span><span class="menu-item-leader"></span><span class="menu-item-price">7,90€</span></span><span class="menu-item-desc">Notre grand format, se conserve toute la semaine.</span></div><button class="menu-add" type="button" data-name="Miche au levain 1kg" data-price="7.90" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Pain aux noix</span><span class="menu-item-leader"></span><span class="menu-item-price">5,20€</span></span><span class="menu-item-desc">Noix entières, parfait pour un plateau de fromages.</span></div><button class="menu-add" type="button" data-name="Pain aux noix" data-price="5.20" aria-label="Ajouter">+</button></div>
+      </div>
+
+      <div class="menu-panel" data-panel="viennoiseries">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Croissant pur beurre</span><span class="menu-item-leader"></span><span class="menu-item-price">1,50€</span></span><span class="menu-item-desc">Feuilletage 27 tours, beurre AOP.</span></div><button class="menu-add" type="button" data-name="Croissant pur beurre" data-price="1.50" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Pain au chocolat</span><span class="menu-item-leader"></span><span class="menu-item-price">1,60€</span></span><span class="menu-item-desc">Double barre de chocolat noir 64%.</span></div><button class="menu-add" type="button" data-name="Pain au chocolat" data-price="1.60" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Chausson aux pommes</span><span class="menu-item-leader"></span><span class="menu-item-price">2,10€</span></span><span class="menu-item-desc">Compotée de pommes maison, feuilletage doré.</span></div><button class="menu-add" type="button" data-name="Chausson aux pommes" data-price="2.10" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Kouign-amann</span><span class="menu-item-leader"></span><span class="menu-item-price">2,80€</span></span><span class="menu-item-desc">Caramélisé au beurre salé, recette bretonne.</span></div><button class="menu-add" type="button" data-name="Kouign-amann" data-price="2.80" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Brioche tressée</span><span class="menu-item-leader"></span><span class="menu-item-price">5,50€</span></span><span class="menu-item-desc">Moelleuse, parfaite pour le petit-déjeuner du dimanche.</span></div><button class="menu-add" type="button" data-name="Brioche tressée" data-price="5.50" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Chouquettes (sachet)</span><span class="menu-item-leader"></span><span class="menu-item-price">3,90€</span></span><span class="menu-item-desc">Sachet de 12, sucre perlé.</span></div><button class="menu-add" type="button" data-name="Chouquettes (sachet)" data-price="3.90" aria-label="Ajouter">+</button></div>
+      </div>
+
+      <div class="menu-panel" data-panel="patisserie">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Tarte aux fruits de saison</span><span class="menu-item-leader"></span><span class="menu-item-price">4,50€</span></span><span class="menu-item-desc">Crème pâtissière, fruits frais du moment.</span></div><button class="menu-add" type="button" data-name="Tarte aux fruits de saison" data-price="4.50" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Éclair chocolat ou café</span><span class="menu-item-leader"></span><span class="menu-item-price">3,80€</span></span><span class="menu-item-desc">Pâte à choux maison, crème pâtissière onctueuse.</span></div><button class="menu-add" type="button" data-name="Éclair chocolat ou café" data-price="3.80" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Paris-Brest</span><span class="menu-item-leader"></span><span class="menu-item-price">4,90€</span></span><span class="menu-item-desc">Praliné noisette, pâte à choux croquante.</span></div><button class="menu-add" type="button" data-name="Paris-Brest" data-price="4.90" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Flan pâtissier</span><span class="menu-item-leader"></span><span class="menu-item-price">3,50€</span></span><span class="menu-item-desc">Recette traditionnelle, vanille de Madagascar.</span></div><button class="menu-add" type="button" data-name="Flan pâtissier" data-price="3.50" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Fraisier (part)</span><span class="menu-item-leader"></span><span class="menu-item-price">5,20€</span></span><span class="menu-item-desc">Génoise, crème mousseline, fraises fraîches.</span></div><button class="menu-add" type="button" data-name="Fraisier (part)" data-price="5.20" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Cookie maison</span><span class="menu-item-leader"></span><span class="menu-item-price">2,20€</span></span><span class="menu-item-desc">Pépites de chocolat noir, cœur fondant.</span></div><button class="menu-add" type="button" data-name="Cookie maison" data-price="2.20" aria-label="Ajouter">+</button></div>
+      </div>
+
+      <div class="menu-panel" data-panel="snacking">
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Sandwich jambon-beurre</span><span class="menu-item-leader"></span><span class="menu-item-price">5,50€</span></span><span class="menu-item-desc">Baguette tradition, jambon blanc, beurre demi-sel.</span></div><button class="menu-add" type="button" data-name="Sandwich jambon-beurre" data-price="5.50" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Sandwich poulet crudités</span><span class="menu-item-leader"></span><span class="menu-item-price">6,20€</span></span><span class="menu-item-desc">Poulet rôti, crudités de saison, sauce maison.</span></div><button class="menu-add" type="button" data-name="Sandwich poulet crudités" data-price="6.20" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Quiche du jour</span><span class="menu-item-leader"></span><span class="menu-item-price">4,80€</span></span><span class="menu-item-desc">Recette qui change chaque jour, pâte brisée maison.</span></div><button class="menu-add" type="button" data-name="Quiche du jour" data-price="4.80" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Croque monsieur</span><span class="menu-item-leader"></span><span class="menu-item-price">5,90€</span></span><span class="menu-item-desc">Pain de mie maison, jambon, béchamel, comté.</span></div><button class="menu-add" type="button" data-name="Croque monsieur" data-price="5.90" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Salade composée</span><span class="menu-item-leader"></span><span class="menu-item-price">6,50€</span></span><span class="menu-item-desc">Légumes de saison, œuf, vinaigrette maison.</span></div><button class="menu-add" type="button" data-name="Salade composée" data-price="6.50" aria-label="Ajouter">+</button></div>
+        <div class="menu-item"><div class="menu-item-main"><span class="menu-item-row"><span class="menu-item-name">Focaccia garnie</span><span class="menu-item-leader"></span><span class="menu-item-price">4,20€</span></span><span class="menu-item-desc">Tomates confites, olives, origan.</span></div><button class="menu-add" type="button" data-name="Focaccia garnie" data-price="4.20" aria-label="Ajouter">+</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="galerie">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Ambiance</span>
+        <h2>Un fournil qu'on aime faire vivre</h2>
+      </div>
+      <div class="gallery-grid reveal-stagger reveal">
+        <div class="gallery-tile g1"><span>Le fournil</span></div>
+        <div class="gallery-tile g2"><span>Notre boutique</span></div>
+        <div class="gallery-tile g3"><span>Viennoiseries maison</span></div>
+        <div class="gallery-tile g4"><span>La mie, notre fierté</span></div>
+        <div class="gallery-tile g5"><span>Pains du jour</span></div>
+        <div class="gallery-tile g6"><span>Croûte craquante</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="avis" style="background:var(--bg-alt);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Avis clients</span>
+        <h2>Ce qu'on dit de nous</h2>
+      </div>
+      <div class="testi-grid reveal-stagger reveal">
+        <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
+          <div class="stars">★★★★★</div>
+          <p>Le meilleur pain de campagne du quartier, et de loin. La croûte craque encore le lendemain.</p>
+          <div class="testi-name">Anne-Sophie D.</div>
+          <div class="testi-role">Cliente régulière</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
+          <div class="stars">★★★★★</div>
+          <p>Les croissants sont dignes d'une pâtisserie parisienne. On précommande maintenant chaque week-end.</p>
+          <div class="testi-name">Marc L.</div>
+          <div class="testi-role">Client régulier</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-quote-mark">"</div>
+          <div class="stars">★★★★★</div>
+          <p>On sent vraiment le levain naturel et les bonnes farines. Une adresse à ne pas rater.</p>
+          <div class="testi-name">Julie B.</div>
+          <div class="testi-role">Cliente régulière</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section" id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="tag">Infos pratiques</span>
+        <h2>Nous trouver</h2>
+      </div>
+      <div class="info-grid reveal">
+        <div>
+          <div class="info-list">
+            <div><span class="lbl">Adresse</span><span class="val">8 rue du Levain, Luxembourg</span></div>
+            <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+            <div><span class="lbl">Email</span><span class="val">contact@belle-miche.lu</span></div>
+          </div>
+          <table class="hours-table">
+            <tr><td>Mardi — Vendredi</td><td>6h30 – 19h00</td></tr>
+            <tr><td>Samedi — Dimanche</td><td>7h00 – 13h00</td></tr>
+            <tr><td>Lundi</td><td>Fermé</td></tr>
+          </table>
+          <button class="btn btn-primary" type="button" id="contactPrecommande">Précommander pour le week-end</button>
+        </div>
+        <div class="map-box"><span>Emplacement — carte à intégrer</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 BELLE MICHE — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#carte">Carte</a>
+        <a href="#about">À propos</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--amber);">MatMax Intelligence</a> — Belle Miche n'existe pas.</p>
+  </div>
+</footer>
+
+<!-- Précommande — démonstration de commande en ligne connectée à la carte -->
+<button class="cart-launcher" id="cartLauncher" type="button">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L4 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/></svg>
+  Mon panier
+  <span class="cart-count zero" id="cartCount">0</span>
+</button>
+
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-head">
+    <div class="cart-head-icon">🥖</div>
+    <div class="cart-head-text">
+      <strong>Précommande du week-end</strong>
+      <span>Retrait en boutique, sans file d'attente</span>
+    </div>
+    <button class="cart-close" id="cartClose" type="button" aria-label="Fermer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <p class="cart-empty" id="cartEmpty">Votre panier est vide. Ajoutez des produits depuis la carte ci-dessus avec le bouton "+".</p>
+  </div>
+  <div class="cart-slot" id="cartSlot" style="display:none;">
+    <label>Créneau de retrait</label>
+    <select id="cartSlotSelect">
+      <option>Samedi matin (7h – 10h)</option>
+      <option>Samedi midi (10h – 13h)</option>
+      <option>Dimanche matin (7h – 10h)</option>
+      <option>Dimanche midi (10h – 13h)</option>
+    </select>
+  </div>
+  <div class="cart-total-row" id="cartTotalRow" style="display:none;">
+    <span>Total</span>
+    <strong id="cartTotal">0,00€</strong>
+  </div>
+  <div class="cart-footer">
+    <button class="btn btn-primary" id="cartSubmit" type="button" disabled>Réserver ce panier</button>
+  </div>
+  <p class="cart-foot-note">Démonstration de précommande en ligne — fonctionnalité que MatMax Intelligence peut connecter à votre système de caisse.</p>
+</div>
+
+<script>
+  document.querySelectorAll('.menu-tab').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.menu-tab').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.menu-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelector('.menu-panel[data-panel="' + btn.dataset.menu + '"]').classList.add('active');
+    });
+  });
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+    });
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // ---- Précommande : panier de démonstration ----
+  (function(){
+    var launcher = document.getElementById('cartLauncher');
+    var panel = document.getElementById('cartPanel');
+    var closeBtn = document.getElementById('cartClose');
+    var body = document.getElementById('cartBody');
+    var emptyMsg = document.getElementById('cartEmpty');
+    var slotWrap = document.getElementById('cartSlot');
+    var totalRow = document.getElementById('cartTotalRow');
+    var totalEl = document.getElementById('cartTotal');
+    var submitBtn = document.getElementById('cartSubmit');
+    var countBadge = document.getElementById('cartCount');
+    var cart = {}; // name -> { price, qty }
+
+    function fmt(n){
+      return n.toFixed(2).replace('.', ',') + '€';
+    }
+
+    function render(){
+      body.innerHTML = '';
+      var names = Object.keys(cart);
+      var totalQty = 0, totalPrice = 0;
+      if (names.length === 0){
+        body.appendChild(emptyMsg);
+        slotWrap.style.display = 'none';
+        totalRow.style.display = 'none';
+        submitBtn.disabled = true;
+      } else {
+        names.forEach(function(name){
+          var item = cart[name];
+          totalQty += item.qty;
+          totalPrice += item.qty * item.price;
+          var line = document.createElement('div');
+          line.className = 'cart-line';
+          line.innerHTML =
+            '<span class="cart-line-name">' + name + '<br><span class="cart-line-price">' + fmt(item.price) + '</span></span>' +
+            '<div class="cart-stepper">' +
+              '<button type="button" data-act="dec">−</button>' +
+              '<span>' + item.qty + '</span>' +
+              '<button type="button" data-act="inc">+</button>' +
+            '</div>';
+          line.querySelector('[data-act="dec"]').addEventListener('click', function(){ changeQty(name, -1); });
+          line.querySelector('[data-act="inc"]').addEventListener('click', function(){ changeQty(name, 1); });
+          body.appendChild(line);
+        });
+        slotWrap.style.display = 'block';
+        totalRow.style.display = 'flex';
+        submitBtn.disabled = false;
+      }
+      totalEl.textContent = fmt(totalPrice);
+      countBadge.textContent = totalQty;
+      countBadge.classList.toggle('zero', totalQty === 0);
+    }
+
+    function changeQty(name, delta){
+      if (!cart[name]) return;
+      cart[name].qty += delta;
+      if (cart[name].qty <= 0) delete cart[name];
+      render();
+    }
+
+    function addItem(name, price){
+      if (!cart[name]) cart[name] = { price: price, qty: 0 };
+      cart[name].qty += 1;
+      render();
+    }
+
+    document.querySelectorAll('.menu-add').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        addItem(btn.dataset.name, parseFloat(btn.dataset.price));
+        btn.textContent = '✓';
+        btn.classList.add('added');
+        openPanel();
+        setTimeout(function(){ btn.textContent = '+'; btn.classList.remove('added'); }, 900);
+      });
+    });
+
+    function openPanel(){
+      panel.classList.add('open');
+    }
+    function closePanel(){
+      panel.classList.remove('open');
+    }
+
+    launcher.addEventListener('click', function(){
+      panel.classList.contains('open') ? closePanel() : openPanel();
+    });
+    closeBtn.addEventListener('click', closePanel);
+    document.getElementById('heroPrecommande').addEventListener('click', function(e){
+      e.preventDefault();
+      document.querySelector('#carte').scrollIntoView({ behavior:'smooth' });
+      setTimeout(openPanel, 500);
+    });
+    document.getElementById('contactPrecommande').addEventListener('click', function(){
+      document.querySelector('#carte').scrollIntoView({ behavior:'smooth' });
+      setTimeout(openPanel, 500);
+    });
+
+    submitBtn.addEventListener('click', function(){
+      var slot = document.getElementById('cartSlotSelect').value;
+      body.innerHTML = '';
+      slotWrap.style.display = 'none';
+      totalRow.style.display = 'none';
+      var success = document.createElement('div');
+      success.className = 'cart-success';
+      success.innerHTML =
+        '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#5C8A5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>' +
+        '<h4>Précommande enregistrée</h4>' +
+        '<p>Retrait prévu : ' + slot + ".<br>Ceci est une démonstration — aucune vraie commande n'a été passée.</p>";
+      body.appendChild(success);
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Panier réservé';
+      cart = {};
+      countBadge.textContent = '0';
+      countBadge.classList.add('zero');
+    });
+
+    render();
+  })();
+</script>
+</body>
+</html>
