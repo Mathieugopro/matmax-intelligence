@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Assurantia — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#F4F7FA; --bg-alt:#EAF0F4; --ink:#1B2430; --muted:#5B6B7A; --dim:#A6B2BC; --line:#DCE4EA;
+    --indigo:#1E3A5F; --indigo-dark:#152A44; --indigo-deep:#0E1E33; --sky:#2E86AB; --coral:#E8654A; --white:#FFFFFF;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Manrope',sans-serif; font-weight:700; line-height:1.2; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
+
+  .demo-banner{ background:var(--indigo-deep); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:var(--coral); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  /* ---- Header ---- */
+  header{ position:sticky; top:0; z-index:100; background:rgba(244,247,250,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto; }
+  .logo{ display:flex; align-items:center; gap:9px; font-family:'Manrope'; font-weight:800; font-size:1.15rem; }
+  .logo-mark{ width:30px; height:30px; border-radius:7px; background:var(--indigo); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.8rem; }
+  nav.main-nav{ display:flex; gap:30px; }
+  nav.main-nav a{ font-size:.9rem; font-weight:500; color:var(--muted); transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--indigo); }
+  .nav-actions{ display:flex; align-items:center; gap:18px; }
+  .nav-phone{ font-family:'IBM Plex Mono'; font-size:.85rem; font-weight:600; color:var(--indigo); }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:7px; font-size:.86rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--coral); color:#fff; }
+  .btn-primary:hover{ background:#D5573C; transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--indigo); }
+  .hamburger{ display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+  .hamburger span{ width:22px; height:2px; background:var(--ink); display:block; }
+  .mobile-nav{ display:none; flex-direction:column; gap:2px; padding:0 32px 20px; }
+  .mobile-nav a{ padding:12px 0; border-bottom:1px solid var(--line); font-size:.95rem; }
+  .mobile-nav.open{ display:flex; }
+
+  /* ---- Hero : texte + widget comparateur ---- */
+  .hero{ padding:76px 0 90px; }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:start; }
+  .hero-tag{ font-family:'IBM Plex Mono'; font-size:.76rem; color:var(--sky); text-transform:uppercase; letter-spacing:.07em; margin-bottom:20px; display:block; }
+  .hero h1{ font-size:clamp(2.1rem,3.6vw,2.9rem); margin-bottom:20px; }
+  .hero p.lead{ font-size:1.03rem; color:var(--muted); max-width:48ch; margin-bottom:28px; }
+  .trust-badges{ display:flex; gap:22px; flex-wrap:wrap; }
+  .trust-badges span{ font-size:.82rem; color:var(--muted); display:flex; align-items:center; gap:7px; }
+  .trust-badges svg{ width:15px; height:15px; stroke:var(--sky); flex-shrink:0; }
+
+  /* Comparateur widget */
+  .comparateur{ background:var(--white); border:1px solid var(--line); border-radius:14px; padding:26px; box-shadow:0 20px 50px -25px rgba(30,58,95,0.35); }
+  .comp-head{ font-family:'IBM Plex Mono'; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin-bottom:14px; }
+  .comp-pills{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  .comp-pill{ padding:9px 15px; border-radius:20px; border:1px solid var(--line); background:var(--bg); font-size:.82rem; font-weight:600; cursor:pointer; transition:all .15s; color:var(--muted); }
+  .comp-pill.active{ background:var(--indigo); border-color:var(--indigo); color:#fff; }
+  .comp-btn{ width:100%; background:var(--indigo); color:#fff; border:none; padding:13px; border-radius:8px; font-weight:700; font-size:.9rem; cursor:pointer; font-family:'Inter'; transition:background .2s; margin-bottom:6px; }
+  .comp-btn:hover{ background:var(--indigo-dark); }
+  .comp-results{ margin-top:18px; display:flex; flex-direction:column; gap:10px; }
+  .comp-offer{ border:1px solid var(--line); border-radius:9px; padding:14px 16px; position:relative; }
+  .comp-offer.best{ border-color:var(--coral); background:#FFF6F3; }
+  .comp-offer-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .comp-offer-name{ font-weight:700; font-size:.9rem; }
+  .comp-offer-price{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--indigo); font-size:.92rem; }
+  .comp-badge{ position:absolute; top:-9px; right:14px; background:var(--coral); color:#fff; font-size:.66rem; font-weight:700; padding:3px 9px; border-radius:12px; text-transform:uppercase; letter-spacing:.03em; }
+  .comp-bar-track{ height:6px; background:var(--bg-alt); border-radius:4px; overflow:hidden; }
+  .comp-bar-fill{ height:100%; background:var(--sky); border-radius:4px; transition:width .6s ease; }
+  .comp-offer.best .comp-bar-fill{ background:var(--coral); }
+  .comp-bar-lbl{ font-size:.7rem; color:var(--muted); margin-top:5px; }
+  .comp-empty{ font-size:.82rem; color:var(--dim); text-align:center; padding:16px 0; }
+
+  /* ---- Trust strip ---- */
+  .trust-strip{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--white); padding:26px 0; }
+  .trust-strip .wrap{ display:flex; align-items:center; gap:36px; flex-wrap:wrap; justify-content:space-between; }
+  .trust-strip .ts-lbl{ font-family:'IBM Plex Mono'; font-size:.72rem; color:var(--dim); text-transform:uppercase; letter-spacing:.05em; flex-shrink:0; }
+  .trust-logos{ display:flex; gap:32px; flex-wrap:wrap; }
+  .trust-logos span{ font-family:'Manrope'; font-weight:700; font-size:.98rem; color:var(--dim); }
+
+  section{ padding:90px 0; }
+  .section-head{ margin-bottom:46px; max-width:640px; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--sky); text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:12px; }
+  .section-head h2{ font-size:clamp(1.7rem,2.8vw,2.15rem); }
+  .section-head p{ margin-top:12px; color:var(--muted); font-size:.98rem; }
+
+  /* ---- Nos assurances : tuiles icônes ---- */
+  .assur-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .assur-tile{ background:var(--white); padding:30px 26px; transition:background .2s; }
+  .assur-tile:hover{ background:var(--bg-alt); }
+  .assur-icon{ width:42px; height:42px; border-radius:10px; background:rgba(46,134,171,0.12); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .assur-icon svg{ width:21px; height:21px; stroke:var(--sky); }
+  .assur-tile h3{ font-size:1.02rem; margin-bottom:7px; }
+  .assur-tile p{ font-size:.86rem; color:var(--muted); }
+
+  /* ---- Comment ça marche : horizontal + flèches ---- */
+  .process-row{ display:flex; align-items:flex-start; gap:0; }
+  .process-step{ flex:1; text-align:center; padding:0 14px; }
+  .process-num-circle{ width:56px; height:56px; border-radius:50%; background:var(--indigo); color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+  .process-num-circle svg{ width:24px; height:24px; stroke:#fff; }
+  .process-step h3{ font-size:1.02rem; margin-bottom:8px; }
+  .process-step p{ font-size:.86rem; color:var(--muted); max-width:26ch; margin:0 auto; }
+  .process-arrow{ flex:0 0 auto; padding-top:18px; color:var(--dim); font-size:1.4rem; }
+
+  /* ---- Pourquoi un courtier : comparaison duale ---- */
+  .compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .compare-card{ border-radius:12px; padding:30px 28px; }
+  .compare-card.neg{ background:var(--white); border:1px solid var(--line); }
+  .compare-card.pos{ background:var(--indigo); color:#fff; }
+  .compare-card h3{ font-size:1.1rem; margin-bottom:20px; }
+  .compare-card.pos h3{ color:#fff; }
+  .compare-row{ display:flex; align-items:flex-start; gap:11px; padding:11px 0; border-bottom:1px solid rgba(0,0,0,0.06); font-size:.9rem; }
+  .compare-card.pos .compare-row{ border-bottom-color:rgba(255,255,255,0.14); }
+  .compare-row:last-child{ border-bottom:none; }
+  .compare-row svg{ width:16px; height:16px; flex-shrink:0; margin-top:2px; }
+  .compare-card.neg svg{ stroke:#C6555F; }
+  .compare-card.pos svg{ stroke:#7FD4A8; }
+  .compare-card.neg span{ color:var(--muted); }
+  .compare-card.pos span{ color:rgba(255,255,255,0.9); }
+
+  /* ---- À propos : photo + texte ---- */
+  .about-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:44px; align-items:center; }
+  .about-photo{ border-radius:12px; overflow:hidden; }
+  .about-photo img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+  .about-text p{ color:var(--muted); font-size:.97rem; margin-bottom:16px; }
+  .about-stats{ display:flex; gap:34px; margin-top:22px; }
+  .about-stats div .n{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--indigo); font-size:1.3rem; }
+  .about-stats div .l{ font-size:.78rem; color:var(--muted); margin-top:2px; }
+
+  /* ---- Avis ---- */
+  .testi-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .testi-card{ background:var(--white); border:1px solid var(--line); border-radius:12px; padding:26px; }
+  .testi-tag{ display:inline-block; font-family:'IBM Plex Mono'; font-size:.68rem; text-transform:uppercase; letter-spacing:.04em; color:var(--sky); background:rgba(46,134,171,0.1); padding:4px 10px; border-radius:5px; margin-bottom:14px; }
+  .testi-card p{ font-size:.92rem; margin-bottom:16px; }
+  .testi-name{ font-weight:700; font-size:.86rem; }
+  .testi-role{ font-size:.76rem; color:var(--muted); }
+
+  /* ---- Contact ---- */
+  .contact-section{ background:var(--indigo-deep); color:#fff; }
+  .contact-section .tag{ color:var(--coral); }
+  .contact-section .section-head p{ color:rgba(255,255,255,0.6); }
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .contact-list{ display:flex; flex-direction:column; gap:18px; margin-bottom:26px; }
+  .contact-list .lbl{ font-family:'IBM Plex Mono'; font-size:.7rem; color:var(--coral); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:5px; }
+  .contact-list .val{ font-size:.98rem; }
+  .contact-hours-table{ width:100%; border-collapse:collapse; }
+  .contact-hours-table td{ padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.12); font-size:.86rem; }
+  .contact-hours-table td:last-child{ text-align:right; color:rgba(255,255,255,0.6); }
+
+  footer{ padding:36px 0; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-note{ text-align:center; font-size:.74rem; color:var(--dim); margin-top:18px; padding-top:18px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    .nav-phone{ display:none; }
+    .hamburger{ display:flex; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .assur-grid{ grid-template-columns:1fr 1fr; }
+    .process-row{ flex-direction:column; gap:26px; }
+    .process-arrow{ display:none; }
+    .compare-grid{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; }
+    .testi-row{ grid-template-columns:1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .trust-strip .wrap{ flex-direction:column; align-items:flex-start; gap:16px; }
+  }
+  @media (max-width:600px){
+    .assur-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Assurantia n'est pas une vraie entreprise, le comparateur simule des résultats fictifs.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header>
+  <div class="nav-row">
+    <a href="#" class="logo"><span class="logo-mark">A</span>Assurantia</a>
+    <nav class="main-nav">
+      <a href="#assurances">Nos assurances</a>
+      <a href="#comparateur">Comparateur</a>
+      <a href="#methode">Comment ça marche</a>
+      <a href="#avis">Avis</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <span class="nav-phone">+352 00 00 00 00</span>
+      <a class="btn btn-primary" href="#comparateur">Comparer gratuitement</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#assurances">Nos assurances</a>
+    <a href="#comparateur">Comparateur</a>
+    <a href="#methode">Comment ça marche</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-tag reveal in">Courtier indépendant — Luxembourg</span>
+      <h1 class="reveal in">Le bon contrat, au bon prix, chez le bon assureur.</h1>
+      <p class="lead reveal in">Nous comparons pour vous les offres de nos partenaires assureurs et négocions vos contrats — sans jamais vous facturer le conseil.</p>
+      <div class="trust-badges reveal in">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>8 compagnies partenaires</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Comparaison sans engagement</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Conseil 100% gratuit</span>
+      </div>
+    </div>
+    <div class="comparateur reveal in" id="comparateur">
+      <div class="comp-head">Comparateur rapide — démonstration</div>
+      <div class="comp-pills" id="compPills">
+        <button class="comp-pill active" data-type="auto" type="button">Auto</button>
+        <button class="comp-pill" data-type="habitation" type="button">Habitation</button>
+        <button class="comp-pill" data-type="sante" type="button">Santé</button>
+        <button class="comp-pill" data-type="pro" type="button">Pro</button>
+      </div>
+      <button class="comp-btn" id="compBtn" type="button">Comparer les offres</button>
+      <div class="comp-results" id="compResults">
+        <div class="comp-empty">Choisissez un type d'assurance puis cliquez sur « Comparer les offres ».</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="wrap">
+    <span class="ts-lbl">Comparé auprès de nos partenaires</span>
+    <div class="trust-logos">
+      <span>NordAssur</span>
+      <span>Lux Assurances</span>
+      <span>European Shield</span>
+      <span>Protectia</span>
+      <span>AssurLux</span>
+      <span>Bouclier Plus</span>
+    </div>
+  </div>
+</div>
+
+<section id="assurances">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Nos assurances</span>
+      <h2>Tous vos contrats, un seul interlocuteur</h2>
+      <p>Particuliers ou professionnels, nous couvrons l'ensemble de vos besoins d'assurance.</p>
+    </div>
+    <div class="assur-grid reveal-stagger reveal">
+      <div class="assur-tile"><div class="assur-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14M6 17l1.5-6h9L18 17M8 11V7h8v4"/><circle cx="8" cy="19" r="1.5"/><circle cx="16" cy="19" r="1.5"/></svg></div><h3>Auto &amp; mobilité</h3><p>Responsabilité civile, tous risques, assistance et véhicules de flotte.</p></div>
+      <div class="assur-tile"><div class="assur-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7M5 10v10h14V10"/></svg></div><h3>Habitation</h3><p>Propriétaire ou locataire, protection du logement et des biens.</p></div>
+      <div class="assur-tile"><div class="assur-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9C.9 8.5 2 5 5.5 5c2 0 3.3 1.1 4 2.2C10.2 6.1 11.5 5 13.5 5 17 5 18.1 8.5 16.5 12c-2.5 4.5-4.5 9-4.5 9z"/></svg></div><h3>Santé</h3><p>Complémentaire santé pour vous et votre famille, en France et au Luxembourg.</p></div>
+      <div class="assur-tile"><div class="assur-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></div><h3>Vie &amp; prévoyance</h3><p>Épargne, retraite et protection de vos proches en cas d'imprévu.</p></div>
+      <div class="assur-tile"><div class="assur-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6"/></svg></div><h3>Professionnelle</h3><p>Responsabilité civile pro, protection juridique, multirisque commerce.</p></div>
+      <div class="assur-tile"><div class="assur-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div><h3>Protection juridique</h3><p>Assistance et prise en charge des frais en cas de litige.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="methode" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Comment ça marche</span>
+      <h2>Trois étapes, zéro paperasse pour vous</h2>
+    </div>
+    <div class="process-row reveal">
+      <div class="process-step">
+        <div class="process-num-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8M8 8h8M8 16h5"/></svg></div>
+        <h3>Vous exposez votre besoin</h3>
+        <p>Un échange rapide pour comprendre votre situation et ce que vous voulez couvrir.</p>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <div class="process-num-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <h3>On compare pour vous</h3>
+        <p>Nous interrogeons nos partenaires et sélectionnons le meilleur rapport garantie/prix.</p>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <div class="process-num-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>Vous signez, on gère le reste</h3>
+        <p>Souscription, suivi annuel et accompagnement en cas de sinistre : on reste votre interlocuteur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Pourquoi un courtier</span>
+      <h2>Ce que ça change, concrètement</h2>
+    </div>
+    <div class="compare-grid reveal">
+      <div class="compare-card neg">
+        <h3>Sans courtier</h3>
+        <div class="compare-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Vous comparez seul, sans vision du marché</span></div>
+        <div class="compare-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Un seul assureur, une seule offre</span></div>
+        <div class="compare-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg><span>Renégociation à votre charge chaque année</span></div>
+        <div class="compare-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg><span>En cas de sinistre, vous gérez seul avec l'assureur</span></div>
+      </div>
+      <div class="compare-card pos">
+        <h3>Avec Assurantia</h3>
+        <div class="compare-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Comparaison parmi 8 compagnies partenaires</span></div>
+        <div class="compare-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Le meilleur rapport garantie/prix pour votre profil</span></div>
+        <div class="compare-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Renégociation annuelle automatique</span></div>
+        <div class="compare-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Accompagnement du premier au dernier jour</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg-alt);">
+  <div class="wrap about-grid">
+    <div class="about-photo reveal"><img src="assurantia-about.jpg" alt="Conseillère Assurantia en rendez-vous avec un client" width="1000" height="750" loading="lazy"></div>
+    <div class="about-text reveal">
+      <span class="tag" style="font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--sky); text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:12px;">Un interlocuteur, pas un algorithme</span>
+      <h2 style="margin-bottom:16px;">Une équipe qui connaît votre dossier</h2>
+      <p>Derrière chaque comparaison, un conseiller qui répond au téléphone et connaît votre situation. Pas de plateforme anonyme : le même interlocuteur vous suit d'année en année.</p>
+      <p>En cas de sinistre, nous restons à vos côtés pour accélérer les démarches auprès de l'assureur.</p>
+      <div class="about-stats">
+        <div><div class="n">8</div><div class="l">compagnies partenaires</div></div>
+        <div><div class="n">1 200+</div><div class="l">contrats suivis</div></div>
+        <div><div class="n">24h</div><div class="l">délai de réponse moyen</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Avis clients</span>
+      <h2>Ce qu'en disent nos clients</h2>
+    </div>
+    <div class="testi-row reveal-stagger reveal">
+      <div class="testi-card"><span class="testi-tag">Auto</span><p>Ils ont trouvé une assurance auto 20% moins chère avec les mêmes garanties. Tout s'est fait par téléphone.</p><div class="testi-name">Claire M.</div><div class="testi-role">Cliente depuis 2022</div></div>
+      <div class="testi-card"><span class="testi-tag">Habitation</span><p>Après un dégât des eaux, mon conseiller a géré le dossier avec l'assureur. Je n'ai eu aucune démarche à faire.</p><div class="testi-name">Julien R.</div><div class="testi-role">Client depuis 2021</div></div>
+      <div class="testi-card"><span class="testi-tag">Pro</span><p>En tant qu'indépendant, j'avais besoin d'un contrat sur-mesure. Assurantia a comparé pour moi en une semaine.</p><div class="testi-name">Sofia D.</div><div class="testi-role">Cliente depuis 2023</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Un rendez-vous, sans engagement</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div>
+        <div class="contact-list">
+          <div><span class="lbl">Adresse</span><span class="val">12 avenue de l'Assurance, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+          <div><span class="lbl">Email</span><span class="val">contact@assurantia.lu</span></div>
+        </div>
+        <button class="btn btn-primary" type="button">Demander un comparatif</button>
+      </div>
+      <table class="contact-hours-table">
+        <tr><td>Lundi — Vendredi</td><td>8h30 – 18h00</td></tr>
+        <tr><td>Samedi</td><td>9h00 – 12h00</td></tr>
+        <tr><td>Réponse email</td><td>Sous 24h ouvrées</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 ASSURANTIA — LUXEMBOURG</p>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--indigo);">MatMax Intelligence</a> — Assurantia n'existe pas, le comparateur simule des résultats fictifs.</p>
+  </div>
+</footer>
+
+<script>
+  var hamburger = document.getElementById('hamburger');
+  var mobileNav = document.getElementById('mobileNav');
+  if(hamburger && mobileNav){
+    hamburger.addEventListener('click', function(){ mobileNav.classList.toggle('open'); });
+    mobileNav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileNav.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  var OFFERS = {
+    auto: [
+      { name: "Lux Assurances", price: "45€/mois", coverage: 91 },
+      { name: "NordAssur", price: "38€/mois", coverage: 82 },
+      { name: "European Shield", price: "41€/mois", coverage: 76 }
+    ],
+    habitation: [
+      { name: "Protectia", price: "22€/mois", coverage: 88 },
+      { name: "AssurLux", price: "19€/mois", coverage: 79 },
+      { name: "Bouclier Plus", price: "25€/mois", coverage: 94 }
+    ],
+    sante: [
+      { name: "NordAssur", price: "68€/mois", coverage: 85 },
+      { name: "European Shield", price: "74€/mois", coverage: 93 },
+      { name: "Lux Assurances", price: "61€/mois", coverage: 72 }
+    ],
+    pro: [
+      { name: "AssurLux", price: "54€/mois", coverage: 80 },
+      { name: "Bouclier Plus", price: "63€/mois", coverage: 90 },
+      { name: "Protectia", price: "58€/mois", coverage: 84 }
+    ]
+  };
+
+  var selectedType = "auto";
+  var compPills = document.getElementById('compPills');
+  var compResults = document.getElementById('compResults');
+  var compBtn = document.getElementById('compBtn');
+
+  if(compPills){
+    compPills.querySelectorAll('.comp-pill').forEach(function(pill){
+      pill.addEventListener('click', function(){
+        compPills.querySelectorAll('.comp-pill').forEach(function(p){ p.classList.remove('active'); });
+        pill.classList.add('active');
+        selectedType = pill.getAttribute('data-type');
+        compResults.innerHTML = '<div class="comp-empty">Cliquez sur « Comparer les offres » pour ce type d’assurance.</div>';
+      });
+    });
+  }
+
+  if(compBtn){
+    compBtn.addEventListener('click', function(){
+      var offers = OFFERS[selectedType].slice().sort(function(a,b){ return b.coverage - a.coverage; });
+      compResults.innerHTML = '';
+      offers.forEach(function(offer, i){
+        var div = document.createElement('div');
+        div.className = 'comp-offer' + (i === 0 ? ' best' : '');
+        div.innerHTML =
+          (i === 0 ? '<span class="comp-badge">Meilleur choix</span>' : '') +
+          '<div class="comp-offer-top"><span class="comp-offer-name">' + offer.name + '</span><span class="comp-offer-price">' + offer.price + '</span></div>' +
+          '<div class="comp-bar-track"><div class="comp-bar-fill" style="width:0%"></div></div>' +
+          '<div class="comp-bar-lbl">Couverture estimée : ' + offer.coverage + '%</div>';
+        compResults.appendChild(div);
+        setTimeout(function(){
+          var fill = div.querySelector('.comp-bar-fill');
+          if(fill){ fill.style.width = offer.coverage + '%'; }
+        }, 60 + i * 90);
+      });
+    });
+  }
+</script>
+</body>
+</html>
