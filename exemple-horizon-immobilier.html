@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour une agence immobilière, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>Horizon Immobilier — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#FAF8F5; --bg-alt:#F1ECE3; --ink:#1C1B19; --muted:#6B655C; --dim:#B5AEA1; --line:#E4DCCC;
+    --gold:#B08D57; --gold-dark:#8C6D3F; --charcoal:#2A2A28; --white:#FFFFFF;
+    --radius:4px; --maxw:1220px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Work Sans',sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Fraunces',serif; font-weight:600; line-height:1.15; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:100px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
+
+  .demo-banner{ background:var(--charcoal); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:var(--gold); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 28px; border-radius:2px; font-size:.8rem; font-weight:600; letter-spacing:.03em; text-transform:uppercase; border:1px solid transparent; cursor:pointer; font-family:'Work Sans'; transition:all .2s; }
+  .btn-primary{ background:var(--ink); color:var(--gold); }
+  .btn-primary:hover{ background:var(--gold-dark); color:#fff; }
+  .btn-ghost{ background:transparent; border-color:var(--ink); color:var(--ink); }
+  .btn-ghost:hover{ background:var(--ink); color:var(--gold); }
+  .btn svg{ width:16px; height:16px; }
+
+  /* ---- Header ---- */
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(250,248,245,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:20px 32px; gap:20px; }
+  .logo{ font-family:'Fraunces'; font-weight:600; font-size:1.35rem; letter-spacing:.01em; }
+  .logo span{ color:var(--gold-dark); }
+  nav.main-nav{ display:flex; gap:30px; }
+  nav.main-nav a{ font-size:.78rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.04em; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--gold-dark); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:15px 32px; border-bottom:1px solid var(--line); font-size:.9rem; font-weight:600; }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
+
+  .section-head{ max-width:620px; margin-bottom:54px; }
+  .section-head .tag{ font-family:'Space Mono'; font-size:.7rem; color:var(--gold-dark); text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:16px; }
+  .section-head h2{ font-size:clamp(1.9rem,3.2vw,2.5rem); }
+  .section-head p{ margin-top:16px; color:var(--muted); font-size:1rem; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Hero éditorial asymétrique ---- */
+  .hero{ padding:70px 0 0; overflow:hidden; }
+  .hero-top{ display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:end; margin-bottom:50px; }
+  .eyebrow{ font-family:'Space Mono'; font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gold-dark); display:block; margin-bottom:20px; }
+  .hero h1{ font-size:clamp(2.4rem,5vw,3.8rem); margin-bottom:0; }
+  .hero-side p{ color:var(--muted); font-size:1rem; margin-bottom:24px; }
+  .hero-photo-frame{ position:relative; border:1px solid var(--line); padding:14px; }
+  .hero-photo-frame img{ width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+  .hero-photo-tag{ position:absolute; top:30px; left:30px; background:var(--ink); color:var(--gold); font-family:'Space Mono'; font-size:.68rem; padding:7px 12px; letter-spacing:.05em; }
+  .hero-stats{ display:flex; border-top:1px solid var(--line); }
+  .hero-stat{ flex:1; padding:28px 32px; border-right:1px solid var(--line); }
+  .hero-stat:last-child{ border-right:none; }
+  .hero-stat strong{ display:block; font-family:'Fraunces'; font-size:1.8rem; margin-bottom:4px; }
+  .hero-stat span{ font-family:'Space Mono'; font-size:.68rem; text-transform:uppercase; color:var(--muted); letter-spacing:.05em; }
+
+  /* ---- Biens : grille filtrable ---- */
+  .biens-section{ background:var(--bg-alt); }
+  .filter-group{ margin-bottom:16px; }
+  .filter-group-label{ font-family:'Space Mono'; font-size:.68rem; text-transform:uppercase; color:var(--muted); letter-spacing:.06em; display:block; margin-bottom:10px; }
+  .filter-row{ display:flex; flex-wrap:wrap; gap:9px; }
+  .filter-chip{ padding:9px 16px; border:1px solid var(--line); border-radius:2px; background:var(--white); font-family:'Space Mono'; font-size:.7rem; text-transform:uppercase; letter-spacing:.03em; cursor:pointer; transition:all .2s; }
+  .filter-chip:hover{ border-color:var(--gold-dark); }
+  .filter-chip.active{ background:var(--ink); border-color:var(--ink); color:var(--gold); }
+  .biens-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); margin-top:34px; }
+  .bien-card{ background:var(--white); display:flex; flex-direction:column; }
+  .bien-card.is-hidden{ display:none; }
+  .bien-photo{ position:relative; aspect-ratio:4/3; overflow:hidden; }
+  .bien-photo img{ width:100%; height:100%; object-fit:cover; }
+  .bien-ref{ position:absolute; top:14px; left:14px; background:rgba(28,27,25,0.85); color:var(--gold); font-family:'Space Mono'; font-size:.64rem; padding:5px 10px; letter-spacing:.05em; }
+  .bien-body{ padding:24px 26px 28px; flex:1; display:flex; flex-direction:column; }
+  .bien-type{ font-family:'Space Mono'; font-size:.64rem; text-transform:uppercase; color:var(--muted); letter-spacing:.06em; margin-bottom:8px; display:block; }
+  .bien-body h3{ font-size:1.12rem; margin-bottom:6px; }
+  .bien-location{ font-size:.8rem; color:var(--muted); margin-bottom:12px; }
+  .bien-specs{ font-size:.78rem; color:var(--muted); margin-bottom:16px; flex:1; }
+  .bien-price{ font-family:'Fraunces'; font-size:1.25rem; font-weight:600; color:var(--gold-dark); border-top:1px solid var(--line); padding-top:14px; }
+  .biens-empty{ text-align:center; padding:50px 20px; color:var(--muted); font-size:.9rem; display:none; }
+
+  /* ---- Simulateur de mensualité ---- */
+  .sim-box{ background:var(--white); border:1px solid var(--line); padding:46px; display:grid; grid-template-columns:1.1fr .9fr; gap:54px; max-width:980px; margin:0 auto; align-items:center; }
+  .control{ margin-bottom:30px; }
+  .control:last-child{ margin-bottom:0; }
+  .control-top{ display:flex; justify-content:space-between; margin-bottom:10px; font-size:.85rem; font-weight:600; }
+  .control-top .value{ font-family:'Space Mono'; color:var(--gold-dark); }
+  input[type="range"]{ width:100%; -webkit-appearance:none; appearance:none; height:6px; border-radius:999px; background:var(--bg-alt); outline:none; }
+  input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--gold); border:4px solid var(--white); box-shadow:0 3px 10px rgba(28,27,25,0.3); cursor:pointer; }
+  input[type="range"]::-moz-range-thumb{ width:22px; height:22px; border-radius:50%; background:var(--gold); border:4px solid var(--white); box-shadow:0 3px 10px rgba(28,27,25,0.3); cursor:pointer; border:none; }
+  .sim-result{ background:var(--bg-alt); padding:38px 30px; text-align:center; }
+  .sim-result .label{ font-family:'Space Mono'; font-size:.68rem; text-transform:uppercase; color:var(--muted); letter-spacing:.06em; margin-bottom:12px; }
+  .sim-result .amount{ font-family:'Fraunces'; font-size:2.5rem; color:var(--ink); }
+  .sim-result .amount span{ font-size:1rem; color:var(--muted); font-family:'Work Sans'; }
+  .sim-result .detail{ font-size:.8rem; color:var(--muted); margin-top:18px; line-height:1.8; border-top:1px solid var(--line); padding-top:16px; }
+  .sim-result .detail strong{ color:var(--ink); }
+
+  /* ---- Équipe : lignes éditoriales ---- */
+  .team-section{ background:var(--bg-alt); }
+  .team-rows{ display:flex; flex-direction:column; gap:1px; background:var(--line); }
+  .team-row-item{ display:grid; grid-template-columns:200px 1fr; background:var(--white); align-items:center; }
+  .team-row-photo{ aspect-ratio:1; overflow:hidden; }
+  .team-row-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .team-row-text{ padding:30px 44px; }
+  .team-row-text h3{ font-size:1.35rem; margin-bottom:4px; }
+  .team-row-text .role{ font-family:'Space Mono'; font-size:.7rem; text-transform:uppercase; color:var(--gold-dark); letter-spacing:.06em; margin-bottom:14px; display:block; }
+  .team-row-text p{ color:var(--muted); font-size:.9rem; max-width:56ch; }
+
+  /* ---- Avis : citation unique ---- */
+  .avis-box{ max-width:760px; margin:0 auto; text-align:center; }
+  .avis-quote-text{ font-family:'Fraunces'; font-style:italic; font-size:clamp(1.3rem,2.4vw,1.85rem); color:var(--ink); line-height:1.5; margin-bottom:28px; min-height:150px; }
+  .avis-author{ font-family:'Space Mono'; font-size:.76rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:28px; }
+  .avis-pager{ display:flex; justify-content:center; gap:14px; align-items:center; }
+  .avis-pager button{ width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--white); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+  .avis-pager button:hover{ border-color:var(--ink); }
+  .avis-pager svg{ width:16px; height:16px; }
+  .avis-pager .count{ font-family:'Space Mono'; font-size:.74rem; color:var(--muted); min-width:44px; }
+
+  /* ---- Contact ---- */
+  .contact-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:1px; background:var(--line); }
+  .contact-col{ padding:46px 42px; }
+  .contact-col.dark{ background:var(--ink); color:#fff; }
+  .contact-col.light{ background:var(--white); }
+  .contact-info-list{ display:flex; flex-direction:column; gap:16px; margin:22px 0 28px; }
+  .contact-info-list .lbl{ font-family:'Space Mono'; font-size:.66rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+  .contact-info-list .val{ font-size:.94rem; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:.78rem; font-weight:600; margin-bottom:6px; color:var(--muted); }
+  .field input, .field select, .field textarea{ width:100%; padding:12px 14px; border-radius:2px; border:1px solid var(--line); background:var(--bg-alt); color:var(--ink); font-family:'Work Sans'; font-size:.9rem; }
+  .field textarea{ resize:vertical; min-height:80px; }
+
+  footer{ padding:44px 0 30px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-links{ display:flex; gap:22px; }
+  .footer-links a{ font-size:.78rem; color:var(--muted); text-transform:uppercase; letter-spacing:.03em; }
+  .footer-links a:hover{ color:var(--gold-dark); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:22px; padding-top:22px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    header .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero-top{ grid-template-columns:1fr; gap:34px; }
+    .hero-stats{ flex-wrap:wrap; }
+    .hero-stat{ flex:1 1 50%; border-bottom:1px solid var(--line); }
+    .biens-grid{ grid-template-columns:1fr 1fr; }
+    .sim-box{ grid-template-columns:1fr; }
+    .team-row-item{ grid-template-columns:1fr; }
+    .team-row-photo{ aspect-ratio:16/9; }
+    .contact-grid{ grid-template-columns:1fr; }
+    section{ padding:70px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .biens-grid{ grid-template-columns:1fr; }
+    .hero-stat{ flex:1 1 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Horizon Immobilier n'est pas une vraie agence, les biens présentés sont fictifs.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="nav-row">
+    <a href="#" class="logo">Horizon <span>Immobilier</span></a>
+    <nav class="main-nav">
+      <a href="#biens">Biens</a>
+      <a href="#simulateur">Simulateur</a>
+      <a href="#agence">L'agence</a>
+      <a href="#equipe">Équipe</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Estimer mon bien</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#biens">Biens</a>
+    <a href="#simulateur">Simulateur</a>
+    <a href="#agence">L'agence</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#contact">Estimer mon bien</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div class="reveal in">
+        <span class="eyebrow">Agence immobilière — Luxembourg</span>
+        <h1>Trouvez le bien qui vous ressemble.</h1>
+      </div>
+      <div class="hero-side reveal in">
+        <p>Vente, location et estimation — une sélection de biens choisis avec exigence, et un accompagnement jusqu'à la remise des clés.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn btn-primary" href="#biens">Voir les biens</a>
+          <a class="btn btn-ghost" href="#simulateur">Simuler mon budget</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo-frame reveal in">
+      <img src="horizon-hero.jpg" alt="Villa contemporaine au crépuscule" width="1100" height="734">
+      <div class="hero-photo-tag">Réf. HZ-014 — Luxembourg-Ville</div>
+    </div>
+    <div class="hero-stats reveal in">
+      <div class="hero-stat"><strong>230+</strong><span>Biens vendus</span></div>
+      <div class="hero-stat"><strong>18</strong><span>Années d'expérience</span></div>
+      <div class="hero-stat"><strong>92%</strong><span>Ventes sous 90 jours</span></div>
+      <div class="hero-stat"><strong>4.8/5</strong><span>Satisfaction clients</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="biens" class="biens-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Nos biens</span>
+      <h2>Une sélection à filtrer selon vos critères</h2>
+      <p>Filtrez par type de bien et par budget pour affiner votre recherche.</p>
+    </div>
+    <div class="reveal">
+      <div class="filter-group">
+        <span class="filter-group-label">Type de bien</span>
+        <div class="filter-row" id="typeFilters">
+          <button class="filter-chip active" data-type="tous" type="button">Tous</button>
+          <button class="filter-chip" data-type="maison" type="button">Maison</button>
+          <button class="filter-chip" data-type="appartement" type="button">Appartement</button>
+          <button class="filter-chip" data-type="terrain" type="button">Terrain</button>
+          <button class="filter-chip" data-type="bureau" type="button">Bureau</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <span class="filter-group-label">Budget</span>
+        <div class="filter-row" id="budgetFilters">
+          <button class="filter-chip active" data-budget="tous" type="button">Tous budgets</button>
+          <button class="filter-chip" data-budget="sous500" type="button">&lt; 500 000 €</button>
+          <button class="filter-chip" data-budget="500-1000" type="button">500 000 € – 1 M€</button>
+          <button class="filter-chip" data-budget="plus1000" type="button">&gt; 1 M€</button>
+        </div>
+      </div>
+    </div>
+    <div class="biens-grid reveal" id="biensGrid">
+      <div class="bien-card" data-type="maison" data-budget="plus1000">
+        <div class="bien-photo"><img src="horizon-prop-villa.jpg" alt="Villa contemporaine avec jardin" loading="lazy"></div>
+        <div class="bien-body">
+          <span class="bien-type">Maison</span>
+          <h3>Villa contemporaine</h3>
+          <div class="bien-location">Luxembourg-Ville</div>
+          <div class="bien-specs">5 chambres · 320 m² · Piscine · Réf. HZ-014</div>
+          <div class="bien-price">1 250 000 €</div>
+        </div>
+      </div>
+      <div class="bien-card" data-type="appartement" data-budget="500-1000">
+        <div class="bien-photo"><img src="horizon-prop-appartement.jpg" alt="Appartement duplex moderne" loading="lazy"></div>
+        <div class="bien-body">
+          <span class="bien-type">Appartement</span>
+          <h3>Duplex lumineux</h3>
+          <div class="bien-location">Kirchberg</div>
+          <div class="bien-specs">3 chambres · 140 m² · Terrasse · Réf. HZ-027</div>
+          <div class="bien-price">780 000 €</div>
+        </div>
+      </div>
+      <div class="bien-card" data-type="appartement" data-budget="sous500">
+        <div class="bien-photo"><img src="horizon-prop-residence.jpg" alt="Résidence moderne avec balcons" loading="lazy"></div>
+        <div class="bien-body">
+          <span class="bien-type">Appartement</span>
+          <h3>Résidence avec balcon</h3>
+          <div class="bien-location">Belair</div>
+          <div class="bien-specs">2 chambres · 85 m² · Balcon · Réf. HZ-031</div>
+          <div class="bien-price">420 000 €</div>
+        </div>
+      </div>
+      <div class="bien-card" data-type="terrain" data-budget="sous500">
+        <div class="bien-photo"><img src="horizon-prop-terrain.jpg" alt="Terrain constructible vue aérienne" loading="lazy"></div>
+        <div class="bien-body">
+          <span class="bien-type">Terrain</span>
+          <h3>Terrain constructible</h3>
+          <div class="bien-location">Sandweiler</div>
+          <div class="bien-specs">12 ares · Viabilisé · Réf. HZ-009</div>
+          <div class="bien-price">310 000 €</div>
+        </div>
+      </div>
+      <div class="bien-card" data-type="bureau" data-budget="plus1000">
+        <div class="bien-photo"><img src="horizon-prop-bureau.jpg" alt="Immeuble de bureaux moderne" loading="lazy"></div>
+        <div class="bien-body">
+          <span class="bien-type">Bureau</span>
+          <h3>Plateau open space</h3>
+          <div class="bien-location">Gare</div>
+          <div class="bien-specs">540 m² · Open space · Réf. HZ-042</div>
+          <div class="bien-price">1 480 000 €</div>
+        </div>
+      </div>
+    </div>
+    <div class="biens-empty" id="biensEmpty">Aucun bien ne correspond à ces critères pour le moment.</div>
+  </div>
+</section>
+
+<section id="simulateur">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Simulateur</span>
+      <h2>Estimez votre mensualité</h2>
+      <p>Ajustez le prix, l'apport et la durée pour estimer votre mensualité de prêt.</p>
+    </div>
+    <div class="sim-box reveal">
+      <div class="sim-controls">
+        <div class="control">
+          <div class="control-top"><span>Prix du bien</span><span class="value" id="priceValue">450 000 €</span></div>
+          <input type="range" min="100000" max="2000000" step="10000" value="450000" id="priceSlider">
+        </div>
+        <div class="control">
+          <div class="control-top"><span>Apport personnel</span><span class="value" id="downValue">15%</span></div>
+          <input type="range" min="0" max="50" step="1" value="15" id="downSlider">
+        </div>
+        <div class="control">
+          <div class="control-top"><span>Durée du prêt</span><span class="value" id="durationValue">25 ans</span></div>
+          <input type="range" min="10" max="30" step="1" value="25" id="durationSlider">
+        </div>
+      </div>
+      <div class="sim-result">
+        <div class="label">Mensualité estimée</div>
+        <div class="amount" id="monthlyAmount">1 645 € <span>/ mois</span></div>
+        <div class="detail" id="simDetail">Montant emprunté : <strong>382 500 €</strong><br>Taux indicatif utilisé : <strong>3.8%</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="agence" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">L'agence</span>
+      <h2>Un accompagnement exigeant, du premier contact aux clés</h2>
+    </div>
+    <div class="reveal-stagger reveal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);">
+      <div style="background:var(--white); padding:34px 30px; --i:0;">
+        <h3 style="font-size:1.1rem; margin-bottom:10px;">Estimation précise</h3>
+        <p style="color:var(--muted); font-size:.9rem;">Une estimation basée sur les ventes récentes du quartier, pas sur des barèmes génériques.</p>
+      </div>
+      <div style="background:var(--white); padding:34px 30px; --i:1;">
+        <h3 style="font-size:1.1rem; margin-bottom:10px;">Sélection exigeante</h3>
+        <p style="color:var(--muted); font-size:.9rem;">Chaque bien est visité et vérifié avant d'être publié — pas de mauvaise surprise à la visite.</p>
+      </div>
+      <div style="background:var(--white); padding:34px 30px; --i:2;">
+        <h3 style="font-size:1.1rem; margin-bottom:10px;">Suivi jusqu'aux clés</h3>
+        <p style="color:var(--muted); font-size:.9rem;">Un interlocuteur unique du compromis à la signature, pour éviter les allers-retours inutiles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="equipe" class="team-section">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Notre équipe</span>
+      <h2>Des conseillers qui connaissent leur secteur</h2>
+    </div>
+    <div class="team-rows reveal">
+      <div class="team-row-item">
+        <div class="team-row-photo"><img src="horizon-team1.jpg" alt="Conseiller de l'équipe Horizon Immobilier" loading="lazy"></div>
+        <div class="team-row-text">
+          <h3>Julien Marchetti</h3>
+          <span class="role">Fondateur &amp; conseiller senior</span>
+          <p>Spécialiste des maisons et villas du centre et de la périphérie, avec plus de 15 ans d'expérience sur le marché luxembourgeois.</p>
+        </div>
+      </div>
+      <div class="team-row-item">
+        <div class="team-row-photo"><img src="horizon-team2.jpg" alt="Conseillère de l'équipe Horizon Immobilier" loading="lazy"></div>
+        <div class="team-row-text">
+          <h3>Sarah Weber</h3>
+          <span class="role">Conseillère — appartements &amp; investissement</span>
+          <p>Accompagne particuliers et investisseurs sur les biens en résidence, du studio au duplex familial.</p>
+        </div>
+      </div>
+      <div class="team-row-item">
+        <div class="team-row-photo"><img src="horizon-team3.jpg" alt="Conseillère de l'équipe Horizon Immobilier" loading="lazy"></div>
+        <div class="team-row-text">
+          <h3>Isabelle Roth</h3>
+          <span class="role">Conseillère — terrains &amp; bureaux</span>
+          <p>Pilote les transactions de terrains constructibles et de locaux professionnels pour les projets sur mesure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Avis clients</span>
+      <h2>Ce que disent nos clients</h2>
+    </div>
+    <div class="avis-box reveal">
+      <div class="avis-quote-text" id="avisText">« Vente finalisée en cinq semaines, à un prix supérieur à notre estimation initiale. L'accompagnement était irréprochable du premier rendez-vous à la signature. »</div>
+      <div class="avis-author" id="avisAuthor">Claire &amp; Marc D. — Vente d'une maison à Strassen</div>
+      <div class="avis-pager">
+        <button type="button" id="avisPrev" aria-label="Avis précédent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <span class="count" id="avisCount">01 / 04</span>
+        <button type="button" id="avisNext" aria-label="Avis suivant"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Discutons de votre projet</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-col dark">
+        <h3 style="font-size:1.2rem; margin-bottom:6px; color:#fff;">Horizon Immobilier</h3>
+        <p style="color:rgba(255,255,255,0.65); font-size:.88rem;">Du lundi au samedi, sur rendez-vous ou en agence.</p>
+        <div class="contact-info-list">
+          <div><span class="lbl">Adresse</span><span class="val">9 avenue de l'Horizon, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+          <div><span class="lbl">Email</span><span class="val">contact@horizon-exemple.lu</span></div>
+        </div>
+        <a class="btn btn-primary" href="tel:+35200000000">Appeler l'agence</a>
+      </div>
+      <div class="contact-col light">
+        <h3 style="font-size:1.2rem; margin-bottom:16px;">Demander une estimation</h3>
+        <form id="estimForm" onsubmit="return false;">
+          <div class="field">
+            <label>Votre nom</label>
+            <input type="text" placeholder="Nom et prénom">
+          </div>
+          <div class="field">
+            <label>Type de bien à estimer</label>
+            <select>
+              <option>Maison</option>
+              <option>Appartement</option>
+              <option>Terrain</option>
+              <option>Bureau</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Message</label>
+            <textarea placeholder="Décrivez brièvement votre bien ou votre projet"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">Envoyer la demande</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 HORIZON IMMOBILIER — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#biens">Biens</a>
+        <a href="#simulateur">Simulateur</a>
+        <a href="#equipe">Équipe</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--gold-dark);">MatMax Intelligence</a> — Horizon Immobilier n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Filtres de biens
+  (function(){
+    var typeGroup = document.getElementById('typeFilters');
+    var budgetGroup = document.getElementById('budgetFilters');
+    var grid = document.getElementById('biensGrid');
+    var empty = document.getElementById('biensEmpty');
+    if(!grid) return;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.bien-card'));
+    var currentType = 'tous';
+    var currentBudget = 'tous';
+
+    function apply(){
+      var visibleCount = 0;
+      cards.forEach(function(card){
+        var matchType = currentType === 'tous' || card.getAttribute('data-type') === currentType;
+        var matchBudget = currentBudget === 'tous' || card.getAttribute('data-budget') === currentBudget;
+        var visible = matchType && matchBudget;
+        card.classList.toggle('is-hidden', !visible);
+        if(visible) visibleCount++;
+      });
+      empty.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    if(typeGroup){
+      typeGroup.querySelectorAll('.filter-chip').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          typeGroup.querySelectorAll('.filter-chip').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentType = btn.getAttribute('data-type');
+          apply();
+        });
+      });
+    }
+    if(budgetGroup){
+      budgetGroup.querySelectorAll('.filter-chip').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          budgetGroup.querySelectorAll('.filter-chip').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentBudget = btn.getAttribute('data-budget');
+          apply();
+        });
+      });
+    }
+  })();
+
+  // Simulateur de mensualité
+  (function(){
+    var priceSlider = document.getElementById('priceSlider');
+    var downSlider = document.getElementById('downSlider');
+    var durationSlider = document.getElementById('durationSlider');
+    var priceValue = document.getElementById('priceValue');
+    var downValue = document.getElementById('downValue');
+    var durationValue = document.getElementById('durationValue');
+    var monthlyAmount = document.getElementById('monthlyAmount');
+    var simDetail = document.getElementById('simDetail');
+    if(!priceSlider) return;
+
+    function formatEUR(n){
+      return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' €';
+    }
+
+    function compute(){
+      var price = parseInt(priceSlider.value, 10);
+      var downPct = parseInt(downSlider.value, 10);
+      var years = parseInt(durationSlider.value, 10);
+      var annualRate = 0.038;
+
+      priceValue.textContent = formatEUR(price);
+      downValue.textContent = downPct + '%';
+      durationValue.textContent = years + ' ans';
+
+      var loanAmount = price * (1 - downPct / 100);
+      var monthlyRate = annualRate / 12;
+      var n = years * 12;
+      var monthly = loanAmount * monthlyRate * Math.pow(1 + monthlyRate, n) / (Math.pow(1 + monthlyRate, n) - 1);
+
+      monthlyAmount.innerHTML = formatEUR(monthly) + ' <span>/ mois</span>';
+      simDetail.innerHTML = 'Montant emprunté : <strong>' + formatEUR(loanAmount) + '</strong><br>Taux indicatif utilisé : <strong>3.8%</strong>';
+    }
+
+    [priceSlider, downSlider, durationSlider].forEach(function(el){
+      el.addEventListener('input', compute);
+    });
+    compute();
+  })();
+
+  // Avis en citation unique
+  (function(){
+    var AVIS = [
+      { text: "« Vente finalisée en cinq semaines, à un prix supérieur à notre estimation initiale. L'accompagnement était irréprochable du premier rendez-vous à la signature. »", author: "Claire & Marc D. — Vente d'une maison à Strassen" },
+      { text: "« Nous cherchions un appartement à Kirchberg depuis des mois. Horizon nous a présenté trois biens correspondant vraiment à nos critères, pas une liste générique. »", author: "Yasmine T. — Achat d'un appartement à Kirchberg" },
+      { text: "« Le simulateur de mensualité nous a permis d'arriver au rendez-vous avec un budget clair. Aucune surprise sur le financement. »", author: "Nicolas B. — Achat d'une résidence à Belair" },
+      { text: "« Terrain vendu en trois semaines, avec un accompagnement précis sur les aspects de viabilisation. Très professionnel. »", author: "Famille R. — Vente d'un terrain à Sandweiler" }
+    ];
+    var idx = 0;
+    var textEl = document.getElementById('avisText');
+    var authorEl = document.getElementById('avisAuthor');
+    var countEl = document.getElementById('avisCount');
+    var prev = document.getElementById('avisPrev');
+    var next = document.getElementById('avisNext');
+    if(!textEl) return;
+
+    function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+    function render(){
+      textEl.textContent = AVIS[idx].text;
+      authorEl.textContent = AVIS[idx].author;
+      countEl.textContent = pad(idx + 1) + ' / ' + pad(AVIS.length);
+    }
+    if(prev) prev.addEventListener('click', function(){ idx = (idx - 1 + AVIS.length) % AVIS.length; render(); });
+    if(next) next.addEventListener('click', function(){ idx = (idx + 1) % AVIS.length; render(); });
+    render();
+  })();
+</script>
+</body>
+</html>
