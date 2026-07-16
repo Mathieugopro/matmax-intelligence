@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour un institut de beauté, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>L'Institut Éclat — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#FBF1EC; --bg-alt:#F6E3D9; --ink:#2B211D; --muted:#8A6F68; --dim:#D2B7AE; --line:#EAD6CC;
+    --rose:#C97B63; --rose-dark:#A85D48; --charcoal:#241C19; --gold:#C9A15A; --cream:#FFFBF8;
+    --radius:16px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Marcellus',serif; font-weight:400; line-height:1.2; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:100px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .08s); }
+
+  .demo-banner{ background:var(--charcoal); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; position:relative; z-index:200; }
+  .demo-banner strong{ color:var(--gold); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:999px; font-size:.86rem; font-weight:600; border:1px solid transparent; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--rose); color:#fff; }
+  .btn-primary:hover{ background:var(--rose-dark); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--rose); color:var(--rose-dark); }
+  .btn-ghost-light{ background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.5); color:#fff; }
+  .btn-ghost-light:hover{ background:rgba(255,255,255,0.18); }
+
+  /* ---- Header ---- */
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(251,241,236,0.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:20px 32px; gap:20px; }
+  .logo{ font-family:'Marcellus'; font-size:1.4rem; letter-spacing:.01em; }
+  .logo em{ font-style:italic; color:var(--rose-dark); }
+  nav.main-nav{ display:flex; gap:30px; }
+  nav.main-nav a{ font-size:.85rem; color:var(--muted); position:relative; padding-bottom:4px; transition:color .2s; }
+  nav.main-nav a::after{ content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--rose-dark); transition:width .25s; }
+  nav.main-nav a:hover{ color:var(--ink); }
+  nav.main-nav a:hover::after{ width:100%; }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:15px 32px; border-bottom:1px solid var(--line); font-size:.95rem; }
+  .mobile-menu .btn{ margin:16px 32px; text-align:center; justify-content:center; }
+
+  /* ---- Dot nav flottant (scrollspy) ---- */
+  .dot-nav{ position:fixed; right:26px; top:50%; transform:translateY(-50%); z-index:60; display:flex; flex-direction:column; gap:14px; }
+  .dot-nav a{ width:9px; height:9px; border-radius:50%; background:var(--dim); display:block; position:relative; transition:background .25s, transform .25s; }
+  .dot-nav a::before{ content:attr(data-label); position:absolute; right:20px; top:50%; transform:translateY(-50%); white-space:nowrap; font-family:'IBM Plex Mono'; font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); background:var(--cream); padding:4px 10px; border-radius:6px; border:1px solid var(--line); opacity:0; pointer-events:none; transition:opacity .2s; }
+  .dot-nav a:hover::before{ opacity:1; }
+  .dot-nav a.active{ background:var(--rose-dark); transform:scale(1.3); }
+  @media (max-width:1100px){ .dot-nav{ display:none; } }
+
+  /* ---- Hero : image plein cadre + carte verre en overlay bas-gauche ---- */
+  .hero{ padding:0; position:relative; min-height:92vh; display:flex; align-items:flex-end; overflow:hidden; }
+  .hero-media{ position:absolute; inset:0; }
+  .hero-media img{ width:100%; height:100%; object-fit:cover; }
+  .hero-media::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(36,28,25,0.05) 0%, rgba(36,28,25,0.55) 100%); }
+  .hero-wrap{ position:relative; z-index:2; width:100%; padding-bottom:70px; }
+  .hero-glass{ max-width:560px; background:rgba(255,251,248,0.85); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.5); border-radius:20px; padding:44px 42px; box-shadow:0 30px 60px -30px rgba(36,28,25,0.4); }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--rose-dark); display:block; margin-bottom:16px; }
+  .hero h1{ font-size:clamp(2.1rem,4vw,2.9rem); margin-bottom:18px; }
+  .hero h1 em{ font-style:italic; color:var(--rose-dark); }
+  .hero p.lead{ color:var(--muted); font-size:1rem; margin-bottom:28px; max-width:44ch; }
+  .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+
+  .section-head{ max-width:600px; margin-bottom:52px; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--rose-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.9rem,3.2vw,2.4rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1rem; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Diagnostic peau ---- */
+  .diag-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:start; }
+  .diag-q{ margin-bottom:30px; }
+  .diag-q-label{ font-weight:600; font-size:1.02rem; margin-bottom:14px; }
+  .diag-options{ display:flex; gap:10px; flex-wrap:wrap; }
+  .diag-opt{ padding:11px 20px; border-radius:999px; border:1px solid var(--line); background:var(--cream); font-family:'Inter'; font-size:.85rem; color:var(--muted); cursor:pointer; transition:all .15s; }
+  .diag-opt:hover{ border-color:var(--rose); color:var(--ink); }
+  .diag-opt.active{ background:var(--rose); border-color:var(--rose); color:#fff; }
+
+  .diag-result-card{ background:var(--cream); border:1px solid var(--line); border-radius:var(--radius); padding:40px 34px; text-align:center; position:sticky; top:110px; }
+  .glow-gauge{ width:172px; height:172px; border-radius:50%; margin:0 auto 22px; background:conic-gradient(var(--rose) calc(var(--pct,0)*1%), var(--line) 0); display:flex; align-items:center; justify-content:center; transition:background 1s ease; }
+  .glow-gauge-inner{ width:132px; height:132px; border-radius:50%; background:var(--cream); display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:inset 0 0 0 1px var(--line); }
+  .glow-gauge-inner .pct{ font-family:'Marcellus'; font-size:2rem; color:var(--rose-dark); }
+  .glow-gauge-inner .pct-lbl{ font-family:'IBM Plex Mono'; font-size:.62rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-top:2px; }
+  .diag-result-name{ font-size:1.35rem; margin-bottom:10px; }
+  .diag-result-desc{ color:var(--muted); font-size:.9rem; margin-bottom:26px; min-height:44px; }
+  .diag-steps{ display:flex; flex-direction:column; gap:14px; text-align:left; margin-bottom:24px; }
+  .diag-step{ display:flex; gap:14px; align-items:flex-start; }
+  .diag-step-num{ width:26px; height:26px; border-radius:50%; background:var(--bg-alt); color:var(--rose-dark); font-family:'IBM Plex Mono'; font-size:.72rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+  .diag-step-body strong{ display:block; font-size:.9rem; margin-bottom:2px; }
+  .diag-step-body span{ font-size:.82rem; color:var(--muted); }
+  .diag-hint{ color:var(--dim); font-size:.82rem; font-style:italic; }
+
+  /* ---- Rituels : accordéon ---- */
+  .rituels-section{ background:var(--bg-alt); }
+  .accordion{ border-top:1px solid var(--line); }
+  .acc-item{ border-bottom:1px solid var(--line); }
+  .acc-head{ width:100%; background:none; border:none; cursor:pointer; padding:26px 4px; display:flex; align-items:center; justify-content:space-between; gap:20px; text-align:left; font-family:'Inter'; }
+  .acc-head-left{ display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  .acc-head h3{ font-size:1.2rem; }
+  .acc-meta{ font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--muted); }
+  .acc-price{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--rose-dark); font-size:1rem; white-space:nowrap; }
+  .acc-chevron{ width:22px; height:22px; flex-shrink:0; transition:transform .3s; stroke:var(--rose-dark); }
+  .acc-item.open .acc-chevron{ transform:rotate(180deg); }
+  .acc-body{ max-height:0; overflow:hidden; transition:max-height .35s ease; }
+  .acc-item.open .acc-body{ max-height:220px; }
+  .acc-body-in{ padding:0 4px 28px; color:var(--muted); font-size:.92rem; max-width:66ch; }
+
+  /* ---- Institut : portrait + fondatrice ---- */
+  .institut-grid{ display:grid; grid-template-columns:.85fr 1.15fr; gap:60px; align-items:center; }
+  .institut-photo{ border-radius:var(--radius); overflow:hidden; }
+  .institut-photo img{ width:100%; aspect-ratio:4/3; object-fit:cover; }
+  .institut-quote{ font-family:'Marcellus'; font-style:italic; font-size:1.4rem; color:var(--rose-dark); line-height:1.4; margin:20px 0 22px; }
+  .institut-stats{ display:flex; gap:38px; margin-top:28px; flex-wrap:wrap; }
+  .institut-stat .num{ font-family:'Marcellus'; font-size:1.8rem; color:var(--rose-dark); }
+  .institut-stat .lbl{ font-size:.78rem; color:var(--muted); margin-top:2px; }
+
+  /* ---- Galerie : masonry CSS columns ---- */
+  .masonry{ column-count:3; column-gap:16px; }
+  .masonry img{ width:100%; border-radius:12px; margin-bottom:16px; display:block; break-inside:avoid; }
+
+  /* ---- Avis : spotlight rotatif ---- */
+  .avis-spotlight{ max-width:680px; margin:0 auto; text-align:center; }
+  .avis-qm{ font-family:'Marcellus'; font-size:3.2rem; color:var(--rose); opacity:.5; line-height:1; }
+  .avis-text{ font-family:'Marcellus'; font-style:italic; font-size:1.4rem; color:var(--ink); line-height:1.5; min-height:110px; margin-bottom:20px; }
+  .avis-name{ font-weight:700; font-size:.92rem; }
+  .avis-role{ font-size:.8rem; color:var(--muted); margin-bottom:26px; }
+  .avis-dots{ display:flex; gap:10px; justify-content:center; }
+  .avis-dot{ width:9px; height:9px; border-radius:50%; background:var(--dim); border:none; cursor:pointer; padding:0; transition:background .2s, transform .2s; }
+  .avis-dot.active{ background:var(--rose-dark); transform:scale(1.3); }
+
+  /* ---- Contact : 3 cartes ---- */
+  .contact-section{ background:var(--charcoal); color:#fff; }
+  .contact-section .section-head p{ color:rgba(255,255,255,0.6); }
+  .contact-section .tag{ color:var(--gold); }
+  .contact-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:rgba(255,255,255,0.12); border-radius:var(--radius); overflow:hidden; margin-bottom:36px; }
+  .contact-card{ background:#2E2420; padding:34px 30px; }
+  .contact-card .ic{ width:34px; height:34px; margin-bottom:16px; stroke:var(--gold); }
+  .contact-card h4{ font-family:'IBM Plex Mono'; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:rgba(255,255,255,0.5); margin-bottom:8px; }
+  .contact-card p{ font-size:.98rem; }
+  .contact-cta{ text-align:center; }
+
+  footer{ padding:40px 0 30px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-links{ display:flex; gap:20px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--rose-dark); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    header .btn-primary{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero{ min-height:82vh; }
+    .hero-glass{ max-width:100%; padding:32px 26px; }
+    .diag-grid{ grid-template-columns:1fr; gap:40px; }
+    .diag-result-card{ position:static; }
+    .institut-grid{ grid-template-columns:1fr; gap:34px; }
+    .contact-cards{ grid-template-columns:1fr; }
+    .masonry{ column-count:2; }
+    section{ padding:70px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .masonry{ column-count:1; }
+    .acc-head{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .institut-stats{ gap:26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — L'Institut Éclat n'est pas une vraie entreprise, le diagnostic et les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<nav class="dot-nav" id="dotNav">
+  <a href="#diagnostic" data-label="Diagnostic"></a>
+  <a href="#rituels" data-label="Rituels"></a>
+  <a href="#institut" data-label="Institut"></a>
+  <a href="#galerie" data-label="Galerie"></a>
+  <a href="#avis" data-label="Avis"></a>
+  <a href="#contact" data-label="Contact"></a>
+</nav>
+
+<header class="site-header">
+  <div class="nav-row">
+    <a href="#" class="logo">L'Institut <em>Éclat</em></a>
+    <nav class="main-nav">
+      <a href="#diagnostic">Diagnostic peau</a>
+      <a href="#rituels">Nos rituels</a>
+      <a href="#institut">L'institut</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Prendre rendez-vous</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#diagnostic">Diagnostic peau</a>
+    <a href="#rituels">Nos rituels</a>
+    <a href="#institut">L'institut</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#contact">Prendre rendez-vous</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-media"><img src="eclat-hero.jpg" alt="Application d'un masque au pinceau lors d'un soin du visage" width="1920" height="1200"></div>
+  <div class="wrap hero-wrap">
+    <div class="hero-glass reveal in">
+      <span class="eyebrow">Institut de beauté — soins du visage sur-mesure</span>
+      <h1>Retrouvez <em>l'éclat</em> naturel de votre peau.</h1>
+      <p class="lead">Un diagnostic personnalisé, des rituels sur-mesure et des mains expertes — pensés pour révéler votre peau, pas pour la standardiser.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#diagnostic">Faire mon diagnostic peau</a>
+        <a class="btn btn-ghost" href="#rituels">Découvrir nos rituels</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diagnostic">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Outil interactif</span>
+      <h2>Votre diagnostic peau en 3 questions</h2>
+      <p>Répondez pour découvrir le rituel le plus adapté à votre peau aujourd'hui. Un vrai diagnostic en cabine reste toujours plus précis.</p>
+    </div>
+    <div class="diag-grid">
+      <div class="reveal">
+        <div class="diag-q" data-q="1">
+          <div class="diag-q-label">1. Comment décririez-vous votre peau ?</div>
+          <div class="diag-options">
+            <button class="diag-opt" type="button" data-score="0">Sèche &amp; sensible</button>
+            <button class="diag-opt" type="button" data-score="1">Mixte</button>
+            <button class="diag-opt" type="button" data-score="2">Grasse &amp; sujette aux imperfections</button>
+          </div>
+        </div>
+        <div class="diag-q" data-q="2">
+          <div class="diag-q-label">2. Quelle est votre préoccupation principale ?</div>
+          <div class="diag-options">
+            <button class="diag-opt" type="button" data-score="0">Manque d'éclat, teint terne</button>
+            <button class="diag-opt" type="button" data-score="1">Déshydratation, tiraillements</button>
+            <button class="diag-opt" type="button" data-score="2">Imperfections, pores dilatés</button>
+          </div>
+        </div>
+        <div class="diag-q" data-q="3">
+          <div class="diag-q-label">3. À quel rythme prenez-vous soin de votre peau ?</div>
+          <div class="diag-options">
+            <button class="diag-opt" type="button" data-score="0">Occasionnellement</button>
+            <button class="diag-opt" type="button" data-score="1">Une fois par mois</button>
+            <button class="diag-opt" type="button" data-score="2">Régulièrement, en institut</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="diag-result-card reveal" id="diagResult">
+        <div class="glow-gauge" id="glowGauge" style="--pct:0;">
+          <div class="glow-gauge-inner">
+            <span class="pct" id="glowPct">—</span>
+            <span class="pct-lbl">Indice d'éclat</span>
+          </div>
+        </div>
+        <div id="diagBefore">
+          <p class="diag-hint">Répondez aux trois questions pour révéler votre rituel personnalisé.</p>
+        </div>
+        <div id="diagAfter" style="display:none;">
+          <h3 class="diag-result-name" id="diagName">Éclat Signature</h3>
+          <p class="diag-result-desc" id="diagDesc"></p>
+          <div class="diag-steps" id="diagSteps"></div>
+          <a class="btn btn-primary" href="#contact" style="width:100%; justify-content:center;">Réserver ce rituel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rituels-section" id="rituels">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Nos rituels</span>
+      <h2>Quatre rituels, un même soin de l'écoute</h2>
+      <p>Cliquez sur un rituel pour découvrir son déroulé complet.</p>
+    </div>
+    <div class="accordion reveal">
+      <div class="acc-item open">
+        <button class="acc-head" type="button">
+          <div class="acc-head-left"><h3>Éclat Express</h3><span class="acc-meta">30 min</span></div>
+          <span class="acc-price">45€</span>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-in">Nettoyage en douceur, gommage express et masque flash hydratant. Pensé pour raviver le teint avant un événement, en 30 minutes chrono.</div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" type="button">
+          <div class="acc-head-left"><h3>Éclat Signature</h3><span class="acc-meta">60 min</span></div>
+          <span class="acc-price">75€</span>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-in">Notre soin le plus complet : double nettoyage, exfoliation, extraction douce, massage du visage et masque sur-mesure selon votre diagnostic peau.</div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" type="button">
+          <div class="acc-head-left"><h3>Éclat Intense</h3><span class="acc-meta">75 min</span></div>
+          <span class="acc-price">95€</span>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-in">Un protocole ciblé anti-âge ou anti-imperfections, avec sérums concentrés et massage lifting manuel. Recommandé en cure de 4 séances.</div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" type="button">
+          <div class="acc-head-left"><h3>Rituel Duo</h3><span class="acc-meta">60 min</span></div>
+          <span class="acc-price">130€</span>
+          <svg class="acc-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="acc-body">
+          <div class="acc-body-in">Le soin Éclat Signature à deux, en cabine partagée. Idéal pour un moment à offrir, entre amies ou en couple.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="institut">
+  <div class="wrap institut-grid">
+    <div class="institut-photo reveal"><img src="eclat-about.jpg" alt="Soin du visage appliqué avec précision par notre équipe" loading="lazy"></div>
+    <div class="reveal">
+      <span class="tag" style="font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--rose-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">L'institut</span>
+      <h2>Un geste précis, appris puis affiné</h2>
+      <p class="institut-quote">« Une belle peau ne se maquille pas, elle se soigne. »</p>
+      <p style="color:var(--muted); margin-bottom:14px;">Fondé par Camille Rey, esthéticienne diplômée, L'Institut Éclat est né d'une conviction : chaque geste compte autant que chaque produit. Toute l'équipe est formée en continu aux techniques de massage facial et aux protocoles les plus récents.</p>
+      <p style="color:var(--muted);">Nous sélectionnons des soins à la formulation courte, sans parfum de synthèse, adaptés à chaque type de peau plutôt qu'à une routine universelle.</p>
+      <div class="institut-stats">
+        <div class="institut-stat"><div class="num">9 ans</div><div class="lbl">d'expérience</div></div>
+        <div class="institut-stat"><div class="num">1 200+</div><div class="lbl">soins réalisés</div></div>
+        <div class="institut-stat"><div class="num">100%</div><div class="lbl">diagnostics personnalisés</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galerie" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Galerie</span>
+      <h2>L'institut, en images</h2>
+    </div>
+    <div class="masonry reveal">
+      <img src="eclat-g1.jpg" alt="Cabine de soin de l'Institut Éclat" loading="lazy">
+      <img src="eclat-g2.jpg" alt="Application d'un sérum au compte-gouttes" loading="lazy">
+      <img src="eclat-g3.jpg" alt="Cliente utilisant un rouleau de jade et un gua sha" loading="lazy">
+      <img src="eclat-g4.jpg" alt="Salle de soin duo de l'institut" loading="lazy">
+      <img src="eclat-g5.jpg" alt="Espace d'accueil et de détente de l'institut" loading="lazy">
+      <img src="eclat-g6.jpg" alt="Cabine de massage baignée de lumière naturelle" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Avis</span>
+      <h2>Ce que nos clientes en disent</h2>
+    </div>
+    <div class="avis-spotlight reveal">
+      <div class="avis-qm">"</div>
+      <p class="avis-text" id="avisText">Le diagnostic peau en ligne était bluffant de justesse — le rituel recommandé était exactement ce dont j'avais besoin.</p>
+      <div class="avis-name" id="avisName">Nora B.</div>
+      <div class="avis-role" id="avisRole">Cliente depuis 2023</div>
+      <div class="avis-dots" id="avisDots">
+        <button class="avis-dot active" type="button" data-i="0" aria-label="Avis 1"></button>
+        <button class="avis-dot" type="button" data-i="1" aria-label="Avis 2"></button>
+        <button class="avis-dot" type="button" data-i="2" aria-label="Avis 3"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Offrez un rendez-vous à votre peau</h2>
+      <p>Sur rendez-vous, du mardi au samedi.</p>
+    </div>
+    <div class="contact-cards reveal">
+      <div class="contact-card">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <h4>Adresse</h4>
+        <p>14 rue de l'Éclat, Luxembourg</p>
+      </div>
+      <div class="contact-card">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <h4>Téléphone &amp; email</h4>
+        <p>+352 00 00 00 00<br>contact@institut-eclat.lu</p>
+      </div>
+      <div class="contact-card">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <h4>Horaires</h4>
+        <p>Mardi — Vendredi : 9h30 – 19h<br>Samedi : 9h30 – 17h</p>
+      </div>
+    </div>
+    <div class="contact-cta"><a class="btn btn-primary" href="#diagnostic">Faire mon diagnostic avant de réserver</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 L'INSTITUT ÉCLAT — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#diagnostic">Diagnostic</a>
+        <a href="#rituels">Rituels</a>
+        <a href="#institut">L'institut</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--rose-dark);">MatMax Intelligence</a> — L'Institut Éclat n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  // Menu mobile
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  // Reveal au scroll
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Dot-nav scrollspy
+  (function(){
+    var dotLinks = document.querySelectorAll('#dotNav a');
+    if(!dotLinks.length) return;
+    var sections = [];
+    dotLinks.forEach(function(a){
+      var sec = document.querySelector(a.getAttribute('href'));
+      if(sec) sections.push({ el: sec, link: a });
+    });
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var match = sections.find(function(s){ return s.el === entry.target; });
+        if(!match) return;
+        if(entry.isIntersecting){
+          dotLinks.forEach(function(a){ a.classList.remove('active'); });
+          match.link.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(function(s){ spy.observe(s.el); });
+  })();
+
+  // Diagnostic peau
+  (function(){
+    var answers = {};
+    var groups = document.querySelectorAll('.diag-q');
+    var gauge = document.getElementById('glowGauge');
+    var pctEl = document.getElementById('glowPct');
+    var before = document.getElementById('diagBefore');
+    var after = document.getElementById('diagAfter');
+    var nameEl = document.getElementById('diagName');
+    var descEl = document.getElementById('diagDesc');
+    var stepsEl = document.getElementById('diagSteps');
+
+    var PROFILES = [
+      { max:2, name:"Éclat Express", desc:"Votre peau a surtout besoin de fraîcheur et d'un entretien simple, sans complexifier votre routine.",
+        steps:[
+          {t:"Nettoyage doux", d:"Démaquillage et nettoyage à l'huile végétale, sans décaper la peau."},
+          {t:"Masque flash", d:"10 minutes de masque hydratant pour raviver l'éclat du teint."},
+          {t:"Protection", d:"Crème légère avec SPF pour protéger la peau au quotidien."}
+        ]},
+      { max:4, name:"Éclat Signature", desc:"Un équilibre entre soin ciblé et entretien régulier, pour un teint uniforme et reposé.",
+        steps:[
+          {t:"Double nettoyage", d:"Huile démaquillante puis gel nettoyant adapté à votre type de peau."},
+          {t:"Soin ciblé", d:"Sérum et massage facial pour traiter votre préoccupation principale."},
+          {t:"Hydratation", d:"Crème sur-mesure choisie selon les besoins identifiés du jour."}
+        ]},
+      { max:6, name:"Éclat Intense", desc:"Votre peau mérite un accompagnement approfondi et des soins régénérants réguliers.",
+        steps:[
+          {t:"Exfoliation en profondeur", d:"Gommage enzymatique pour préparer la peau au soin actif."},
+          {t:"Protocole concentré", d:"Sérums haute concentration et massage lifting manuel ciblé."},
+          {t:"Cure recommandée", d:"Un suivi en 4 séances espacées pour des résultats durables."}
+        ]}
+    ];
+
+    function render(){
+      var qs = Object.keys(answers);
+      var total = qs.reduce(function(sum, k){ return sum + answers[k]; }, 0);
+      var pct = Math.round((total / 6) * 100);
+      gauge.style.setProperty('--pct', pct);
+      pctEl.textContent = pct + '%';
+
+      if(qs.length < 3) return;
+
+      var profile = PROFILES.find(function(p){ return total <= p.max; }) || PROFILES[PROFILES.length-1];
+      nameEl.textContent = profile.name;
+      descEl.textContent = profile.desc;
+      stepsEl.innerHTML = '';
+      profile.steps.forEach(function(step, i){
+        var row = document.createElement('div');
+        row.className = 'diag-step';
+        row.innerHTML = '<span class="diag-step-num">' + (i+1) + '</span><div class="diag-step-body"><strong>' + step.t + '</strong><span>' + step.d + '</span></div>';
+        stepsEl.appendChild(row);
+      });
+      before.style.display = 'none';
+      after.style.display = 'block';
+    }
+
+    groups.forEach(function(group){
+      var qNum = parseInt(group.getAttribute('data-q'), 10);
+      group.querySelectorAll('.diag-opt').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          group.querySelectorAll('.diag-opt').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          answers[qNum] = parseInt(btn.getAttribute('data-score'), 10);
+          render();
+        });
+      });
+    });
+  })();
+
+  // Accordéon rituels
+  (function(){
+    document.querySelectorAll('.acc-head').forEach(function(head){
+      head.addEventListener('click', function(){
+        var item = head.parentElement;
+        var wasOpen = item.classList.contains('open');
+        item.parentElement.querySelectorAll('.acc-item').forEach(function(i){ i.classList.remove('open'); });
+        if(!wasOpen) item.classList.add('open');
+      });
+    });
+  })();
+
+  // Avis spotlight
+  (function(){
+    var AVIS = [
+      { text:"Le diagnostic peau en ligne était bluffant de justesse — le rituel recommandé était exactement ce dont j'avais besoin.", name:"Nora B.", role:"Cliente depuis 2023" },
+      { text:"J'ai enfin trouvé un institut qui prend le temps d'expliquer chaque étape du soin, sans jamais pousser à la vente.", name:"Claire M.", role:"Cliente depuis 2021" },
+      { text:"Le rituel Éclat Intense a vraiment changé l'aspect de ma peau après seulement deux séances.", name:"Yasmine T.", role:"Cliente depuis 2024" }
+    ];
+    var textEl = document.getElementById('avisText');
+    var nameEl = document.getElementById('avisName');
+    var roleEl = document.getElementById('avisRole');
+    var dots = document.querySelectorAll('.avis-dot');
+    dots.forEach(function(dot){
+      dot.addEventListener('click', function(){
+        var i = parseInt(dot.getAttribute('data-i'), 10);
+        dots.forEach(function(d){ d.classList.remove('active'); });
+        dot.classList.add('active');
+        textEl.textContent = AVIS[i].text;
+        nameEl.textContent = AVIS[i].name;
+        roleEl.textContent = AVIS[i].role;
+      });
+    });
+  })();
+</script>
+</body>
+</html>
