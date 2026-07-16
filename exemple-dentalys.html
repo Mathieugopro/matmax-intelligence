@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour un cabinet dentaire, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>Dentalys — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#F4FAF9; --bg-alt:#E8F3F1; --ink:#16302B; --muted:#5A7570; --dim:#A9C2BC; --line:#D7E8E4;
+    --teal:#0E7C71; --teal-dark:#0A5A52; --mint:#5FCFC0; --coral:#F2765C; --coral-dark:#D65A40; --white:#FFFFFF;
+    --radius:16px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Outfit',sans-serif; font-weight:700; line-height:1.2; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:96px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
+
+  .demo-banner{ background:var(--teal-dark); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:#FFD8CD; }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:999px; font-size:.85rem; font-weight:700; border:1px solid transparent; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--coral); color:#fff; }
+  .btn-primary:hover{ background:var(--coral-dark); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--teal); color:var(--teal-dark); }
+  .btn svg{ width:17px; height:17px; }
+
+  /* ---- Header ---- */
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(244,250,249,0.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; gap:20px; }
+  .logo{ font-family:'Outfit'; font-weight:700; font-size:1.4rem; display:flex; align-items:center; gap:9px; color:var(--teal-dark); }
+  .logo svg{ width:26px; height:26px; stroke:var(--coral); }
+  nav.main-nav{ display:flex; gap:26px; }
+  nav.main-nav a{ font-size:.85rem; color:var(--muted); font-weight:600; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--teal-dark); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:15px 32px; border-bottom:1px solid var(--line); font-size:.95rem; font-weight:600; }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
+
+  .section-head{ max-width:600px; margin-bottom:50px; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--coral-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.8rem,3vw,2.3rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1rem; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Hero : photo encadrée + badge flottant ---- */
+  .hero{ padding:64px 0 88px; }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center; }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--coral-dark); display:block; margin-bottom:18px; }
+  .hero h1{ font-size:clamp(2.1rem,4vw,3rem); margin-bottom:20px; color:var(--teal-dark); }
+  .hero p.lead{ color:var(--muted); font-size:1.02rem; margin-bottom:30px; max-width:44ch; }
+  .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+  .hero-photo-wrap{ position:relative; }
+  .hero-photo{ border-radius:28px; overflow:hidden; box-shadow:0 40px 70px -32px rgba(14,124,113,0.4); }
+  .hero-photo img{ width:100%; aspect-ratio:4/5; object-fit:cover; display:block; }
+  .hero-badge{ position:absolute; left:-22px; bottom:36px; background:#fff; border-radius:16px; padding:16px 22px; box-shadow:0 20px 40px -16px rgba(22,48,43,0.3); display:flex; align-items:center; gap:12px; }
+  .hero-badge .stars{ color:var(--coral); font-size:.9rem; letter-spacing:1px; }
+  .hero-badge strong{ display:block; font-family:'Outfit'; font-size:1.15rem; color:var(--teal-dark); }
+  .hero-badge span{ font-size:.72rem; color:var(--muted); }
+
+  /* ---- Schéma dentaire interactif ---- */
+  .tooth-row{ display:flex; justify-content:center; gap:16px; margin-bottom:40px; flex-wrap:wrap; }
+  .tooth-btn{ display:flex; flex-direction:column; align-items:center; gap:9px; background:none; border:none; cursor:pointer; padding:10px 6px; border-radius:16px; transition:all .2s; font-family:'Inter'; }
+  .tooth-btn:nth-child(odd){ transform:translateY(-10px); }
+  .tooth-btn:hover{ background:var(--bg-alt); }
+  .tooth-icon{ width:54px; height:62px; display:flex; align-items:center; justify-content:center; background:var(--white); border:2px solid var(--line); border-radius:16px 16px 22px 22px; transition:all .2s; }
+  .tooth-icon svg{ width:26px; height:26px; stroke:var(--teal); transition:stroke .2s; }
+  .tooth-btn.active .tooth-icon{ border-color:var(--teal); background:var(--teal); }
+  .tooth-btn.active .tooth-icon svg{ stroke:#fff; }
+  .tooth-label{ font-family:'IBM Plex Mono'; font-size:.68rem; color:var(--muted); text-align:center; }
+  .tooth-btn.active .tooth-label{ color:var(--teal-dark); font-weight:700; }
+  .tooth-info{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:38px 36px; max-width:640px; margin:0 auto; text-align:center; }
+  .tooth-info-icon{ width:52px; height:52px; border-radius:14px; background:var(--bg-alt); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+  .tooth-info-icon svg{ width:26px; height:26px; stroke:var(--coral); }
+  .tooth-info h3{ font-size:1.35rem; margin-bottom:10px; color:var(--teal-dark); }
+  .tooth-info p{ color:var(--muted); font-size:.95rem; margin-bottom:18px; }
+  .tooth-info-price{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--ink); font-size:1rem; }
+
+  /* ---- Parcours de soin : timeline verticale alternée ---- */
+  .parcours-section{ background:var(--bg-alt); }
+  .timeline{ position:relative; max-width:760px; margin:0 auto; }
+  .timeline::before{ content:''; position:absolute; left:50%; top:6px; bottom:6px; width:2px; background:var(--line); transform:translateX(-50%); }
+  .tl-step{ position:relative; display:grid; grid-template-columns:1fr 56px 1fr; align-items:center; margin-bottom:44px; }
+  .tl-step:last-child{ margin-bottom:0; }
+  .tl-content{ background:var(--white); border:1px solid var(--line); border-radius:14px; padding:22px 24px; }
+  .tl-content h4{ font-size:1.02rem; margin-bottom:6px; color:var(--teal-dark); }
+  .tl-content p{ font-size:.86rem; color:var(--muted); }
+  .tl-step.odd .tl-content{ grid-column:1; text-align:right; }
+  .tl-step.even .tl-content{ grid-column:3; }
+  .tl-dot{ grid-column:2; width:42px; height:42px; border-radius:50%; background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Outfit'; font-weight:700; font-size:.95rem; justify-self:center; z-index:1; }
+
+  /* ---- Cabinet / réassurance ---- */
+  .cabinet-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .cabinet-photo{ border-radius:var(--radius); overflow:hidden; }
+  .cabinet-photo img{ width:100%; aspect-ratio:4/3; object-fit:cover; }
+  .reassure-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+  .reassure-badge{ display:flex; align-items:center; gap:8px; background:var(--bg-alt); border-radius:999px; padding:10px 16px; font-size:.8rem; font-weight:600; color:var(--teal-dark); }
+  .reassure-badge svg{ width:15px; height:15px; stroke:var(--teal); }
+
+  /* ---- Équipe : cartes façon certificat ---- */
+  .team-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .team-card{ background:var(--white); border:1px solid var(--line); border-radius:16px; overflow:hidden; position:relative; }
+  .team-photo{ aspect-ratio:4/5; overflow:hidden; }
+  .team-photo img{ width:100%; height:100%; object-fit:cover; }
+  .team-seal{ position:absolute; top:14px; right:14px; width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.94); display:flex; align-items:center; justify-content:center; box-shadow:0 8px 16px -8px rgba(0,0,0,0.35); }
+  .team-seal svg{ width:18px; height:18px; stroke:var(--coral); }
+  .team-body{ padding:20px 22px; border-top:3px solid var(--teal); }
+  .team-body h4{ font-size:1.05rem; margin-bottom:2px; }
+  .team-role{ color:var(--teal-dark); font-size:.82rem; font-weight:600; margin-bottom:10px; }
+  .team-diploma{ font-family:'IBM Plex Mono'; font-size:.7rem; color:var(--muted); }
+
+  /* ---- Avis ---- */
+  .avis-panel{ display:grid; grid-template-columns:.7fr 1.3fr; gap:50px; align-items:center; background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:44px 42px; }
+  .avis-rating{ text-align:center; border-right:1px solid var(--line); padding-right:40px; }
+  .avis-rating .big-num{ font-family:'Outfit'; font-weight:700; font-size:3.2rem; color:var(--teal-dark); }
+  .avis-rating .stars{ color:var(--coral); font-size:1.05rem; margin:8px 0; letter-spacing:1px; }
+  .avis-rating .count{ font-size:.8rem; color:var(--muted); }
+  .avis-quotes{ display:flex; flex-direction:column; gap:22px; }
+  .avis-quote{ border-left:3px solid var(--teal); padding-left:18px; }
+  .avis-quote p{ font-size:.95rem; margin-bottom:8px; }
+  .avis-quote .name{ font-size:.8rem; font-weight:700; color:var(--muted); }
+
+  /* ---- Contact ---- */
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--line); border-radius:var(--radius); overflow:hidden; }
+  .contact-col{ background:var(--white); padding:44px 40px; }
+  .contact-col.dark{ background:var(--teal-dark); color:#fff; }
+  .contact-info-list{ display:flex; flex-direction:column; gap:16px; margin:24px 0 28px; }
+  .contact-info-list .lbl{ font-family:'IBM Plex Mono'; font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+  .contact-col.dark .contact-info-list .lbl{ color:rgba(255,255,255,0.5); }
+  .contact-info-list .val{ font-size:.96rem; }
+  .checklist{ display:flex; flex-direction:column; gap:14px; margin-top:20px; }
+  .checklist-item{ display:flex; align-items:flex-start; gap:10px; font-size:.9rem; color:rgba(255,255,255,0.85); }
+  .checklist-item svg{ width:18px; height:18px; stroke:var(--mint); flex-shrink:0; margin-top:1px; }
+
+  footer{ padding:40px 0 30px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-links{ display:flex; gap:20px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--coral-dark); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    header .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero-grid{ grid-template-columns:1fr; gap:56px; }
+    .hero-photo-wrap{ order:-1; max-width:360px; margin:0 auto; }
+    .cabinet-grid{ grid-template-columns:1fr; gap:34px; }
+    .team-grid{ grid-template-columns:1fr 1fr; }
+    .avis-panel{ grid-template-columns:1fr; }
+    .avis-rating{ border-right:none; border-bottom:1px solid var(--line); padding-right:0; padding-bottom:24px; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .timeline::before{ left:20px; }
+    .tl-step{ grid-template-columns:40px 1fr; }
+    .tl-dot{ grid-column:1; width:36px; height:36px; font-size:.82rem; }
+    .tl-step.odd .tl-content, .tl-step.even .tl-content{ grid-column:2; text-align:left; }
+    section{ padding:66px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .team-grid{ grid-template-columns:1fr; }
+    .hero-badge{ position:static; margin-top:16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Dentalys n'est pas un vrai cabinet, la prise de rendez-vous n'est pas fonctionnelle.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="nav-row">
+    <a href="#" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5c-1.5-1.5-3.5-2-5-1-2 1.3-2 4-1.5 6.5.4 2 1.5 7 2.5 9 .6 1.2 1.5 1.5 2 0 .5-1.5.5-4 2-4s1.5 2.5 2 4c.5 1.5 1.4 1.2 2 0 1-2 2.1-7 2.5-9 .5-2.5.5-5.2-1.5-6.5-1.5-1-3.5-.5-5 1z"/></svg>Dentalys</a>
+    <nav class="main-nav">
+      <a href="#soins">Nos soins</a>
+      <a href="#parcours">Votre parcours</a>
+      <a href="#cabinet">Le cabinet</a>
+      <a href="#equipe">Équipe</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Prendre rendez-vous</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#soins">Nos soins</a>
+    <a href="#parcours">Votre parcours</a>
+    <a href="#cabinet">Le cabinet</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#contact">Prendre rendez-vous</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <span class="eyebrow">Cabinet dentaire — soins &amp; esthétique du sourire</span>
+      <h1>Prendre soin de votre sourire, sans appréhension.</h1>
+      <p class="lead">Consultations, soins et esthétique dentaire, expliqués simplement à chaque étape. Un cabinet pensé pour mettre les patients les plus anxieux à l'aise.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Prendre rendez-vous</a>
+        <a class="btn btn-ghost" href="#soins">Découvrir nos soins</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap reveal in">
+      <div class="hero-photo"><img src="dentalys-hero.jpg" alt="Dentiste réalisant un soin dans un cabinet lumineux" width="1000" height="1100"></div>
+      <div class="hero-badge">
+        <div>
+          <div class="stars">★★★★★</div>
+          <strong>4.9 / 5</strong>
+          <span>Sur 320 avis patients</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="soins">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Nos soins</span>
+      <h2>Cliquez sur une dent, découvrez le soin</h2>
+      <p>Chaque zone de la bouche correspond à des soins spécifiques — cliquez pour en savoir plus.</p>
+    </div>
+    <div class="tooth-row reveal" id="toothRow">
+      <button class="tooth-btn active" type="button" data-tooth="incisives">
+        <div class="tooth-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2 0-4 1-4 4 0 2 .8 5 1.5 7 .4 1 1 1.3 1.5 0 .4-1 .3-2.5 1-2.5s.6 1.5 1 2.5c.5 1.3 1.1 1 1.5 0 .7-2 1.5-5 1.5-7 0-3-2-4-4-4z"/></svg></div>
+        <span class="tooth-label">Incisives</span>
+      </button>
+      <button class="tooth-btn" type="button" data-tooth="canines">
+        <div class="tooth-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2 0-4 1-4 4 0 2 .8 5 1.5 7 .4 1 1 1.3 1.5 0 .4-1 .3-2.5 1-2.5s.6 1.5 1 2.5c.5 1.3 1.1 1 1.5 0 .7-2 1.5-5 1.5-7 0-3-2-4-4-4z"/></svg></div>
+        <span class="tooth-label">Canines</span>
+      </button>
+      <button class="tooth-btn" type="button" data-tooth="premolaires">
+        <div class="tooth-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2 0-4 1-4 4 0 2 .8 5 1.5 7 .4 1 1 1.3 1.5 0 .4-1 .3-2.5 1-2.5s.6 1.5 1 2.5c.5 1.3 1.1 1 1.5 0 .7-2 1.5-5 1.5-7 0-3-2-4-4-4z"/></svg></div>
+        <span class="tooth-label">Prémolaires</span>
+      </button>
+      <button class="tooth-btn" type="button" data-tooth="molaires">
+        <div class="tooth-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2 0-4 1-4 4 0 2 .8 5 1.5 7 .4 1 1 1.3 1.5 0 .4-1 .3-2.5 1-2.5s.6 1.5 1 2.5c.5 1.3 1.1 1 1.5 0 .7-2 1.5-5 1.5-7 0-3-2-4-4-4z"/></svg></div>
+        <span class="tooth-label">Molaires</span>
+      </button>
+      <button class="tooth-btn" type="button" data-tooth="sagesse">
+        <div class="tooth-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-2 0-4 1-4 4 0 2 .8 5 1.5 7 .4 1 1 1.3 1.5 0 .4-1 .3-2.5 1-2.5s.6 1.5 1 2.5c.5 1.3 1.1 1 1.5 0 .7-2 1.5-5 1.5-7 0-3-2-4-4-4z"/></svg></div>
+        <span class="tooth-label">Sagesse</span>
+      </button>
+      <button class="tooth-btn" type="button" data-tooth="gencives">
+        <div class="tooth-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13c0-5 3.5-9 8-9s8 4 8 9c0 2-1 3-2 3-1.5 0-1.5-2-3-2s-1.5 2-3 2-1.5-2-3-2-1.5 2-3 2c-1 0-2-1-2-3z"/></svg></div>
+        <span class="tooth-label">Gencives</span>
+      </button>
+    </div>
+    <div class="tooth-info reveal" id="toothInfo">
+      <div class="tooth-info-icon" id="toothIcon"></div>
+      <h3 id="toothTitle">Incisives</h3>
+      <p id="toothDesc">Blanchiment dentaire et facettes esthétiques pour un sourire plus lumineux et harmonieux.</p>
+      <div class="tooth-info-price" id="toothPrice">Dès 250 €</div>
+    </div>
+  </div>
+</section>
+
+<section class="parcours-section" id="parcours">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Votre parcours</span>
+      <h2>Quatre étapes, à votre rythme</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-step odd">
+        <div class="tl-content"><h4>1. Premier rendez-vous &amp; bilan</h4><p>Examen complet, radiographies si nécessaire, et écoute de vos attentes.</p></div>
+        <div class="tl-dot">1</div>
+        <div></div>
+      </div>
+      <div class="tl-step even">
+        <div></div>
+        <div class="tl-dot">2</div>
+        <div class="tl-content"><h4>2. Plan de traitement personnalisé</h4><p>Un devis détaillé et un calendrier de soins expliqués avant toute intervention.</p></div>
+      </div>
+      <div class="tl-step odd">
+        <div class="tl-content"><h4>3. Soin réalisé en douceur</h4><p>Anesthésie adaptée, information à chaque étape, rythme respecté.</p></div>
+        <div class="tl-dot">3</div>
+        <div></div>
+      </div>
+      <div class="tl-step even">
+        <div></div>
+        <div class="tl-dot">4</div>
+        <div class="tl-content"><h4>4. Suivi &amp; contrôle</h4><p>Rendez-vous de contrôle et conseils d'entretien adaptés à votre sourire.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cabinet">
+  <div class="wrap cabinet-grid">
+    <div class="cabinet-photo reveal"><img src="dentalys-calm.jpg" alt="Patient détendu et souriant en cabinet dentaire" loading="lazy"></div>
+    <div class="reveal">
+      <span class="tag" style="font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--coral-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">Le cabinet</span>
+      <h2 style="margin-bottom:16px;">Même la peur du dentiste a sa place ici</h2>
+      <p style="color:var(--muted); margin-bottom:14px;">Beaucoup de nos patients arrivent anxieux — c'est normal, et nous adaptons chaque rendez-vous en conséquence : rythme plus lent, explications avant chaque geste, pauses possibles à tout moment.</p>
+      <p style="color:var(--muted);">Notre cabinet a été pensé pour être lumineux et calme, loin de l'image clinique habituelle.</p>
+      <div class="reassure-badges">
+        <span class="reassure-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9C.9 8.5 2 5 5.5 5c2 0 3.3 1.1 4 2.2C10.2 6.1 11.5 5 13.5 5 17 5 18.1 8.5 16.5 12c-2.5 4.5-4.5 9-4.5 9z"/></svg>Sédation possible</span>
+        <span class="reassure-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Explications à chaque étape</span>
+        <span class="reassure-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Matériel stérile à usage unique</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="equipe" style="background:var(--bg-alt);">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Notre équipe</span>
+      <h2>Des praticiens diplômés, à votre écoute</h2>
+    </div>
+    <div class="team-grid reveal-stagger reveal">
+      <div class="team-card" style="--i:0">
+        <div class="team-photo"><img src="dentalys-team1.jpg" alt="Dentiste de l'équipe Dentalys" loading="lazy"></div>
+        <div class="team-seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L6 21l6-3 6 3-2.5-7.5"/></svg></div>
+        <div class="team-body">
+          <h4>Dr Elena Marchetti</h4>
+          <div class="team-role">Dentiste généraliste</div>
+          <div class="team-diploma">Diplômée en 2014</div>
+        </div>
+      </div>
+      <div class="team-card" style="--i:1">
+        <div class="team-photo"><img src="dentalys-team2.jpg" alt="Dentiste de l'équipe Dentalys" loading="lazy"></div>
+        <div class="team-seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L6 21l6-3 6 3-2.5-7.5"/></svg></div>
+        <div class="team-body">
+          <h4>Dr Karim Haddad</h4>
+          <div class="team-role">Orthodontiste</div>
+          <div class="team-diploma">Diplômé en 2011</div>
+        </div>
+      </div>
+      <div class="team-card" style="--i:2">
+        <div class="team-photo"><img src="dentalys-team3.jpg" alt="Dentiste de l'équipe Dentalys" loading="lazy"></div>
+        <div class="team-seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L6 21l6-3 6 3-2.5-7.5"/></svg></div>
+        <div class="team-body">
+          <h4>Dr Julia Novak</h4>
+          <div class="team-role">Esthétique dentaire</div>
+          <div class="team-diploma">Diplômée en 2017</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Avis patients</span>
+      <h2>Ce que nos patients en disent</h2>
+    </div>
+    <div class="avis-panel reveal">
+      <div class="avis-rating">
+        <div class="big-num">4.9</div>
+        <div class="stars">★★★★★</div>
+        <div class="count">320 avis vérifiés</div>
+      </div>
+      <div class="avis-quotes">
+        <div class="avis-quote"><p>Premier cabinet où je n'ai pas eu peur pendant un détartrage. On m'a expliqué chaque geste avant de le faire.</p><div class="name">Léna V. — Avis vérifié</div></div>
+        <div class="avis-quote"><p>Mon fils est terrifié par le dentiste d'habitude — ici il est ressorti en souriant. L'équipe est incroyable avec les enfants.</p><div class="name">Marc T. — Avis vérifié</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Prenez rendez-vous</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-col">
+        <h3 style="font-size:1.15rem; margin-bottom:6px;">Infos pratiques</h3>
+        <div class="contact-info-list">
+          <div><span class="lbl">Adresse</span><span class="val">6 avenue de la Santé, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+          <div><span class="lbl">Email</span><span class="val">contact@dentalys-exemple.lu</span></div>
+          <div><span class="lbl">Horaires</span><span class="val">Lundi — Vendredi, 8h30 – 18h30</span></div>
+        </div>
+        <a class="btn btn-primary" href="tel:+35200000000">Appeler le cabinet</a>
+      </div>
+      <div class="contact-col dark">
+        <h3 style="font-size:1.15rem; margin-bottom:6px; color:#fff;">Premier rendez-vous ?</h3>
+        <p style="color:rgba(255,255,255,0.65); font-size:.88rem;">Pensez à apporter :</p>
+        <div class="checklist">
+          <div class="checklist-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Votre carte d'assurance maladie</div>
+          <div class="checklist-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Vos anciennes radiographies, si vous en avez</div>
+          <div class="checklist-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>La liste de vos traitements en cours</div>
+          <div class="checklist-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Arriver 10 minutes avant l'heure prévue</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 DENTALYS — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#soins">Soins</a>
+        <a href="#parcours">Parcours</a>
+        <a href="#equipe">Équipe</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--coral-dark);">MatMax Intelligence</a> — Dentalys n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Schéma dentaire interactif
+  (function(){
+    var TEETH = {
+      incisives: { title:"Incisives", desc:"Blanchiment dentaire et facettes esthétiques pour un sourire plus lumineux et harmonieux.", price:"Dès 250 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M12 2a7 7 0 00-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0012 2z"/></svg>' },
+      canines: { title:"Canines", desc:"Détartrage et traitement des caries, pour préserver des dents naturellement plus exposées.", price:"Dès 80 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>' },
+      premolaires: { title:"Prémolaires", desc:"Pose de couronnes et d'inlays/onlays pour restaurer une dent abîmée en profondeur.", price:"Dès 450 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h2"/></svg>' },
+      molaires: { title:"Molaires", desc:"Traitement de racine (dévitalisation) et plombages pour les dents les plus sollicitées.", price:"Dès 120 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>' },
+      sagesse: { title:"Dents de sagesse", desc:"Extraction chirurgicale, sous anesthésie locale ou sédation selon votre confort.", price:"Dès 180 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>' },
+      gencives: { title:"Gencives", desc:"Soins parodontaux pour traiter et prévenir les inflammations des gencives.", price:"Dès 90 €", icon:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13c0-5 3.5-9 8-9s8 4 8 9c0 2-1 3-2 3-1.5 0-1.5-2-3-2s-1.5 2-3 2-1.5-2-3-2-1.5 2-3 2c-1 0-2-1-2-3z"/></svg>' }
+    };
+    var row = document.getElementById('toothRow');
+    var titleEl = document.getElementById('toothTitle');
+    var descEl = document.getElementById('toothDesc');
+    var priceEl = document.getElementById('toothPrice');
+    var iconEl = document.getElementById('toothIcon');
+
+    function render(key){
+      var t = TEETH[key];
+      if(!t) return;
+      titleEl.textContent = t.title;
+      descEl.textContent = t.desc;
+      priceEl.textContent = t.price;
+      iconEl.innerHTML = t.icon;
+    }
+    render('incisives');
+
+    if(row){
+      row.querySelectorAll('.tooth-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          row.querySelectorAll('.tooth-btn').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          render(btn.getAttribute('data-tooth'));
+        });
+      });
+    }
+  })();
+</script>
+</body>
+</html>
