@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour un paysagiste, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>Verdura Paysage — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#F7F4EC; --bg-alt:#EFEADB; --ink:#23281F; --muted:#63695A; --dim:#AEB3A0; --line:#E1DBC8;
+    --forest:#1F4D3A; --forest-dark:#153A2B; --terracotta:#C4693A; --terracotta-dark:#A34F27; --moss:#7A9B76;
+    --sun:#D9A441; --bark:#8C5A3C; --sky:#5B8AA6; --cream:#FFFDF6; --white:#FFFFFF;
+    --radius:16px; --maxw:1180px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Comfortaa',sans-serif; font-weight:700; line-height:1.25; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:96px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
+
+  .demo-banner{ background:var(--forest-dark); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:var(--sun); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:999px; font-size:.85rem; font-weight:700; border:1px solid transparent; cursor:pointer; font-family:'Inter'; transition:all .2s; }
+  .btn-primary{ background:var(--forest); color:#fff; }
+  .btn-primary:hover{ background:var(--forest-dark); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--forest); color:var(--forest); }
+  .btn svg{ width:17px; height:17px; }
+
+  /* ---- Header ---- */
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(247,244,236,0.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; gap:20px; }
+  .logo{ font-family:'Comfortaa'; font-weight:700; font-size:1.35rem; display:flex; align-items:center; gap:9px; color:var(--forest-dark); }
+  .logo svg{ width:26px; height:26px; stroke:var(--terracotta); }
+  nav.main-nav{ display:flex; gap:26px; }
+  nav.main-nav a{ font-size:.85rem; color:var(--muted); font-weight:600; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--forest-dark); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:15px 32px; border-bottom:1px solid var(--line); font-size:.95rem; font-weight:600; }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
+
+  .section-head{ max-width:600px; margin-bottom:50px; }
+  .section-head .tag{ font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--terracotta-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.8rem,3vw,2.3rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1rem; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Hero : photo plein cadre + panneau organique ---- */
+  .hero{ position:relative; min-height:88vh; display:flex; align-items:flex-end; overflow:hidden; padding:0; }
+  .hero-media{ position:absolute; inset:0; }
+  .hero-media img{ width:100%; height:100%; object-fit:cover; }
+  .hero-media::after{ content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(21,58,43,0.15) 0%, rgba(21,58,43,0) 45%); }
+  .hero-wrap{ position:relative; z-index:2; width:100%; padding-bottom:60px; }
+  .hero-panel{ max-width:580px; background:rgba(255,253,246,0.94); padding:52px 56px; border-radius:100px 26px 100px 26px / 54px 100px 54px 100px; box-shadow:0 30px 60px -28px rgba(21,58,43,0.4); }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--terracotta-dark); display:block; margin-bottom:16px; }
+  .hero h1{ font-size:clamp(2rem,3.8vw,2.7rem); margin-bottom:18px; color:var(--forest-dark); }
+  .hero p.lead{ color:var(--muted); font-size:1rem; margin-bottom:28px; max-width:42ch; }
+  .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+
+  /* ---- Styles de jardin ---- */
+  .style-tabs{ display:flex; gap:10px; margin-bottom:40px; flex-wrap:wrap; }
+  .style-tab{ padding:12px 22px; border-radius:999px; border:1px solid var(--line); background:var(--white); font-weight:600; font-size:.86rem; cursor:pointer; color:var(--muted); transition:all .2s; font-family:'Inter'; }
+  .style-tab:hover{ border-color:var(--forest); color:var(--forest-dark); }
+  .style-tab.active{ background:var(--forest); border-color:var(--forest); color:#fff; }
+  .style-panel{ display:grid; grid-template-columns:1fr 1fr; gap:54px; align-items:center; }
+  .style-photo{ border-radius:var(--radius); overflow:hidden; }
+  .style-photo img{ width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+  .style-title{ font-size:1.6rem; margin-bottom:14px; color:var(--forest-dark); }
+  .style-desc{ color:var(--muted); margin-bottom:22px; }
+  .style-tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .style-tag{ background:var(--bg-alt); color:var(--forest-dark); font-size:.78rem; padding:8px 15px; border-radius:999px; font-family:'IBM Plex Mono'; }
+
+  /* ---- Calendrier d'entretien ---- */
+  .cal-section{ background:var(--bg-alt); }
+  .cal-scroll{ overflow-x:auto; padding-bottom:8px; }
+  .cal-grid{ display:grid; grid-template-columns:170px repeat(12,52px); gap:5px; min-width:800px; }
+  .cal-head-cell{ font-family:'IBM Plex Mono'; font-size:.7rem; color:var(--dim); text-align:center; padding:8px 0; text-transform:uppercase; }
+  .cal-row-label{ display:flex; align-items:center; gap:10px; font-size:.86rem; font-weight:600; cursor:pointer; padding:10px 8px; border-radius:8px; transition:background .15s; }
+  .cal-row-label:hover{ background:rgba(0,0,0,0.03); }
+  .cal-row-dot{ width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .cal-cell{ height:32px; border-radius:6px; background:var(--white); border:1px solid var(--line); align-self:center; }
+  .cal-cell.on{ border-color:transparent; }
+  .cal-row.dim .cal-cell.on{ opacity:.25; }
+  .cal-row.dim .cal-row-label{ opacity:.4; }
+  .cal-legend-note{ margin-top:20px; font-size:.82rem; color:var(--dim); font-style:italic; }
+
+  /* ---- Prestations ---- */
+  .presta-list{ display:grid; grid-template-columns:1fr 1fr; gap:16px 40px; }
+  .presta-item{ display:flex; align-items:flex-start; gap:14px; padding:18px 0; border-bottom:1px solid var(--line); }
+  .presta-item svg{ width:22px; height:22px; stroke:var(--forest); flex-shrink:0; margin-top:2px; }
+  .presta-item h4{ font-size:1rem; font-family:'Inter'; font-weight:700; margin-bottom:3px; }
+  .presta-item p{ font-size:.85rem; color:var(--muted); }
+
+  /* ---- Équipe ---- */
+  .equipe-grid{ display:grid; grid-template-columns:.9fr 1.1fr; gap:56px; align-items:center; }
+  .equipe-photo{ border-radius:var(--radius); overflow:hidden; }
+  .equipe-photo img{ width:100%; aspect-ratio:4/3; object-fit:cover; }
+  .equipe-stats{ display:flex; gap:36px; margin-top:26px; flex-wrap:wrap; }
+  .equipe-stat .num{ font-family:'Comfortaa'; font-weight:700; font-size:1.7rem; color:var(--forest); }
+  .equipe-stat .lbl{ font-size:.78rem; color:var(--muted); margin-top:2px; }
+
+  /* ---- Avis ---- */
+  .avis-grid{ display:grid; grid-template-columns:1fr 1fr; gap:36px; }
+  .avis-card{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:30px 28px; }
+  .leaf-rating{ display:flex; gap:4px; margin-bottom:14px; }
+  .leaf-rating svg{ width:16px; height:16px; fill:var(--moss); stroke:none; }
+  .avis-card p{ font-size:.96rem; color:var(--ink); margin-bottom:16px; }
+  .avis-name{ font-weight:700; font-size:.86rem; }
+  .avis-role{ font-size:.78rem; color:var(--muted); }
+
+  /* ---- Contact : fond clair ---- */
+  .contact-section{ background:var(--forest); color:#fff; border-radius:40px; max-width:calc(var(--maxw) - 64px); margin:0 auto; }
+  .contact-inner{ padding:64px 60px; text-align:center; }
+  .contact-section .tag{ color:var(--sun); }
+  .contact-section h2{ color:#fff; margin-bottom:16px; }
+  .contact-section p.sub{ color:rgba(255,255,255,0.75); max-width:48ch; margin:0 auto 34px; }
+  .contact-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:40px; }
+  .btn-on-forest{ background:#fff; color:var(--forest-dark); }
+  .btn-on-forest:hover{ background:var(--sun); color:var(--forest-dark); }
+  .btn-ghost-on-forest{ border-color:rgba(255,255,255,0.35); color:#fff; background:rgba(255,255,255,0.06); }
+  .btn-ghost-on-forest:hover{ background:rgba(255,255,255,0.14); }
+  .contact-info-row{ display:flex; justify-content:center; gap:44px; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.18); padding-top:30px; }
+  .contact-info-row .lbl{ font-family:'IBM Plex Mono'; font-size:.68rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:4px; }
+  .contact-info-row .val{ font-size:.94rem; }
+
+  footer{ padding:40px 0 30px; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-links{ display:flex; gap:20px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--terracotta-dark); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    header .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero-panel{ max-width:100%; padding:40px 34px; border-radius:48px 20px 48px 20px / 34px 48px 34px 48px; }
+    .style-panel{ grid-template-columns:1fr; gap:30px; }
+    .presta-list{ grid-template-columns:1fr; }
+    .equipe-grid{ grid-template-columns:1fr; gap:32px; }
+    .avis-grid{ grid-template-columns:1fr; }
+    .contact-inner{ padding:48px 28px; }
+    .contact-section{ border-radius:28px; }
+    section{ padding:66px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — Verdura Paysage n'est pas une vraie entreprise, les boutons ne sont pas fonctionnels.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="nav-row">
+    <a href="#" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/><path d="M2 21c0-9 4-13 4-13"/></svg>Verdura Paysage</a>
+    <nav class="main-nav">
+      <a href="#styles">Styles de jardin</a>
+      <a href="#calendrier">Calendrier</a>
+      <a href="#prestations">Prestations</a>
+      <a href="#equipe">Équipe</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Devis gratuit</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#styles">Styles de jardin</a>
+    <a href="#calendrier">Calendrier</a>
+    <a href="#prestations">Prestations</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#contact">Devis gratuit</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-media"><img src="verdura-hero.jpg" alt="Paysagiste taillant une haie au coucher du soleil" width="1920" height="1200"></div>
+  <div class="wrap hero-wrap">
+    <div class="hero-panel reveal in">
+      <span class="eyebrow">Conception &amp; entretien de jardins</span>
+      <h1>Un jardin qui vous ressemble, à chaque saison.</h1>
+      <p class="lead">De la conception à l'entretien régulier, Verdura Paysage imagine et prend soin de jardins sur mesure, adaptés à votre terrain et à votre rythme de vie.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#styles">Découvrir nos styles</a>
+        <a class="btn btn-ghost" href="#contact">Demander un devis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="styles">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Styles de jardin</span>
+      <h2>Quel jardin vous fait rêver ?</h2>
+      <p>Chaque style est une base de travail — nous l'adaptons toujours à votre terrain, votre exposition et votre budget.</p>
+    </div>
+    <div class="style-tabs reveal" id="styleTabs">
+      <button class="style-tab active" type="button" data-style="med">Méditerranéen</button>
+      <button class="style-tab" type="button" data-style="jap">Japonais</button>
+      <button class="style-tab" type="button" data-style="eng">Anglais</button>
+      <button class="style-tab" type="button" data-style="pot">Potager</button>
+    </div>
+    <div class="style-panel reveal">
+      <div class="style-photo"><img id="stylePhoto" src="verdura-mediterraneen.jpg" alt="Jardin méditerranéen avec olivier et lavande"></div>
+      <div>
+        <h3 class="style-title" id="styleTitle">Jardin méditerranéen</h3>
+        <p class="style-desc" id="styleDesc">Oliviers, lavandes et graminées argentées, sur un sol drainant en gravier clair. Un jardin sobre, résistant à la sécheresse, qui demande peu d'arrosage une fois installé.</p>
+        <div class="style-tags" id="styleTags">
+          <span class="style-tag">Olivier</span>
+          <span class="style-tag">Lavande</span>
+          <span class="style-tag">Romarin</span>
+          <span class="style-tag">Gravier clair</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cal-section" id="calendrier">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Calendrier d'entretien</span>
+      <h2>Un jardin suit son rythme, nous aussi</h2>
+      <p>Cliquez sur une prestation pour voir à quelle période de l'année elle intervient.</p>
+    </div>
+    <div class="cal-scroll reveal">
+      <div class="cal-grid" id="calGrid">
+        <div></div>
+        <div class="cal-head-cell">Jan</div><div class="cal-head-cell">Fév</div><div class="cal-head-cell">Mar</div><div class="cal-head-cell">Avr</div>
+        <div class="cal-head-cell">Mai</div><div class="cal-head-cell">Jun</div><div class="cal-head-cell">Jul</div><div class="cal-head-cell">Aoû</div>
+        <div class="cal-head-cell">Sep</div><div class="cal-head-cell">Oct</div><div class="cal-head-cell">Nov</div><div class="cal-head-cell">Déc</div>
+
+        <div class="cal-row-label"><span class="cal-row-dot" style="background:var(--forest);"></span>Tonte de pelouse</div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell on" style="background:var(--forest);"></div><div class="cal-cell on" style="background:var(--forest);"></div><div class="cal-cell on" style="background:var(--forest);"></div>
+        <div class="cal-cell on" style="background:var(--forest);"></div><div class="cal-cell on" style="background:var(--forest);"></div><div class="cal-cell on" style="background:var(--forest);"></div>
+        <div class="cal-cell on" style="background:var(--forest);"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+
+        <div class="cal-row-label"><span class="cal-row-dot" style="background:var(--terracotta);"></span>Taille de haies</div>
+        <div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell on" style="background:var(--terracotta);"></div><div class="cal-cell on" style="background:var(--terracotta);"></div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell on" style="background:var(--terracotta);"></div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+
+        <div class="cal-row-label"><span class="cal-row-dot" style="background:var(--sky);"></span>Élagage d'arbres</div>
+        <div class="cal-cell on" style="background:var(--sky);"></div><div class="cal-cell on" style="background:var(--sky);"></div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell on" style="background:var(--sky);"></div><div class="cal-cell on" style="background:var(--sky);"></div>
+
+        <div class="cal-row-label"><span class="cal-row-dot" style="background:var(--sun);"></span>Plantations &amp; massifs</div>
+        <div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell on" style="background:var(--sun);"></div><div class="cal-cell on" style="background:var(--sun);"></div><div class="cal-cell on" style="background:var(--sun);"></div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell on" style="background:var(--sun);"></div><div class="cal-cell on" style="background:var(--sun);"></div>
+        <div class="cal-cell"></div><div class="cal-cell"></div>
+
+        <div class="cal-row-label"><span class="cal-row-dot" style="background:var(--moss);"></span>Entretien du potager</div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell on" style="background:var(--moss);"></div><div class="cal-cell on" style="background:var(--moss);"></div><div class="cal-cell on" style="background:var(--moss);"></div>
+        <div class="cal-cell on" style="background:var(--moss);"></div><div class="cal-cell on" style="background:var(--moss);"></div><div class="cal-cell on" style="background:var(--moss);"></div>
+        <div class="cal-cell on" style="background:var(--moss);"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+
+        <div class="cal-row-label"><span class="cal-row-dot" style="background:var(--bark);"></span>Nettoyage automnal</div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div><div class="cal-cell"></div>
+        <div class="cal-cell"></div>
+        <div class="cal-cell on" style="background:var(--bark);"></div><div class="cal-cell on" style="background:var(--bark);"></div>
+        <div class="cal-cell"></div>
+      </div>
+    </div>
+    <p class="cal-legend-note">Survolez ou cliquez une prestation pour la mettre en évidence dans le calendrier.</p>
+  </div>
+</section>
+
+<section id="prestations">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Prestations</span>
+      <h2>Tout ce dont votre jardin a besoin</h2>
+    </div>
+    <div class="presta-list reveal-stagger reveal">
+      <div class="presta-item" style="--i:0"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div><h4>Conception de jardins</h4><p>Plan personnalisé selon votre terrain, votre budget et vos envies.</p></div></div>
+      <div class="presta-item" style="--i:1"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div><h4>Entretien régulier</h4><p>Tonte, désherbage et taille, sur passage hebdomadaire ou mensuel.</p></div></div>
+      <div class="presta-item" style="--i:2"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div><h4>Taille &amp; élagage</h4><p>Haies, arbustes et arbres, taillés selon leur période idéale.</p></div></div>
+      <div class="presta-item" style="--i:3"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div><h4>Arrosage automatique</h4><p>Installation et réglage de systèmes d'arrosage économes en eau.</p></div></div>
+      <div class="presta-item" style="--i:4"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div><h4>Création de potagers</h4><p>Carrés potagers, bordures et rotation des cultures sur mesure.</p></div></div>
+      <div class="presta-item" style="--i:5"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg><div><h4>Aménagement extérieur</h4><p>Terrasses, allées et clôtures végétales pour compléter votre jardin.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="equipe" style="background:var(--bg-alt);">
+  <div class="wrap equipe-grid">
+    <div class="equipe-photo reveal"><img src="verdura-about.jpg" alt="Mains plantant de jeunes pousses en terre" loading="lazy"></div>
+    <div class="reveal">
+      <span class="tag" style="font-family:'IBM Plex Mono'; font-size:.74rem; color:var(--terracotta-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">Notre équipe</span>
+      <h2 style="margin-bottom:16px;">Des paysagistes qui connaissent leur terrain</h2>
+      <p style="color:var(--muted); margin-bottom:14px;">Toute l'équipe de Verdura Paysage est formée aux techniques d'entretien raisonné : moins d'arrosage, moins de traitements, plus d'observation. Chaque jardin est pensé pour s'épanouir avec un minimum d'intervention.</p>
+      <p style="color:var(--muted);">Nous travaillons avec des pépinières locales et privilégions les essences adaptées au climat luxembourgeois.</p>
+      <div class="equipe-stats">
+        <div class="equipe-stat"><div class="num">11 ans</div><div class="lbl">d'expérience</div></div>
+        <div class="equipe-stat"><div class="num">180+</div><div class="lbl">jardins entretenus</div></div>
+        <div class="equipe-stat"><div class="num">100%</div><div class="lbl">essences locales</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Avis clients</span>
+      <h2>Ce que nos clients en disent</h2>
+    </div>
+    <div class="avis-grid reveal-stagger reveal">
+      <div class="avis-card" style="--i:0">
+        <div class="leaf-rating">
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+        </div>
+        <p>Le jardin méditerranéen qu'ils ont conçu demande à peine d'entretien l'été. Exactement ce qu'on voulait après des années à trop arroser.</p>
+        <div class="avis-name">Nadia S.</div>
+        <div class="avis-role">Cliente depuis 2023</div>
+      </div>
+      <div class="avis-card" style="--i:1">
+        <div class="leaf-rating">
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 20 9.5 20 16c-2.5-1-4.5-1-6.5 0"/></svg>
+        </div>
+        <p>Le calendrier d'entretien qu'ils m'ont laissé après l'installation du potager est super pratique — je sais exactement quand semer.</p>
+        <div class="avis-name">Paul K.</div>
+        <div class="avis-role">Client depuis 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-section reveal">
+      <div class="contact-inner">
+        <span class="tag" style="font-family:'IBM Plex Mono'; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">Contact</span>
+        <h2>Parlons de votre jardin</h2>
+        <p class="sub">Un premier échange sur place, gratuit et sans engagement, pour comprendre votre terrain et vos envies.</p>
+        <div class="contact-actions">
+          <a class="btn btn-on-forest" href="tel:+35200000000">Appeler maintenant</a>
+          <a class="btn btn-ghost-on-forest" href="mailto:contact@verdura-exemple.lu">Écrire par email</a>
+        </div>
+        <div class="contact-info-row">
+          <div><span class="lbl">Adresse</span><span class="val">4 chemin des Vergers, Luxembourg</span></div>
+          <div><span class="lbl">Téléphone</span><span class="val">+352 00 00 00 00</span></div>
+          <div><span class="lbl">Horaires</span><span class="val">Lundi — Samedi, 8h – 18h</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 VERDURA PAYSAGE — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#styles">Styles</a>
+        <a href="#calendrier">Calendrier</a>
+        <a href="#prestations">Prestations</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--terracotta-dark);">MatMax Intelligence</a> — Verdura Paysage n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Styles de jardin
+  (function(){
+    var STYLES = {
+      med: { img:"verdura-mediterraneen.jpg", alt:"Jardin méditerranéen avec olivier et lavande", title:"Jardin méditerranéen", desc:"Oliviers, lavandes et graminées argentées, sur un sol drainant en gravier clair. Un jardin sobre, résistant à la sécheresse, qui demande peu d'arrosage une fois installé.", tags:["Olivier","Lavande","Romarin","Gravier clair"] },
+      jap: { img:"verdura-japonais.jpg", alt:"Jardin japonais avec lanterne de pierre et érable", title:"Jardin japonais", desc:"Érables, mousses et pierres soigneusement disposées autour d'un point d'eau. Un jardin contemplatif, pensé pour la lenteur et l'observation des saisons.", tags:["Érable","Mousse","Lanterne de pierre","Bassin"] },
+      eng: { img:"verdura-anglais.jpg", alt:"Jardin anglais fleuri devant un cottage", title:"Jardin anglais", desc:"Massifs fleuris généreux, pelouse structurée et haies taillées avec soin. Un style romantique et vivant, qui change de couleur à chaque saison.", tags:["Rosier","Vivaces","Haie taillée","Pelouse"] },
+      pot: { img:"verdura-potager.jpg", alt:"Potager en carrés surélevés", title:"Jardin potager", desc:"Carrés potagers surélevés, allées en gravier et rotation des cultures. Idéal pour allier plaisir du jardinage et légumes de saison.", tags:["Carrés potagers","Aromates","Rotation des cultures","Compost"] }
+    };
+    var tabs = document.getElementById('styleTabs');
+    var photo = document.getElementById('stylePhoto');
+    var title = document.getElementById('styleTitle');
+    var desc = document.getElementById('styleDesc');
+    var tagsBox = document.getElementById('styleTags');
+    if(!tabs) return;
+    tabs.querySelectorAll('.style-tab').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        tabs.querySelectorAll('.style-tab').forEach(function(t){ t.classList.remove('active'); });
+        tab.classList.add('active');
+        var s = STYLES[tab.getAttribute('data-style')];
+        photo.src = s.img;
+        photo.alt = s.alt;
+        title.textContent = s.title;
+        desc.textContent = s.desc;
+        tagsBox.innerHTML = '';
+        s.tags.forEach(function(t){
+          var span = document.createElement('span');
+          span.className = 'style-tag';
+          span.textContent = t;
+          tagsBox.appendChild(span);
+        });
+      });
+    });
+  })();
+
+  // Calendrier d'entretien : mise en évidence au clic
+  (function(){
+    var grid = document.getElementById('calGrid');
+    if(!grid) return;
+    var labels = grid.querySelectorAll('.cal-row-label');
+    var rows = [];
+    labels.forEach(function(label){
+      var cells = [label];
+      var el = label.nextElementSibling;
+      for(var i = 0; i < 12 && el; i++){ cells.push(el); el = el.nextElementSibling; }
+      rows.push(cells);
+    });
+    var activeIndex = -1;
+    labels.forEach(function(label, idx){
+      label.addEventListener('click', function(){
+        activeIndex = (activeIndex === idx) ? -1 : idx;
+        labels.forEach(function(l, i){
+          var wrapCells = rows[i];
+          var shouldDim = activeIndex !== -1 && i !== activeIndex;
+          l.style.opacity = shouldDim ? .35 : 1;
+          for(var c = 1; c < wrapCells.length; c++){
+            wrapCells[c].style.opacity = shouldDim ? .3 : 1;
+          }
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
