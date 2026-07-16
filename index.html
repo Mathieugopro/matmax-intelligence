@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Agence luxembourgeoise de sites web et d'agents IA par abonnement. Sites sur-mesure dès 1800€, agents IA dès 800€, formules mensuelles dès 39€/mois.">
+<meta name="description" content="Agence luxembourgeoise de création de sites web professionnels, par abonnement. En complément : outils IA sur mesure et logos. Sites dès 1800€, formules mensuelles dès 39€/mois.">
 <link rel="canonical" href="https://matmax-intelligence.netlify.app/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="MatMax Intelligence — Sites web & IA, par abonnement">
-<meta property="og:description" content="Agence luxembourgeoise de sites web et d'agents IA par abonnement. Sites sur-mesure dès 1800€, agents IA dès 800€, formules mensuelles dès 39€/mois.">
+<meta property="og:title" content="MatMax Intelligence — Création de sites web professionnels">
+<meta property="og:description" content="Agence luxembourgeoise de création de sites web professionnels, par abonnement. En complément : outils IA sur mesure et logos.">
 <meta property="og:image" content="https://matmax-intelligence.netlify.app/og-image.png">
 <meta property="og:url" content="https://matmax-intelligence.netlify.app/">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MatMax Intelligence — Sites web & IA, par abonnement">
-<meta name="twitter:description" content="Agence luxembourgeoise de sites web et d'agents IA par abonnement. Sites sur-mesure dès 1800€, agents IA dès 800€, formules mensuelles dès 39€/mois.">
+<meta name="twitter:title" content="MatMax Intelligence — Création de sites web professionnels">
+<meta name="twitter:description" content="Agence luxembourgeoise de création de sites web professionnels, par abonnement. En complément : outils IA sur mesure et logos.">
 <meta name="twitter:image" content="https://matmax-intelligence.netlify.app/og-image.png">
-<title>MatMax Intelligence — Sites web &amp; IA, par abonnement</title>
+<title>MatMax Intelligence — Création de sites web professionnels</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,19 +101,21 @@
   .hero p.lead{ margin-top:24px; font-size:1.08rem; color:rgba(255,255,255,.72); max-width:46ch; }
   .hero-actions{ display:flex; gap:16px; margin-top:36px; flex-wrap:wrap; }
 
-  .demo-card{ background:var(--ink-soft); border:1px solid rgba(255,255,255,.12); border-radius:12px; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); overflow:hidden; width:100%; max-width:400px; justify-self:end; }
-  .demo-topbar{ display:flex; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.12); }
-  .demo-topbar .label{ font-family:'Inter'; font-weight:600; font-size:.7rem; letter-spacing:.04em; color:rgba(255,255,255,.5); text-transform:uppercase; }
-  .demo-body{ padding:20px 18px; display:flex; flex-direction:column; gap:12px; min-height:190px; }
-  .demo-msg{ max-width:82%; padding:10px 14px; border-radius:10px; font-size:.87rem; opacity:0; transform:translateY(6px); animation:msgIn .45s ease forwards; }
-  .demo-msg.in{ align-self:flex-start; background:rgba(255,255,255,.1); color:#fff; border-bottom-left-radius:3px; }
-  .demo-msg.out{ align-self:flex-end; background:var(--blue); color:#fff; border-bottom-right-radius:3px; }
-  @keyframes msgIn{ to{ opacity:1; transform:translateY(0); } }
-  .demo-tag{ align-self:flex-end; font-family:'Inter'; font-weight:600; font-size:.68rem; color:rgba(255,255,255,.4); opacity:0; animation:msgIn .4s ease forwards; }
-  .demo-foot{ border-top:1px solid rgba(255,255,255,.12); padding:12px 16px; display:flex; align-items:center; justify-content:space-between; }
-  .demo-foot .status{ display:flex; align-items:center; gap:7px; font-size:.76rem; color:rgba(255,255,255,.6); }
-  .demo-foot .status .pulse{ width:6px; height:6px; border-radius:50%; background:#2ECC71; }
-  .demo-foot .agent{ font-size:.76rem; color:rgba(255,255,255,.4); }
+  .site-mock{ background:#fff; border-radius:12px; box-shadow:0 30px 60px -20px rgba(0,0,0,.5); overflow:hidden; width:100%; max-width:400px; justify-self:end; }
+  .site-mock-bar{ display:flex; align-items:center; padding:12px 16px; background:var(--bg-alt); border-bottom:1px solid var(--line); }
+  .site-mock-url{ font-family:'Inter'; font-weight:600; font-size:.72rem; letter-spacing:.02em; color:var(--dim); background:#fff; border:1px solid var(--line); border-radius:20px; padding:4px 14px; }
+  .site-mock-body{ padding:20px; display:flex; flex-direction:column; gap:16px; }
+  .site-mock-nav{ display:flex; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid var(--line); }
+  .site-mock-dot{ width:14px; height:14px; border-radius:3px; background:var(--blue); flex-shrink:0; }
+  .site-mock-line{ height:7px; border-radius:4px; background:var(--line); }
+  .site-mock-nav .site-mock-line{ margin-left:auto; }
+  .site-mock-nav .site-mock-line:first-of-type{ margin-left:auto; }
+  .site-mock-hero{ display:flex; flex-direction:column; gap:9px; padding:6px 0; }
+  .site-mock-hero .lg{ height:11px; }
+  .site-mock-hero .site-mock-cta{ margin-top:8px; width:88px; height:26px; border-radius:6px; background:var(--blue); }
+  .site-mock-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .site-mock-card{ height:46px; border-radius:6px; background:var(--bg-alt); border:1px solid var(--line); }
+  .w20{ width:20%; } .w40{ width:40%; } .w60{ width:60%; } .w70{ width:70%; }
 
   section{ padding:100px 0; }
   .section-head{ max-width:640px; margin-bottom:56px; }
@@ -125,18 +127,27 @@
   .chevron-divider svg{ width:100%; height:100%; }
 
   /* services */
-  .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
-  .service-card{ background:#fff; padding:38px 32px; position:relative; transition:background .25s; }
+  .services-split{ display:grid; grid-template-columns:1.3fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .service-card{ background:#fff; position:relative; transition:background .25s; }
   .service-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--blue); transform:scaleX(0); transform-origin:left; transition:transform .3s; }
   .service-card:hover::before{ transform:scaleX(1); }
   .service-card:hover{ background:var(--bg-alt); }
-  .service-icon{ width:42px; height:42px; background:var(--blue-soft); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; margin-bottom:22px; }
+  .service-icon{ width:42px; height:42px; background:var(--blue-soft); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; margin-bottom:22px; flex-shrink:0; }
   .service-icon svg{ width:20px; height:20px; }
+  .service-icon.sm{ width:34px; height:34px; margin-bottom:0; }
+  .service-icon.sm svg{ width:16px; height:16px; }
   .service-card h3{ font-size:1.2rem; margin-bottom:12px; }
   .service-card p{ color:var(--muted); font-size:.93rem; margin-bottom:18px; }
   .service-list{ list-style:none; display:flex; flex-direction:column; gap:8px; }
   .service-list li{ font-size:.86rem; color:var(--muted); padding-left:16px; position:relative; }
   .service-list li::before{ content:'—'; position:absolute; left:0; color:var(--blue); }
+  .service-tag{ font-family:'Inter'; font-weight:600; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); display:block; margin-bottom:8px; }
+  .service-main{ padding:38px 36px; }
+  .service-side-col{ display:flex; flex-direction:column; gap:1px; background:var(--line); }
+  .service-side{ padding:26px 28px; display:flex; gap:16px; align-items:flex-start; flex:1; }
+  .service-side h3{ font-size:1.02rem; margin-bottom:6px; }
+  .service-side p{ font-size:.86rem; margin-bottom:0; }
+  @media (max-width:860px){ .services-split{ grid-template-columns:1fr; } }
 
   /* pricing */
   .price-tabs{ display:flex; gap:8px; margin-bottom:36px; flex-wrap:wrap; }
@@ -146,6 +157,8 @@
   .price-panel{ display:none; grid-template-columns:repeat(4,1fr); gap:18px; }
   .price-panel.active{ display:grid; }
   .price-panel.cols-3{ grid-template-columns:repeat(3,1fr); }
+  .price-panel.cols-2{ grid-template-columns:repeat(2,1fr); max-width:700px; }
+  @media (max-width:540px){ .price-panel.cols-2{ grid-template-columns:1fr; } }
   .price-panel-static{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
   @media (max-width:860px){ .price-panel-static{ grid-template-columns:1fr 1fr; } }
   @media (max-width:540px){ .price-panel-static{ grid-template-columns:1fr; } }
@@ -234,7 +247,7 @@
     .hero h1{ font-size:2.1rem; max-width:none; }
     .hero-actions{ flex-direction:column; align-items:stretch; }
     .hero-actions .btn{ justify-content:center; width:100%; }
-    .demo-card{ max-width:100%; justify-self:stretch; margin-top:36px; }
+    .site-mock{ max-width:100%; justify-self:stretch; margin-top:36px; }
   }
 </style>
 </head>
@@ -269,22 +282,36 @@
     </svg>
     <div class="wrap hero-inner">
       <div class="hero-text">
-        <span class="eyebrow reveal in">Luxembourg — Sites web &amp; IA</span>
-        <h1 class="reveal in">Des sites qui convertissent, des <span class="u">outils IA</span> qui travaillent pour vous</h1>
-        <p class="lead reveal in">MatMax Intelligence conçoit des sites web sur mesure et des agents IA pour les entreprises qui veulent gagner du temps, pas en perdre. Un seul abonnement, tout est géré, mis à jour et fait évoluer par nous.</p>
+        <span class="eyebrow reveal in">Luxembourg — Création de sites web</span>
+        <h1 class="reveal in">Des sites web <span class="u">professionnels</span> qui font grandir votre entreprise</h1>
+        <p class="lead reveal in">MatMax Intelligence conçoit et héberge des sites web sur mesure, par abonnement. Selon vos besoins, nous proposons aussi des outils IA sur mesure et des logos, réalisés avec une graphiste partenaire.</p>
         <div class="hero-actions reveal in">
           <a href="#formules" class="btn btn-white">Voir les formules</a>
           <a href="#contact" class="btn btn-ghost">Demander un devis</a>
         </div>
       </div>
-      <div class="demo-card reveal in">
-        <div class="demo-topbar">
-          <span class="label">Agent IA — support client</span>
+      <div class="site-mock reveal in">
+        <div class="site-mock-bar">
+          <span class="site-mock-url">votre-entreprise.lu</span>
         </div>
-        <div class="demo-body" id="demoBody"></div>
-        <div class="demo-foot">
-          <span class="status"><span class="pulse"></span>En ligne</span>
-          <span class="agent">Réponse automatique</span>
+        <div class="site-mock-body">
+          <div class="site-mock-nav">
+            <span class="site-mock-dot"></span>
+            <span class="site-mock-line w40"></span>
+            <span class="site-mock-line w20"></span>
+            <span class="site-mock-line w20"></span>
+          </div>
+          <div class="site-mock-hero">
+            <span class="site-mock-line w60 lg"></span>
+            <span class="site-mock-line w40 lg"></span>
+            <span class="site-mock-line w70"></span>
+            <span class="site-mock-cta"></span>
+          </div>
+          <div class="site-mock-grid">
+            <span class="site-mock-card"></span>
+            <span class="site-mock-card"></span>
+            <span class="site-mock-card"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -294,12 +321,13 @@
     <div class="wrap">
       <div class="section-head reveal">
         <span class="tag">Ce que nous faisons</span>
-        <h2>Trois expertises, une seule équipe</h2>
-        <p>De la création de votre site à l'automatisation de vos tâches répétitives, on couvre tout le chemin numérique de votre entreprise.</p>
+        <h2>Des sites web professionnels, et deux services complémentaires</h2>
+        <p>Notre cœur de métier, c'est la création de sites web. En complément, nous proposons aussi des outils IA sur mesure et des logos.</p>
       </div>
-      <div class="services-grid reveal-stagger reveal">
-        <div class="service-card">
+      <div class="services-split reveal-stagger reveal">
+        <div class="service-card service-main">
           <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 8.5h18"/><circle cx="6" cy="6.3" r=".5" fill="#1149FE" stroke="none"/></svg></span>
+          <span class="service-tag">Activité principale</span>
           <h3>Sites web sur mesure</h3>
           <p>Conception, design et développement de sites rapides, responsives et pensés pour convertir vos visiteurs en clients.</p>
           <ul class="service-list">
@@ -308,25 +336,23 @@
             <li>Mises à jour continues</li>
           </ul>
         </div>
-        <div class="service-card">
-          <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.6"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" stroke-linecap="round"/><circle cx="12" cy="12" r="3"/></svg></span>
-          <h3>Agents IA &amp; automatisation</h3>
-          <p>Des outils IA connectés à votre activité : réponse client, traitement de documents, tâches répétitives automatisées.</p>
-          <ul class="service-list">
-            <li>Chatbots &amp; assistants sur mesure</li>
-            <li>Automatisation de process internes</li>
-            <li>Intégration à vos outils existants</li>
-          </ul>
-        </div>
-        <div class="service-card">
-          <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 15l3-4 3 3 4-6"/></svg></span>
-          <h3>Conseil digital</h3>
-          <p>Un regard extérieur sur votre stratégie numérique : ce qui vaut la peine d'être digitalisé, et dans quel ordre.</p>
-          <ul class="service-list">
-            <li>Audit de votre présence en ligne</li>
-            <li>Feuille de route digitale</li>
-            <li>Accompagnement subventions</li>
-          </ul>
+        <div class="service-side-col">
+          <div class="service-card service-side">
+            <span class="service-icon sm"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.6"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1" stroke-linecap="round"/><circle cx="12" cy="12" r="3"/></svg></span>
+            <div>
+              <span class="service-tag">Service complémentaire</span>
+              <h3>Outils IA sur mesure</h3>
+              <p>Un chatbot ou un agent IA connecté à votre activité, en option sur votre site.</p>
+            </div>
+          </div>
+          <div class="service-card service-side">
+            <span class="service-icon sm"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5.5L20 9l-4.2 3.9L17 19l-5-3-5 3 1.2-6.1L4 9l5.5-.5z"/></svg></span>
+            <div>
+              <span class="service-tag">Service complémentaire</span>
+              <h3>Logos &amp; identité visuelle</h3>
+              <p>Réalisés avec une graphiste partenaire, en complément de votre nouveau site.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -349,7 +375,8 @@
 
       <div class="price-tabs reveal">
         <button class="price-tab active" data-tab="sites" type="button">Sites web</button>
-        <button class="price-tab" data-tab="ia" type="button">Agents IA</button>
+        <button class="price-tab" data-tab="ia" type="button">Outils IA</button>
+        <button class="price-tab" data-tab="logo" type="button">Logos</button>
       </div>
 
       <div class="price-panel active" data-panel="sites">
@@ -391,6 +418,19 @@
           <span class="p-name">Multi-agents</span>
           <div class="p-price">Dès 3 000€<span>sur devis</span></div>
           <span class="p-hint">Plusieurs agents, intégrations complexes.</span>
+        </div>
+      </div>
+      <div class="price-panel cols-2" data-panel="logo">
+        <div class="price-card">
+          <span class="p-name">Logo seul</span>
+          <div class="p-price">350 – 600€<span>paiement unique</span></div>
+          <span class="p-hint">Logo sur mesure avec une graphiste partenaire, 2 propositions, fichiers sources inclus.</span>
+        </div>
+        <div class="price-card featured">
+          <span class="badge">Le plus choisi</span>
+          <span class="p-name">Identité complète</span>
+          <div class="p-price">700 – 1 200€<span>paiement unique</span></div>
+          <span class="p-hint">Logo, palette, typographies et déclinaisons pour votre site et vos réseaux.</span>
         </div>
       </div>
 
@@ -467,7 +507,7 @@
         <h2>Ce qui ne bougera pas, même en grandissant</h2>
       </div>
       <div class="stats-row-band reveal-stagger reveal">
-        <div class="stat-band"><div class="num">1</div><div class="lbl">Seul interlocuteur pour le site et l'IA, du premier échange à la maintenance.</div></div>
+        <div class="stat-band"><div class="num">1</div><div class="lbl">Seul interlocuteur pour votre site et vos projets complémentaires, du premier échange à la maintenance.</div></div>
         <div class="stat-band"><div class="num">0</div><div class="lbl">Facture surprise pour une mise à jour — c'est inclus dans l'abonnement.</div></div>
         <div class="stat-band"><div class="num">100%</div><div class="lbl">Des projets qui partent d'un besoin métier concret, pas d'un simple visuel.</div></div>
       </div>
@@ -529,34 +569,6 @@
 </footer>
 
 <script>
-  const demoBody = document.getElementById('demoBody');
-  const script = [
-    { type:'in', text:"Bonjour, vous êtes ouverts samedi ?" },
-    { type:'out', text:"Oui, de 9h à 17h. Vous voulez que je vous réserve un créneau ?" },
-    { type:'in', text:"Oui, 14h si possible" },
-    { type:'out', text:"C'est noté, confirmation envoyée par email." },
-    { type:'tag', text:"Traité en 0,8s — sans intervention humaine" }
-  ];
-  function playDemo(){
-    demoBody.innerHTML = '';
-    let delay = 300;
-    script.forEach((m, i)=>{
-      setTimeout(()=>{
-        const el = document.createElement('div');
-        if(m.type === 'tag'){
-          el.className = 'demo-tag';
-          el.textContent = m.text;
-        } else {
-          el.className = 'demo-msg ' + m.type;
-          el.textContent = m.text;
-        }
-        demoBody.appendChild(el);
-      }, delay);
-      delay += (m.type === 'tag' ? 500 : 900);
-    });
-  }
-  playDemo();
-
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
       if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
