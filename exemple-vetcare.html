@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Exemple de site vitrine pour une clinique vétérinaire, imaginé par MatMax Intelligence. Ceci est une démonstration, pas une vraie entreprise.">
+<title>VetCare — Exemple de site (démo MatMax Intelligence)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --bg:#FFF9F0; --bg-alt:#FCEFDC; --ink:#2B2118; --muted:#7A6A57; --dim:#C9B89C; --line:#EDDFC7;
+    --amber:#E8A33D; --amber-dark:#C6811F; --navy:#1F3B4D; --mint:#7FCDBB; --white:#FFFFFF;
+    --radius:20px; --maxw:1200px;
+  }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Nunito',sans-serif; background:var(--bg); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Fredoka',sans-serif; font-weight:600; line-height:1.2; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  ul{ list-style:none; }
+  img,svg{ max-width:100%; display:block; }
+  section{ padding:96px 0; }
+
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-stagger.in > *{ transition-delay: calc(var(--i,0) * .07s); }
+
+  .demo-banner{ background:var(--navy); color:#fff; text-align:center; font-size:.82rem; padding:12px 16px; }
+  .demo-banner strong{ color:var(--amber); }
+  .demo-banner a{ color:#fff; text-decoration:underline; margin-left:10px; white-space:nowrap; }
+
+  .btn{ display:inline-flex; align-items:center; gap:9px; padding:14px 26px; border-radius:999px; font-size:.85rem; font-weight:700; border:2px solid transparent; cursor:pointer; font-family:'Nunito'; transition:all .2s; }
+  .btn-primary{ background:var(--amber); color:var(--ink); }
+  .btn-primary:hover{ background:var(--amber-dark); color:#fff; transform:translateY(-2px); }
+  .btn-navy{ background:var(--navy); color:#fff; }
+  .btn-navy:hover{ background:#152c3a; transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+  .btn-ghost:hover{ border-color:var(--amber-dark); color:var(--amber-dark); }
+  .btn svg{ width:17px; height:17px; }
+
+  /* ---- Header ---- */
+  header.site-header{ position:sticky; top:0; z-index:100; background:rgba(255,249,240,0.94); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; gap:20px; }
+  .logo{ font-family:'Fredoka'; font-weight:600; font-size:1.4rem; display:flex; align-items:center; gap:9px; color:var(--navy); }
+  .logo svg{ width:26px; height:26px; stroke:var(--amber-dark); }
+  nav.main-nav{ display:flex; gap:26px; }
+  nav.main-nav a{ font-size:.85rem; color:var(--muted); font-weight:700; transition:color .2s; }
+  nav.main-nav a:hover{ color:var(--amber-dark); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .mobile-menu{ display:none; flex-direction:column; border-top:1px solid var(--line); background:var(--bg); }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ padding:15px 32px; border-bottom:1px solid var(--line); font-size:.95rem; font-weight:700; }
+  .mobile-menu .btn{ margin:16px 32px; justify-content:center; }
+
+  .section-head{ max-width:600px; margin-bottom:50px; }
+  .section-head .tag{ font-family:'JetBrains Mono'; font-size:.72rem; color:var(--amber-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px; }
+  .section-head h2{ font-size:clamp(1.9rem,3vw,2.4rem); }
+  .section-head p{ margin-top:14px; color:var(--muted); font-size:1rem; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+
+  /* ---- Hero : photo inclinée façon sticker ---- */
+  .hero{ position:relative; overflow:hidden; padding:70px 0 100px; }
+  .hero::before{ content:''; position:absolute; inset:0; background-image:radial-gradient(var(--line) 2.5px, transparent 2.5px); background-size:26px 26px; opacity:.6; z-index:0; }
+  .hero .wrap{ position:relative; z-index:1; }
+  .hero-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:64px; align-items:center; }
+  .eyebrow{ font-family:'JetBrains Mono'; font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; color:var(--amber-dark); display:block; margin-bottom:18px; }
+  .hero h1{ font-size:clamp(2.2rem,4vw,3.1rem); margin-bottom:20px; color:var(--navy); }
+  .hero p.lead{ color:var(--muted); font-size:1.02rem; margin-bottom:30px; max-width:44ch; }
+  .hero-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+  .hero-photo-tilt{ position:relative; transform:rotate(-3deg); border-radius:24px; overflow:hidden; box-shadow:0 40px 70px -28px rgba(43,33,24,0.35); border:9px solid var(--white); max-width:400px; margin:0 auto; }
+  .hero-photo-tilt img{ width:100%; aspect-ratio:3/4; object-fit:cover; display:block; }
+  .hero-chip{ position:absolute; top:-20px; right:-16px; background:var(--amber); color:var(--ink); border-radius:50%; width:104px; height:104px; display:flex; align-items:center; justify-content:center; text-align:center; font-family:'Fredoka'; font-weight:600; font-size:.76rem; transform:rotate(9deg); box-shadow:0 14px 30px -10px rgba(0,0,0,0.35); line-height:1.25; padding:6px; }
+
+  /* ---- Espèces : flip cards ---- */
+  .espece-section{ background:var(--bg-alt); }
+  .espece-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; perspective:1400px; }
+  .espece-card{ height:230px; cursor:pointer; }
+  .espece-inner{ position:relative; width:100%; height:100%; transition:transform .6s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d; }
+  .espece-card.flipped .espece-inner{ transform:rotateY(180deg); }
+  .espece-front, .espece-back{ position:absolute; inset:0; backface-visibility:hidden; border-radius:18px; padding:26px 20px; display:flex; flex-direction:column; }
+  .espece-front{ background:var(--white); border:1px solid var(--line); align-items:center; justify-content:center; text-align:center; }
+  .espece-front .icon{ width:52px; height:52px; margin-bottom:16px; }
+  .espece-front .icon svg{ width:100%; height:100%; stroke:var(--amber-dark); }
+  .espece-front h3{ font-size:1.1rem; margin-bottom:6px; }
+  .espece-front span{ font-family:'JetBrains Mono'; font-size:.68rem; color:var(--muted); }
+  .espece-back{ background:var(--navy); color:#fff; transform:rotateY(180deg); justify-content:center; }
+  .espece-back h4{ font-family:'Fredoka'; font-size:1rem; margin-bottom:12px; color:var(--amber); }
+  .espece-back ul{ display:flex; flex-direction:column; gap:7px; }
+  .espece-back li{ font-size:.8rem; padding-left:14px; position:relative; color:rgba(255,255,255,0.85); }
+  .espece-back li::before{ content:''; position:absolute; left:0; top:7px; width:5px; height:5px; border-radius:50%; background:var(--amber); }
+
+  /* ---- Âge : slider interactif ---- */
+  .age-box{ background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:44px 44px 40px; max-width:840px; margin:0 auto; }
+  .age-display{ text-align:center; margin-bottom:6px; }
+  .age-display .num{ font-family:'Fredoka'; font-size:2.8rem; color:var(--amber-dark); }
+  .age-display .stage{ font-family:'JetBrains Mono'; font-size:.76rem; text-transform:uppercase; color:var(--muted); letter-spacing:.06em; }
+  input[type="range"]{ width:100%; margin:26px 0 34px; -webkit-appearance:none; appearance:none; height:8px; border-radius:999px; background:var(--bg-alt); outline:none; }
+  input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; width:26px; height:26px; border-radius:50%; background:var(--amber); border:4px solid var(--white); box-shadow:0 4px 12px rgba(43,33,24,0.3); cursor:pointer; }
+  input[type="range"]::-moz-range-thumb{ width:26px; height:26px; border-radius:50%; background:var(--amber); border:4px solid var(--white); box-shadow:0 4px 12px rgba(43,33,24,0.3); cursor:pointer; border:none; }
+  .age-checklist{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .age-check-item{ display:flex; gap:10px; align-items:flex-start; background:var(--bg-alt); border-radius:12px; padding:14px 16px; font-size:.86rem; }
+  .age-check-item svg{ width:18px; height:18px; stroke:var(--amber-dark); flex-shrink:0; margin-top:2px; }
+
+  /* ---- Cabinet / réassurance ---- */
+  .cabinet-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .cabinet-photo{ border-radius:var(--radius); overflow:hidden; }
+  .cabinet-photo img{ width:100%; aspect-ratio:4/3; object-fit:cover; }
+  .reassure-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+  .reassure-badge{ display:flex; align-items:center; gap:8px; background:var(--bg-alt); border-radius:999px; padding:10px 16px; font-size:.8rem; font-weight:700; color:var(--navy); }
+  .reassure-badge svg{ width:15px; height:15px; stroke:var(--amber-dark); }
+
+  /* ---- Équipe : avatars ronds ---- */
+  .team-section{ background:var(--bg-alt); }
+  .team-row{ display:flex; justify-content:center; gap:44px; flex-wrap:wrap; }
+  .team-avatar{ text-align:center; max-width:180px; }
+  .team-avatar .ring{ width:140px; height:140px; border-radius:50%; padding:5px; background:conic-gradient(var(--amber), var(--mint), var(--amber)); margin:0 auto 16px; }
+  .team-avatar .ring img{ width:100%; height:100%; border-radius:50%; object-fit:cover; border:4px solid var(--bg-alt); display:block; }
+  .team-avatar h4{ font-size:1.02rem; margin-bottom:2px; }
+  .team-avatar span{ font-size:.78rem; color:var(--muted); }
+
+  /* ---- Avis : mur façon masonry ---- */
+  .avis-wall{ column-count:3; column-gap:20px; }
+  .avis-wall-card{ break-inside:avoid; background:var(--white); border:1px solid var(--line); border-radius:14px; padding:24px 22px; margin-bottom:20px; }
+  .avis-wall-card .stars{ color:var(--amber-dark); font-size:.9rem; margin-bottom:10px; }
+  .avis-wall-card p{ font-size:.9rem; margin-bottom:12px; }
+  .avis-wall-card .name{ font-size:.78rem; font-weight:700; color:var(--muted); }
+
+  /* ---- Contact ---- */
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--line); border-radius:var(--radius); overflow:hidden; }
+  .contact-col{ background:var(--white); padding:44px 40px; }
+  .contact-col.urgence{ background:var(--navy); color:#fff; }
+  .contact-info-list{ display:flex; flex-direction:column; gap:16px; margin:22px 0 26px; }
+  .contact-info-list .lbl{ font-family:'JetBrains Mono'; font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:3px; }
+  .contact-info-list .val{ font-size:.96rem; }
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:.78rem; font-weight:700; margin-bottom:6px; color:rgba(255,255,255,0.75); }
+  .field input, .field select, .field textarea{ width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:#fff; font-family:'Nunito'; font-size:.9rem; }
+  .field select option{ color:#111; }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .urgence-btn{ display:flex; align-items:center; gap:12px; background:#fff; color:var(--navy); border-radius:14px; padding:16px 20px; font-family:'Fredoka'; font-weight:600; font-size:1.02rem; margin:18px 0 6px; animation:pulseRing 2.2s infinite; }
+  .urgence-btn svg{ width:22px; height:22px; stroke:var(--navy); flex-shrink:0; }
+  @keyframes pulseRing{ 0%{ box-shadow:0 0 0 0 rgba(255,255,255,0.45); } 70%{ box-shadow:0 0 0 14px rgba(255,255,255,0); } 100%{ box-shadow:0 0 0 0 rgba(255,255,255,0); } }
+
+  .emergency-fab{ position:fixed; right:22px; bottom:22px; z-index:200; background:var(--navy); color:#fff; border-radius:999px; padding:14px 20px; display:flex; align-items:center; gap:8px; font-weight:700; font-size:.82rem; box-shadow:0 12px 30px -8px rgba(31,59,77,0.55); animation:pulseFab 2.6s infinite; }
+  .emergency-fab svg{ width:18px; height:18px; stroke:var(--amber); }
+  @keyframes pulseFab{ 0%{ box-shadow:0 0 0 0 rgba(31,59,77,0.5); } 70%{ box-shadow:0 0 0 16px rgba(31,59,77,0); } 100%{ box-shadow:0 0 0 0 rgba(31,59,77,0); } }
+
+  footer{ padding:40px 0 90px; border-top:1px solid var(--line); }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  .footer-row p{ font-size:.78rem; color:var(--muted); }
+  .footer-links{ display:flex; gap:20px; }
+  .footer-links a{ font-size:.8rem; color:var(--muted); }
+  .footer-links a:hover{ color:var(--amber-dark); }
+  .footer-note{ text-align:center; font-size:.76rem; color:var(--dim); margin-top:20px; padding-top:20px; border-top:1px solid var(--line); }
+
+  @media (max-width:980px){
+    nav.main-nav{ display:none; }
+    header .btn{ display:none; }
+    .nav-toggle{ display:flex; }
+    .hero-grid{ grid-template-columns:1fr; gap:56px; }
+    .hero-photo-tilt{ order:-1; }
+    .espece-grid{ grid-template-columns:1fr 1fr; }
+    .cabinet-grid{ grid-template-columns:1fr; gap:34px; }
+    .age-checklist{ grid-template-columns:1fr; }
+    .avis-wall{ column-count:2; }
+    .contact-grid{ grid-template-columns:1fr; }
+    section{ padding:66px 0; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .espece-grid{ grid-template-columns:1fr 1fr; }
+    .avis-wall{ column-count:1; }
+    .team-row{ gap:26px; }
+    .team-avatar{ max-width:120px; }
+    .team-avatar .ring{ width:100px; height:100px; }
+    .emergency-fab span{ display:none; }
+    .emergency-fab{ padding:14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <strong>Exemple de site</strong> réalisé par MatMax Intelligence — VetCare n'est pas une vraie clinique, la prise de rendez-vous n'est pas fonctionnelle.
+  <a href="/realisations">← Retour aux exemples</a>
+</div>
+
+<header class="site-header">
+  <div class="nav-row">
+    <a href="#" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="1.6"/><circle cx="12" cy="5.5" r="1.6"/><circle cx="17" cy="8" r="1.6"/><circle cx="19" cy="13" r="1.6"/><path d="M12 21c-3 0-5.5-1.8-5.5-4.2 0-2 1.6-2.8 2.6-4 1-1.2 1.6-2 2.9-2s1.9.8 2.9 2c1 1.2 2.6 2 2.6 4C17.5 19.2 15 21 12 21z"/></svg>VetCare</a>
+    <nav class="main-nav">
+      <a href="#especes">Espèces soignées</a>
+      <a href="#age">Calendrier de soins</a>
+      <a href="#cabinet">Le cabinet</a>
+      <a href="#equipe">Équipe</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary" href="#contact">Prendre RDV</a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#especes">Espèces soignées</a>
+    <a href="#age">Calendrier de soins</a>
+    <a href="#cabinet">Le cabinet</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn-primary" href="#contact">Prendre RDV</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <span class="eyebrow">Clinique vétérinaire</span>
+      <h1>Le meilleur des soins, pour tous vos compagnons.</h1>
+      <p class="lead">Chiens, chats, NAC et oiseaux — un suivi attentif à chaque étape de leur vie, par une équipe qui prend le temps d'expliquer.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Prendre rendez-vous</a>
+        <a class="btn btn-ghost" href="#especes">Voir les espèces soignées</a>
+      </div>
+    </div>
+    <div class="hero-photo-tilt reveal in">
+      <img src="vetcare-hero.jpg" alt="Vétérinaire souriante avec un petit chien en cabinet" width="1000" height="1500">
+      <div class="hero-chip">Suivi<br>sur mesure</div>
+    </div>
+  </div>
+</section>
+
+<section id="especes" class="espece-section">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Espèces soignées</span>
+      <h2>Cliquez sur une carte pour découvrir nos soins</h2>
+      <p>Chaque espèce a ses propres besoins — retournez une carte pour voir ce que nous proposons.</p>
+    </div>
+    <div class="espece-grid reveal-stagger reveal" id="especeGrid">
+      <div class="espece-card" data-espece="chien">
+        <div class="espece-inner">
+          <div class="espece-front">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="1.4"/><circle cx="12" cy="5" r="1.4"/><circle cx="17" cy="8" r="1.4"/><circle cx="19" cy="13" r="1.4"/><path d="M12 21c-3 0-5.5-1.8-5.5-4.2 0-2 1.6-2.8 2.6-4 1-1.2 1.6-2 2.9-2s1.9.8 2.9 2c1 1.2 2.6 2 2.6 4C17.5 19.2 15 21 12 21z"/></svg></div>
+            <h3>Chiens</h3>
+            <span>Cliquez pour voir</span>
+          </div>
+          <div class="espece-back">
+            <h4>Soins pour chiens</h4>
+            <ul>
+              <li>Vaccination &amp; identification</li>
+              <li>Chirurgie &amp; stérilisation</li>
+              <li>Bilan de croissance chiot</li>
+              <li>Consultation comportementale</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="espece-card" data-espece="chat">
+        <div class="espece-inner">
+          <div class="espece-front">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l3-4 1 3h8l1-3 3 4v9a3 3 0 01-3 3H7a3 3 0 01-3-3V8z"/><path d="M9 14v1M15 14v1"/></svg></div>
+            <h3>Chats</h3>
+            <span>Cliquez pour voir</span>
+          </div>
+          <div class="espece-back">
+            <h4>Soins pour chats</h4>
+            <ul>
+              <li>Vaccination &amp; typage</li>
+              <li>Détartrage dentaire</li>
+              <li>Dépistage FIV/FeLV</li>
+              <li>Suivi chat senior</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="espece-card" data-espece="nac">
+        <div class="espece-inner">
+          <div class="espece-front">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="14" rx="6" ry="7"/><path d="M9 7c-1-2-1-4 0-5M15 7c1-2 1-4 0-5"/></svg></div>
+            <h3>NAC &amp; lapins</h3>
+            <span>Cliquez pour voir</span>
+          </div>
+          <div class="espece-back">
+            <h4>Soins NAC &amp; lapins</h4>
+            <ul>
+              <li>Contrôle des dents</li>
+              <li>Vaccination myxomatose</li>
+              <li>Alimentation adaptée</li>
+              <li>Consultation rongeurs</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="espece-card" data-espece="oiseau">
+        <div class="espece-inner">
+          <div class="espece-front">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c3-6 9-8 13-6-1 1-1 2 0 3 2 1 4 0 5-1-1 5-6 9-11 9-2 0-4-1-5-2l-2 2v-5z"/></svg></div>
+            <h3>Oiseaux</h3>
+            <span>Cliquez pour voir</span>
+          </div>
+          <div class="espece-back">
+            <h4>Soins pour oiseaux</h4>
+            <ul>
+              <li>Examen général</li>
+              <li>Taille du bec &amp; des griffes</li>
+              <li>Conseils d'habitat</li>
+              <li>Consultation d'urgence</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="age">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Calendrier de soins</span>
+      <h2>À chaque âge, ses besoins</h2>
+      <p>Déplacez le curseur pour voir les soins recommandés selon l'âge de votre animal.</p>
+    </div>
+    <div class="age-box reveal">
+      <div class="age-display">
+        <div class="num" id="ageNum">1 an</div>
+        <div class="stage" id="ageStage">Jeune animal</div>
+      </div>
+      <input type="range" min="0" max="15" value="1" step="1" id="ageSlider" aria-label="Âge de l'animal en années">
+      <div class="age-checklist" id="ageChecklist">
+        <div class="age-check-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Rappels de vaccination</div>
+        <div class="age-check-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Identification (puce électronique)</div>
+        <div class="age-check-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Stérilisation à discuter</div>
+        <div class="age-check-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Conseils alimentation croissance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cabinet" style="background:var(--bg-alt);">
+  <div class="wrap cabinet-grid">
+    <div class="cabinet-photo reveal"><img src="vetcare-cat.jpg" alt="Vétérinaire auscultant un chat en cabinet" loading="lazy"></div>
+    <div class="reveal">
+      <span class="tag" style="font-family:'JetBrains Mono'; font-size:.72rem; color:var(--amber-dark); text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:14px;">Le cabinet</span>
+      <h2 style="margin-bottom:16px;">Un cabinet pensé pour rassurer</h2>
+      <p style="color:var(--muted); margin-bottom:14px;">Salle d'attente séparée chiens/chats, manipulation en douceur et explications claires à chaque étape — pour que la visite se passe bien, pour vous comme pour votre animal.</p>
+      <p style="color:var(--muted);">Notre équipe prend le temps nécessaire, sans jamais presser la consultation.</p>
+      <div class="reassure-badges">
+        <span class="reassure-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9C.9 8.5 2 5 5.5 5c2 0 3.3 1.1 4 2.2C10.2 6.1 11.5 5 13.5 5 17 5 18.1 8.5 16.5 12c-2.5 4.5-4.5 9-4.5 9z"/></svg>Manipulation en douceur</span>
+        <span class="reassure-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Explications à chaque étape</span>
+        <span class="reassure-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Urgences prises en charge rapidement</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="equipe" class="team-section">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Notre équipe</span>
+      <h2>Des vétérinaires diplômés, à l'écoute</h2>
+    </div>
+    <div class="team-row reveal-stagger reveal">
+      <div class="team-avatar" style="--i:0">
+        <div class="ring"><img src="vetcare-team1.jpg" alt="Vétérinaire de l'équipe VetCare" loading="lazy"></div>
+        <h4>Dr Amara N'Diaye</h4>
+        <span>Médecine générale</span>
+      </div>
+      <div class="team-avatar" style="--i:1">
+        <div class="ring"><img src="vetcare-team2.jpg" alt="Vétérinaire de l'équipe VetCare" loading="lazy"></div>
+        <h4>Dr Lukas Herman</h4>
+        <span>Chirurgie &amp; imagerie</span>
+      </div>
+      <div class="team-avatar" style="--i:2">
+        <div class="ring"><img src="vetcare-team3.jpg" alt="Vétérinaire de l'équipe VetCare" loading="lazy"></div>
+        <h4>Dr Milo Fabre</h4>
+        <span>NAC &amp; médecine féline</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="tag">Avis</span>
+      <h2>Ce que disent les familles de nos patients</h2>
+    </div>
+    <div class="avis-wall reveal" id="avisWall">
+      <div class="avis-wall-card"><div class="stars">★★★★★</div><p>Mon chat déteste les visites chez le vétérinaire, mais ici il reste calme — l'équipe sait vraiment y faire.</p><div class="name">Sophie L.</div></div>
+      <div class="avis-wall-card"><div class="stars">★★★★★</div><p>Prise en charge en urgence un dimanche soir pour mon chien. Réactivité et professionnalisme.</p><div class="name">Karim A.</div></div>
+      <div class="avis-wall-card"><div class="stars">★★★★☆</div><p>Très bon suivi pour mon lapin, ce n'est pas toujours facile de trouver un vétérinaire NAC compétent.</p><div class="name">Elise M.</div></div>
+      <div class="avis-wall-card"><div class="stars">★★★★★</div><p>Explications claires, prix annoncés avant chaque acte, et un vrai suivi sur plusieurs années pour nos deux chats.</p><div class="name">Antoine R.</div></div>
+      <div class="avis-wall-card"><div class="stars">★★★★★</div><p>Le calendrier de vaccination de mon chiot a été parfaitement respecté, avec des rappels utiles.</p><div class="name">Nadia B.</div></div>
+      <div class="avis-wall-card"><div class="stars">★★★★★</div><p>Equipe adorable avec mon perroquet, ce qui n'est pas donné à tout le monde !</p><div class="name">Yann P.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Contact</span>
+      <h2>Prenez rendez-vous ou contactez-nous</h2>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-col urgence">
+        <h3 style="font-size:1.15rem; margin-bottom:6px; color:#fff;">Urgence vétérinaire</h3>
+        <p style="color:rgba(255,255,255,0.7); font-size:.88rem;">Une urgence avec votre animal ? Contactez-nous directement.</p>
+        <a class="urgence-btn" href="tel:+35200000000"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .3 2 .6 2.9a2 2 0 01-.4 2.1L8 10a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.9.5 2.9.6a2 2 0 011.7 2z"/></svg>+352 00 00 00 00</a>
+        <div class="contact-info-list">
+          <div><span class="lbl">Adresse</span><span class="val">21 chemin des Vétérinaires, Luxembourg</span></div>
+          <div><span class="lbl">Horaires</span><span class="val">Lundi — Samedi, 8h – 19h · Urgences 7j/7</span></div>
+        </div>
+      </div>
+      <div class="contact-col" style="background:var(--white);">
+        <h3 style="font-size:1.15rem; margin-bottom:16px;">Demande de rendez-vous</h3>
+        <form id="rdvForm" onsubmit="return false;">
+          <div class="field" style="margin-bottom:14px;">
+            <label style="color:var(--muted);">Votre nom</label>
+            <input type="text" placeholder="Nom et prénom" style="background:var(--bg-alt); border:1px solid var(--line); color:var(--ink);">
+          </div>
+          <div class="field" style="margin-bottom:14px;">
+            <label style="color:var(--muted);">Espèce concernée</label>
+            <select style="background:var(--bg-alt); border:1px solid var(--line); color:var(--ink);">
+              <option>Chien</option>
+              <option>Chat</option>
+              <option>NAC / Lapin</option>
+              <option>Oiseau</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field" style="margin-bottom:20px;">
+            <label style="color:var(--muted);">Motif de la visite</label>
+            <textarea placeholder="Décrivez brièvement le motif de la consultation" style="background:var(--bg-alt); border:1px solid var(--line); color:var(--ink);"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%; justify-content:center;">Envoyer la demande</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<a class="emergency-fab" href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg><span>Urgence</span></a>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-row">
+      <p>© 2026 VETCARE — LUXEMBOURG</p>
+      <div class="footer-links">
+        <a href="#especes">Espèces</a>
+        <a href="#age">Calendrier</a>
+        <a href="#equipe">Équipe</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <p class="footer-note">Ceci est un site fictif créé à titre d'exemple par <a href="/" style="color:var(--amber-dark);">MatMax Intelligence</a> — VetCare n'existe pas.</p>
+  </div>
+</footer>
+
+<script>
+  var navToggle = document.getElementById('navToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if(navToggle && mobileMenu){
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+    mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); }); });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .reveal-stagger').forEach(function(el){ io.observe(el); });
+
+  // Flip cards espèces
+  (function(){
+    var grid = document.getElementById('especeGrid');
+    if(!grid) return;
+    grid.querySelectorAll('.espece-card').forEach(function(card){
+      card.addEventListener('click', function(){
+        card.classList.toggle('flipped');
+      });
+    });
+  })();
+
+  // Slider d'âge
+  (function(){
+    var slider = document.getElementById('ageSlider');
+    var num = document.getElementById('ageNum');
+    var stage = document.getElementById('ageStage');
+    var checklist = document.getElementById('ageChecklist');
+    if(!slider) return;
+
+    var STAGES = [
+      { max:1, label:"Jeune animal", items:["Rappels de vaccination","Identification (puce électronique)","Stérilisation à discuter","Conseils alimentation croissance"] },
+      { max:7, label:"Adulte", items:["Rappel vaccinal annuel","Détartrage préventif","Contrôle du poids","Bilan sanguin de routine"] },
+      { max:15, label:"Senior", items:["Bilan sanguin approfondi","Dépistage arthrose","Contrôle cardiaque","Adaptation de l'alimentation"] }
+    ];
+
+    function render(){
+      var age = parseInt(slider.value, 10);
+      num.textContent = age === 0 ? "< 1 an" : (age + (age > 1 ? " ans" : " an"));
+      var s = STAGES.find(function(st){ return age <= st.max; }) || STAGES[STAGES.length - 1];
+      stage.textContent = s.label;
+      checklist.innerHTML = s.items.map(function(item){
+        return '<div class="age-check-item"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>' + item + '</div>';
+      }).join('');
+    }
+    slider.addEventListener('input', render);
+    render();
+  })();
+</script>
+</body>
+</html>
