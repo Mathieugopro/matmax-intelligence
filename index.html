@@ -167,9 +167,14 @@
   .price-panel.cols-3{ grid-template-columns:repeat(3,1fr); }
   .price-panel.cols-2{ grid-template-columns:repeat(2,1fr); max-width:700px; }
   @media (max-width:540px){ .price-panel.cols-2{ grid-template-columns:1fr; } }
-  .price-panel-static{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .price-panel-static{ display:none; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .price-panel-static.active{ display:grid; }
+  .price-panel-static.cols-2{ grid-template-columns:repeat(2,1fr); max-width:700px; }
   @media (max-width:860px){ .price-panel-static{ grid-template-columns:1fr 1fr; } }
-  @media (max-width:540px){ .price-panel-static{ grid-template-columns:1fr; } }
+  @media (max-width:540px){ .price-panel-static{ grid-template-columns:1fr; } .price-panel-static.cols-2{ grid-template-columns:1fr; } }
+  .price-note-box{ display:none; border:1px dashed var(--line); border-radius:var(--radius); padding:22px 26px; background:var(--bg-alt); }
+  .price-note-box.active{ display:block; }
+  .price-note-box p{ color:var(--muted); font-size:.92rem; }
   .price-card{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:30px 24px; display:flex; flex-direction:column; gap:14px; transition:box-shadow .25s, transform .25s, border-color .25s; position:relative; }
   .price-card:hover{ transform:translateY(-3px); box-shadow:0 18px 32px -22px rgba(20,20,26,.18); }
   .price-card.featured{ border-color:var(--blue); box-shadow:0 0 0 1px var(--blue); }
@@ -464,14 +469,14 @@
         </div>
       </div>
 
-      <div class="pricing-connector"><span>+</span></div>
+      <div class="pricing-connector" id="pricingConnector"><span>+</span></div>
 
-      <div class="pricing-step-head">
+      <div class="pricing-step-head" id="step2Head">
         <span class="step-num">2</span>
         <div><h3>Abonnement mensuel</h3><span class="step-sub">Ensuite, tant que le service est actif</span></div>
       </div>
 
-      <div class="price-panel-static cols-3">
+      <div class="price-panel-static cols-3 active" data-sub-panel="sites">
         <div class="price-card">
           <span class="p-name">Essentiel</span>
           <div class="p-price">39 – 59€<span>par mois</span></div>
@@ -481,13 +486,31 @@
           <span class="badge">Le plus choisi</span>
           <span class="p-name">Confort</span>
           <div class="p-price">79 – 99€<span>par mois</span></div>
-          <span class="p-hint">3 modifications par mois, maintenance du chatbot incluse.</span>
+          <span class="p-hint">3 modifications par mois, maintenance incluse.</span>
         </div>
         <div class="price-card">
           <span class="p-name">Premium</span>
           <div class="p-price">129 – 179€<span>par mois</span></div>
           <span class="p-hint">Modifications illimitées, contact dédié, rapport mensuel.</span>
         </div>
+      </div>
+
+      <div class="price-panel-static cols-2" data-sub-panel="ia">
+        <div class="price-card">
+          <span class="p-name">Essentiel</span>
+          <div class="p-price">19 – 39€<span>par mois</span></div>
+          <span class="p-hint">Hébergement de l'agent et mises à jour de sécurité.</span>
+        </div>
+        <div class="price-card featured">
+          <span class="badge">Le plus choisi</span>
+          <span class="p-name">Avancé</span>
+          <div class="p-price">49 – 79€<span>par mois</span></div>
+          <span class="p-hint">Ajustements de scénarios inclus et suivi des performances.</span>
+        </div>
+      </div>
+
+      <div class="price-note-box" data-sub-panel="logo">
+        <p>Le logo est un service ponctuel — pas d'abonnement mensuel associé. Les fichiers sources vous sont remis à la livraison.</p>
       </div>
 
       <p class="pricing-note reveal">Prix indicatifs, ajustés selon la complexité exacte du projet lors du devis.</p>
@@ -620,12 +643,28 @@
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal, .reveal-stagger').forEach(el=>io.observe(el));
 
+  var pricingConnector = document.getElementById('pricingConnector');
+  var step2Head = document.getElementById('step2Head');
   document.querySelectorAll('.price-tab').forEach(function(btn){
     btn.addEventListener('click', function(){
+      var tab = btn.dataset.tab;
       document.querySelectorAll('.price-tab').forEach(function(b){ b.classList.remove('active'); });
       document.querySelectorAll('.price-panel').forEach(function(p){ p.classList.remove('active'); });
+      document.querySelectorAll('.price-panel-static').forEach(function(p){ p.classList.remove('active'); });
+      document.querySelectorAll('.price-note-box').forEach(function(p){ p.classList.remove('active'); });
       btn.classList.add('active');
-      document.querySelector('.price-panel[data-panel="' + btn.dataset.tab + '"]').classList.add('active');
+      document.querySelector('.price-panel[data-panel="' + tab + '"]').classList.add('active');
+      var sub = document.querySelector('.price-panel-static[data-sub-panel="' + tab + '"]');
+      var note = document.querySelector('.price-note-box[data-sub-panel="' + tab + '"]');
+      if(sub){
+        sub.classList.add('active');
+        if(pricingConnector) pricingConnector.style.display = '';
+        if(step2Head) step2Head.style.display = '';
+      } else if(note){
+        note.classList.add('active');
+        if(pricingConnector) pricingConnector.style.display = 'none';
+        if(step2Head) step2Head.style.display = 'none';
+      }
     });
   });
 
