@@ -211,9 +211,9 @@
     nav ul, .nav-cta{ display:none; }
     .services-grid, .pricing-grid{ grid-template-columns: 1fr; }
     .contact-grid{ grid-template-columns: 1fr; }
-    .contact-section{ padding: 40px 24px; }
-    .approach-item{ grid-template-columns: 1fr; gap: 8px; }
-    section{ padding: 64px 0; }
+    .contact-section{ padding: 24px 18px; }
+    .approach-item{ grid-template-columns: 1fr; gap: 6px; padding:16px 0; }
+    section{ padding: 36px 0; }
   }
 
   .page-hero{ padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
@@ -255,34 +255,73 @@
   }
 
   @media (max-width: 860px){
-    .wrap{ padding: 0 20px; }
-    .nav-row{ height:64px; }
-    .logo{ font-size:.92rem; gap:6px; }
-    .logo img{ height:24px; }
-    .hero{ padding: 52px 0 36px; }
-    .hero h1{ max-width:none; }
-    .hero-actions{ flex-direction:column; align-items:stretch; }
-    .hero-actions .btn{ justify-content:center; width:100%; }
+    .wrap{ padding: 0 16px; }
+    .nav-row{ height:58px; }
+    .mobile-menu a{ padding:13px 20px; font-size:.9rem; }
+    .mobile-menu .nav-cta{ margin:12px 20px; }
+    .logo{ font-size:.9rem; gap:6px; }
+    .logo img{ height:22px; }
+    .hero{ padding: 26px 0 22px; }
+    .hero h1{ max-width:none; font-size:1.55rem; line-height:1.15; }
+    .hero p.lead{ font-size:.86rem; margin-top:10px; }
+    .hero-actions{ flex-direction:column; align-items:stretch; margin-top:16px; gap:8px; }
+    .hero-actions .btn{ justify-content:center; width:100%; padding:11px 18px; font-size:.88rem; }
     .demo-card{ max-width:100%; }
-    section{ padding: 52px 0; }
-    .section-head{ margin-bottom:32px; }
-    .price-card{ padding:22px 18px; }
-    .contact-side-light, .contact-main-light{ padding:28px 22px; }
-    .cta-box{ padding:36px 22px; }
-    .page-hero{ padding:52px 0 36px; }
-    .footer-row{ flex-direction:column; align-items:flex-start; gap:14px; }
-    .story-highlight{ padding:20px 18px; }
-    .role-card, .value-card, .info-card{ padding:24px 20px; }
-    .legal-wrap{ padding: 52px 0 64px; }
+    .demo-body{ padding:12px; min-height:0; gap:7px; }
+    .demo-msg{ font-size:.78rem; padding:7px 10px; max-width:88%; }
+    .demo-topbar{ padding:9px 12px; }
+    .demo-foot{ padding:9px 12px; }
+    section{ padding: 32px 0; }
+    .section-head{ margin-bottom:16px; }
+    .section-head h2{ font-size:1.25rem; }
+    .section-head p{ font-size:.84rem; margin-top:8px; }
+    .service-card{ padding:16px 14px; }
+    .service-card h3{ font-size:.98rem; margin-bottom:6px; }
+    .service-card p{ font-size:.82rem; margin-bottom:10px; }
+    .plan{ padding:18px 15px; }
+    .plan-price{ font-size:1.5rem; }
+    .price-card{ padding:14px 13px; }
+    .contact-side-light, .contact-main-light{ padding:16px 15px; }
+    .cta-box{ padding:22px 16px; }
+    .cta-box h2{ font-size:1.2rem; margin-bottom:8px; }
+    .page-hero{ padding:24px 0 20px; }
+    .page-hero .tag{ margin-bottom:10px; font-size:.72rem; }
+    .page-hero h1{ font-size:1.45rem; line-height:1.15; }
+    .page-hero p.lead{ font-size:.86rem; margin-top:10px; }
+    footer{ padding:22px 0; }
+    .footer-row{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .footer-links{ flex-wrap:wrap; gap:8px 14px; }
+    .footer-links a{ font-size:.76rem; }
+    .story p{ font-size:.9rem; margin-bottom:14px; }
+    .story-highlights{ margin:20px 0 22px; }
+    .story-highlight{ padding:14px 13px; }
+    .story-highlight .num{ font-size:1.3rem; }
+    .role-card, .value-card, .info-card{ padding:16px 15px; }
+    .role-card h3, .value-card h3{ font-size:.98rem; margin-bottom:6px; }
+    .role-card p, .value-card p{ font-size:.82rem; }
+    .legal-wrap{ padding: 32px 0 40px; }
+    .portfolio-tabs{ gap:6px; margin-bottom:18px; }
+    .portfolio-tab{ padding:7px 12px; font-size:.75rem; }
+    .portfolio-panel{ gap:12px; }
+    .portfolio-thumb{ height:130px; }
+    .portfolio-body{ padding:12px 14px; }
+    .portfolio-card h3{ font-size:.92rem; }
+    .portfolio-card p{ font-size:.8rem; }
   }
   @media (max-width: 480px){
-    .hero h1{ font-size: 1.9rem; }
-    .hero p.lead{ font-size:1rem; }
-    .btn{ padding:13px 20px; font-size:.9rem; }
+    .wrap{ padding:0 14px; }
+    section{ padding:28px 0; }
+    .hero h1{ font-size: 1.35rem; }
+    .hero p.lead{ font-size:.82rem; }
+    .btn{ padding:10px 16px; font-size:.84rem; }
     .price-tabs{ gap:6px; }
-    .price-tab{ padding:9px 16px; font-size:.82rem; }
-    .page-hero h1{ font-size:1.6rem; }
-    .section-head h2{ font-size:1.4rem; }
+    .price-tab{ padding:7px 12px; font-size:.75rem; }
+    .page-hero h1{ font-size:1.25rem; }
+    .section-head h2{ font-size:1.1rem; }
+    .portfolio-panel{ grid-template-columns:1fr; }
+    .portfolio-thumb{ height:150px; }
+    .logo{ font-size:.86rem; }
+    .logo img{ height:20px; }
   }
   /* portfolio / concepts */
   .portfolio-tabs{ display:flex; gap:8px; margin-bottom: 36px; flex-wrap:wrap; }

@@ -212,9 +212,9 @@
     nav ul, .nav-cta{ display:none; }
     .services-grid, .pricing-grid{ grid-template-columns: 1fr; }
     .contact-grid{ grid-template-columns: 1fr; }
-    .contact-section{ padding: 40px 24px; }
-    .approach-item{ grid-template-columns: 1fr; gap: 8px; }
-    section{ padding: 64px 0; }
+    .contact-section{ padding: 24px 18px; }
+    .approach-item{ grid-template-columns: 1fr; gap: 6px; }
+    section{ padding: 32px 0; }
   }
 
   .page-hero{ padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
@@ -255,32 +255,44 @@
   }
 
   @media (max-width: 860px){
-    .wrap{ padding: 0 20px; }
-    .nav-row{ height:64px; }
-    .logo{ font-size:.92rem; gap:6px; }
-    .logo img{ height:24px; }
-    .hero{ padding: 52px 0 36px; }
+    .wrap{ padding: 0 16px; }
+    .nav-row{ height:58px; }
+    .mobile-menu a{ padding:13px 20px; font-size:.9rem; }
+    .mobile-menu .nav-cta{ margin:12px 20px; }
+    .logo{ font-size:.9rem; gap:6px; }
+    .logo img{ height:22px; }
+    .hero{ padding: 26px 0 22px; }
     .hero h1{ max-width:none; }
     .hero-actions{ flex-direction:column; align-items:stretch; }
     .hero-actions .btn{ justify-content:center; width:100%; }
     .demo-card{ max-width:100%; }
-    section{ padding: 52px 0; }
-    .section-head{ margin-bottom:32px; }
-    .price-card{ padding:22px 18px; }
-    .contact-side-light, .contact-main-light{ padding:28px 22px; }
-    .cta-box{ padding:36px 22px; }
-    .page-hero{ padding:52px 0 36px; }
-    .footer-row{ flex-direction:column; align-items:flex-start; gap:14px; }
-    .story-highlight{ padding:20px 18px; }
-    .role-card, .value-card, .info-card{ padding:24px 20px; }
-    .legal-wrap{ padding: 52px 0 64px; }
+    section{ padding: 32px 0; }
+    .section-head{ margin-bottom:16px; }
+    .price-card{ padding:14px 13px; }
+    .contact-side-light, .contact-main-light{ padding:16px 15px; }
+    .cta-box{ padding:22px 16px; }
+    .page-hero{ padding:24px 0 20px; }
+    .footer-row{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .story-highlight{ padding:14px 13px; }
+    .role-card, .value-card, .info-card{ padding:16px 15px; }
+    .legal-wrap{ padding: 28px 0 40px; }
+    .thanks-wrap{ min-height:0; padding:48px 20px; }
+    .thanks-card .icon{ width:44px; height:44px; margin-bottom:16px; }
+    .thanks-card .icon svg{ width:20px; height:20px; }
+    .thanks-card h1{ font-size:1.4rem; margin-bottom:10px; }
+    .thanks-card p{ font-size:.9rem; margin-bottom:22px; }
+    footer{ padding:22px 0; }
+    .footer-links{ flex-wrap:wrap; gap:8px 14px; }
+    .footer-links a{ font-size:.76rem; }
   }
   @media (max-width: 480px){
-    .hero h1{ font-size: 1.9rem; }
-    .hero p.lead{ font-size:1rem; }
-    .btn{ padding:13px 20px; font-size:.9rem; }
+    .wrap{ padding:0 14px; }
+    .hero h1{ font-size: 1.5rem; }
+    .hero p.lead{ font-size:.86rem; }
+    .btn{ padding:10px 16px; font-size:.84rem; }
     .price-tabs{ gap:6px; }
-    .price-tab{ padding:9px 16px; font-size:.82rem; }
+    .price-tab{ padding:7px 12px; font-size:.75rem; }
+    .thanks-card h1{ font-size:1.25rem; }
   }
 
   .footer-brand{ display:flex; align-items:center; gap:10px; }

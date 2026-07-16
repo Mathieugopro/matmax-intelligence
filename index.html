@@ -248,52 +248,91 @@
   @media (max-width:860px){
     nav ul, .nav-cta{ display:none; }
     .nav-toggle{ display:flex; }
-    .nav-row{ height:64px; }
+    .nav-row{ height:58px; }
+    .mobile-menu a{ padding:13px 20px; font-size:.9rem; }
+    .mobile-menu .nav-cta{ margin:12px 20px; }
     .services-grid, .price-panel{ grid-template-columns:1fr; }
-    .approach-grid{ grid-template-columns:1fr; gap:28px; }
-    .approach-photo{ order:-1; max-width:280px; height:auto; min-height:0; }
+    .approach-grid{ grid-template-columns:1fr; gap:18px; }
+    .approach-photo{ order:-1; max-width:150px; height:auto; min-height:0; margin:0 auto; box-shadow:none; border-radius:8px; }
     .approach-photo img{ height:auto; aspect-ratio:4/5; }
     .stats-row-band{ grid-template-columns:1fr; }
     .contact-layout-light{ grid-template-columns:1fr; }
     .contact-side-light{ border-right:none; border-bottom:1px solid var(--line); }
-    section{ padding:56px 0; }
-    .wrap{ padding:0 20px; }
+    section{ padding:36px 0; }
+    .wrap{ padding:0 16px; }
     .hero{ padding-top:0; }
     .hero-chevrons{ display:none; }
-    .hero-inner{ grid-template-columns:1fr; padding-top:44px; padding-bottom:40px; gap:28px; }
-    .hero h1{ font-size:1.9rem; max-width:none; }
-    .hero p.lead{ font-size:.98rem; margin-top:18px; }
-    .hero-actions{ flex-direction:column; align-items:stretch; gap:12px; margin-top:26px; }
-    .hero-actions .btn{ justify-content:center; width:100%; padding:13px 22px; }
-    .chat-card{ max-width:100%; justify-self:stretch; margin-top:0; }
-    .chat-body{ padding:16px; min-height:190px; gap:10px; }
-    .chat-msg{ font-size:.82rem; padding:9px 12px; }
-    .section-head{ margin-bottom:32px; }
-    .section-head h2{ font-size:1.6rem; }
-    .section-head p{ font-size:.94rem; }
-    .service-main{ padding:24px 20px; }
-    .service-side{ padding:20px 20px; }
-    .price-card{ padding:22px 18px; }
-    .price-tabs{ gap:6px; margin-bottom:26px; }
-    .price-tab{ padding:9px 16px; font-size:.82rem; }
-    .approach-item{ grid-template-columns:40px 1fr; gap:14px; padding:20px 0; }
-    .stat-band{ padding:24px 18px; }
-    .stat-band .num{ font-size:1.8rem; }
-    .contact-side-light, .contact-main-light{ padding:26px 22px; }
-    .footer-row{ flex-direction:column; align-items:flex-start; gap:14px; }
-    .footer-links{ flex-wrap:wrap; gap:14px 20px; }
+    .chevron-divider{ display:none; }
+    .hero-inner{ grid-template-columns:1fr; padding-top:24px; padding-bottom:22px; gap:18px; }
+    .eyebrow{ margin-bottom:12px; font-size:.72rem; }
+    .hero h1{ font-size:1.55rem; line-height:1.15; max-width:none; }
+    .hero p.lead{ font-size:.88rem; margin-top:10px; }
+    .hero-actions{ flex-direction:column; align-items:stretch; gap:8px; margin-top:16px; }
+    .hero-actions .btn{ justify-content:center; width:100%; padding:11px 18px; font-size:.88rem; }
+    .chat-card{ max-width:100%; justify-self:stretch; margin-top:0; border-radius:10px; }
+    .chat-top{ padding:10px 14px; }
+    .chat-body{ padding:12px; min-height:0; gap:7px; }
+    .chat-msg{ font-size:.78rem; padding:7px 10px; max-width:88%; }
+    .chat-foot{ padding:9px 14px; }
+    .section-head{ margin-bottom:18px; }
+    .section-head h2{ font-size:1.3rem; }
+    .section-head p{ font-size:.84rem; margin-top:8px; }
+    .service-main{ padding:16px 14px; }
+    .service-side{ padding:14px 14px; gap:10px; }
+    .service-card h3{ font-size:.98rem; margin-bottom:6px; }
+    .service-card p{ font-size:.82rem; margin-bottom:10px; }
+    .service-icon{ margin-bottom:14px; }
+    .work-grid{ gap:10px; margin-bottom:16px; }
+    .work-card img{ height:90px; }
+    .work-card-label{ padding:8px 10px; font-size:.74rem; }
+    .price-tabs{ gap:5px; margin-bottom:14px; }
+    .price-tab{ padding:7px 12px; font-size:.75rem; }
+    .price-panel, .price-panel-static{ gap:10px; }
+    .price-card{ padding:14px 13px; gap:6px; }
+    .price-card .p-price{ font-size:1.15rem; }
+    .price-card .p-hint{ font-size:.78rem; }
+    .price-card .badge{ font-size:.6rem; padding:4px 10px; top:-10px; }
+    .pricing-step-head{ margin-bottom:12px; gap:8px; }
+    .pricing-step-head h3{ font-size:.95rem; }
+    .pricing-step-head .step-sub{ font-size:.76rem; }
+    .step-num{ width:26px; height:26px; font-size:.8rem; }
+    .pricing-connector{ margin:14px 0; }
+    .price-note-box{ padding:14px 16px; margin-top:16px; }
+    .price-note-box p{ font-size:.82rem; }
+    .pricing-note{ margin-top:12px; font-size:.76rem; }
+    .approach-item{ grid-template-columns:30px 1fr; gap:10px; padding:12px 0; }
+    .approach-num{ font-size:.82rem; }
+    .approach-item h3{ font-size:.95rem; margin-bottom:3px; }
+    .approach-item p{ font-size:.82rem; }
+    .stat-band{ padding:14px 13px; }
+    .stat-band .num{ font-size:1.4rem; }
+    .stat-band .lbl{ font-size:.78rem; margin-top:3px; }
+    .contact-side-light, .contact-main-light{ padding:16px 15px; }
+    .contact-side-light{ gap:12px; }
+    .contact-side-light h2{ font-size:1.05rem; }
+    footer{ padding:22px 0; }
+    .footer-row{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .footer-links{ flex-wrap:wrap; gap:8px 14px; }
+    .footer-links a{ font-size:.76rem; }
   }
   @media (max-width:640px){
     .work-grid .work-card:nth-child(n+3){ display:none; }
   }
   @media (max-width:480px){
-    .hero h1{ font-size:1.65rem; }
-    .section-head h2{ font-size:1.4rem; }
-    .btn{ font-size:.9rem; padding:12px 20px; }
-    .price-card .p-price{ font-size:1.35rem; }
-    .stat-band .num{ font-size:1.5rem; }
-    .logo{ font-size:.96rem; gap:8px; }
-    .logo img{ height:24px; }
+    .wrap{ padding:0 14px; }
+    section{ padding:30px 0; }
+    .hero h1{ font-size:1.35rem; }
+    .hero p.lead{ font-size:.84rem; }
+    .section-head h2{ font-size:1.15rem; }
+    .section-head p{ font-size:.8rem; }
+    .btn{ font-size:.84rem; padding:10px 16px; }
+    .price-card .p-price{ font-size:1.05rem; }
+    .price-tab{ padding:6px 10px; font-size:.7rem; }
+    .stat-band .num{ font-size:1.2rem; }
+    .approach-photo{ max-width:110px; }
+    .logo{ font-size:.9rem; gap:6px; }
+    .logo img{ height:22px; }
+    .work-card img{ height:100px; }
   }
 </style>
 </head>
