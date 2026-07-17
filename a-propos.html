@@ -102,6 +102,8 @@
   .story{ max-width:720px; }
   .story p{ color:var(--muted); font-size:1rem; margin-bottom:20px; }
   .story p strong{ color:var(--ink); font-weight:600; }
+  .story-quote-mobile, .story-short-mobile{ display:none; }
+  .value-icon{ display:none; }
 
   .stats-band{ position:relative; padding:8px 0; margin:36px 0 40px; }
   .stats-band .inner{ position:relative; z-index:1; }
@@ -218,6 +220,17 @@
     .mobile-menu a{ font-size:1.05rem; padding:17px 24px; min-height:24px; }
     .mobile-menu .nav-cta{ margin:18px 24px; padding:14px 22px; }
   }
+
+  @media (max-width:860px){
+    #storyFull, #storyFull2{ display:none; }
+    .story-quote-mobile{ display:block; font-family:'Bricolage Grotesque'; font-weight:700; font-size:1.05rem; line-height:1.4; color:var(--ink); border-left:3px solid var(--blue); padding-left:14px; margin-bottom:0; }
+    .story-short-mobile{ display:block; color:var(--muted); font-size:.84rem; margin-top:18px; }
+    .stats-band{ margin:20px 0 4px; }
+    .value-icon{ display:flex; width:36px; height:36px; background:var(--blue-soft); border-radius:8px; align-items:center; justify-content:center; margin-bottom:10px; }
+    .value-icon svg{ width:18px; height:18px; }
+    .team-card p.desc{ display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .value-card{ box-shadow:0 8px 20px -14px rgba(20,20,26,.25); }
+  }
 </style>
 </head>
 <body>
@@ -257,7 +270,10 @@
 
   <section>
     <div class="wrap story reveal">
+      <p class="story-quote-mobile">Un seul interlocuteur, du premier échange à la maintenance — sans jongler entre plusieurs prestataires.</p>
+      <div id="storyFull">
       <p>MatMax Intelligence est une agence luxembourgeoise fondée pour répondre à un besoin très concret&nbsp;: donner aux entreprises un site web professionnel, géré de bout en bout, sans avoir à gérer plusieurs prestataires, plusieurs factures et plusieurs interlocuteurs.</p>
+      </div>
 
       <div class="stats-band">
         <div class="inner">
@@ -269,7 +285,10 @@
         </div>
       </div>
 
+      <div id="storyFull2">
       <p>Nous fonctionnons en abonnement plutôt qu'en projet ponctuel, parce qu'un site qui n'évolue pas devient vite obsolète. La maintenance, les mises à jour et les ajustements font partie du service. Selon vos besoins, nous complétons aussi votre projet avec un outil IA sur mesure ou un logo, réalisé avec une graphiste partenaire.</p>
+      </div>
+      <p class="story-short-mobile">Abonnement plutôt que projet ponctuel : maintenance et évolutions incluses. En complément, outil IA sur mesure ou logo selon vos besoins.</p>
     </div>
   </section>
 
@@ -320,14 +339,17 @@
       </div>
       <div class="values-grid reveal-stagger reveal">
         <div class="value-card">
+          <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg></span>
           <h3>Simplicité</h3>
           <p>Un site ou un outil que votre équipe comprend et peut faire vivre, sans jargon technique inutile.</p>
         </div>
         <div class="value-card">
+          <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
           <h3>Transparence</h3>
           <p>Un abonnement clair, sans frais cachés pour les mises à jour ou la maintenance courante.</p>
         </div>
         <div class="value-card">
+          <span class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="#1149FE"/></svg></span>
           <h3>Utilité</h3>
           <p>Chaque fonctionnalité doit faire gagner du temps ou des clients — sinon elle ne mérite pas d'exister.</p>
         </div>

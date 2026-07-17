@@ -83,6 +83,7 @@
   .contact-side .item{ position:relative; }
   .contact-side .item .label{ font-size:.76rem; color:var(--dim); text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; display:block; font-family:'Inter'; font-weight:600; }
   .contact-side .item a, .contact-side .item p{ font-size:.98rem; color:var(--ink); margin:0; }
+  .item-icon{ display:none; }
   .contact-main{ padding:48px 40px; }
   .contact-main form{ display:flex; flex-direction:column; gap:18px; }
   .contact-main .field label{ font-size:.82rem; color:var(--muted); display:block; margin-bottom:8px; }
@@ -150,6 +151,15 @@
     .contact-main .field label{ font-size:.86rem; margin-bottom:6px; }
     .contact-main .field{ margin-bottom:2px; }
   }
+  @media (max-width:860px){
+    .contact-layout{ box-shadow:0 8px 20px -16px rgba(20,20,26,.3); }
+    .contact-side .item{ display:grid; grid-template-columns:32px 1fr; column-gap:12px; align-items:start; }
+    .item-icon{ display:flex; grid-column:1; grid-row:1 / span 2; width:32px; height:32px; background:var(--blue-soft); border-radius:8px; align-items:center; justify-content:center; }
+    .item-icon svg{ width:16px; height:16px; }
+    .contact-side .item .label{ grid-column:2; grid-row:1; margin-bottom:4px; }
+    .contact-side .item a, .contact-side .item p{ grid-column:2; grid-row:2; }
+    .contact-side{ gap:14px; }
+  }
 </style>
 </head>
 <body>
@@ -196,19 +206,23 @@
             <p class="side-intro">On revient vers vous sous 24h ouvrées.</p>
           </div>
           <div class="item">
+            <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 6l8 7 8-7"/></svg></span>
             <span class="label">Email</span>
             <a href="mailto:vercauteren.mathieu@gmail.com">vercauteren.mathieu@gmail.com</a>
           </div>
           <div class="item">
+            <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.8a15.3 15.3 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.36 2.3.56 3.5.56a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.2 2.4.56 3.5a1 1 0 0 1-.25 1z"/></svg></span>
             <span class="todo-flag">À compléter</span>
             <span class="label">Téléphone</span>
             <p class="todo-inline">+352 XX XX XX XX</p>
           </div>
           <div class="item">
+            <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
             <span class="label">Basé à</span>
             <p>Luxembourg</p>
           </div>
           <div class="item">
+            <span class="item-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1149FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
             <span class="label">Délai de réponse</span>
             <p>Sous 24h ouvrées</p>
           </div>
