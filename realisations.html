@@ -300,10 +300,7 @@
     .role-card h3, .value-card h3{ font-size:.98rem; margin-bottom:6px; }
     .role-card p, .value-card p{ font-size:.82rem; }
     .legal-wrap{ padding: 32px 0 40px; }
-    .portfolio-tabs{ gap:6px; margin-bottom:18px; }
-    .portfolio-tab{ padding:7px 12px; font-size:.75rem; }
-    .portfolio-panel{ gap:12px; }
-    .portfolio-thumb{ height:130px; }
+    .portfolio-thumb{ height:150px; }
     .portfolio-body{ padding:12px 14px; }
     .portfolio-card h3{ font-size:.92rem; }
     .portfolio-card p{ font-size:.8rem; }
@@ -314,11 +311,8 @@
     .hero h1{ font-size: 1.35rem; }
     .hero p.lead{ font-size:.82rem; }
     .btn{ padding:10px 16px; font-size:.84rem; }
-    .price-tabs{ gap:6px; }
-    .price-tab{ padding:7px 12px; font-size:.75rem; }
     .page-hero h1{ font-size:1.25rem; }
     .section-head h2{ font-size:1.1rem; }
-    .portfolio-panel{ grid-template-columns:1fr; }
     .portfolio-thumb{ height:150px; }
     .logo{ font-size:.86rem; }
     .logo img{ height:20px; }
@@ -343,14 +337,26 @@
   .portfolio-card-link{ display:block; }
   .portfolio-view{ display:inline-block; margin-top:10px; font-size:.8rem; color:var(--accent); font-weight:500; }
   .portfolio-card-link:hover .portfolio-view{ text-decoration:underline; }
-  @media (max-width: 860px){ .portfolio-panel{ grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 640px){ .portfolio-panel{ grid-template-columns: 1fr; } }
-  @media (max-width: 480px){ .portfolio-tabs{ gap:6px; } .portfolio-tab{ padding:9px 16px; font-size:.82rem; } }
+  @media (min-width: 861px){ .portfolio-panel{ grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); } }
 
   .footer-brand{ display:flex; align-items:center; gap:10px; }
   .footer-brand img{ height:20px; }
   .todo-flag{ position:relative; display:inline-flex; background:var(--todo); color:#fff; font-family:'Inter',sans-serif; font-weight:600; font-size:.64rem; letter-spacing:.03em; padding:4px 10px; border-radius:20px; white-space:nowrap; }
   .todo-inline{ color:var(--todo); font-style:italic; border-bottom:1px dashed var(--todo); padding-bottom:1px; }
+
+  /* mobile: swipeable carousel instead of a stacked grid */
+  @media (max-width: 860px){
+    .portfolio-tabs{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; gap:6px; margin-bottom:16px; padding-bottom:2px; }
+    .portfolio-tabs::-webkit-scrollbar{ display:none; }
+    .portfolio-tab{ padding:7px 12px; font-size:.75rem; flex-shrink:0; }
+    .portfolio-panel.active{ display:flex; }
+    .portfolio-panel{ overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; gap:12px; scrollbar-width:none; margin:0 -16px; padding:0 16px 4px; }
+    .portfolio-panel::-webkit-scrollbar{ display:none; }
+    .portfolio-card{ flex:0 0 78%; scroll-snap-align:start; }
+  }
+  @media (max-width: 480px){
+    .portfolio-card{ flex:0 0 84%; }
+  }
 </style>
 </head>
 <body>
@@ -371,7 +377,7 @@
     </nav>
     <a class='nav-cta' href='/contact'>Discutons de votre projet</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
-  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="/sites-web">Sites web</a><a href="/realisations">Réalisations</a><a href="/#formules">Formules</a><a href="/#approche">Approche</a><a href="/a-propos">À&nbsp;propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
+  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="/sites-web">Sites web</a><a href="/realisations">Réalisations</a><a href="/tarifs">Tarifs</a><a href="/#formules">Formules</a><a href="/#approche">Approche</a><a href="/a-propos">À&nbsp;propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
 </header>
 
 

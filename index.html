@@ -187,6 +187,7 @@
   .price-card .p-price span{ font-size:.76rem; color:var(--muted); font-weight:400; display:block; margin-top:3px; font-family:'Inter'; }
   .price-card .p-hint{ font-size:.85rem; color:var(--muted); line-height:1.5; }
   .pricing-note{ margin-top:26px; color:var(--dim); font-size:.86rem; }
+  .pricing-mobile-teaser{ display:none; }
   @media (max-width:860px){ .price-panel{ grid-template-columns:1fr 1fr; } }
   @media (max-width:540px){ .price-panel{ grid-template-columns:1fr; } }
 
@@ -252,9 +253,8 @@
     .mobile-menu a{ padding:13px 20px; font-size:.9rem; }
     .mobile-menu .nav-cta{ margin:12px 20px; }
     .services-grid, .price-panel{ grid-template-columns:1fr; }
-    .approach-grid{ grid-template-columns:1fr; gap:18px; }
-    .approach-photo{ order:-1; max-width:150px; height:auto; min-height:0; margin:0 auto; box-shadow:none; border-radius:8px; }
-    .approach-photo img{ height:auto; aspect-ratio:4/5; }
+    .approach-grid{ grid-template-columns:1fr; gap:8px; }
+    .approach-photo{ display:none; }
     .stats-row-band{ grid-template-columns:1fr; }
     .contact-layout-light{ grid-template-columns:1fr; }
     .contact-side-light{ border-right:none; border-bottom:1px solid var(--line); }
@@ -278,13 +278,25 @@
     .section-head h2{ font-size:1.3rem; }
     .section-head p{ font-size:.84rem; margin-top:8px; }
     .service-main{ padding:16px 14px; }
-    .service-side{ padding:14px 14px; gap:10px; }
+    .service-side-col{ flex-direction:row; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; gap:10px; background:none; scrollbar-width:none; }
+    .service-side-col::-webkit-scrollbar{ display:none; }
+    .service-side{ padding:14px 14px; gap:10px; flex:0 0 80%; scroll-snap-align:start; border:1px solid var(--line); border-radius:var(--radius); }
     .service-card h3{ font-size:.98rem; margin-bottom:6px; }
     .service-card p{ font-size:.82rem; margin-bottom:10px; }
     .service-icon{ margin-bottom:14px; }
-    .work-grid{ gap:10px; margin-bottom:16px; }
-    .work-card img{ height:90px; }
+    .work-grid{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; gap:10px; margin-bottom:16px; scrollbar-width:none; }
+    .work-grid::-webkit-scrollbar{ display:none; }
+    .work-grid .work-card{ flex:0 0 74%; scroll-snap-align:start; }
+    .work-card img{ height:110px; }
     .work-card-label{ padding:8px 10px; font-size:.74rem; }
+    #pricingFull{ display:none; }
+    .pricing-mobile-teaser{ display:block; background:var(--bg-alt); border:1px solid var(--line); border-radius:var(--radius); padding:16px; }
+    .pricing-mobile-teaser .teaser-row{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:10px 0; border-bottom:1px solid var(--line); font-size:.86rem; }
+    .pricing-mobile-teaser .teaser-row:first-child{ padding-top:0; }
+    .pricing-mobile-teaser .teaser-row span{ color:var(--muted); }
+    .pricing-mobile-teaser .teaser-row strong{ font-family:'Bricolage Grotesque'; font-weight:700; text-align:right; }
+    .pricing-mobile-teaser .teaser-row em{ display:block; font-style:normal; font-weight:400; font-size:.72rem; color:var(--dim); font-family:'Inter'; }
+    .pricing-mobile-teaser .teaser-btn{ display:flex; justify-content:center; width:100%; margin-top:14px; padding:11px 18px; font-size:.86rem; }
     .price-tabs{ gap:5px; margin-bottom:14px; }
     .price-tab{ padding:7px 12px; font-size:.75rem; }
     .price-panel, .price-panel-static{ gap:10px; }
@@ -315,9 +327,6 @@
     .footer-links{ flex-wrap:wrap; gap:8px 14px; }
     .footer-links a{ font-size:.76rem; }
   }
-  @media (max-width:640px){
-    .work-grid .work-card:nth-child(n+3){ display:none; }
-  }
   @media (max-width:480px){
     .wrap{ padding:0 14px; }
     section{ padding:30px 0; }
@@ -329,10 +338,10 @@
     .price-card .p-price{ font-size:1.05rem; }
     .price-tab{ padding:6px 10px; font-size:.7rem; }
     .stat-band .num{ font-size:1.2rem; }
-    .approach-photo{ max-width:110px; }
     .logo{ font-size:.9rem; gap:6px; }
     .logo img{ height:22px; }
-    .work-card img{ height:100px; }
+    .service-side{ flex:0 0 86%; }
+    .work-grid .work-card{ flex:0 0 82%; }
   }
 </style>
 </head>
@@ -354,7 +363,7 @@
     </nav>
     <a class='nav-cta' href='/contact'>Discutons de votre projet</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
-  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="/sites-web">Sites web</a><a href="/realisations">Réalisations</a><a href="#formules">Formules</a><a href="#approche">Approche</a><a href="/a-propos">À&nbsp;propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
+  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="/sites-web">Sites web</a><a href="/realisations">Réalisations</a><a href="/tarifs">Tarifs</a><a href="#formules">Formules</a><a href="#approche">Approche</a><a href="/a-propos">À&nbsp;propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
 </header>
 
 <main>
@@ -475,6 +484,14 @@
         <p>La mise en place est toujours un paiement unique au démarrage. Sites web et outils IA sont ensuite suivis d'un abonnement mensuel (hébergement, maintenance, évolutions) ; les logos n'en nécessitent pas.</p>
       </div>
 
+      <div class="pricing-mobile-teaser">
+        <div class="teaser-row"><span>Sites web</span><strong>Dès 1 800€ <em>+ 39€/mois</em></strong></div>
+        <div class="teaser-row"><span>Outils IA</span><strong>Dès 800€ <em>+ 19€/mois</em></strong></div>
+        <div class="teaser-row"><span>Logos</span><strong>Dès 350€ <em>sans abonnement</em></strong></div>
+        <a href="/tarifs" class="btn btn-primary teaser-btn">Voir le détail des tarifs</a>
+      </div>
+
+      <div id="pricingFull">
       <div class="pricing-step-head">
         <span class="step-num">1</span>
         <div><h3>Mise en place</h3><span class="step-sub">Paiement unique, au démarrage du projet</span></div>
@@ -589,6 +606,7 @@
 
       <div class="hero-actions reveal" style="margin-top:32px;">
         <a href="#contact" class="btn btn-primary">Demander un devis</a>
+      </div>
       </div>
     </div>
   </section>

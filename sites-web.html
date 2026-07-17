@@ -161,7 +161,9 @@
     .section-head{ margin-bottom:18px; }
     .section-head h2{ font-size:1.25rem; }
     .section-head p{ font-size:.84rem; margin-top:8px; }
-    .feature-card{ padding:16px 14px; }
+    .features-grid{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; gap:10px; background:none; border:none; scrollbar-width:none; }
+    .features-grid::-webkit-scrollbar{ display:none; }
+    .feature-card{ padding:16px 14px; flex:0 0 78%; scroll-snap-align:start; border:1px solid var(--line); border-radius:var(--radius); }
     .feature-card h3{ font-size:.94rem; margin-bottom:5px; }
     .feature-card p{ font-size:.8rem; }
     .feature-icon{ margin-bottom:10px; width:32px; height:32px; }
@@ -169,10 +171,11 @@
     .process-num{ font-size:1.05rem; width:26px; }
     .process-step h3{ font-size:.92rem; margin-bottom:3px; }
     .process-step p{ font-size:.8rem; }
-    .work-grid{ gap:10px; margin-bottom:16px; }
-    .work-card img{ height:90px; }
+    .work-grid{ display:flex; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; gap:10px; margin-bottom:16px; scrollbar-width:none; }
+    .work-grid::-webkit-scrollbar{ display:none; }
+    .work-grid .work-card{ flex:0 0 74%; scroll-snap-align:start; }
+    .work-card img{ height:110px; }
     .work-card-label{ padding:8px 10px; font-size:.74rem; }
-    .work-grid .work-card:nth-child(n+3){ display:none; }
     .faq-item{ padding:14px 14px; }
     .faq-item h3{ font-size:.9rem; margin-bottom:5px; }
     .faq-item p{ font-size:.8rem; }
@@ -193,7 +196,8 @@
     .btn{ font-size:.84rem; padding:10px 16px; }
     .logo{ font-size:.9rem; gap:6px; }
     .logo img{ height:22px; }
-    .work-card img{ height:100px; }
+    .feature-card{ flex:0 0 86%; }
+    .work-grid .work-card{ flex:0 0 82%; }
   }
 </style>
 </head>
@@ -215,7 +219,7 @@
     </nav>
     <a class='nav-cta' href='/contact'>Discutons de votre projet</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
-  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="/sites-web">Sites web</a><a href="/realisations">Réalisations</a><a href="/#formules">Formules</a><a href="/#approche">Approche</a><a href="/a-propos">À&nbsp;propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
+  <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="/sites-web">Sites web</a><a href="/realisations">Réalisations</a><a href="/tarifs">Tarifs</a><a href="/#formules">Formules</a><a href="/#approche">Approche</a><a href="/a-propos">À&nbsp;propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
 </header>
 
 <main>
