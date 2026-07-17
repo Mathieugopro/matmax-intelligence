@@ -199,6 +199,25 @@
     .feature-card{ flex:0 0 86%; }
     .work-grid .work-card{ flex:0 0 82%; }
   }
+
+  .mobile-cta-bar{ display:none; }
+
+  @media (max-width:860px){
+    body{ padding-bottom:70px; }
+    .mobile-cta-bar{
+      display:flex; position:fixed; left:0; right:0; bottom:0; z-index:45;
+      padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+      background:rgba(255,255,255,.94); backdrop-filter:blur(10px);
+      border-top:1px solid var(--line); box-shadow:0 -8px 24px -12px rgba(20,20,26,.12);
+    }
+    .mobile-cta-bar .btn{ width:100%; justify-content:center; padding:12px 20px; font-size:.92rem; }
+    .faq-item{ cursor:pointer; }
+    .faq-item h3{ display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:.92rem; }
+    .faq-item h3::after{ content:''; width:8px; height:8px; border-right:2px solid var(--dim); border-bottom:2px solid var(--dim); transform:rotate(45deg); transition:transform .2s; flex-shrink:0; }
+    .faq-item.open h3::after{ transform:rotate(-135deg); }
+    .faq-item p{ display:none; font-size:.82rem; margin-top:0; }
+    .faq-item.open p{ display:block; margin-top:8px; }
+  }
 </style>
 </head>
 <body>
@@ -349,7 +368,7 @@
         <h2>Avant de vous décider</h2>
       </div>
       <div class="faq-list reveal-stagger reveal">
-        <div class="faq-item">
+        <div class="faq-item open">
           <h3>Combien de temps faut-il pour obtenir mon site ?</h3>
           <p>Généralement entre 2 et 4 semaines, de la première maquette à la mise en ligne, selon la complexité du projet.</p>
         </div>
@@ -395,6 +414,8 @@
   </div>
 </footer>
 
+<div class="mobile-cta-bar"><a href="/contact" class="btn btn-primary">Demander un devis</a></div>
+
 <script>
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
@@ -415,6 +436,12 @@
       });
     });
   }
+
+  document.querySelectorAll('.faq-item h3').forEach(function(h){
+    h.addEventListener('click', function(){
+      h.parentElement.classList.toggle('open');
+    });
+  });
 </script>
 
 </body>

@@ -357,6 +357,19 @@
   @media (max-width: 480px){
     .portfolio-card{ flex:0 0 84%; }
   }
+
+  .mobile-cta-bar{ display:none; }
+
+  @media (max-width:860px){
+    body{ padding-bottom:70px; }
+    .mobile-cta-bar{
+      display:flex; position:fixed; left:0; right:0; bottom:0; z-index:45;
+      padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+      background:rgba(255,255,255,.94); backdrop-filter:blur(10px);
+      border-top:1px solid var(--line); box-shadow:0 -8px 24px -12px rgba(20,20,26,.12);
+    }
+    .mobile-cta-bar .btn{ width:100%; justify-content:center; padding:12px 20px; font-size:.92rem; }
+  }
 </style>
 </head>
 <body>
@@ -623,6 +636,8 @@
     </div>
   </div>
 </footer>
+
+<div class="mobile-cta-bar"><a href="/contact" class="btn btn-primary">Discuter de mon projet</a></div>
 
 <script>
   const io = new IntersectionObserver((entries)=>{

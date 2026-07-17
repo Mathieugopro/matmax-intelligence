@@ -263,17 +263,19 @@
     .hero{ padding-top:0; }
     .hero-chevrons{ display:none; }
     .chevron-divider{ display:none; }
-    .hero-inner{ grid-template-columns:1fr; padding-top:24px; padding-bottom:22px; gap:18px; }
-    .eyebrow{ margin-bottom:12px; font-size:.72rem; }
-    .hero h1{ font-size:1.55rem; line-height:1.15; max-width:none; }
-    .hero p.lead{ font-size:.88rem; margin-top:10px; }
-    .hero-actions{ flex-direction:column; align-items:stretch; gap:8px; margin-top:16px; }
+    .hero-inner{ grid-template-columns:1fr; padding-top:20px; padding-bottom:20px; gap:16px; }
+    .eyebrow{ margin-bottom:10px; font-size:.7rem; }
+    .hero h1{ font-size:1.5rem; line-height:1.15; max-width:none; }
+    .hero p.lead{ font-size:.86rem; margin-top:8px; }
+    .hero-actions{ flex-direction:column; align-items:stretch; gap:8px; margin-top:14px; }
     .hero-actions .btn{ justify-content:center; width:100%; padding:11px 18px; font-size:.88rem; }
+    .hero-inner > .hero-text > .hero-actions .btn-ghost{ display:none; }
     .chat-card{ max-width:100%; justify-self:stretch; margin-top:0; border-radius:10px; }
-    .chat-top{ padding:10px 14px; }
-    .chat-body{ padding:12px; min-height:0; gap:7px; }
+    .chat-top{ padding:9px 14px; }
+    .chat-body{ padding:10px; min-height:0; gap:6px; }
     .chat-msg{ font-size:.78rem; padding:7px 10px; max-width:88%; }
-    .chat-foot{ padding:9px 14px; }
+    .chat-msg:nth-child(2), .chat-msg:nth-child(3){ display:none; }
+    .chat-foot{ padding:8px 14px; }
     .section-head{ margin-bottom:18px; }
     .section-head h2{ font-size:1.3rem; }
     .section-head p{ font-size:.84rem; margin-top:8px; }
@@ -342,6 +344,19 @@
     .logo img{ height:22px; }
     .service-side{ flex:0 0 86%; }
     .work-grid .work-card{ flex:0 0 82%; }
+  }
+
+  .mobile-cta-bar{ display:none; }
+
+  @media (max-width:860px){
+    body{ padding-bottom:70px; }
+    .mobile-cta-bar{
+      display:flex; position:fixed; left:0; right:0; bottom:0; z-index:45;
+      padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+      background:rgba(255,255,255,.94); backdrop-filter:blur(10px);
+      border-top:1px solid var(--line); box-shadow:0 -8px 24px -12px rgba(20,20,26,.12);
+    }
+    .mobile-cta-bar .btn{ width:100%; justify-content:center; padding:12px 20px; font-size:.92rem; }
   }
 </style>
 </head>
@@ -710,6 +725,8 @@
     </div>
   </div>
 </footer>
+
+<div class="mobile-cta-bar"><a href="/contact" class="btn btn-primary">Discuter de mon projet</a></div>
 
 <script>
   const chatBody = document.getElementById('chatBody');
