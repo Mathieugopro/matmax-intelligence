@@ -205,6 +205,19 @@
     }
     .mobile-cta-bar .btn{ width:100%; justify-content:center; padding:12px 20px; font-size:.92rem; }
   }
+
+  body.menu-open{ overflow:hidden; }
+  @media (max-width:860px){
+    .nav-toggle{ width:44px; height:44px; }
+    .icon-close{ display:none; }
+    .nav-toggle[aria-expanded="true"] .icon-menu{ display:none; }
+    .nav-toggle[aria-expanded="true"] .icon-close{ display:block; }
+    body.menu-open header{ backdrop-filter:none; }
+    .nav-row{ position:relative; z-index:2; background:#fff; }
+    .mobile-menu{ position:fixed; inset:0; z-index:1; padding-top:72px; overflow-y:auto; border-top:none; background:#fff; -webkit-overflow-scrolling:touch; }
+    .mobile-menu a{ font-size:1.05rem; padding:17px 24px; min-height:24px; }
+    .mobile-menu .nav-cta{ margin:18px 24px; padding:14px 22px; }
+  }
 </style>
 </head>
 <body>
@@ -223,7 +236,7 @@
         <li><a href='/contact'>Contact</a></li>
       </ul>
     </nav>
-    <a class='nav-cta' href='/contact'>Discutons de votre projet</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <a class='nav-cta' href='/contact'>Discutons de votre projet</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false"><svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg><svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="mobile-menu" id="mobileMenu"><a href="/">Accueil</a><a href="/sites-web">Sites web</a><a href="/realisations">Réalisations</a><a href="/tarifs">Tarifs</a><a href="/#formules">Formules</a><a href="/#approche">Approche</a><a href="/a-propos">À&nbsp;propos</a><a href="/contact">Contact</a><a href="/contact" class="nav-cta">Discutons de votre projet</a></div>
 </header>
@@ -360,14 +373,27 @@
 
   var navToggle = document.getElementById('navToggle');
   var mobileMenu = document.getElementById('mobileMenu');
+  function closeMobileMenu(){
+    if(!mobileMenu) return;
+    mobileMenu.classList.remove('open');
+    if(navToggle) navToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+  function openMobileMenu(){
+    if(!mobileMenu) return;
+    mobileMenu.classList.add('open');
+    if(navToggle) navToggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  }
   if(navToggle && mobileMenu){
     navToggle.addEventListener('click', function(){
-      mobileMenu.classList.toggle('open');
+      if(mobileMenu.classList.contains('open')){ closeMobileMenu(); } else { openMobileMenu(); }
     });
     mobileMenu.querySelectorAll('a').forEach(function(link){
-      link.addEventListener('click', function(){
-        mobileMenu.classList.remove('open');
-      });
+      link.addEventListener('click', closeMobileMenu);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closeMobileMenu();
     });
   }
 </script>
