@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Agence luxembourgeoise de création de sites web professionnels, par abonnement. En complément : outils IA sur mesure et logos. Sites dès 1800€, formules mensuelles dès 39€/mois.">
-<link rel="canonical" href="https://matmax-intelligence.netlify.app/">
+<link rel="canonical" href="https://matmax-intelligence.vercel.app/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="MatMax Intelligence — Création de sites web professionnels">
 <meta property="og:description" content="Agence luxembourgeoise de création de sites web professionnels, par abonnement. En complément : outils IA sur mesure et logos.">
-<meta property="og:image" content="https://matmax-intelligence.netlify.app/og-image.png">
-<meta property="og:url" content="https://matmax-intelligence.netlify.app/">
+<meta property="og:image" content="https://matmax-intelligence.vercel.app/og-image.png">
+<meta property="og:url" content="https://matmax-intelligence.vercel.app/">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="MatMax Intelligence — Création de sites web professionnels">
 <meta name="twitter:description" content="Agence luxembourgeoise de création de sites web professionnels, par abonnement. En complément : outils IA sur mesure et logos.">
-<meta name="twitter:image" content="https://matmax-intelligence.netlify.app/og-image.png">
+<meta name="twitter:image" content="https://matmax-intelligence.vercel.app/og-image.png">
 <title>MatMax Intelligence — Création de sites web professionnels</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -722,11 +722,12 @@
           </div>
         </div>
         <div class="contact-main-light">
-          <form action='/merci' method='POST' name='contact' data-netlify="true">
-            <input type="hidden" name="form-name" value="contact">
-            <div class="field"><label>Nom</label><input type="text" name="name" placeholder="Votre nom"></div>
-            <div class="field"><label>Email</label><input type="email" name="email" placeholder="vous@entreprise.com"></div>
-            <div class="field"><label>Message</label><textarea name="message" placeholder="Quelques lignes sur ce que vous cherchez à faire"></textarea></div>
+          <form action='https://formspree.io/f/mlgqdngw' method='POST'>
+            <input type="hidden" name="_subject" value="Nouveau message — Site MatMax Intelligence">
+            <input type="hidden" name="_next" value="/merci">
+            <div class="field"><label for="homeContactName">Nom</label><input type="text" id="homeContactName" name="name" placeholder="Votre nom" autocomplete="name"></div>
+            <div class="field"><label for="homeContactEmail">Email</label><input type="email" id="homeContactEmail" name="email" placeholder="vous@entreprise.com" autocomplete="email" inputmode="email"></div>
+            <div class="field"><label for="homeContactMessage">Message</label><textarea id="homeContactMessage" name="message" placeholder="Quelques lignes sur ce que vous cherchez à faire"></textarea></div>
             <button class="btn btn-primary" type="submit">Envoyer</button>
           </form>
         </div>
