@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Tarifs de MatMax Intelligence : sites web, outils IA et logos. Mise en place unique puis abonnement mensuel clair, sans frais caché.">
+<meta name="description" content="Tarifs de MM Intelligence : sites web sur mesure dès 1 490€, puis abonnement mensuel dès 69€ (hébergement, maintenance, modifications). Remise jusqu'à 1 000€ en cas d'engagement.">
 <link rel="canonical" href="https://matmax-intelligence.vercel.app/tarifs.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Tarifs — MatMax Intelligence">
+<meta property="og:title" content="Tarifs — MM Intelligence">
 <meta property="og:description" content="Sites web, outils IA et logos : mise en place unique puis abonnement mensuel clair, sans frais caché.">
 <meta property="og:image" content="https://matmax-intelligence.vercel.app/og-image.png">
 <meta property="og:url" content="https://matmax-intelligence.vercel.app/tarifs.html">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Tarifs — MatMax Intelligence">
+<meta name="twitter:title" content="Tarifs — MM Intelligence">
 <meta name="twitter:description" content="Sites web, outils IA et logos : mise en place unique puis abonnement mensuel clair, sans frais caché.">
 <meta name="twitter:image" content="https://matmax-intelligence.vercel.app/og-image.png">
-<title>Tarifs — MatMax Intelligence</title>
+<title>Tarifs — MM Intelligence</title>
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -94,6 +94,22 @@
   .price-note-box{ display:none; margin-top:32px; border:1px dashed var(--line); border-radius:var(--radius); padding:22px 26px; background:var(--bg-alt); }
   .price-note-box.active{ display:block; }
   .price-note-box p{ color:var(--muted); font-size:.92rem; }
+  .engage-box{ margin-top:40px; border:1px solid var(--line); border-radius:var(--radius); padding:28px 30px; background:var(--bg-alt); }
+  .engage-box h4{ font-size:1.05rem; margin-bottom:5px; }
+  .engage-box .sub{ font-size:.88rem; color:var(--muted); margin-bottom:18px; line-height:1.55; }
+  .engage-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .engage-item{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:15px 17px; }
+  .engage-item.best{ border-color:var(--blue); box-shadow:0 0 0 1px var(--blue); }
+  .engage-item .e-dur{ font-size:.74rem; color:var(--dim); text-transform:uppercase; letter-spacing:.05em; font-family:'Inter'; font-weight:600; }
+  .engage-item .e-val{ font-family:'Bricolage Grotesque'; font-size:1.3rem; font-weight:700; color:var(--blue); margin-top:5px; }
+  .engage-item.plain .e-val{ color:var(--muted); }
+  .engage-ex{ margin-top:16px; font-size:.88rem; color:var(--muted); line-height:1.6; }
+  .engage-ex strong{ color:var(--ink); }
+  .opt-list{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:16px; }
+  .opt-list div{ font-size:.87rem; color:var(--muted); padding:10px 13px; background:#fff; border:1px solid var(--line); border-radius:8px; }
+  .opt-list strong{ color:var(--ink); font-weight:600; }
+  @media (max-width:860px){ .engage-grid{ grid-template-columns:1fr 1fr; } .opt-list{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:540px){ .engage-box{ padding:18px 16px; } .opt-list{ grid-template-columns:1fr; } }
   .price-card{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:30px 24px; display:flex; flex-direction:column; gap:14px; transition:box-shadow .25s, transform .25s, border-color .25s; position:relative; }
   .price-card:hover{ transform:translateY(-3px); box-shadow:0 18px 32px -22px rgba(20,20,26,.18); }
   .price-card.featured{ border-color:var(--blue); box-shadow:0 0 0 1px var(--blue); }
@@ -211,7 +227,7 @@
 
 <header>
   <div class="wrap nav-row">
-    <a href="/" class="logo"><img src="logo.svg" alt="MatMax Intelligence" width="28" height="24">MatMax Intelligence</a>
+    <a href="/" class="logo"><img src="logo.svg" alt="MM Intelligence" width="28" height="24">MM Intelligence</a>
     <nav>
       <ul>
         <li><a href='/'>Accueil</a></li>
@@ -237,7 +253,7 @@
     <div class="wrap">
       <span class="tag reveal in">Tarifs</span>
       <h1 class="reveal in">Des tarifs clairs, pensés pour chaque service</h1>
-      <p class="lead reveal in">La mise en place est toujours un paiement unique au démarrage. Sites web et outils IA sont ensuite suivis d'un abonnement mensuel ; les logos n'en nécessitent pas.</p>
+      <p class="lead reveal in">La création est un paiement unique au démarrage. Ensuite, un abonnement mensuel prend en charge l'hébergement, la maintenance et vos modifications — et plus vous vous engagez, moins la création vous coûte.</p>
     </div>
   </section>
 
@@ -248,64 +264,48 @@
         <div><h3>Mise en place</h3><span class="step-sub">Paiement unique, au démarrage du projet</span></div>
       </div>
 
-      <div class="price-tabs reveal in">
-        <button class="price-tab active" data-tab="sites" type="button">Sites web</button>
-        <button class="price-tab" data-tab="ia" type="button">Outils IA</button>
-        <button class="price-tab" data-tab="logo" type="button">Logos</button>
-      </div>
-
-      <div class="price-panel active" data-panel="sites">
+      <div class="price-panel cols-3 active" data-panel="sites">
         <div class="price-card">
           <span class="p-name">Essentiel</span>
-          <div class="p-price">1 800 – 2 800€<span>paiement unique</span></div>
-          <span class="p-hint">Site vitrine 1 à 4 pages, design sur mesure, SEO de base.</span>
+          <div class="p-price">1 490€<span>paiement unique</span></div>
+          <span class="p-hint">Jusqu'à 5 pages, 1 langue. Design unique, textes rédigés, mobile, SEO de base, conformité RGPD.</span>
         </div>
         <div class="price-card featured">
           <span class="badge">Le plus choisi</span>
-          <span class="p-name">Premium</span>
-          <div class="p-price">3 000 – 5 000€<span>paiement unique</span></div>
-          <span class="p-hint">5 à 8 pages, chatbot intégré, contenu rédigé pour vous.</span>
+          <span class="p-name">Pro</span>
+          <div class="p-price">2 890€<span>paiement unique</span></div>
+          <span class="p-hint">Jusqu'à 10 pages, 2 langues. Prise de rendez-vous, carte, avis, galerie, SEO avancé — et un module interactif sur mesure inclus.</span>
         </div>
         <div class="price-card">
+          <span class="p-name">Signature</span>
+          <div class="p-price">4 900€<span>paiement unique</span></div>
+          <span class="p-hint">Pages illimitées, 3 langues. Atelier de conception, mise en page dessinée pour vous, blog, deux modules interactifs, SEO complet.</span>
+        </div>
+      </div>
+
+      <div class="price-panel-static cols-2 active" style="margin-top:18px;">
+        <div class="price-card">
           <span class="p-name">Refonte</span>
-          <div class="p-price">2 800 – 4 500€<span>paiement unique</span></div>
-          <span class="p-hint">On reprend votre site existant, niveau Premium.</span>
+          <div class="p-price">dès 2 290€<span>paiement unique</span></div>
+          <span class="p-hint">On reprend votre site existant dans la continuité de votre identité, sans perdre votre référencement.</span>
         </div>
         <div class="price-card">
           <span class="p-name">Sur-mesure</span>
-          <div class="p-price">Dès 5 000€<span>sur devis</span></div>
-          <span class="p-hint">Réservation en ligne, espace membre, besoins spécifiques.</span>
+          <div class="p-price">dès 6 000€<span>sur devis</span></div>
+          <span class="p-hint">Fonctionnalité spécifique, intégration à vos outils métier, espace membre.</span>
         </div>
       </div>
-      <div class="price-panel cols-3" data-panel="ia">
-        <div class="price-card">
-          <span class="p-name">Essentiel</span>
-          <div class="p-price">800 – 1 500€<span>paiement unique</span></div>
-          <span class="p-hint">Un agent IA avec des scénarios prédéfinis.</span>
-        </div>
-        <div class="price-card featured">
-          <span class="badge">Le plus choisi</span>
-          <span class="p-name">Avancé</span>
-          <div class="p-price">1 800 – 3 000€<span>paiement unique</span></div>
-          <span class="p-hint">Connecté à vos outils, avec logique conditionnelle.</span>
-        </div>
-        <div class="price-card">
-          <span class="p-name">Multi-agents</span>
-          <div class="p-price">Dès 3 000€<span>sur devis</span></div>
-          <span class="p-hint">Plusieurs agents, intégrations complexes.</span>
-        </div>
-      </div>
-      <div class="price-panel cols-2" data-panel="logo">
-        <div class="price-card">
-          <span class="p-name">Logo seul</span>
-          <div class="p-price">350 – 600€<span>paiement unique</span></div>
-          <span class="p-hint">Logo sur mesure avec une graphiste partenaire, 2 propositions, fichiers sources inclus.</span>
-        </div>
-        <div class="price-card featured">
-          <span class="badge">Le plus choisi</span>
-          <span class="p-name">Identité complète</span>
-          <div class="p-price">700 – 1 200€<span>paiement unique</span></div>
-          <span class="p-hint">Logo, palette, typographies et déclinaisons pour votre site et vos réseaux.</span>
+
+      <div class="engage-box">
+        <h4>Les options</h4>
+        <p class="sub">À ajouter à n'importe quelle formule, au moment du devis.</p>
+        <div class="opt-list">
+          <div><strong>+ 490€</strong> — langue supplémentaire</div>
+          <div><strong>+ 490€</strong> — module interactif</div>
+          <div><strong>+ 490€</strong> — blog / actualités</div>
+          <div><strong>+ 390€</strong> — prise de rendez-vous en ligne</div>
+          <div><strong>+ 390€</strong> — reportage photo sur place</div>
+          <div><strong>+ 180€</strong> — page supplémentaire</div>
         </div>
       </div>
 
@@ -316,44 +316,55 @@
         <div><h3>Abonnement mensuel</h3><span class="step-sub">Ensuite, tant que le service est actif</span></div>
       </div>
 
-      <div class="price-panel-static cols-3 active" data-sub-panel="sites">
+      <div class="price-panel-static active" data-sub-panel="sites">
         <div class="price-card">
-          <span class="p-name">Essentiel</span>
-          <div class="p-price">39 – 59€<span>par mois</span></div>
-          <span class="p-hint">Hébergement et domaine gérés, 1 modification par mois.</span>
+          <span class="p-name">Base</span>
+          <div class="p-price">69€<span>par mois</span></div>
+          <span class="p-hint">Hébergement, nom de domaine, certificat, sauvegardes et surveillance. 1 modification par mois, traitée sous 5 jours.</span>
         </div>
         <div class="price-card featured">
           <span class="badge">Le plus choisi</span>
           <span class="p-name">Confort</span>
-          <div class="p-price">79 – 99€<span>par mois</span></div>
-          <span class="p-hint">3 modifications par mois, maintenance incluse.</span>
+          <div class="p-price">129€<span>par mois</span></div>
+          <span class="p-hint">4 modifications par mois traitées sous 48h, suivi du référencement trimestriel, traduction des nouveaux contenus.</span>
         </div>
         <div class="price-card">
-          <span class="p-name">Premium</span>
-          <div class="p-price">129 – 179€<span>par mois</span></div>
-          <span class="p-hint">Modifications illimitées, contact dédié, rapport mensuel.</span>
+          <span class="p-name">Sérénité</span>
+          <div class="p-price">199€<span>par mois</span></div>
+          <span class="p-hint">Modifications illimitées sous 24h, référencement suivi activement, un article de blog rédigé chaque mois, interlocuteur dédié.</span>
         </div>
       </div>
 
-      <div class="price-panel-static cols-2" data-sub-panel="ia">
-        <div class="price-card">
-          <span class="p-name">Essentiel</span>
-          <div class="p-price">19 – 39€<span>par mois</span></div>
-          <span class="p-hint">Hébergement de l'agent et mises à jour de sécurité.</span>
+      <div class="engage-box">
+        <h4>Vous engager fait baisser le prix de départ</h4>
+        <p class="sub">L'abonnement n'est pas obligatoire. Mais plus vous vous engagez longtemps, moins la création vous coûte.</p>
+        <div class="engage-grid">
+          <div class="engage-item plain">
+            <div class="e-dur">Sans abonnement</div>
+            <div class="e-val">Prix plein</div>
+          </div>
+          <div class="engage-item">
+            <div class="e-dur">Sans engagement</div>
+            <div class="e-val">– 200€</div>
+          </div>
+          <div class="engage-item">
+            <div class="e-dur">Engagement 12 mois</div>
+            <div class="e-val">– 500€</div>
+          </div>
+          <div class="engage-item best">
+            <div class="e-dur">Engagement 24 mois</div>
+            <div class="e-val">– 1 000€</div>
+          </div>
         </div>
-        <div class="price-card featured">
-          <span class="badge">Le plus choisi</span>
-          <span class="p-name">Avancé</span>
-          <div class="p-price">49 – 79€<span>par mois</span></div>
-          <span class="p-hint">Ajustements de scénarios inclus et suivi des performances.</span>
-        </div>
+        <p class="engage-ex">Exemple : la formule <strong>Pro</strong> avec un abonnement <strong>Confort</strong> engagé 24 mois, c'est <strong>1 890€ à la création</strong> au lieu de 2 890€, puis 129€ par mois.</p>
       </div>
 
-      <div class="price-note-box" data-sub-panel="logo">
-        <p>Le logo est un service ponctuel — pas d'abonnement mensuel associé. Les fichiers sources vous sont remis à la livraison.</p>
+      <div class="engage-box">
+        <h4>Et si un jour vous partez</h4>
+        <p class="sub">Résiliation à tout moment, avec un mois de préavis. On vous remet gratuitement l'intégralité de votre site, et votre nom de domaine vous est transféré : vous en devenez propriétaire. Vous n'êtes prisonnier de rien.<br><br>Votre site est garanti six mois. Après, sans abonnement, une intervention est facturée 95€ de l'heure.</p>
       </div>
 
-      <p class="pricing-note reveal in">Prix indicatifs, ajustés selon la complexité exacte du projet lors du devis.</p>
+      <p class="pricing-note reveal in">Prix hors TVA. Le logo et l'identité visuelle sont réalisés sur devis avec une graphiste partenaire.</p>
     </div>
   </section>
 
@@ -370,7 +381,7 @@
 
 <footer>
   <div class="wrap footer-row">
-    <div class="footer-brand"><img src="logo.svg" alt="" width="20" height="17"><p>© 2026 MATMAX INTELLIGENCE — LUXEMBOURG</p></div>
+    <div class="footer-brand"><img src="logo.svg" alt="" width="20" height="17"><p>© 2026 MM INTELLIGENCE — LUXEMBOURG</p></div>
     <div class="footer-links">
       <a href='/sites-web'>Sites web</a>
       <a href='/realisations'>Réalisations</a>
